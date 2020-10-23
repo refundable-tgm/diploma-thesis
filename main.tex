@@ -1,0 +1,39 @@
+\documentclass[minted]{thesis}
+% Required
+\title{Keine Panik!}
+% Authors
+\author{Arthur Dent}{5xHIT}{Untertitel des Themengebiets von Arthur Dent}
+\author{Ford Prefect}{5xHIT}{Untertitel des Themengebiets von Ford Prefect}
+\author{Tricia McMillan}{5xHIT}{Untertitel des Themengebiets von Tricia McMillan}
+\author{Zaphod Beeblebrox}{5xHIT}{Untertitel des Themengebiets von Zaphod Beeblebrox}
+% Date of submission
+\date{4. April 2018}
+% Optional
+\mysubtitle{Mit {\LaTeX} durch die Diplomarbeit}
+\myteacher{DSc MSc Deep Thought}
+\myyear{2017/18}
+\mydivision{Medientechnik, Systemtechnik}
+% \selectlanguage{english}			% Set language to english
+% \selectlanguage{ngerman}			% Set language to german
+% \setcode{frame=single} 			% Add a frame to codes
+% \setcode{bgcolor=AlmostWhite}		% Add a background to codes (minted only)
+% \usemintedstyle{rainbow_dash} 	% autumn, rainbow_dash, tango (default), trac
+\begin{document}
+\input{chapters/kurzfassung}
+% Table of contents
+\tableofcontents\glsresetall
+\newpage\pagestyle{fancy}
+
+\include{chapters/vorwort} 			% Include the chapter „Vorwort“
+\include{chapters/vorwort/quellen}	% Include a section of a chapter
+
+\include{chapters/danksagung}
+\include{chapters/einleitung}
+\include{chapters/studie}
+\include{chapters/konzept}
+\include{chapters/implementierung}
+\include{chapters/retrospektive}
+\include{chapters/conclusio}
+
+% \glsaddall	% Also list unused glossary entries
+\end{document}
