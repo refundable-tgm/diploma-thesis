@@ -155,7 +155,10 @@
 
 % Add glossary / bibliography entries if they exist
 \IfFileExists{glossaries.tex}{\input{glossaries}\makeglossaries}{}
-\IfFileExists{bibliography.bib}{\addbibresource{bibliography}}{}
+% CUSTOM: Adding different source files from all teammembers
+\IfFileExists{sources/rfoster.bib}{\addbibresource{bibliography}}{}
+\IfFileExists{sources/mbeier.bib}{\addbibresource{bibliography}}{}
+\IfFileExists{sources/ldehner.bib}{\addbibresource{bibliography}}{}
 
 % Make empty book pages lose their headers and footers
 % http://mirror.kumi.systems/ctan/macros/latex/contrib/fancyhdr/fancyhdr.pdf
