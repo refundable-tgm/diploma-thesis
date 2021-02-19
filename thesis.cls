@@ -356,9 +356,9 @@
     \else   \ifen\printbibliography[heading=bibintoc]
             \else\printbibliography[heading=bibintoc, title=Literaturverzeichnis]\fi\fi
     
-    \iftotalfigures\listoffigures\fi    % Figures
-    \iftotaltables\listoftables\fi      % Tables
-    \iftotallistings\listoflistings\fi  % Listings
+    \iftotalfigures\addcontentsline{toc}{section}{Abbildungsverzeichnis}\listoffigures\fi    % Figures
+    \iftotaltables\addcontentsline{toc}{section}{Tabellenverzeichnis}\listoftables\fi      % Tables
+    \iftotallistings\addcontentsline{toc}{section}{Aufzählungsverzeichnis}\listoflistings\fi  % Listings
 
-    \IfFileExists{chapters/anhang.tex}{\include{chapters/anhang}}{}
+    \IfFileExists{chapters/appendix.tex}{\include{chapters/appendix}}{}
 }

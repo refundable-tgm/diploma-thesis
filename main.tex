@@ -1,13 +1,16 @@
 \documentclass[minted]{thesis}
-% Required
+
+% Title
 \title{Refundable}
+
 % Authors
 \author{Linus Dehner}{5BHIT}{Projektleitung \& Frontend - responsives Webdesign}
 \author{Ryan Foster}{5BHIT}{Frontend - Webapplikation als REST-Client}
 \author{Michael Beier}{5BHIT}{Backend - REST-Schnittstelle und Infrastruktur}
-% Date of submission
+
+% Submission Date
 \date{7. April 2021}
-% Optional
+
 \mysubtitle{effiziente Reise- und Exkursionsverwaltung}
 \myteacher{DI Stefan Zakall, BSc}
 \myyear{2020/21}
@@ -16,22 +19,41 @@
 % \setcode{frame=single} 			% Add a frame to codes
 % \setcode{bgcolor=AlmostWhite}		% Add a background to codes (minted only)
 % \usemintedstyle{rainbow_dash} 	% autumn, rainbow_dash, tango (default), trac
+
 \begin{document}
-\input{chapters/kurzfassung}
+\input{chapters/abstract}
+\include{chapters/gender}
+
 % Table of contents
 \tableofcontents\glsresetall
 \newpage\pagestyle{fancy}
 
-\include{chapters/vorwort} 			% Include the chapter „Vorwort“
-\include{chapters/vorwort/quellen}	% Include a section of a chapter
-
+\include{chapters/vorwort}
 \include{chapters/danksagung}
 \include{chapters/einleitung}
+\include{chapters/projektmanagement}
 \include{chapters/studie}
+\include{chapters/studie/ldehner}
+\include{chapters/studie/mbeier}
+\include{chapters/studie/rfoster}
+\include{chapters/studie/fazit}
 \include{chapters/konzept}
+\include{chapters/konzept/ldehner}
+\include{chapters/konzept/mbeier}
+\include{chapters/konzept/rfoster}
 \include{chapters/implementierung}
+\include{chapters/implementierung/ldehner}
+\include{chapters/implementierung/mbeier}
+\include{chapters/implementierung/rfoster}
 \include{chapters/retrospektive}
+\include{chapters/retrospektive/ldehner}
+\include{chapters/retrospektive/mbeier}
+\include{chapters/retrospektive/rfoster}
 \include{chapters/conclusio}
+\include{chapters/conclusio/ldehner}
+\include{chapters/conclusio/mbeier}
+\include{chapters/conclusio/rfoster}
 
-% \glsaddall	% Also list unused glossary entries
+
+\glsaddall	% Also list unused glossary entries
 \end{document}
