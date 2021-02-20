@@ -156,9 +156,9 @@
 % Add glossary / bibliography entries if they exist
 \IfFileExists{glossaries.tex}{\input{glossaries}\makeglossaries}{}
 % CUSTOM: Adding different source files from all teammembers
-\IfFileExists{sources/rfoster.bib}{\addbibresource{bibliography}}{}
-\IfFileExists{sources/mbeier.bib}{\addbibresource{bibliography}}{}
-\IfFileExists{sources/ldehner.bib}{\addbibresource{bibliography}}{}
+\IfFileExists{sources/rfoster.bib}{\addbibresource{sources/rfoster}}{}
+\IfFileExists{sources/mbeier.bib}{\addbibresource{sources/mbeier}}{}
+\IfFileExists{sources/ldehner.bib}{\addbibresource{sources/ldehner}}{}
 
 % Make empty book pages lose their headers and footers
 % http://mirror.kumi.systems/ctan/macros/latex/contrib/fancyhdr/fancyhdr.pdf
@@ -356,9 +356,9 @@
     \else   \ifen\printbibliography[heading=bibintoc]
             \else\printbibliography[heading=bibintoc, title=Literaturverzeichnis]\fi\fi
     
-    \iftotalfigures\addcontentsline{toc}{section}{Abbildungsverzeichnis}\listoffigures\fi    % Figures
-    \iftotaltables\addcontentsline{toc}{section}{Tabellenverzeichnis}\listoftables\fi      % Tables
-    \iftotallistings\addcontentsline{toc}{section}{Aufzählungsverzeichnis}\listoflistings\fi  % Listings
+    \iftotalfigures\addcontentsline{toc}{chapter}{Abbildungsverzeichnis}\listoffigures\fi    % Figures
+    \iftotaltables\addcontentsline{toc}{chapter}{Tabellenverzeichnis}\listoftables\fi      % Tables
+    \iftotallistings\addcontentsline{toc}{chapter}{Aufzählungsverzeichnis}\listoflistings\fi  % Listings
 
     \IfFileExists{chapters/appendix.tex}{\include{chapters/appendix}}{}
 }
