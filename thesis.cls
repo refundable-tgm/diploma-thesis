@@ -60,6 +60,7 @@
 \RequirePackage{fancyhdr, float, multicol, multirow, titling}
 \RequirePackage[marginal, norule, perpage]{footmisc}
 \RequirePackage[dvipsnames]{xcolor}
+\providecommand\phantomsection{}
 \RequirePackage{hyperref, url, pageslts, nameref}
 \RequirePackage{outlines, enumitem}
 \RequirePackage{booktabs, tabularx}
@@ -67,7 +68,7 @@
 \RequirePackage{graphicx, subcaption, pdfpages}
 \RequirePackage[font=small]{caption}
 \RequirePackage{accsupp}    % [1]
-\RequirePackage[acronym, xindy, toc, nohypertypes={acronym,notation}]{glossaries}
+\RequirePackage[acronym, xindy, nohypertypes={acronym,notation}]{glossaries}
 \RequirePackage[figure,table,listing]{totalcount}
 \RequirePackage{pgffor, xparse}     % Easier creation of commands with arguments
 
@@ -350,15 +351,30 @@
 % :: End Document ::
 % Add common commands at the end of the document
 \AtEndDocument{
-    \printglossaries    % List used glossary entries
+    % \printglossaries   % doesnt work
+    % List used glossary entries
+    \renewcommand{\glossarysection}[2][]{}
+    \cleardoublepage
+    \phantomsection
+    \addcontentsline{toc}{chapter}{Glossar}
+    \chapter*{Glossar}
+    \rhead{Glossar}
+    \printglossary
+    \cleardoublepage
+    \phantomsection
+    \addcontentsline{toc}{chapter}{Akronyme}
+    \chapter*{Akronyme}
+    \rhead{Akronyme}
+    \printacronyms
 
+    \rhead{Literaturverzeichnis}
     \ifnatbib\bibliography{bibliography} % List bibliography entries with natbib
     \else   \ifen\printbibliography[heading=bibintoc]
             \else\printbibliography[heading=bibintoc, title=Literaturverzeichnis]\fi\fi
     
-    \iftotalfigures\addcontentsline{toc}{chapter}{Abbildungsverzeichnis}\listoffigures\fi    % Figures
-    \iftotaltables\addcontentsline{toc}{chapter}{Tabellenverzeichnis}\listoftables\fi      % Tables
-    \iftotallistings\addcontentsline{toc}{chapter}{Aufzählungsverzeichnis}\listoflistings\fi  % Listings
+    \iftotalfigures\cleardoublepage\phantomsection\addcontentsline{toc}{chapter}{Abbildungsverzeichnis}\rhead{Abbildungsverzeichnis}\listoffigures\fi    % Figures
+    \iftotaltables\cleardoublepage\phantomsection\addcontentsline{toc}{chapter}{Tabellenverzeichnis}\rhead{Tabellenverzeichnis}\listoftables\fi      % Tables
+    \iftotallistings\cleardoublepage\phantomsection\addcontentsline{toc}{chapter}{Auflistungsverzeichnis}\rhead{Auflistungsverzeichnis}\listoflistings\fi  % Listings
 
     \IfFileExists{chapters/appendix.tex}{\include{chapters/appendix}}{}
 }
