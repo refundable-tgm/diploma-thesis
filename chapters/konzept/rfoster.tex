@@ -6,22 +6,30 @@ Die Webseite wird mittels Vue-Komponenten aufgebaut werden. Eine Seite besteht a
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.8\linewidth]{images/Webseite_hierarchie}
-	\caption[Die Hierarchie der Webseite]{Die Übersicht der Hierarchie der Webseite}
+	\caption[Hierarchie der Webseite]{Übersicht der Hierarchie der Webseite}
 	\label{fig:webseitehierachie}
 \end{figure}
 
-\subsubsection{Seite wurde nicht gefunden}
+\subsubsection{Seite nicht gefunden}
 Wird ein Link eingegeben werden, welcher nicht die Seite selbst oder eine definierte Unterseite ist, wird eine Seite geladen, bei der der Benutzer darauf hingewiesen wird, dass er keinen korrekten Link eingegeben hat.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.6\linewidth]{images/page_not_found}
+	\caption[Seite nicht gefunden]{Seite nicht gefunden}
+	\label{fig:pagenotfound}
+\end{figure}
+
 \subsubsection{Manager}
-Der Manager ist der Hauptbestandteil der Webseite. Er beinhaltet alle einzelnen Seiten und zeigt immer die gewünschten Seite an. In dem Manager werden auch Cookie-Einstellungen und Rechte gespeichert. Fast alle Komponenten werden dem Manager untergeordnet sein. Der Manager ist auch dafür verantwortlich sein zwischen Komponenten Daten zu senden.
+Der Manager ist der Hauptbestandteil der Webseite. Er beinhaltet alle einzelnen Seiten und zeigt immer die gewünschten Seite an. In dem Manager werden auch Cookie-Einstellungen und Rechte gespeichert. Fast alle Komponenten werden dem Manager untergeordnet sein. Der Manager ist auch dafür verantwortlich zwischen Komponenten Daten zu senden.
 
 \subsubsection{Komponenten}
-Einzelne Komponenten laden die Daten eigenständig aus dem Backend. Im Falle, dass eine Komponente Daten an eine Weitere sendet, geschieht dies über den Manager. In den jeweiligen Komponenten wird auch jeder Befehl eigenständig an das Backend gesendet. Dies sind Maßnahmen, um den Manager nicht mit Funktionen zu überladen und damit nicht unnötiger Weise Daten bei jedem Aufruf von dem Manager an die einzelnen Komponenten gesendet werden müssen.
+Einzelne Komponenten laden die Daten eigenständig aus dem Backend. Dies ist eine Maßnahme, um den Manager nicht mit Funktionen zu überladen und damit nicht Daten bei jedem Aufruf von dem Manager an die einzelnen Komponenten gesendet werden müssen.\\
+Im Falle, dass eine Komponente Daten an eine weitere Komponente sendet, wird diese Kommunikation von dem Manager übernommen.
 
 \subsubsection{Antrag-Viewer}
-Es wird eine weitere Seite vorhanden sein, auf die man durch einen Link gelangen kann. Auf dieser Seite ist es möglich, einen Antrag per ID anzeigen zu lassen. Da dieser extra Link technisch auf der selben Ebene, wie der Manager ist, wird dafür gesorgt, dass dieser extra Link dem Manager nahtlos untergeordnet ist. Der Antrag-Viewer ist nur verwendbar, sofern der Benutzer angemeldet ist und auch die Berechtigung hat, diesen Antrag zu betrachten.
+Es wird eine weitere Seite vorhanden sein, auf die man durch einen Link gelangen kann. Auf dieser Seite ist es möglich, einen Antrag per ID anzeigen zu lassen. Da dieser extra Link technisch auf der selben Ebene, wie der Manager ist, wird dafür gesorgt, dass dieser extra Link dem Manager nahtlos untergeordnet ist. Der Antrag-Viewer ist nur verwendbar, sofern der Benutzer angemeldet ist und auch die Berechtigung hat diesen Antrag zu betrachten.
 \\\\
-Wird in den Parameter des Links bereits spezifiziert, welcher Antrag geöffnet werden soll, wird nach der Anmeldung dem Benutzer dieser Antrag angezeigt. Sollte der Benutzer keine Berechtigungen besitzen diesen Antrag zu betrachten, wird eine Fehlermeldung ausgegeben.
+Wird in den Parametern des Links bereits spezifiziert, welcher Antrag geöffnet werden soll, wird nach der Anmeldung dem Benutzer dieser Antrag angezeigt. Es können nur jene Anträge angezeigt werden, zu denen der Benutzer die erforderlichen Berechtigungen besitzt. Besitzt der Benutzer nicht die erforderlichen Berechtigungen, wird eine Fehlermeldung ausgegeben.
 
 \subsubsection{Navigation}
 Da fast alle Komponenten dem Manager untergeordnet sind, ist es auch die Verantwortung des Managers die Navigation zu steuern. Dazu gibt es eine zentrale Funktion im Manager, welche die derzeit geladene Seite verändern kann. Des Weiteren werden die benötigten Informationen geladen bzw. erstellt, welche die Komponenten benötigen.
@@ -31,12 +39,12 @@ Die Funktion zum Verändern der derzeitigen Anzeige, wird von den untergeordnete
 \subsubsection{Features}
 Es werden auch Funktionen implementiert, welche das Benützen der Webseite erleichtern.
 \\\\
-Es ist möglich, bei erneutem Laden der Webseite auf die zuletzt geöffnete Seite zu gelangen. Auch bei Beenden des Browsers merkt sich die Webseite, auf welcher Seite der Benutzer gewesen ist und lädt diese bei erneutem Aufrufen der Webseite.
+Es ist möglich bei erneutem Laden der Webseite auf die zuletzt geöffnete Seite zu gelangen. Bei Beenden des Browsers speichert die Webseite die aktuelle Seite und lädt diese bei erneutem Aufrufen der Webseite.
 \\\\
-Es ist auch möglich, zwischen den Seiten durch die Browser-Pfeile zu navigieren. Dies ist wichtig, da durch versehentliches Drücken einer falschen Komponente ein Benutzer möglichst schnell wieder auf die vorherige Seite gelangen können muss. Durch die Implementierung der Browser-Pfeile kann intuitiv auf die vorherige Seite gewechselt werden.
+Es ist auch möglich zwischen den Seiten durch die Browser-Pfeile zu navigieren. Dies ist wichtig, da durch versehentliches Drücken einer falschen Komponente ein Benutzer möglichst schnell wieder auf die vorherige Seite gelangen können muss. Durch die Implementierung der Browser-Pfeile ist es möglich intuitiv auf die vorherige Seite zu wechseln. Andere Funktionen, welche die selben Funktionalität haben, werden durch diese Implementierung auch unterstützt.
 \newpage
 \subsection{Daten laden}
-Auf den Seiten, bei denen es benötigt wird, werden über Funktionen des Frameworks dynamisch Komponenten erstellt und geladen. Der Prozess, um Daten aus dem Backend zu laden wird in folgender Grafik beschrieben:
+Auf den Seiten, bei denen es benötigt wird, werden über Funktionen des Frameworks dynamisch Komponenten erstellt und geladen. Der Prozess um Daten aus dem Backend zu laden wird in folgender Grafik beschrieben:
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.8\linewidth]{images/Prozess_Daten_laden}
@@ -44,21 +52,28 @@ Auf den Seiten, bei denen es benötigt wird, werden über Funktionen des Framewo
 	\label{fig:prozessdatenladen}
 \end{figure}
 
-\subsubsection{Webseite wird aufgerufen}
+\subsubsection{Webseite aufrufen}
 Die Webseite wird aufgerufen und der Benutzer bekommt die Startseite angezeigt.
 
-\subsubsection{Daten werden geladen}
-Auf der Startseite der Webseite werden die neuesten Nachrichten angezeigt, welche für den Lehrer relevant sind. Hierfür müssen aus dem Backend Daten geladen werden. Dies erfolgt über eine Abfrage, welche aus dem Frontend gesendet wird.
+\subsubsection{Datenabfrage erstellen und Daten erhalten}
+Auf der Startseite der Webseite werden die neuesten Nachrichten angezeigt, welche für den Lehrer relevant sind. Hierfür müssen aus dem Backend Daten geladen werden. Dies erfolgt über eine Abfrage, welche aus dem Frontend gesendet wird. Diese werden ausgelesen und verwendet um Komponenten zu erstellen.
 
-\subsubsection{Komponenten werden erstellen}
+\subsubsection{Komponenten erstellen}
 Die geladenen Daten aus dem Backend werden mittels Einbindung der Variablen in einzelne Komponenten eingebunden.\\
 Seiten, auf denen viele gleiche Komponenten sind, werden mittels Schleifen erstellt. Diese sorgen dafür, dass nicht zu viele Komponenten auf der Seite geladen sind, wenn diese nicht gebraucht werden.
+Ein Beispiel hierfür sind die neuen Nachrichten, welche in folgender Grafik gezeigt werden:
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.3\linewidth]{images/messages_index}
+	\caption[Neue Nachrichten]{Grafik der neuen Nachrichten}
+	\label{fig:messagesindex}
+\end{figure}
 
-\subsubsection{Komponenten werden angezeigt}
+\subsubsection{Komponenten anzeigen}
 Die bereits erstellten Komponenten werden über die Einbindung in der Webseite angezeigt. Dies kann durch einfache Implementierung bei einzelnen Komponenten sein.\\
 Durch die Schleife, können auch die Komponenten angezeigt werden. Diese ordnet alle Komponenten hintereinander an und zeigt diese an.\\
 Bei den Nachrichten kann man sich jede Nachricht als eigene Komponente vorstellen, welche jeweils erstellt und danach angezeigt wird.
-\newpage
+%\newpage
 \subsection{Befehle senden}
 Die Webseite besitzt auch einige Aktionen, die von Benutzern ausgeführt werden können. Diese müssen je nach Aktion eine neue Seite aufrufen oder einen Befehl an das Backend senden.
 
@@ -69,16 +84,16 @@ Die Webseite besitzt auch einige Aktionen, die von Benutzern ausgeführt werden 
 	\label{fig:prozessbefehlsenden}
 \end{figure}
 
-\subsubsection{Aktion wird ausgeführt}
+\subsubsection{Aktion ausführen}
 Eine Aktion wird ausgeführt, wenn z.B: auf eine Komponente gedrückt wird. Dies ruft eine Funktion auf, bei der ein Befehl erstellt wird.
 
-\subsubsection{Befehl wird gesendet}
+\subsubsection{Befehl senden}
 Der Befehl beinhaltet alle wichtigen Informationen für das Backend. Beispielsweise, falls eine neue Nachricht gelöscht werden soll, wird die ID der Nachricht mitgesendet.
 
-\subsubsection{Antwort wird interpretiert}
+\subsubsection{Antwort interpretieren}
 Sobald das Backend den Befehl ausgeführt hat, wird eine Antwort an das Frontend gesendet und wird dort interpretiert. Die Interpretation der Antwort wird durch den Status der Antwort geschehen. Der Status der Antwort beinhaltet einen Code, welcher aussagt, ob der Befehl funktioniert hat oder fehlgeschlagen ist. Sollte der Befehl fehlgeschlagen sein, so deutet der Code auf den genauen Fehlergrund hin.
 
-\subsubsection{Visuelles Feedback wird angezeigt}
+\subsubsection{Information anzeigen}
 Tritt ein Fehler auf, wird dem Benutzer dies offensichtlich mitgeteilt werden.\\
 Sollte kein Fehler aufgetreten sein, soll dem Benutzer je nach Befehl dies auf unterschiedliche Weise mitgeteilt werden.\\
 Um weiterhin das Beispiel zu nutzen: Wenn eine Nachricht gelöscht werden soll, dann wird dem Benutzer mitgeteilt, dass die Nachricht gelöscht worden ist, wenn diese Nachricht verschwindet.
