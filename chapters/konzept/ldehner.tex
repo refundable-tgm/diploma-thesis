@@ -4,48 +4,72 @@ In diesem Kapitel geht es darum ein Konzept für das Frontend zu erstellen. Dabe
 \subsection{Theoretische Konzeption}
 Da die Zielgruppe \enquote{Lehrer} nicht gleichaltrig ist, sondern die darin enthaltenen Menschen ein Alter von 25 bis 65 Jahren haben gibt es keine Literatur zur \enquote{perfekten Usability für Lehrpersonal}. Daher richten wir uns nach dem Buch \enquote{Don't Make Me Think: A Common Sense Approche to Web Usability} von Steve Krug und an dem Buch \enquote{101 UX Principles} von Will Grant. Um eine gute Usability für die Lehrer des TGMs zu gewährleisten werden wir den Prozess der Entwicklung streng in Kontakt zu Lehrern begleiten und das Produkt auch mit nicht Technik affinen Menschen testen.  
 \subsection{Visuelle Konzeption}
+\paragraph{Login-Seite}
+~\\
+Wie man auf der Abbildung 6.1 sehen kann ist die Login-Seite sehr schlicht gehalten. Neben dem Schriftzug \enquote{Refundable} soll das Formular zum einloggen sein. Da die Plattform nur für das Personal des TGMs zugänglich sein soll, wird bei der Eingabe der E-Mail Adresse automatisch eine \enquote{@tgm.ac.at} Adresse gefordert. Wird der \enquote{Passwort vergessen?} Link betätigt, soll automatisch auf die Seite des TGMs verwiesen werden, da wir über LDAP die Daten der Lehrer abrufen. Bei der Eingabe von validen Daten und des betätigen des \enquote{Anmelden} Buttons wird der Benutzer auf die Startseite weitergeleitet.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\linewidth]{images/Mockup-Startseite}
 	\caption[Mockup Login]{Das Mockup der Login Seite}
 	\label{fig:mockupLogin}
 \end{figure}
+\paragraph{Startseite}
+~\\
+
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\linewidth]{images/Mockup-Startseite-eingeloggt}
 	\caption[Mockup Startseite]{Das Mockup der Startseite, nachdem man sich eingeloggt hat}
 	\label{fig:mockupStart}
 \end{figure}
+\paragraph{Neuer Antrag}
+~\\
+
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\linewidth]{images/Mockup-Neuer-Antrag}
 	\caption[Mockup neuer Antrag]{Das Mockup der Seite, auf der man eine Antragsart auswählen kann}
 	\label{fig:mockupNeu}
 \end{figure}
+\paragraph{Antrag ausfüllen}
+~\\
+
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\linewidth]{images/Mockup-Antrag-erstellen}
 	\caption[Mockup Antrag erstellen]{Das Mockup zum erstellen einer neuen Schulveranstaltung}
 	\label{fig:mockupErstellen}
 \end{figure}
+\paragraph{Ansicht Alle Anträge}
+~\\
+
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\linewidth]{images/Mockup-Alle-Anträge}
 	\caption[Mockup Alle Anträge]{Das Mockup, welches alle Anträge einer gewissen Person veranschaulicht}
 	\label{fig:mockupAlle}
 \end{figure}
+\paragraph{Ansicht Aktive Anträge}
+~\\
+
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\linewidth]{images/Mockup-Aktive-Anträge}
 	\caption[Mokup aktive Anträge]{Das Mockup, welches alle aktiven Anträge einer gewissen Person veranschaulicht}
 	\label{fig:mockupAktive}
 \end{figure}
+\paragraph{Administrator Ansicht}
+~\\
+
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\linewidth]{images/Mockup-Admin}
 	\caption[Mockup Adminansicht]{Das Mockup, der Admin Ansicht, zum akzeptieren und ablehnen von Anträgen}
 	\label{fig:mockupAdmin}
 \end{figure}
+\paragraph{Antragsansicht}
+~\\
+
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\linewidth]{images/Mockup-Antragsansicht}
