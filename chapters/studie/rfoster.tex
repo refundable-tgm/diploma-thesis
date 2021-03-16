@@ -2,9 +2,9 @@
 
 \section{Frontend - Webapplikation als REST-Client}
 \subsection{Einleitung}
-Das \Gls{backend} muss mit dem \Gls{frontend} verbunden werden. Es gibt unterschiedliche Möglichkeiten dies zu realisieren. Beim Realisieren, muss darauf geachtet werden, dass eine Struktur vorhanden ist. Es werden 2 verschiedene \Gls{designpattern} betrachtet und verglichen. Umgesetzt wird dann ein Entwurfsmuster mithilfe von \Gls{js}. Hier kann ein \Gls{js}-\Gls{framework} zum Einsatz kommen. Dazu werden hier verschiedene JavaScript-Frameworks angeschaut und verglichen. Für die Verarbeitung der Daten ist es wichtig Datenformate festzulegen. Die Aufbereitung der Elemente für das Frontend mit den Daten des Backends wird ebenfalls angeschaut.
-\\
-Daraus erschließt sich eine gewisse Fragestellung, die in den nächsten Seiten beantwortet wird. Erstens, welche Unterschiede es bei der Datenrepräsentation und -manipulation zwischen den Entwurfsmustern \Gls{mvvm} und \Gls{mvc} gibt und zweitens, mit welchen Werkzeugen bzw. JavaScript-Frameworks die jeweiligen Methoden zugriffsperformant umgesetzt werden können.
+Das \Gls{backend} muss mit dem \Gls{frontend} verbunden werden. Es gibt unterschiedliche Möglichkeiten dies zu realisieren. Beim Realisieren, muss darauf geachtet werden, dass eine Struktur vorhanden ist. Es werden 2 verschiedene \Gls{designpattern} betrachtet und verglichen. Umgesetzt wird dann ein Entwurfsmuster mithilfe von \Gls{js}. Hier kann ein \Gls{js}-\Gls{framework} zum Einsatz kommen. Dazu werden hier verschiedene JavaScript-Frameworks angeschaut und verglichen. Für die Verarbeitung der Daten ist es wichtig Datenformate festzulegen. Die Aufbereitung der Elemente für das Frontend mit den Daten des Backends wird ebenfalls untersucht.
+\\\\
+Die Fragestellung der Studie ist erstens, welche Unterschiede es bei der Datenrepräsentation und -manipulation zwischen den Entwurfsmustern \Gls{mvvm} und \Gls{mvc} gibt und zweitens, mit welchen Werkzeugen bzw. JavaScript-Frameworks die jeweiligen Methoden zugriffsperformant umgesetzt werden können.
 \subsection{Entwurfsmuster}
 Dieser Teil des Projektes wird in Verwendung eines Entwurfsmusters umgesetzt. Zwei \Gls{mv*} Entwurfsmuster werden hierbei in Betrachtung gezogen. Zum einen MVVM und zum anderen MVC. Es kommen diese zwei Entwurfsmuster in Frage, da MVC ein sehr bekanntes Entwurfsmuster ist und MVVM eine neuere und spezifischere Variante von MVC ist \cite{mvvm_vue}.
 \subsubsection{MVC}
@@ -19,10 +19,10 @@ Der Controller ist der Teil der Software, der Model und View verbindet. Im Contr
 	\label{fig:mvc}
 \end{figure}
 \subsubsection{MVVM}
-\Gls{mvvm} oder auch \Gls{mvvc} ist ein \Gls{designpattern} mit dem eine Software in drei Teile geteilt wird \cite{mvvm_vue}. Jedoch wird bei MVVM die Software in Model, View und ViewModel aufgeteilt.\\
-Das Model beinhaltet wie im konventionellen \Gls{mvc}-Pattern alle wichtigen Daten und Funktionen.\\
-Die View ist wie beim MVC-Pattern der Teil der Software, mit dem der Benutzer interagiert.\\
-Das ViewModel ist ein Bindeglied zwischen Model und View \cite{mvvm_vue}. Dabei stellt das ViewModel der View Funktionen zur Verfügung. Diese können auch Daten verändern bzw. mit Daten rechnen. Das Model kann über das ViewModel auch mit der View direkt interagieren.\\
+\Gls{mvvm} oder auch \Gls{mvvc} ist ein \Gls{designpattern} mit dem eine Software in drei Teile geteilt wird \cite{mvvm_vue}. Jedoch wird bei MVVM die Software in Model, View und ViewModel aufgeteilt. 
+Das Model beinhaltet wie im konventionellen \Gls{mvc}-Pattern alle wichtigen Daten und Funktionen. 
+Die View ist wie beim MVC-Pattern der Teil der Software, mit dem der Benutzer interagiert. 
+Das ViewModel ist ein Bindeglied zwischen Model und View \cite{mvvm_vue}. Dabei stellt das ViewModel der View Funktionen zur Verfügung. Diese können auch Daten verändern bzw. mit Daten rechnen. Das Model kann über das ViewModel auch mit der View direkt interagieren. 
 MVVM sieht nicht vor, dass ein Controller verwendet wird. Diese Funktion übernimmt zu einem gewissen Teil das ViewModel bzw. auch die View und das Model.
 \begin{figure}[H]
 	\centering
@@ -37,7 +37,7 @@ Diese zwei \Gls{designpattern} sind zwar sehr ähnlich, jedoch gibt es wichtige 
 Bei der Entwicklung einer Webapplikation ist es nicht einfach, das Model von dem Controller zu trennen.\\
 \Gls{mvvm} auf der anderen Seite zielt explizit auf HTML5 ab \cite{mvvm_vue}. Somit ist es bei webbasierten Applikationen zu bevorzugen.
 \subsection{Umsetzungsmöglichkeiten}
-Dieser Teil des Projekts wird mittels \Gls{js} umgesetzt. Hierbei kommen unterschiedliche \Gls{js}-\Gls{framework} in Frage. Hier werden die verbreitetsten JavaScript-Frameworks vorgestellt und dann verglichen. \Gls{angular} wird nicht in Betrachtung gezogen, da dies ein \Gls{framework} für professionelle Projekte ist und somit sehr umständlich ist \cite{angular_ex}.
+Dieser Teil des Projekts wird mittels \Gls{js} umgesetzt. Hierbei kommen unterschiedliche \Gls{js}-\Gls{framework} in Frage. Hier werden die verbreitetsten JavaScript-Frameworks vorgestellt und dann verglichen. \Gls{angular} wird nicht in Betrachtung gezogen, da dies ein \Gls{framework} für professionelle Projekte ist und demnach nicht für vergleichsweise kleine Projekte verwendbar ist, wegen dem Aufwand das Framework zu erlernen \cite{angular_ex}.
 \subsubsection{VueJS}
 \gls{vue} ist ein progressives JavaScript-Framework. Dies bedeutet, dass VueJS in bereits bestehende Webseiten bzw. in webbasierte Software implementiert werden kann.\\
 VueJS kann aber auch von Anfang an verwendet werden, wobei man hier mit den Bibliotheken von VueJS skalieren kann \cite{vuedoc}. VueJS kann Teile einer Webseite in Komponenten aufteilen, um diese mehrmals zu verwenden, falls dies notwendig ist. Jeder dieser Komponenten hat sein eigenes \Gls{html}-, \Gls{css}- und \Gls{js} File, was gebraucht wird, um diese Komponente zu rendern.\\
@@ -69,6 +69,7 @@ Um einzelnen Elementen VueJS-Funktionalität zu geben, kann auf diese Elemente f
 		</body>
 	</html>
 \end{code}
+\captionof{listing}{VueJS Beispiel}
 \subsubsection{React}
 \Gls{react} ist eine \Gls{js}-Bibliothek, mit der man Benutzeroberflächen entwickeln kann \cite{reactdoc}. React hat wie \Gls{vue} Komponenten. Dies bedeutet, dass man einzelne Elemente mehrfach verwenden kann, falls man dies benötigt.\\
 React ist von Facebook entwickelt worden und wurde 2013 als \Gls{opensource}-Lösung veröffentlicht.\\
@@ -94,6 +95,7 @@ Folgender Code beschreibt eine Beispiel-React-Webseite \cite{reactdoc}:
 		</body>
 	</html>
 \end{code}
+\captionof{listing}{React-Webseite Beispiel}
 In der letzten Zeile des body-Tags, wird auf ein "likebutton.js" referenziert. Dies ist eine Komponente und muss noch erstellt werden \cite{reactdoc}:
 \begin{code}{js}
 	'use strict';
@@ -122,6 +124,7 @@ In der letzten Zeile des body-Tags, wird auf ein "likebutton.js" referenziert. D
 	const domContainer = document.querySelector('#likebuttoncontainer');
 	ReactDOM.render(e(LikeButton), domContainer);
 \end{code}
+\captionof{listing}{React-Komponente Beispiel}
 \subsubsection{Ohne Framework}
 Die Schnittstelle zwischen \Gls{backend} und \Gls{frontend} kann auch ohne ein \Gls{framework} umgesetzt werden. Dies ist bei kleinen und leichten Applikationen von Vorteil, da keine umständlichen \Gls{js}-\Gls{framework}s aufgesetzt und richtig implementiert werden müssen. Ohne Framework implementiert man einfach eine \Gls{js}-Datei in eine Webseite, um die gewünschte Funktionalität einzufügen. Mit folgendem Code kann eine Implementierung einer JavaScript-Datei umgesetzt werden:
 \begin{code}{html}
@@ -141,6 +144,7 @@ Die Schnittstelle zwischen \Gls{backend} und \Gls{frontend} kann auch ohne ein \
 		</body>
 	</html>
 \end{code}
+\captionof{listing}{Ohne Framework Beispiel}
 Es kann auch direkt in ein \Gls{html}-File \Gls{js} in ein <script></script> geschrieben werden.
 \subsubsection{Vergleich}
 Verglichen werden diese unterschiedlichen Umsetzungsmöglichkeiten an Design, Entwicklungszeit, Performanz und \Gls{loc}.\\
@@ -168,7 +172,7 @@ Folgende Tabelle zeigt die unterschiedlichen Werte bei der Umsetzung der Beispie
 \end{table}
 \textbf{Kriterien:}\\\\
 \textbf{Design}\\
-Das Design fällt in die Wertung, da hier geschaut wird, ob die Beispiel-Website so umgesetzt werden kann, oder ob die Umsetzung in diesem Design nicht möglich ist.\\\\
+Das Design fällt in die Wertung, da hier angegeben wird, ob die Beispiel-Website so umgesetzt werden kann, oder ob die Umsetzung in diesem Design nicht möglich ist.\\\\
 \textbf{Entwicklungszeit}\\
 \Gls{vue}: 40min\\
 \Gls{react}: 55min\\
