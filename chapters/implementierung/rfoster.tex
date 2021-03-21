@@ -1,1 +1,72 @@
 %!TEX root=../../main.tex
+\section{Datenschnittstelle und Webseitenlogik}
+\subsection{Webseitenlogik}
+Wie in \hyperref[sec:webseitenlogik]{6.3.1} beschrieben wird die Webseitenlogik größtenteils von einem Manager übernommen.
+
+\subsubsection{Navigation}
+Die Unterseiten werden in den Manager geladen und je nach Gebrauch angezeigt. Dafür gibt es eine Variable im Manager, welche dafür sorgt, dass nur eine Komponente auf einmal angezeigt werden kann. Die Komponente wird gewechselt, indem die nachfolgende Funktion aufgerufen wird:
+\begin{code}{js}
+	changeComponent(
+	component,
+	back = true,
+	application = null,
+	escortsdata = null
+	) {
+		switch (component) {
+			case "Login":
+			this.change("Login", back);
+			this.deleteCookie();
+			break;
+			
+			case "Index":
+			this.change("Index", back);
+			break;
+			
+			case "ApplicationView":
+			this.loadApplication(application);
+			this.change("ApplicationView", back);
+			break;
+			
+			case "Escorts":
+			this.loadEscortsData(escortsdata);
+			this.change("Escorts", back, false);
+			break;
+			
+			[Weitere Unterseiten]
+		}
+	}
+\end{code}
+\captionof{listing}{Komponente ändern Funktion}
+Des weiteren gibt es bei manchen Komponenten den Zusatz einer load-Funktion, welche Daten für die jeweilige Komponente vorbereitet bzw. berechnet.
+
+Die referenzierte "change" Funktion übernimmt das tatsächliche ändern der Variable:
+\begin{code}{js}
+	change(page, back = true, cookie = true) {
+		this.currentComponent = page;
+		window.scrollTo(0, 0);
+		if (back) {
+			if (window.history.state !== page) {
+				window.history.pushState(page, null);
+			}
+		}
+		if (cookie) {
+			this.setCookie(page);
+		}
+\end{code}
+\captionof{listing}{Funktion für das Managment der Cookies und History des Browsers}
+
+Die beschriebenen Funktionen müssen von den Komponenten aufgerufen werden können, deswegen hört der Manager auf Signale der Unterseiten, falls diese die Seite ändern möchte. Dies wird mittels VueJS erledigt, da das Framework dafür bereits Funktionen implementiert hat:
+\begin{code}{js}
+	v-on:change-component="changeComponent"
+	// Es wird auf das Signal change-component gehört und die Funktion changeComponent aufgerufen
+\end{code}
+\captionof{listing}{Event Handling mittels v-on}
+
+Die beschriebenen Signale werden von den Unterseiten mittels folgendem Code bzw. Funktion gesendet:
+\begin{code}{js}
+	changeComponent(component, back, application, escortsdata) {
+		this.\$emit("change-component", component, back, application, escortsdata);
+	}
+\end{code}
+\captionof{listing}{Signal senden}
+\subsubsection{Datenmanipulation}
