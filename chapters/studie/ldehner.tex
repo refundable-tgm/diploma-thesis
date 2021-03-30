@@ -2,10 +2,10 @@
 
 \section{Frontend - responsives Webdesign}
 	\subsection{Einleitung}
-	In diesem Kapitel werden die Anforderungen des Designs des \Gls{frontend}s geschildert. Da es mehrere Möglichkeiten gibt das Frontend zu realisieren werden hier drei wesentliche Methoden verglichen. Die erste Variante wäre ganz klassisch \Gls{html}, \Gls{css} und \Gls{js} zu verwenden. Die zweite Methode, die zum Vergleich hergezogen wird ist statt \Gls{vanilla} CSS die etwas agilere Sprache \Gls{sass} zu verwenden. Die dritte und auch letzte Methode in diesem Vergleich ist, dass die Arbeit durch die Verwendung eines CSS \Gls{framework}s vereinfacht wird. Anschließend werden die drei verschiedenen Methoden verglichen und die Variante, welche am Besten für unser Projekt Refundable geeignet ist wird ausgewählt. Zu guter Letzt wird das Design für die Zielgruppe analysiert, da Refundable explizit für Lehrer erstellt wird und diese Zielgruppe soll sich möglichst gut und schnell auf der Website zurecht finden.
+	In diesem Kapitel werden die Anforderungen des Designs des \Gls{frontend}s geschildert. Da es mehrere Möglichkeiten gibt das Frontend zu realisieren werden hier drei wesentliche Methoden verglichen. Die erste Variante wäre ganz klassisch \Gls{html}, \Gls{css} und \Gls{js} zu verwenden. Die zweite Methode, die zum Vergleich hergezogen wird, ist statt \Gls{vanilla} CSS die etwas agilere Sprache \Gls{sass} zu verwenden. Die dritte und auch letzte Methode in diesem Vergleich ist, dass die Arbeit durch die Verwendung eines CSS \Gls{framework}s vereinfacht wird. Anschließend werden die drei verschiedenen Methoden gegenüber gestellt und die Variante, welche am Besten für unser Projekt Refundable geeignet ist wird ausgewählt. Zu guter Letzt wird das Design für die Zielgruppe analysiert, da Refundable explizit für Lehrer erstellt wird und diese Zielgruppe soll sich möglichst gut und schnell auf der Website zurecht finden.
 	
 	\subsection{HTML, CSS, JS}
-	Der eigentliche Standard \textit{HTML5} wird in der Praxis meist als Überbegriff für \textit{HTML}, \textit{CSS} und \textit{JS} verwendet. In diesem Unterkapiteln beschäftigen wir uns genau damit.\cite{html5-css3-handbuch} In den folgenden Kapiteln wird erklärt wozu \textit{HTML}, \textit{CSS} und \textit{JS} da sind und welche Funktionalitäten sie bieten.
+	Der eigentliche Standard \textit{HTML5} wird in der Praxis meist als Überbegriff für \textit{HTML}, \textit{CSS} und \textit{JS} verwendet.\cite{html5-css3-handbuch} In den folgenden Kapiteln wird erklärt wozu \textit{HTML}, \textit{CSS} und \textit{JS} da sind und welche Funktionalitäten sie bieten.
 	
 		\subsubsection{HTML}
 		HTML ist eine \Gls{auszeichnungssprache} steht für \enquote{Hypertext Markup Language} und wurde 1989 von dem britischen Informatiker Tim Burners-Lee veröffentlicht.\\ 
@@ -26,6 +26,8 @@
 			<tagname>Tag Inhalt</tagname>
 			<einzeltag attribut="123">
 		\end{code}
+	\captionof{listing}{HTML Tags}
+	\label{list:htmltags} ~\\
 		Das grundlegende Gerüst von HTML besteht aus einer Deklaration von HTML, einem \textit{html-}, \textit{head-} und \textit{body-Tag}. In den \textit{html-Tag} kommt ein \textit{title-Tag}, in diesem wird der Titel der Website angegeben und ein \textit{meta-tag}, in diesem werden Meta-Informationen angegeben. In den \textit{Body-Tag} kommen wiederum Tags, die den Inhalt der Seite beinhalten. 
 		\begin{code}{html}
 			<!DOCTYPE html>
@@ -41,10 +43,12 @@
 				</body>
 			</html>
 		\end{code}
+	\captionof{listing}{Kurzes HTML Beispiel}
+	\label{list:htmlbsp} ~\\
 		Wenn man die Datei nun im Browser öffnet schaut dies wie folgt aus:
 		\begin{figure}[H]
 			\centering
-			\includegraphics[width=1\linewidth]{images/html1}
+			\includegraphics[width=0.3\linewidth]{images/html1}
 			\caption[HTML Beispielseite]{Beispiel einer HTML Seite mit einer Überschrift und einem Button}
 			\label{fig:htmlbsp}
 		\end{figure}
@@ -98,17 +102,21 @@
 					</style>
 				</head>
 		\end{code}
-		Ebenfalls kann man ein \textit{CSS-File}, welches den Inhalt des obigen \textit{style-Tags} hat im \textit{head} als externes File einbinden:
+	\captionof{listing}{Beispiel CSS}
+	\label{list:cssbsp} ~\\
+		Ebenfalls kann man ein \textit{CSS-File}, welches den Inhalt des obigen \textit{style-Tags} hat, im \textit{head} als externes File einbinden:
 		\begin{code}{html}
 			<head>
 				<link rel="stylesheet" href="file.css" type="text/css">
 			</head>
 		\end{code}
-		Wie man erkennen kann, ist dem ganzen keine Ende gesetzt und mit viel Aufwand kann man alles denkbare verändern. Um den Aufwand jedoch gering zu halten sind \textit{SASS} und \textit{CSS-Frameworks} da, welche in Kapitel 1.3 und 1.4 erklärt werden.
+	\captionof{listing}{CSS Verlinkung}
+	\label{list:csslink} ~\\
+		Wie man erkennen kann, ist dem ganzen keine Ende gesetzt und mit viel Aufwand kann man alles denkbare verändern. Um den Aufwand jedoch gering zu halten, sind \textit{SASS} und \textit{CSS-Frameworks} da, welche in Kapitel 5.1.3 und 5.1.4 erklärt werden.
 		\subsubsection{Java Script}
 		\textit{JavaScript} wird verwendet um Elementen Funktionen zu geben. Zum Beispiel, dass wenn man auf einen Button drückt ein Fenster aufpoppt, ein neues Element hinzugefügt wird oder ein Element im Nachhinein verändert wird. Da \textit{JavaScript} eine Skriptsprache ist kann man auch eigene Funktionen schreiben und Variablen verwenden. Für das Designen brauch man JS nur, wenn man nur mit \textit{CSS} oder \textit{SASS} arbeitet. Wird ein \textit{Framework} verwendet, haben diese meist ein \textit{JavaScript-Framework} inkludiert und man muss kein \textit{JavaScript} mehr verwenden.
 	\subsection{SASS}
-	\textit{Syntactically Awesome Style Sheets} oder kurz \textit{SASS} ist eine Erweiterung von \textit{CSS} \cite{jump-start-sass}. Es fügt \textit{CSS} ein paar Funktionalitäten von Java Script hinzu. \textit{SASS} wird aber nicht wie \textit{CSS} direkt in das \textit{HTML-File} eingebunden und kann auch nicht direkt in ein Element geschrieben werden. Das \textit{.sass} File muss erst kompiliert werden. Anschließend wird ein \textit{.css} File generiert, welches man im \textit{HTML-Code} einbinden kann. Man kann unter anderem Funktionen erstellen um Elemente zu verändern.Zusätzlich kann man Variablen festlegen und so zum Beispiel eine Primärfarbe festzulegen, wodurch man sich nicht immer den \textit{HEX-Code} von einer bestimmten Farbe merken muss. Ebenfalls kann man durch die Variablen die Farbe von mehreren Elementen auf Einmal ändern. Dadurch kann man zum Beispiel Light- und Darktheme in die Website einbauen.\\Beispiele für die oben genannten Funktionen wären:
+	\textit{Syntactically Awesome Style Sheets} oder kurz \textit{SASS} ist eine Erweiterung von \textit{CSS} \cite{jump-start-sass}. Es fügt \textit{CSS} ein paar Funktionalitäten von Java Script hinzu. \textit{SASS} wird aber nicht wie \textit{CSS} direkt in das \textit{HTML-File} eingebunden und kann auch nicht direkt in ein Element geschrieben werden. Das \textit{.sass} File muss erst kompiliert werden. Anschließend wird ein \textit{.css} File generiert, welches man im \textit{HTML-Code} einbinden kann. Man kann unter anderem Funktionen erstellen um Elemente zu verändern. Zusätzlich kann man Variablen festlegen und so zum Beispiel eine Primärfarbe festzulegen, wodurch man sich nicht immer den \textit{HEX-Code} von einer bestimmten Farbe merken muss. Ebenfalls kann man durch die Variablen die Farbe von mehreren Elementen auf Einmal ändern. Dadurch kann man zum Beispiel Light- und Darktheme in die Website einbauen.\\Beispiele für die oben genannten Funktionen wären:
 
 %	\begin{code}{sass}
 	%	$standard-width: 200px
@@ -179,7 +187,7 @@
 		\end{itemize}
 	
 		\subsubsection{ZURB Foundation}
-		Foundation wird wie Bootstrap und Materialize als intuitives Web-Framework bezeichnet \cite{foundation-intro}. Das von Zurb entwickelte Framework beinhaltet viele verschiedenen Komponenten, die für die mobilen Geräte optimiert sind. Das Framework ist dafür optimiert schnell und effizient Webseiten zu gestalten. Darum ist es auch in zwei verschiedene Kategorien geteilt, nämlich in das Framework für das Web und in das Framework das explizit für html-Mails ist. Man kann sich Foundation als \enquote{Complete-Version} herunterladen, darin sind alle Komponenten enthalten. In der \enquote{Essential-Version} sind nur die essentiellen Komponenten, wie zum Beispiel Buttons, enthalten. Man kann sich seine ZURB-Datei auch mit allen Komoinenten, die man benötigt selbst konfigurieren. Auch eine SASS Version ist verfügbar, falls man nur das Aussehen der Komponenten verändern möchte. Natürlich ist auch die CDN Einbindung möglich, die für die schnellste Ladegeschwindigkeit optimiert ist.
+		Foundation wird wie Bootstrap und Materialize als intuitives Web-Framework bezeichnet \cite{foundation-intro}. Das von Zurb entwickelte Framework beinhaltet viele verschiedenen Komponenten, die für die mobilen Geräte optimiert sind. Das Framework ist dafür optimiert schnell und effizient Webseiten zu gestalten. Darum ist es auch in zwei verschiedene Kategorien geteilt, nämlich in das Framework für das Web und in das Framework, welches explizit für html-Mails ist. Man kann sich Foundation als \enquote{Complete-Version} herunterladen, darin sind alle Komponenten enthalten. In der \enquote{Essential-Version} sind nur die essentiellen Komponenten, wie zum Beispiel Buttons, enthalten. Man kann sich seine ZURB-Datei auch mit allen Komoinenten, die man benötigt selbst konfigurieren. Auch eine SASS Version ist verfügbar, falls man nur das Aussehen der Komponenten verändern möchte. Natürlich ist auch die CDN Einbindung möglich, die für die schnellste Ladegeschwindigkeit optimiert ist.
 		\paragraph{Pro / Contra}
 		\subparagraph{Pro}
 		\begin{itemize}
@@ -227,7 +235,7 @@ Bootstrap hat durch das langjährige Bestehen und durch die große Reichweite un
 \subsubsection{Aussehen}
 Bei dem Aussehen des Standard-Designs gewinnt klar und deutlich Materialize, da es die ansprechendste Darstellung mit einem schönen Design bietet \cite{WebDocMaterialize}. Bootstrap und Foundation legen mehr Wert auf die Funktionalität des Frameworks und legen weniger Wert auf das Aussehen \cite{bootstrap-docu, foundation-docu}. Dies merkt man dadurch, dass die Elemente optisch nur minimal von den HTML-Standardelementen abweichen. Materialize hat hingegen ein komplett neues und modernes Design aufgezogen.
 \subsubsection{Leichtigkeit}
-Aus eigener Erfahrung können wir sagen, dass Materialize wirklich einfach zu erlernen ist \cite{WebDocMaterialize}. Bei einem groben Einlernen in Foundation haben wir auch hier festgestellt, dass es dem Aufbau von Materialize sehr ähnelt. Bootstrap hingegen sah auf den ersten Blick sehr kompliziert aus und war am Anfang sehr schwer zu verstehen. Nach ein paar Stunden einlernen war jedoch schon ein sehr guter Workflow vorhanden.
+Aus eigener Erfahrung können wir sagen, dass Materialize wirklich einfach zu erlernen ist \cite{WebDocMaterialize}. Bei einem groben Einlernen in Foundation hat das Team festgestellt, dass es dem Aufbau von Materialize sehr ähnelt. Bootstrap hingegen sah auf den ersten Blick sehr kompliziert aus und war am Anfang sehr schwer zu verstehen. Nach ein paar Stunden einlernen war jedoch schon ein sehr guter Workflow vorhanden.
 \subsubsection{Dokumentation}
 Auf den ersten Blick erscheint die Dokumentation von Materialize als sehr gut, jedoch ist der Beispielcode zu einzelnen Komponenten in manchen Fällen unvollständig und man muss sich mit mühsamer Recherche nach Lösungen erkunden \cite{WebDocMaterialize}. Bootstrap und Foundation sind sehr gut dokumentiert, haben viele Code-Beispiele und in manchen Fällen sogar mit \Gls{codepen} Beispielen bestückt \cite{bootstrap-docu, foundation-docu}.
 
