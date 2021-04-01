@@ -4,6 +4,7 @@
 Wie in Kapitel \hyperref[sec:webseitenlogik]{6.3.1} beschrieben wird die Webseitenlogik größtenteils von einem Manager übernommen.
 
 \subsubsection{Navigation}
+\label{sec:navigation}
 Die Unterseiten werden in den Manager geladen und je nach Gebrauch angezeigt. Dafür gibt es eine Variable im Manager, welche dafür sorgt, dass nur eine Komponente auf einmal angezeigt werden kann. Die Komponente wird gewechselt, indem die nachfolgende Funktion aufgerufen wird:
 \begin{code}{js}
 	changeComponent(
@@ -67,14 +68,192 @@ Die Codezeile wird beim Aufruf der Unterseite im Manager hinzugefügt.\\
 Die beschriebenen Signale werden von den Unterseiten mittels folgendem Code bzw. Funktion gesendet:
 \begin{code}{js}
 	changeComponent(component, back, application, escortsdata) {
-		this.$emit("change-component", component, back, application, escortsdata);
+		this.\$emit("change-component", component, back, application, escortsdata);
 	}
 \end{code}
 \captionof{listing}{Signal senden}~\\
 Hier wird durch this.\$emit() ein Befehl an die übergeordnete Seite gesendet.
-\subsubsection{Komponeten}
+\newpage
+\subsubsection{Komponenten}
+Die Komponenten der Unterseiten werden wie im vorherigen Kapitel beschrieben in den Manager eingebunden. Dies wird mit dem Import, Laden und Implementierung der Komponente umgesetzt.
+Das Importieren erfolgt mit folgendem Code:
+\begin{code}{html}
+	<script>
+	import ApplicationView from "@/components/ApplicationView.vue";
+	// [Weitere Imports]
+	
+	export default {
+		components: {
+			ApplicationView
+			// [Weitere Komponenten]
+		}
+	}
+</script>
+\end{code}
+\captionof{listing}{Importieren und Laden einer Komponente}~\\
+In dem Code wird von @/components/ die einzelnen Komponenten geladen. Aufgrund der Verwendung von @ wird das Angeben des vollen Pfades nicht mehr gebraucht, da dies auf den relativen Pfad der Softwarestruktur zeigt.
+\newpage
+Diese Komponente muss noch in den Manager angezeigt werden, dies wird in dem Template des Managers mit folgendem Code umgesetzt:
+\begin{code}{html}
+<template>
+	<div class="home">
+		<Login
+			v-if="currentComponent == 'Login'"
+			v-on:change-component="changeComponent"
+			v-bind:url="url"
+			v-bind:token="token"
+			v-bind:forward="forward"
+			v-on:requestAnswer="useCookie"
+			v-bind:cookieset="cookies"
+			v-on:login="login"
+		/>
+		<Index
+			v-if="currentComponent == 'Index'"
+			v-on:change-component="changeComponent"
+			v-bind:url="url"
+			v-bind:token="token"
+			v-bind:admin="admin"
+			v-bind:user="user"
+		/>
+		<ApplicationView
+			v-if="currentComponent == 'ApplicationView'"
+			v-on:change-component="changeComponent"
+			v-bind:url="url"
+			v-bind:token="token"
+			v-bind:appid="appid"
+			v-bind:user="user"
+		/>
+		<PageNotFound
+			v-if="currentComponent == 'PageNotFound'"
+			v-on:change-component="changeComponent"
+			v-bind:url="url"
+		/>
+		<!-- Weitere Komponenten -->
+	</div>
+</template>
+\end{code}
+\captionof{listing}{Anzeigen der Komponenten im Manager}~\\
+In dem Code wird nicht nur die Komponente angezeigt, sondern auch Daten an die Komponenten gebunden.\\
+v-if Attribute sorgt dafür, dass das Rendern nur unter der angegebenen Bedingung erfolgt. In dem Fall wird die Komponente nur angezeigt, wenn die Variable currentComponent den Namen einer Komponente annimmt.\\
+v-bind Attribute binden Daten von der übergeordneten Komponente in die eingebundene Komponente. Bei dem Beispiel v-bind:cookieset=''cookies'' wird an die Login-Komponente ein Attribut cookieset mitgegeben mit dem Wert von der Variable cookies.
+\newpage
+Diese Attribute können mit folgendem Code aufgefangen werden und in diesen eingebundenen Komponenten verwendet werden:
+\begin{code}{html}
+<script>
+	import CookieRequest from "@/components/CookieRequest.vue";
+	import axios from "axios";
+	export default {
+		components: {
+			CookieRequest
+		},
+		name: "Login",
+		props: ["url", "forward", "cookieset"],
+		// ...
+	}
+</script>
+\end{code}
+\captionof{listing}{Auffangen einer übergebenen Variable}~\\
+In dem Code ist Zeile 9 relevant, dort werden die übergebenen Variablen, welche in der übergeordneten Komponente definiert worden sind, aufgefangen. Diese können als normale Variable verwendet werden.
+\newpage
 \subsubsection{Seite nicht gefunden}
+Wie in Kapitel \hyperref[sec:not_found]{6.3.1.1} beschrieben wird, wird der Benutzer bei Eingabe eines falschen Links auf eine Seite weitergeleitet. Dazu wird der Vue-Router so eingestellt, sodass jeder Link, außer der Hauptlink zur eigentlichen Webseite, auf die beschriebene Seite weitergeleitet wird. Die Routen des Routers:
+\begin{code}{js}
+// Imports für die Komponenten
+import Vue from "vue";
+import VueRouter from "vue-router";
+import Home from "../views/Home.vue";
+import PageNotFound from "../components/PageNotFound.vue";
+
+Vue.use(VueRouter);		// Sagt dem Projekt, dass es den Router verwenden soll
+
+const routes = [
+{
+	path: "/",					// Der Pfad, der von dem Benutzer eingegeben wird
+	name: "Home",				// Der Name des Pfades
+	component: Home,			// Die Komponente, welche angezeigt werden soll
+	props: { pathing: "base" }	// Variablen, welche an die Komponente gesendet werden sollen
+},
+{
+	path: "/viewer",
+	name: "Viewer",
+	component: Home,
+	props: route => ({ query: route.query.uid })	// Die ID des Antrags, welcher betrachtet werden möchte
+},
+{
+	path: "*",				// Fasst alle nicht erwähnten Routen zusammen
+	name: "NotFound",
+	component: PageNotFound
+}
+];
+const router = new VueRouter({
+	mode: "history",
+	base: process.env.BASE_URL,
+	routes
+});
+
+export default router;
+\end{code}
+\captionof{listing}{Router, welche die Pfade der Software verwaltet}~\\
+
+Wird ein Link eingegeben, welcher nicht ''/'' oder ''/viewer'' ist, so wird die PageNotFound Komponente geladen und dadurch wird dem Benutzer mitgeteilt, dass der eingegebene Link nicht funktioniert.
 \subsubsection{Antrag-Viewer}
+Der Antrag-Viewer wird über den Link /viewer aufgerufen. Dies führt dazu, dass der Benutzer auf eine Seite weitergeleitet wird, auf der er die ID eines Antrags eingeben kann.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\linewidth]{images/antrag_viewer}
+	\caption[Webseite Antrag-Viewer]{Die Antrag-Viewer Seite der Webseite}
+	\label{fig:antragviewer}
+\end{figure}
+
+Sollte der Benutzer nicht angemeldet sein, so wird er zuerst auf die Login-Seite weitergeleitet, bevor er die ID des Antrags eingeben kann. Sollte der eingegebene Link bereits den Parameter ''uid'' besitzen, wird der Benutzer auf die Antragsansichtsseite weitergeleitet, sofern dieser angemeldet ist. Ansonsten wird der Benutzer zuerst auf die Login-Seite weitergeleitet.
+\begin{code}{js}
+	{
+		// Die Route des Antrag-Viewers
+		path: "/viewer",
+		name: "Viewer",
+		component: Home,
+		props: route => ({ query: route.query.uid }) // Der Parameter in der URL
+	},
+\end{code}
+\captionof{listing}{Route für den Antrag-Viewer}~\\
+Es wird die Home-Komponente (der Manager) aufgerufen, da dieser das Verarbeiten der URL und das weiterleiten auf die Login und Antragsansicht übernimmt.
+\newpage
 \subsubsection{Features}
+Die in Kapitel \hyperref[sec:feature]{6.3.1.6} Features wurden folgendermaßen implementiert.
+
+\paragraph{Zuletzt besuchte Seite der Webseite}~\\
+Beim laden der Webseite wird mithilfe von Cookies auf die zuletzt besuchte Seite navigiert. Dazu wird bei jeder Navigation wie in Kapitel \hyperref[sec:navigation]{7.1.1.1} beschrieben der Cookie gesetzt. Dieser wird beim laden der Webseite aufgerufen und es wird, falls der Cookie gesetzt ist, auf diese Seite navigiert.
+\begin{code}{js}
+	if (this.checkCookie()) {		// Abfrage, ob ein Cookie vorhanden ist
+		this.useCookie(true);		// Sofern ein Cookie vorhanden ist, hat der Benutzer bereits die Cookies für diese Webseite akzeptiert
+		var c = this.getCookie();	// Die Informationen des Cookies werden ausgelesen
+		if (c == this.generateState(window.history.state)) {	// Falls die zuletzt besuchte Seite die gleiche ist, wie die aktuelle Seite, so wird kein neuer Eintrag in der History generiert
+			this.changeComponent(c, false);
+		} else {
+			this.changeComponent(c);
+		}
+	} else {
+		// Falls kein Cookie gesetzt ist, wird der Benutzer auf die Login-Seite weitergeleitet
+		this.changeComponent("Login");
+	}
+\end{code}
+\captionof{listing}{Navigation auf die zuletzt besuchte Unterseite}~\\
+
+\paragraph{Browser-Pfeile}~\\
+Die Browser-Pfeile navigieren durch die History des Browsers. Da die Webseite ein One-Pager ist, muss das schreiben in die History selbst übernommen werden. Dies wird durch den folgenden Code umgesetzt:
+\begin{code}{js}
+window.addEventListener("popstate", e => {			// Es wird ein Listener auf die Webseite gesetzt
+	if (this.generateState(e.state) === "Escorts") {	// Dies ist eine  extra Abfrage, welche verhindert auf die Escorts-Seite zu gelangen.
+		this.changeComponent("School", false);
+	} else {
+		this.changeComponent(this.generateState(e.state), false);	// Es wird auf die Unterseite navigiert.
+	}
+});
+\end{code}
+\captionof{listing}{Unterstützung der Browser-Pfeile}
+Das Hinzufügen der einzelnen Histories für die einzelnen Unterseiten wird in Kapitel \hyperref[sec:navigation]{7.1.1.1} beschrieben.
+\newpage
 \subsection{Daten laden}
+Wird eine Unterseite aufgerufen, so gibt es einen Block, der spezifisch für jede Unterseite einzeln ausgeführt wird. Dieser Block kann auch Abfragen an das Backend beinhalten.
+
 \subsection{Befehle senden}
