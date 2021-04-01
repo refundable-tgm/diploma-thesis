@@ -1,1 +1,47 @@
 %!TEX root=../../main.tex
+\section{Frontend}
+In diesem Kapitel wird die Erstellung eines Konzepts für das Frontend erläutert. Dabei müssen Faktoren wie beispielsweise unsere Zielgruppe, die Lehrerschaft beachtet werden. Im folgenden Kapitel werden die theoretischen Hintergründe des Konzeptes überlegt, danach werden erste Entwürfe mittels Mockups erstellt. 
+\subsection{Vorbereitung}
+Wie im Kapitel 5.1 und 5.3 festgelegt wird im Frontend Bootstrap in Verbindung mit VueJS verwendet. Zu aller Erst muss daher VueJS auf dem Computer, auf dem das Projekt erstellt wir installiert werden. Dies geschieht auf Windows über den Node Packet Manager (NPM) \cite{vue-install}. Der Befehl um VueJS zu installieren schaut wie folgt aus:
+\begin{code}{bash}
+	npm install -g @vue/cli
+\end{code}
+Nachdem VueJS installiert ist kann man in das gewünschte Verzeichnis wechseln und über
+\begin{code}{bash}
+	vue create refundable
+\end{code}
+ein neues Vue Projekt erstellen, das in diesem Fall \enquote{Refundable} heißt \cite{vue-create-project}. Um die Funktionalität von Bootstrap und VueJS optimal auszunutzen wird Bootstrap direkt mit dem Node Packet Manager zu VueJS installiert \cite{bootstrap-vue-getting-started}:
+\begin{code}{bash}
+	npm install vue bootstrap-vue
+\end{code}
+Damit ist die Arbeit aber noch nicht getan, um in den Komponenten Bootstrap und dessen vordefinierte Icons zu verwenden, muss man 
+\begin{code}{html}
+	import { BootstrapVue, BootstrapVueIcons } from "bootstrap-vue";
+	import "./plugins/bootstrap-vue";
+	
+	Vue.use(BootstrapVue);
+	Vue.use(BootstrapVueIcons);
+\end{code}
+
+
+\newpage
+\subsection{Visuelle Konzeption}
+\paragraph{Login-Seite}
+~\\
+
+\paragraph{Startseite}
+~\\
+
+\paragraph{Neuer Antrag}
+~\\
+
+\paragraph{Ansicht Alle Anträge}
+~\\
+
+\paragraph{Ansicht Aktive Anträge}
+~\\
+
+\paragraph{Administrator Ansicht}
+
+\paragraph{Antragsansicht}
+~\\
