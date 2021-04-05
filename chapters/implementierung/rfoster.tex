@@ -193,10 +193,11 @@ const router = new VueRouter({
 
 export default router;
 \end{code}
-\captionof{listing}{Router, welche die Pfade der Software verwaltet}~\\
+\captionof{listing}{Router, welcher die Pfade der Software verwaltet}~\\
 
 Wird ein Link eingegeben, welcher nicht ''/'' oder ''/viewer'' ist, so wird die PageNotFound Komponente geladen und dadurch wird dem Benutzer mitgeteilt, dass der eingegebene Link nicht funktioniert.
 \subsubsection{Antrag-Viewer}
+\label{sec:antrag_viewer}
 Der Antrag-Viewer wird über den Link /viewer aufgerufen. Dies führt dazu, dass der Benutzer auf eine Seite weitergeleitet wird, auf der er die ID eines Antrags eingeben kann.
 \begin{figure}[H]
 	\centering
@@ -253,7 +254,221 @@ window.addEventListener("popstate", e => {			// Es wird ein Listener auf die Web
 \captionof{listing}{Unterstützung der Browser-Pfeile}
 Das Hinzufügen der einzelnen Histories für die einzelnen Unterseiten wird in Kapitel \hyperref[sec:navigation]{7.1.1.1} beschrieben.
 \newpage
-\subsection{Daten laden}
-Wird eine Unterseite aufgerufen, so gibt es einen Block, der spezifisch für jede Unterseite einzeln ausgeführt wird. Dieser Block kann auch Abfragen an das Backend beinhalten.
+\subsection{Anmelden}
+Der Benutzer kann sich auf einer Anmelde-Seite anmelden um das System verwenden zu können. Dazu werden die Anmeldedaten des Benutzers an das Backend gesendet. Um sich anmelden zu können, müssen die Cookies akzeptiert werden. Sollten jene nicht akzeptiert werden, ist es nicht möglich den Dienst zu verwenden.
+Sobald der Benutzer erfolgreich angemeldet ist, wird dieser auf die Hauptseite weitergeleitet.
+\\
+TODO Code einbinden
+\subsubsection{Spezielle Situationen}
+In besonderen Fällen, zum Beispiel wie in Kapitel \hyperref[sec:antrag_viewer]{7.2.1.4} beschrieben, wird der Benutzer nicht auf die Hauptseite weitergeleitet, sondern auf den Antrag-Viewer oder auf die Antrag Ansicht.
+\subsubsection{Passwort vergessen}
+Da Refundable die Anmeldedaten von LDAP-verwendet, wird, wenn auf ''Passwort vergessen'' gedrückt wird, der Benutzer auf ... weitergeleitet.
+\\
+TODO
+\subsection{Abmelden}
+Wird auf den ''Abmelden'' Knopf gedrückt, wird ein Abfrage mit dem derzeit aktiven Token an das Backend gesendet, um den Authentifizierungstoken zu terminieren. Dies bedeutet, dass der Benutzer keinen validen Token mehr besitzt und auf die Login Seite weitergeleitet wird.
+\\
+TODO Code einbinden
+\newpage
+\subsection{Antrag erstellen}
+Ein Antrag kann von jedem Lehrer, der an dem System angemeldet ist erstellt werden. Dazu wird auf die Antrag erstellen Unterseite navigiert, wo der Benutzer aussuchen kann, ob er eine Schulveranstaltung, Fortbildung oder einen anderen Antrag erstellen möchte. Auf diesen Unterseiten werden die notwendigen Informationen von dem Benutzer in die Eingabefelder eingegeben. Diese Informationen werden in ein JSON-Objekt gegeben und an das Backend gesendet.
+\\
+In den folgenden Codebeispielen, werden oft die Befehle ''returnString'', ''returnBoolean'' und ''returnValue'' verwendet. Diese dienen dazu die Datentypen auf die des Backends anzupassen. 
+\subsubsection{Schulveranstaltung}
+\paragraph{Allgemeine Informationen}~\\
+In dem ersten Schritt, werden allgemeine Informationen der Schulveranstaltung eingegeben.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\linewidth]{images/schoolgeneral}
+	\caption[Schulveranstaltung]{Eingabefelder für allgemeine Informationen einer Schulveranstaltung}
+	\label{fig:schoolgeneral}
+\end{figure}
+\paragraph{Informationen zu Begleitlehrern}~\\
+Nach der Eingabe aller allgemeinen Informationen wird der Benutzer nach dem Drücken des ''weiter'' Knopfes auf eine weitere Unterseite weitergeleitet. Auf dieser können Informationen zu den im vorherigen Schritt angegeben Begleitlehrern angegeben werden.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\linewidth]{images/escorts}
+	\caption[Schulveranstaltung 2]{Eingabefelder für Informationen von Begleitlehrern}
+	\label{fig:escorts}
+\end{figure}
+\newpage
+Nachdem die Seite bearbeitet worden ist, kann auf den Knopf ''Einreichen'' gedrückt werden. Sobald der Knopf gedrückt worden ist, wird das JSON-Objekt erstellt, mit allen Informationen die eingegeben worden sind und an das Backend gesendet.
+\label{code_submit_data}
+\begin{code}{js}
+var data = {		// Das JSON-Objekt mit allen Informationen
+	Name: this.returnString(this.escorts.description),	// Der Name des Antrags
+	Kind: 4,	// Der Typ des Antrags (4 = Schulveranstaltung)
+	MiscellaneousReason: this.returnString(""),			// Nicht benötigt, da es eine Schulveranstaltung ist
+	Progress: 1,	// Der Fortschritt ist standardmäßig auf 1 gesetzt
+	StartTime: this.setTimezone(	// Die Startzeit des Antrags
+	new Date(this.escorts.startDate + "T" + this.escorts.startTime)
+	),
+	EndTime: this.setTimezone(	// Die Endzeit des Antrags
+	new Date(this.escorts.endDate + "T" + this.escorts.endTime)
+	),
+	Notes: this.returnString(this.escorts.notes),	// Zusätzliche Notizen zum Antrags
+	StartAddress: this.returnString(this.escorts.start),	// Startadresse des Antrags
+	DestinationAddress: this.returnString(this.escorts.ziel), // Zieladresse des Antrags
+	SchoolEventDetails: {	// Allgemeine Informationen zu einer Schulveranstaltung
+		Classes: this.escorts.class,	// Klassen, die auf die Schulveranstaltung mitfahren
+		AmountMaleStudent: this.returnValue(	// Anzahl der männlichen Schüler der Schulveranstaltung
+		this.escorts.count_student_male
+		),
+		AmountFemaleStudent: this.returnValue(	// Anzahl der weiblichen Schüler der Schulveranstaltung
+		this.escorts.count_student_female
+		),
+		DurationInDays: this.returnValue(this.escorts.exkursLength),	// Die Länge der Schulveranstaltung in Tagen
+		Teachers: teachers	// Eine Liste aller Lehrer mit Ihren spezifischen Informationen
+	},
+	BusinessTripApplications: business,	// Die Reiseformulare für alle Lehrer beteiligt an dem Antrag
+	TravelInvoices: invoices	// Die Reiserechnungen für alle Lehrer beteiligt an dem Antrag
+};
+\end{code}
+\captionof{listing}{JSON-Objekt einer Schulveranstaltung}~\\
+\newpage
+\subsubsection{Fortbildung}
+Eine Fortbildung wird auf der Fortbildungs-Unterseite erstellt. Diese sieht wie folgt aus und beinhaltet Eingabefelder für alle notwendigen Informationen der Fortbildung.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.65\linewidth]{images/workshop}
+	\caption[Fortbildung]{Eingabefelder einer Fortbildung}
+	\label{fig:workshop}
+\end{figure}
+\newpage
+Bei einer Fortbildung kann unterschieden werden, welche Art von Fortbildung erstellt werden soll. Es kann zwischen Seminar, Tagung, Lehrgang und Sonstiges unterschieden werden. Das JSON-Objekt wird nach dem Drücken des ''Einreichen'' Knopfes erstellt und mit den angegebenen Daten befüllt. Das Objekt wird anschließend an das Backend gesendet.\\
 
-\subsection{Befehle senden}
+Das JSON-Objekt wird wie in Kapitel \hyperref[code_submit_data]{7.2.4.1} beschrieben erstellt. Für eine Fortbildung gibt es nur wenige Änderungen.
+Statt dem SchoolEventDetails Objekt, wird ein TrainingDetails in den Antrag hinzugefügt und die Art des Antrags wird auf 0 gesetzt:
+\begin{code}{js}
+var data = {		// Das JSON-Objekt mit allen Informationen
+	Name: this.returnString(this.escorts.description),	// Der Name des Antrags
+	Kind: 0,	// Der Typ des Antrags (0 = Fortbildung)
+	// ...
+	TrainingDetails: {
+		Kind: this.returnValue(this.selected),	// Die Art der Fortbildung
+		MiscellaneousReason: this.returnString(this.son),	// Falls "Sonstiges" ausgewählt worden ist
+		PH: this.returnValue(this.phNumber),	// Die PH Zahl des Lehrers
+		Organizer: this.returnString(this.veran)	// Der Veranstalter der Fortbildung
+	},
+	BusinessTripApplications: business,	// Das Reiseformular für den Lehrer
+	TravelInvoices: invoices	// Die Reiserechnung für den Lehrer
+};
+\end{code}
+\captionof{listing}{JSON-Objekt einer Fortbildung}~\\
+\newpage
+\subsubsection{Sonstiges}
+Ein Sonstiger Antrag kann auf der Unterseite ''Anderer Grund'' erstellt werden. Ein Sonstiger Antrag sieht wie folgt aus und beinhaltet Eingabefelder für alle notwendigen Informationen für den Antrag.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.75\linewidth]{images/othercause}
+	\caption[Sonstiger Antrag]{Eingabefelder für sonstige Anträge}
+	\label{fig:othercause}
+\end{figure}
+Sonstige Anträge können unterschieden werden in Pflegefreistellungen, Dienstaufträgen, Arztterminen und Sonstiges. Das JSON-Objekt wird nach dem Drücken des ''Einreichen'' Knopfes erstellt und mit den angegebenen Daten befüllt. Das Objekt wird anschließend an das Backend gesendet.\\
+
+Das JSON-Objekt wird wie in Kapitel \hyperref[code_submit_data]{7.2.4.1} beschrieben erstellt. Für einen Sonstigen Antrag gibt es nur wenige Änderungen.
+Statt dem SchoolEventDetails Objekt, wird ein OtherReasonDetails in den Antrag hinzugefügt und die Art des Antrags wird auf 8 gesetzt:
+\begin{code}{js}
+var data = {		// Das JSON-Objekt mit allen Informationen
+	Name: this.returnString(this.escorts.description),	// Der Name des Antrags
+	Kind: 8,	// Der Typ des Antrags (8 = Sonstiger Antrag)
+	// ...
+	OtherReasonDetails: {
+		Kind: this.returnValue(this.selected),	// Die Art des Sonstigen Antrags
+		MiscellaneousReason: this.returnString(this.son),	// Falls "Sonstiges" ausgewählt worden ist
+		ServiceMandateGZ: this.returnValue(this.gz),	// Die GZ des Dienstauftrags
+		ServiceMandateTitle: this.returnString(this.title)	// Titel des Dienstauftrags
+	},
+	BusinessTripApplications: business,	// Das Reiseformular für den Lehrer
+	TravelInvoices: invoices	// Die Reiserechnung für den Lehrer
+};
+\end{code}
+\captionof{listing}{JSON-Objekt eines Sonstigen Antrags}~\\
+\newpage
+\subsection{Antrag Ansicht}
+\label{sec:antrag_ansicht}
+Wenn die Unterseite geladen wird, die einen Antrag anzeigen soll, so wird der Unterseite die ID des Antrags mitgegeben. Mit dieser ID wird, sobald die Komponente geladen wird eine Abfrage an das Backend gesendet, um den gesamten Antrag zu laden. Die Informationen werden interpretiert und angezeigt.
+\subsubsection{Progress Bar}
+Jeder Antrag besitzt einen Fortschritt, welcher graphisch durch eine ''Progress'' Komponente angezeigt wird. Die Komponente erhält von der  Antrag Ansicht den Fortschritt des Antrags und die Art des Antrags als Nummer, um die Informationen für den Benutzer lesbar anzuzeigen.
+\begin{figure}
+	\centering
+	\includegraphics[width=1\linewidth]{images/progress}
+	\caption[Fortschrittsanzeige]{Fortschrittsanzeige für einen Antrag}
+	\label{fig:progress}
+\end{figure}
+\subsubsection{Dokumente}
+In einem Antrag werden mehrere Dokumente gespeichert. Die Dokumente können je nach Fortschritt des Antrags bearbeitet werden.
+Die Dokumente werden in einer Liste angezeigt:
+\begin{figure}
+	\centering
+	\includegraphics[width=1\linewidth]{images/documents}
+	\caption[Dokumente eines Antrags]{Die Dokumente einer Schulveranstaltung}
+	\label{fig:documents}
+\end{figure}
+
+Folgende Dokumente werden je nach Antragsart erstellt:
+\paragraph{Schulveranstaltung}~\\
+Die Schulveranstaltung besitzt 2 Dokumente. Zum einen die allgemeinen Informationen zu der Veranstaltung und zum Anderen die Informationen zu den Begleitpersonen.
+\subparagraph{Allgemeine Informationen}~\\
+In diesem Dokument werden generellen Informationen über die Schulveranstaltung gespeichert. Diese können nur von dem Leiter des Antrags eingesehen und bearbeitet werden.
+\subparagraph{Informationen zu Begleitlehrern}~\\
+In diesem Dokument sieht jeder Begleitlehrer sein eigenes Formular, welches er je nach Fortschritt des Antrags bearbeiten kann. In diesem Dokument werden Informationen über die An-, Abreise und Aufenthalt des Lehrers gespeichert.
+\paragraph{Fortbildung}~\\
+In einem Fortbildungsformular werden Informationen über die Fortbildung und den Lehrer gespeichert.
+\paragraph{Sonstiges}~\\
+In einem ''Sonstiges'' Antrag werden Informationen über den Grund des Antrags, sowie den Zeitraum gespeichert.
+\paragraph{Reiseformular}~\\
+Ein Reiseformular wird bei jeder Art von Antrag erstellt. In einem Reiseformular werden Informationen über den Lehrer und über dessen An- und Abreise gespeichert.
+\paragraph{Reiserechnung}~\\
+Eine Reiserechnung wird bei jeder Art von Antrag erstellt. In einer Reiserechnung werden Informationen über die Kosten des Antrags gespeichert und wie diese entstanden sind. Des weiteren können Belege hochgeladen werden, um diese dem Antrag zu hinterlegen.
+\subsubsection{Aktionen}
+\paragraph{PDF öffnen}~\\
+Der Benutzer kann die PDFs der Dokumente öffnen. Die PDFs werden in einem neuen Tab im Browser angezeigt.\\
+Mit folgendem Code wird eine PDF erstellt und in einem neuen Tab geöffnet:\cite{sof_pdf}
+\begin{code}{js}
+	let pdfWindow = window.open("");
+	var fileName = "PDF";
+	pdfWindow.document.write(
+	"<html<head><title>" +
+	fileName +
+	"</title><style>body{margin: 0px;}iframe{border-width: 0px;}</style></head>"
+	);
+	pdfWindow.document.write(
+	"<body><embed width='100\%' height='100\%' src='data:application/pdf;base64, " +
+	encodeURI(pdf) +
+	"#toolbar=0\&navpanes=0\&scrollbar=0'></embed></body></html>"
+	);
+\end{code}
+\paragraph{Änderungen speichern}~\\
+Der Benutzer kann die Änderungen eines Antrags speichern. Dies kann in bestimmten Phasen eines Antrags geschehen. Die Änderungen werden sobald auf den ''Änderungen Speichern'' Knopf gedrückt wird an das Backend gesendet.
+\paragraph{Antrag schließen}~\\
+Der Leiter eines Antrags kann den Antrag schließen. Sobald der Antrag geschlossen ist, kann er nicht mehr editiert werden.
+\newpage
+\subsection{Antrag Übersicht}
+\label{sec:antrag_uebersicht}
+Um einen Überblick über die Anträge zu haben, gibt es zwei Übersichtsseiten, welche die Anträge auflisten. In den Auflistungen sieht man die groben Daten des Antrags und kann diese in der Antrag Ansicht öffnen. Sobald eine Übersichtsseite aufgerufen wird, werden die Anträge abgefragt und werden in der Liste angezeigt.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\linewidth]{images/liste_antrag}
+	\caption[Liste der Anträge]{Auflistung von Anträgen auf der Übersichtsseite}
+	\label{fig:listeantrag}
+\end{figure}
+
+\subsubsection{Alle Anträge}
+Auf dieser Übersichtsseite werden alle Anträge angezeigt, die mit dem angemeldeten Benutzer zusammenhängen.
+\subsubsection{Aktive Anträge}
+In der Auflistung der aktiven Anträge, werden alle Anträge angezeigt, welche nicht abgeschlossen sind. Ist nur ein Antrag in der Liste der aktiven Anträge, so wird der Antrag sofort in der Antrag Ansicht geöffnet.
+\subsubsection{Aktionen}
+\paragraph{Schnelle Informationen}~\\
+Wird auf den Knopf ''Schnelle Informationen'' gedrückt, öffnet sich ein Fenster, in dem die groben Informationen angezeigt werden.
+\paragraph{Antrag Betrachten}~\\
+Wird auf den Knopf ''Antrag Betrachten'' gedrückt, wird der Antrag in der Antrag Ansicht geöffnet.
+\newpage
+\subsection{Administrator}
+\subsubsection{Antrag Ansicht}
+Der Aufbau der Antrag Ansicht ähnelt dem aus \hyperref[sec:antrag_ansicht]{7.2.5}.\\
+Ein Administrator kann jedoch alle Informationen eines Antrags einsehen und diesen Akzeptieren. Des weiteren können alle PDFs des Antrags geöffnet werden. Der Antrag kann auch abgelehnt werden, wodurch der Fortschritt zurückgesetzt wird. Wenn der Antrag abgelehnt wird, kann ein Grund für das Ablehnen angegeben werden. Der Antragsteller kann daraufhin die Informationen des Antrags aktualisieren und damit den Antrag erneut einreichen, oder den Antrag schließen.
+\subsubsection{Antrag Übersicht}
+Die Übersichtsseite für Administratoren ähnelt dem Aufbau aus \hyperref[sec:antrag_uebersicht]{7.2.6}.\\
+Der Administrator sieht jedoch wer den Antrag gestellt hat und kann mehrere Anträge auswählen um diese in einer PDF anzuzeigen.
+Des weiteren kann auf den Knopf ''Antrag beachten'' gedrückt werden, wodurch der Administrator auf die Antrag Ansicht für Administratoren weitergeleitet wird.
