@@ -177,7 +177,7 @@ const routes = [
 	path: "/viewer",
 	name: "Viewer",
 	component: Home,
-	props: route => ({ query: route.query.uid })	// Die ID des Antrags, welcher betrachtet werden möchte
+	props: route => ({ query: route.query.uuid })	// Die ID des Antrags, welcher betrachtet werden möchte
 },
 {
 	path: "*",				// Fasst alle nicht erwähnten Routen zusammen
@@ -213,7 +213,7 @@ Sollte der Benutzer nicht angemeldet sein, so wird er zuerst auf die Login-Seite
 		path: "/viewer",
 		name: "Viewer",
 		component: Home,
-		props: route => ({ query: route.query.uid }) // Der Parameter in der URL
+		props: route => ({ query: route.query.uuid }) // Der Parameter in der URL
 	},
 \end{code}
 \captionof{listing}{Route für den Antrag-Viewer}~\\
