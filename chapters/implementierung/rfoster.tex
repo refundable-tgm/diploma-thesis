@@ -134,7 +134,7 @@ Diese Komponente muss noch in den Manager angezeigt werden, dies wird in dem Tem
 \end{code}
 \captionof{listing}{Anzeigen der Komponenten im Manager}~\\
 In dem Code wird nicht nur die Komponente angezeigt, sondern auch Daten an die Komponenten gebunden.\\
-v-if Attribute sorgt dafür, dass das Rendern nur unter der angegebenen Bedingung erfolgt. In dem Fall wird die Komponente nur angezeigt, wenn die Variable currentComponent den Namen einer Komponente annimmt.\\
+v-if Attribute sorgen dafür, dass das Rendern nur unter der angegebenen Bedingung erfolgt. In dem Fall wird die Komponente nur angezeigt, wenn die Variable currentComponent den Namen einer Komponente annimmt.\\
 v-bind Attribute binden Daten von der übergeordneten Komponente in die eingebundene Komponente. Bei dem Beispiel v-bind:cookieset=''cookies'' wird an die Login-Komponente ein Attribut cookieset mitgegeben mit dem Wert von der Variable cookies.
 \newpage
 Diese Attribute können mit folgendem Code aufgefangen werden und in diesen eingebundenen Komponenten verwendet werden:
@@ -156,7 +156,7 @@ Diese Attribute können mit folgendem Code aufgefangen werden und in diesen eing
 In dem Code ist Zeile 9 relevant, dort werden die übergebenen Variablen, welche in der übergeordneten Komponente definiert worden sind, aufgefangen. Diese können als normale Variable verwendet werden.
 \newpage
 \subsubsection{Seite nicht gefunden}
-Wie in Kapitel \hyperref[sec:not_found]{6.3.1.1} beschrieben wird, wird der Benutzer bei Eingabe eines falschen Links auf eine Seite weitergeleitet. Dazu wird der Vue-Router so eingestellt, sodass jeder Link, außer der Hauptlink zur eigentlichen Webseite, auf die beschriebene Seite weitergeleitet wird. Die Routen des Routers:
+Wie in Kapitel \hyperref[sec:not_found]{6.3.1.1} beschrieben wird, wird der Benutzer bei Eingabe eines falschen Links auf eine Seite weitergeleitet. Dazu wird der Vue-Router so eingestellt, sodass jeder Link, außer der Hauptlink zur eigentlichen Webseite, auf die beschriebene Seite weitergeleitet wird. Die Routen des Routers sind wie folgt aufgebaut:
 \begin{code}{js}
 // Imports für die Komponenten
 import Vue from "vue";
@@ -195,7 +195,7 @@ export default router;
 \end{code}
 \captionof{listing}{Router, welcher die Pfade der Software verwaltet}~\\
 
-Wird ein Link eingegeben, welcher nicht ''/'' oder ''/viewer'' ist, so wird die PageNotFound Komponente geladen und dadurch wird dem Benutzer mitgeteilt, dass der eingegebene Link nicht funktioniert.
+Wird ein Link eingegeben, welcher nicht ''/'' oder ''/viewer'' entspricht, so wird die PageNotFound Komponente geladen und dem Benutzer mitgeteilt, dass der eingegebene Link nicht funktioniert.
 \subsubsection{Antrag-Viewer}
 \label{sec:antrag_viewer}
 Der Antrag-Viewer wird über den Link /viewer aufgerufen. Dies führt dazu, dass der Benutzer auf eine Seite weitergeleitet wird, auf der er die ID eines Antrags eingeben kann.
@@ -258,17 +258,57 @@ Das Hinzufügen der einzelnen Histories für die einzelnen Unterseiten wird in K
 Der Benutzer kann sich auf einer Anmelde-Seite anmelden um das System verwenden zu können. Dazu werden die Anmeldedaten des Benutzers an das Backend gesendet. Um sich anmelden zu können, müssen die Cookies akzeptiert werden. Sollten jene nicht akzeptiert werden, ist es nicht möglich den Dienst zu verwenden.
 Sobald der Benutzer erfolgreich angemeldet ist, wird dieser auf die Hauptseite weitergeleitet.
 \\
-TODO Code einbinden
+\begin{code}{js}
+axios.post(this.url + "/login", {	// Sendet ein POST-Abfrage an das Backend
+	username: this.email,	// Die eingegebene E-Mail Adresse
+	password: this.password // Das eingegebene Passwort
+}).then(response => {
+	var data = response.data
+	// Es werden die Daten aus der Abfrage an den Manager gesendet, damit eine valide Sitzung erstellt wird.
+})
+\end{code}
+\captionof{listing}{POST-Abfrage für den Login}~\\
+
 \subsubsection{Spezielle Situationen}
 In besonderen Fällen, zum Beispiel wie in Kapitel \hyperref[sec:antrag_viewer]{7.2.1.4} beschrieben, wird der Benutzer nicht auf die Hauptseite weitergeleitet, sondern auf den Antrag-Viewer oder auf die Antrag Ansicht.
+\begin{code}{js}
+switch (this.forward.name) {	// Es wird entschieden, auf welche Unterseite navigiert werden soll
+	case "ApplicationSearch":	// Es wird auf den Antrag-Viewer navigiert
+	this.\$emit("change-component", this.forward.name);
+	break;
+	case "ApplicationView":	// Es wird auf die Antrag Ansicht navigiert
+	this.\$emit(
+	"change-component",
+	this.forward.name,
+	true,
+	this.forward.id
+	);
+	break;
+	default:	// Es wird auf die Hauptseite navigiert
+	this.\$emit("change-component", "Index");
+	break;
+}
+\end{code}
+\captionof{listing}{Weiterleitung nach erfolgreichem Anmelden}~\\
 \subsubsection{Passwort vergessen}
-Da Refundable die Anmeldedaten von LDAP-verwendet, wird, wenn auf ''Passwort vergessen'' gedrückt wird, der Benutzer auf ... weitergeleitet.
-\\
-TODO
+Da Refundable die Anmeldedaten von LDAP-verwendet, wird, wenn auf ''Passwort vergessen'' gedrückt wird, der Benutzer auf \href{https://owa.tgm.ac.at}{OWA} weitergeleitet.
+\newpage
 \subsection{Abmelden}
 Wird auf den ''Abmelden'' Knopf gedrückt, wird ein Abfrage mit dem derzeit aktiven Token an das Backend gesendet, um den Authentifizierungstoken zu terminieren. Dies bedeutet, dass der Benutzer keinen validen Token mehr besitzt und auf die Login Seite weitergeleitet wird.
-\\
-TODO Code einbinden
+\begin{code}{js}
+axios.post(this.url + "/logout", {	// Sendet ein POST-Abfrage an das Backend
+	headers: { Authorization: this.token }	// Der Token des Benutzers
+})
+.then(response => {
+	if (response.status === 200) {	// Falls die Abfrage erfolgreich war
+		this.token = "";
+		this.refresh_token = "";
+		this.deleteCookie();
+		this.changeComponent("Login");	// Es werden die Tokens und Cookies gelöscht und der Benutzer wird auf die Login-Seite weitergeleitet.
+	}
+});
+\end{code}
+\captionof{listing}{Gesamte Abfrage für das Abmelden}~\\
 \newpage
 \subsection{Antrag erstellen}
 Ein Antrag kann von jedem Lehrer, der an dem System angemeldet ist erstellt werden. Dazu wird auf die Antrag erstellen Unterseite navigiert, wo der Benutzer aussuchen kann, ob er eine Schulveranstaltung, Fortbildung oder einen anderen Antrag erstellen möchte. Auf diesen Unterseiten werden die notwendigen Informationen von dem Benutzer in die Eingabefelder eingegeben. Diese Informationen werden in ein JSON-Objekt gegeben und an das Backend gesendet.
