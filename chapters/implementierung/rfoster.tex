@@ -42,7 +42,7 @@ Die Unterseiten werden in den Manager geladen und je nach Gebrauch angezeigt. Da
 Diese Funktion besteht hauptsächlich aus einer Verzweigung, welche Seite angezeigt werden soll.
 Des weiteren gibt es bei manchen Komponenten den Zusatz einer load Funktion, welche Daten für die jeweilige Komponente vorbereitet bzw. berechnet.
 
-Die referenzierte change Funktion übernimmt das tatsächliche ändern der Variable:
+Die referenzierte \textit{change} Funktion übernimmt das tatsächliche ändern der Variable:
 \begin{code}{js}
 	change(page, back = true, cookie = true) {
 		this.currentComponent = page;	// Es wird die angezeigte Seite verändert
@@ -57,7 +57,7 @@ Die referenzierte change Funktion übernimmt das tatsächliche ändern der Varia
 		}
 \end{code}
 \captionof{listing}{Funktion für das Managment der Cookies und History des Browsers}~\\
-Hier wird nicht nur die angezeigte Seite verändert, sondern auch sich um das Cookie-Management, sowie das History-Management gekümmert. Es wird je nach Parameter der Cookie und bzw. oder die History gesetzt.\\
+Hier wird nicht nur die angezeigte Seite verändert, sondern auch die Cookies, sowie die History des Browsers gesetzt. Es wird je nach Parameter der Cookie und die History gesetzt.\\
 Die beschriebenen Funktionen müssen von den Komponenten aufgerufen werden können, deswegen hört der Manager auf Signale der Unterseiten, falls diese die Seite ändern möchte. Dies wird mittels VueJS erledigt, da das Framework dafür bereits Funktionen implementiert hat:
 \begin{code}{js}
 	v-on:change-component="changeComponent"
@@ -72,10 +72,10 @@ Die beschriebenen Signale werden von den Unterseiten mittels folgendem Code bzw.
 	}
 \end{code}
 \captionof{listing}{Signal senden}~\\
-Hier wird durch this.\$emit() ein Befehl an die übergeordnete Seite gesendet.
+Hier wird durch \textit{this.\$emit()} ein Befehl an die übergeordnete Seite gesendet.
 \newpage
 \subsubsection{Komponenten}
-Die Komponenten der Unterseiten werden wie im vorherigen Kapitel beschrieben in den Manager eingebunden. Dies wird mit dem Import, Laden und Implementierung der Komponente umgesetzt.
+Die Komponenten der Unterseiten werden, wie im vorherigen Kapitel beschrieben, in den Manager eingebunden. Dies wird mit dem Import, Laden und Implementierung der Komponente umgesetzt.
 Das Importieren erfolgt mit folgendem Code:
 \begin{code}{html}
 	<script>
@@ -91,9 +91,9 @@ Das Importieren erfolgt mit folgendem Code:
 </script>
 \end{code}
 \captionof{listing}{Importieren und Laden einer Komponente}~\\
-In dem Code wird von @/components/ die einzelnen Komponenten geladen. Aufgrund der Verwendung von @ wird das Angeben des vollen Pfades nicht mehr gebraucht, da dies auf den relativen Pfad der Softwarestruktur zeigt.
+In dem Code wird von \textit{@/components/} die einzelnen Komponenten geladen. Aufgrund der Verwendung von @ wird das Angeben des vollen Pfades nicht mehr gebraucht, da dies auf den relativen Pfad der Softwarestruktur zeigt.
 \newpage
-Diese Komponente muss noch in den Manager angezeigt werden, dies wird in dem Template des Managers mit folgendem Code umgesetzt:
+Diese Komponente muss noch in den Manager angezeigt werden. Dies wird in dem Template des Managers mit folgendem Code umgesetzt:
 \begin{code}{html}
 <template>
 	<div class="home">
@@ -134,26 +134,15 @@ Diese Komponente muss noch in den Manager angezeigt werden, dies wird in dem Tem
 \end{code}
 \captionof{listing}{Anzeigen der Komponenten im Manager}~\\
 In dem Code wird nicht nur die Komponente angezeigt, sondern auch Daten an die Komponenten gebunden.\\
-v-if Attribute sorgen dafür, dass das Rendern nur unter der angegebenen Bedingung erfolgt. In dem Fall wird die Komponente nur angezeigt, wenn die Variable currentComponent den Namen einer Komponente annimmt.\\
-v-bind Attribute binden Daten von der übergeordneten Komponente in die eingebundene Komponente. Bei dem Beispiel v-bind:cookieset=''cookies'' wird an die Login-Komponente ein Attribut cookieset mitgegeben mit dem Wert von der Variable cookies.
+\textit{v-if} Attribute sorgen dafür, dass das Rendern nur unter der angegebenen Bedingung erfolgt. In dem Fall wird die Komponente nur angezeigt, wenn die Variable currentComponent den Namen einer Komponente annimmt.\\
+\textit{v-bind} Attribute binden Daten von der übergeordneten Komponente in die eingebundene Komponente. Bei dem Beispiel \textit{v-bind:cookieset=''cookies''} wird an die Login-Komponente ein Attribut cookieset mitgegeben mit dem Wert von der Variable cookies.
 \newpage
 Diese Attribute können mit folgendem Code aufgefangen werden und in diesen eingebundenen Komponenten verwendet werden:
 \begin{code}{html}
-<script>
-	import CookieRequest from "@/components/CookieRequest.vue";
-	import axios from "axios";
-	export default {
-		components: {
-			CookieRequest
-		},
-		name: "Login",
-		props: ["url", "forward", "cookieset"],
-		// ...
-	}
-</script>
+		props: ["url", "forward", "cookieset"]
 \end{code}
 \captionof{listing}{Auffangen einer übergebenen Variable}~\\
-In dem Code ist Zeile 9 relevant, dort werden die übergebenen Variablen, welche in der übergeordneten Komponente definiert worden sind, aufgefangen. Diese können als normale Variable verwendet werden.
+In dem Code werden die übergebenen Variablen, welche in der übergeordneten Komponente definiert worden sind, aufgefangen. Diese können als normale Variable verwendet werden.
 \newpage
 \subsubsection{Seite nicht gefunden}
 Wie in Kapitel \hyperref[sec:not_found]{6.3.1.1} beschrieben wird, wird der Benutzer bei Eingabe eines falschen Links auf eine Seite weitergeleitet. Dazu wird der Vue-Router so eingestellt, sodass jeder Link, außer der Hauptlink zur eigentlichen Webseite, auf die beschriebene Seite weitergeleitet wird. Die Routen des Routers sind wie folgt aufgebaut:
@@ -195,10 +184,10 @@ export default router;
 \end{code}
 \captionof{listing}{Router, welcher die Pfade der Software verwaltet}~\\
 
-Wird ein Link eingegeben, welcher nicht ''/'' oder ''/viewer'' entspricht, so wird die PageNotFound Komponente geladen und dem Benutzer mitgeteilt, dass der eingegebene Link nicht funktioniert.
+Wird ein Link eingegeben, welcher nicht ''/'' oder ''/viewer'' entspricht, so wird die \textit{PageNotFound} Komponente geladen und dem Benutzer mitgeteilt, dass der eingegebene Link nicht funktioniert.
 \subsubsection{Antrag-Viewer}
 \label{sec:antrag_viewer}
-Der Antrag-Viewer wird über den Link /viewer aufgerufen. Dies führt dazu, dass der Benutzer auf eine Seite weitergeleitet wird, auf der er die ID eines Antrags eingeben kann.
+Der Antrag-Viewer wird über den Link \textit{/viewer} aufgerufen. Dies führt dazu, dass der Benutzer auf eine Seite weitergeleitet wird, auf der er die ID eines Antrags eingeben kann.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\linewidth]{images/antrag_viewer}
@@ -206,7 +195,7 @@ Der Antrag-Viewer wird über den Link /viewer aufgerufen. Dies führt dazu, dass
 	\label{fig:antragviewer}
 \end{figure}
 
-Sollte der Benutzer nicht angemeldet sein, so wird er zuerst auf die Login-Seite weitergeleitet, bevor er die ID des Antrags eingeben kann. Sollte der eingegebene Link bereits den Parameter ''uid'' besitzen, wird der Benutzer auf die Antragsansichtsseite weitergeleitet, sofern dieser angemeldet ist. Ansonsten wird der Benutzer zuerst auf die Login-Seite weitergeleitet.
+Sollte der Benutzer nicht angemeldet sein, so wird er zuerst auf die Login-Seite weitergeleitet, bevor er die ID des Antrags eingeben kann. Sollte der eingegebene Link bereits den Parameter \textit{uuid} besitzen, wird der Benutzer auf die Antragsansichtsseite weitergeleitet, sofern dieser angemeldet ist. Ansonsten wird der Benutzer zuerst auf die Login-Seite weitergeleitet.
 \begin{code}{js}
 	{
 		// Die Route des Antrag-Viewers
@@ -217,13 +206,13 @@ Sollte der Benutzer nicht angemeldet sein, so wird er zuerst auf die Login-Seite
 	},
 \end{code}
 \captionof{listing}{Route für den Antrag-Viewer}~\\
-Es wird die Home-Komponente (der Manager) aufgerufen, da dieser das Verarbeiten der URL und das weiterleiten auf die Login und Antragsansicht übernimmt.
+Es wird die Home-Komponente (der Manager) aufgerufen, da dieser das Verarbeiten der URL und das Weiterleiten auf die Login und Antragsansicht übernimmt.
 \newpage
 \subsubsection{Features}
 Die in Kapitel \hyperref[sec:feature]{6.3.1.6} Features wurden folgendermaßen implementiert.
 
 \paragraph{Zuletzt besuchte Seite der Webseite}~\\
-Beim laden der Webseite wird mithilfe von Cookies auf die zuletzt besuchte Seite navigiert. Dazu wird bei jeder Navigation wie in Kapitel \hyperref[sec:navigation]{7.1.1.1} beschrieben der Cookie gesetzt. Dieser wird beim laden der Webseite aufgerufen und es wird, falls der Cookie gesetzt ist, auf diese Seite navigiert.
+Beim Laden der Webseite wird mithilfe von Cookies auf die zuletzt besuchte Seite navigiert. Dazu wird bei jeder Navigation, wie in Kapitel \hyperref[sec:navigation]{7.1.1.1} beschrieben, der Cookie gesetzt. Dieser wird beim Laden der Webseite aufgerufen und es wird, falls der Cookie gesetzt ist, auf diese Seite navigiert.
 \begin{code}{js}
 	if (this.checkCookie()) {		// Abfrage, ob ein Cookie vorhanden ist
 		this.useCookie(true);		// Sofern ein Cookie vorhanden ist, hat der Benutzer bereits die Cookies für diese Webseite akzeptiert
@@ -241,7 +230,7 @@ Beim laden der Webseite wird mithilfe von Cookies auf die zuletzt besuchte Seite
 \captionof{listing}{Navigation auf die zuletzt besuchte Unterseite}~\\
 
 \paragraph{Browser-Pfeile}~\\
-Die Browser-Pfeile navigieren durch die History des Browsers. Da die Webseite ein One-Pager ist, muss das schreiben in die History selbst übernommen werden. Dies wird durch den folgenden Code umgesetzt:
+Die Browser-Pfeile navigieren durch die History des Browsers. Da die Webseite ein One-Pager ist, muss das Schreiben in die History selbst übernommen werden. Dies wird durch den folgenden Code umgesetzt:
 \begin{code}{js}
 window.addEventListener("popstate", e => {			// Es wird ein Listener auf die Webseite gesetzt
 	if (this.generateState(e.state) === "Escorts") {	// Dies ist eine  extra Abfrage, welche verhindert auf die Escorts-Seite zu gelangen.
@@ -251,7 +240,7 @@ window.addEventListener("popstate", e => {			// Es wird ein Listener auf die Web
 	}
 });
 \end{code}
-\captionof{listing}{Unterstützung der Browser-Pfeile}
+\captionof{listing}{Unterstützung der Browser-Pfeile}~\\
 Das Hinzufügen der einzelnen Histories für die einzelnen Unterseiten wird in Kapitel \hyperref[sec:navigation]{7.1.1.1} beschrieben.
 \newpage
 \subsection{Anmelden}
@@ -270,7 +259,7 @@ axios.post(this.url + "/login", {	// Sendet ein POST-Abfrage an das Backend
 \captionof{listing}{POST-Abfrage für den Login}~\\
 
 \subsubsection{Spezielle Situationen}
-In besonderen Fällen, zum Beispiel wie in Kapitel \hyperref[sec:antrag_viewer]{7.2.1.4} beschrieben, wird der Benutzer nicht auf die Hauptseite weitergeleitet, sondern auf den Antrag-Viewer oder auf die Antrag Ansicht.
+In besonderen Fällen, wie in Kapitel \hyperref[sec:antrag_viewer]{7.2.1.4} beschrieben, wird der Benutzer nicht auf die Hauptseite weitergeleitet, sondern auf den Antrag-Viewer oder auf die Antrag Ansicht.
 \begin{code}{js}
 switch (this.forward.name) {	// Es wird entschieden, auf welche Unterseite navigiert werden soll
 	case "ApplicationSearch":	// Es wird auf den Antrag-Viewer navigiert
@@ -311,9 +300,9 @@ axios.post(this.url + "/logout", {	// Sendet ein POST-Abfrage an das Backend
 \captionof{listing}{Gesamte Abfrage für das Abmelden}~\\
 \newpage
 \subsection{Antrag erstellen}
-Ein Antrag kann von jedem Lehrer, der an dem System angemeldet ist erstellt werden. Dazu wird auf die Antrag erstellen Unterseite navigiert, wo der Benutzer aussuchen kann, ob er eine Schulveranstaltung, Fortbildung oder einen anderen Antrag erstellen möchte. Auf diesen Unterseiten werden die notwendigen Informationen von dem Benutzer in die Eingabefelder eingegeben. Diese Informationen werden in ein JSON-Objekt gegeben und an das Backend gesendet.
+Ein Antrag kann von jedem Lehrer, der an dem System angemeldet ist, erstellt werden. Dazu wird auf die Antrag erstellen Unterseite navigiert, wo der Benutzer aussuchen kann, ob er eine Schulveranstaltung, Fortbildung oder einen anderen Antrag erstellen möchte. Auf diesen Unterseiten werden die notwendigen Informationen von dem Benutzer in die Eingabefelder eingegeben. Diese Informationen werden in ein JSON-Objekt gegeben und an das Backend gesendet.
 \\
-In den folgenden Codebeispielen, werden oft die Befehle ''returnString'', ''returnBoolean'' und ''returnValue'' verwendet. Diese dienen dazu die Datentypen auf die des Backends anzupassen. 
+In den folgenden Codebeispielen, werden oft die Befehle \textit{returnString}, \textit{returnBoolean} und \textit{returnValue} verwendet. Diese dienen dazu die Datentypen auf die des Backends anzupassen. 
 \subsubsection{Schulveranstaltung}
 \paragraph{Allgemeine Informationen}~\\
 In dem ersten Schritt, werden allgemeine Informationen der Schulveranstaltung eingegeben.
@@ -332,7 +321,7 @@ Nach der Eingabe aller allgemeinen Informationen wird der Benutzer nach dem Drü
 	\label{fig:escorts}
 \end{figure}
 \newpage
-Nachdem die Seite bearbeitet worden ist, kann auf den Knopf ''Einreichen'' gedrückt werden. Sobald der Knopf gedrückt worden ist, wird das JSON-Objekt erstellt, mit allen Informationen die eingegeben worden sind und an das Backend gesendet.
+Nachdem die Seite bearbeitet worden ist, kann auf den Knopf ''Einreichen'' gedrückt werden. Sobald der Knopf gedrückt worden ist, wird das JSON-Objekt, mit allen Informationen, die eingegeben worden sind, erstellt und an das Backend gesendet.
 \label{code_submit_data}
 \begin{code}{js}
 var data = {		// Das JSON-Objekt mit allen Informationen
@@ -377,8 +366,8 @@ Eine Fortbildung wird auf der Fortbildungs-Unterseite erstellt. Diese sieht wie 
 \newpage
 Bei einer Fortbildung kann unterschieden werden, welche Art von Fortbildung erstellt werden soll. Es kann zwischen Seminar, Tagung, Lehrgang und Sonstiges unterschieden werden. Das JSON-Objekt wird nach dem Drücken des ''Einreichen'' Knopfes erstellt und mit den angegebenen Daten befüllt. Das Objekt wird anschließend an das Backend gesendet.\\
 
-Das JSON-Objekt wird wie in Kapitel \hyperref[code_submit_data]{7.2.4.1} beschrieben erstellt. Für eine Fortbildung gibt es nur wenige Änderungen.
-Statt dem SchoolEventDetails Objekt, wird ein TrainingDetails in den Antrag hinzugefügt und die Art des Antrags wird auf 0 gesetzt:
+Das JSON-Objekt wird, wie in Kapitel \hyperref[code_submit_data]{7.2.4.1} beschrieben, erstellt. Für eine Fortbildung gibt es nur wenige Änderungen.
+Statt dem \textit{SchoolEventDetails} Objekt, wird ein \textit{TrainingDetails} Objekt in den Antrag hinzugefügt und die Art des Antrags wird auf 0 gesetzt:
 \begin{code}{js}
 var data = {		// Das JSON-Objekt mit allen Informationen
 	Name: this.returnString(this.escorts.description),	// Der Name des Antrags
@@ -404,10 +393,10 @@ Ein Sonstiger Antrag kann auf der Unterseite ''Anderer Grund'' erstellt werden. 
 	\caption[Sonstiger Antrag]{Eingabefelder für sonstige Anträge}
 	\label{fig:othercause}
 \end{figure}
-Sonstige Anträge können unterschieden werden in Pflegefreistellungen, Dienstaufträgen, Arztterminen und Sonstiges. Das JSON-Objekt wird nach dem Drücken des ''Einreichen'' Knopfes erstellt und mit den angegebenen Daten befüllt. Das Objekt wird anschließend an das Backend gesendet.\\
+Sonstige Anträge werden unterschieden in Pflegefreistellungen, Dienstaufträgen, Arztterminen und Sonstiges. Das JSON-Objekt wird nach dem Drücken des ''Einreichen'' Knopfes erstellt und mit den angegebenen Daten befüllt. Das Objekt wird anschließend an das Backend gesendet.\\
 
-Das JSON-Objekt wird wie in Kapitel \hyperref[code_submit_data]{7.2.4.1} beschrieben erstellt. Für einen Sonstigen Antrag gibt es nur wenige Änderungen.
-Statt dem SchoolEventDetails Objekt, wird ein OtherReasonDetails in den Antrag hinzugefügt und die Art des Antrags wird auf 8 gesetzt:
+Das JSON-Objekt wird, wie in Kapitel \hyperref[code_submit_data]{7.2.4.1} beschrieben, erstellt. Für einen Sonstigen Antrag gibt es nur wenige Änderungen.
+Statt dem \textit{SchoolEventDetails} Objekt, wird ein \textit{OtherReasonDetails} Objekt in den Antrag hinzugefügt und die Art des Antrags wird auf 8 gesetzt:
 \begin{code}{js}
 var data = {		// Das JSON-Objekt mit allen Informationen
 	Name: this.returnString(this.escorts.description),	// Der Name des Antrags
@@ -427,7 +416,7 @@ var data = {		// Das JSON-Objekt mit allen Informationen
 \newpage
 \subsection{Antrag Ansicht}
 \label{sec:antrag_ansicht}
-Wenn die Unterseite geladen wird, die einen Antrag anzeigen soll, so wird der Unterseite die ID des Antrags mitgegeben. Mit dieser ID wird, sobald die Komponente geladen wird eine Abfrage an das Backend gesendet, um den gesamten Antrag zu laden. Die Informationen werden interpretiert und angezeigt.
+Wenn die Unterseite, die einen Antrag anzeigen soll, geladen wird, so wird der Unterseite die ID des Antrags mitgegeben. Mit dieser ID wird, sobald die Komponente geladen wird, eine Abfrage an das Backend gesendet, um den gesamten Antrag zu laden. Die Informationen werden interpretiert und angezeigt.
 \subsubsection{Progress Bar}
 Jeder Antrag besitzt einen Fortschritt, welcher graphisch durch eine ''Progress'' Komponente angezeigt wird. Die Komponente erhält von der  Antrag Ansicht den Fortschritt des Antrags und die Art des Antrags als Nummer, um die Informationen für den Benutzer lesbar anzuzeigen.
 \begin{figure}
@@ -448,7 +437,7 @@ Die Dokumente werden in einer Liste angezeigt:
 
 Folgende Dokumente werden je nach Antragsart erstellt:
 \paragraph{Schulveranstaltung}~\\
-Die Schulveranstaltung besitzt 2 Dokumente. Zum einen die allgemeinen Informationen zu der Veranstaltung und zum Anderen die Informationen zu den Begleitpersonen.
+Die Schulveranstaltung besitzt zwei Dokumente. Zum Einen die allgemeinen Informationen zu der Veranstaltung und zum Anderen die Informationen zu den Begleitpersonen.
 \subparagraph{Allgemeine Informationen}~\\
 In diesem Dokument werden generellen Informationen über die Schulveranstaltung gespeichert. Diese können nur von dem Leiter des Antrags eingesehen und bearbeitet werden.
 \subparagraph{Informationen zu Begleitlehrern}~\\
@@ -480,13 +469,13 @@ Mit folgendem Code wird eine PDF erstellt und in einem neuen Tab geöffnet:\cite
 	);
 \end{code}
 \paragraph{Änderungen speichern}~\\
-Der Benutzer kann die Änderungen eines Antrags speichern. Dies kann in bestimmten Phasen eines Antrags geschehen. Die Änderungen werden sobald auf den ''Änderungen Speichern'' Knopf gedrückt wird an das Backend gesendet.
+Der Benutzer kann die Änderungen eines Antrags speichern. Dies kann in bestimmten Phasen eines Antrags geschehen. Die Änderungen werden, sobald auf den ''Änderungen Speichern'' Knopf gedrückt wird, an das Backend gesendet.
 \paragraph{Antrag schließen}~\\
-Der Leiter eines Antrags kann den Antrag schließen. Sobald der Antrag geschlossen ist, kann er nicht mehr editiert werden.
+Der Leiter eines Antrags kann den Antrag schließen. Sobald der Antrag geschlossen ist, wird dieser im Backend gelöscht.
 \newpage
 \subsection{Antrag Übersicht}
 \label{sec:antrag_uebersicht}
-Um einen Überblick über die Anträge zu haben, gibt es zwei Übersichtsseiten, welche die Anträge auflisten. In den Auflistungen sieht man die groben Daten des Antrags und kann diese in der Antrag Ansicht öffnen. Sobald eine Übersichtsseite aufgerufen wird, werden die Anträge abgefragt und werden in der Liste angezeigt.
+Um einen Überblick über die Anträge zu haben, gibt es zwei Übersichtsseiten, welche die Anträge auflisten. In den Auflistungen sieht man die groben Daten des Antrags und kann diese in der Antrag Ansicht öffnen. Sobald eine Übersichtsseite aufgerufen wird, werden die Anträge abgefragt und in der Liste angezeigt.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\linewidth]{images/liste_antrag}
@@ -502,13 +491,13 @@ In der Auflistung der aktiven Anträge, werden alle Anträge angezeigt, welche n
 \paragraph{Schnelle Informationen}~\\
 Wird auf den Knopf ''Schnelle Informationen'' gedrückt, öffnet sich ein Fenster, in dem die groben Informationen angezeigt werden.
 \paragraph{Antrag Betrachten}~\\
-Wird auf den Knopf ''Antrag Betrachten'' gedrückt, wird der Antrag in der Antrag Ansicht geöffnet.
+Wird auf den Knopf ''Antrag Betrachten'' gedrückt, wird der Antrag in der Ansicht geöffnet.
 \newpage
 \subsection{Administrator}
 \subsubsection{Antrag Ansicht}
-Der Aufbau der Antrag Ansicht ähnelt dem aus \hyperref[sec:antrag_ansicht]{7.2.5}.\\
-Ein Administrator kann jedoch alle Informationen eines Antrags einsehen und diesen Akzeptieren. Des weiteren können alle PDFs des Antrags geöffnet werden. Der Antrag kann auch abgelehnt werden, wodurch der Fortschritt zurückgesetzt wird. Wenn der Antrag abgelehnt wird, kann ein Grund für das Ablehnen angegeben werden. Der Antragsteller kann daraufhin die Informationen des Antrags aktualisieren und damit den Antrag erneut einreichen, oder den Antrag schließen.
+Der Aufbau der Antrag Ansicht ähnelt dem aus dem Kapitel \hyperref[sec:antrag_ansicht]{7.2.5}.\\
+Ein Administrator kann alle Informationen eines Antrags einsehen und diesen akzeptieren. Des Weiteren können alle PDFs des Antrags geöffnet werden. Der Antrag kann auch abgelehnt werden, wodurch der Fortschritt zurückgesetzt wird. Wenn der Antrag abgelehnt wird, kann ein Grund für das Ablehnen angegeben werden. Der Antragsteller kann daraufhin die Informationen des Antrags aktualisieren und damit den Antrag erneut einreichen, oder den Antrag schließen.
 \subsubsection{Antrag Übersicht}
-Die Übersichtsseite für Administratoren ähnelt dem Aufbau aus \hyperref[sec:antrag_uebersicht]{7.2.6}.\\
-Der Administrator sieht jedoch wer den Antrag gestellt hat und kann mehrere Anträge auswählen um diese in einer PDF anzuzeigen.
-Des weiteren kann auf den Knopf ''Antrag beachten'' gedrückt werden, wodurch der Administrator auf die Antrag Ansicht für Administratoren weitergeleitet wird.
+Die Übersichtsseite für Administratoren ähnelt dem Aufbau aus dem Kapitel \hyperref[sec:antrag_uebersicht]{7.2.6}.\\
+Der Administrator sieht wer den Antrag gestellt hat und kann mehrere Anträge auswählen um diese in einer PDF anzuzeigen.
+Des Weiteren kann auf den Knopf ''Antrag beachten'' gedrückt werden, wodurch der Administrator auf die Antrag Ansicht für Administratoren weitergeleitet wird.

@@ -29,9 +29,9 @@ Einzelne Komponenten laden die Daten eigenständig aus dem Backend. Dies ist ein
 Im Falle, dass eine Komponente Daten an eine weitere Komponente sendet, wird diese Kommunikation von dem Manager übernommen.
 
 \subsubsection{Antrag-Viewer}
-Es wird eine weitere Seite vorhanden sein, auf die man durch einen Link gelangen kann. Auf dieser Seite ist es möglich, einen Antrag per ID anzeigen zu lassen. Da dieser extra Link technisch auf der selben Ebene, wie der Manager ist, wird dafür gesorgt, dass dieser extra Link dem Manager nahtlos untergeordnet ist. Der Antrag-Viewer ist nur verwendbar, sofern der Benutzer angemeldet ist und auch die Berechtigung hat diesen Antrag zu betrachten.
+Es soll eine weitere Seite vorhanden sein, auf der man durch einen Link gelangen kann. Auf dieser Seite soll es möglich sein, einen Antrag per ID anzeigen zu lassen. Da dieser extra Link technisch auf der selben Ebene, wie der Manager ist, wird dafür gesorgt, dass dieser extra Link dem Manager nahtlos untergeordnet ist. Der Antrag-Viewer ist nur verwendbar, sofern der Benutzer angemeldet ist und auch die Berechtigung hat diesen Antrag zu betrachten.
 \\\\
-Wird in den Parametern des Links bereits spezifiziert, welcher Antrag geöffnet werden soll, wird nach der Anmeldung dem Benutzer dieser Antrag angezeigt. Es können nur jene Anträge angezeigt werden, zu denen der Benutzer die erforderlichen Berechtigungen besitzt. Besitzt der Benutzer nicht die erforderlichen Berechtigungen, wird eine Fehlermeldung ausgegeben.
+Wird in den Parametern des Links bereits spezifiziert welcher Antrag geöffnet werden soll, wird nach der Anmeldung dem Benutzer dieser Antrag angezeigt. Es können nur jene Anträge angezeigt werden, zu denen der Benutzer die erforderlichen Berechtigungen besitzt. Besitzt der Benutzer nicht die erforderlichen Berechtigungen, wird eine Fehlermeldung ausgegeben.
 
 \subsubsection{Navigation}
 Da fast alle Komponenten dem Manager untergeordnet sind, ist es auch die Verantwortung des Managers die Navigation zu steuern. Dazu gibt es eine zentrale Funktion im Manager, welche die derzeit geladene Seite verändern kann. Des Weiteren werden die benötigten Informationen geladen bzw. erstellt, welche die Komponenten benötigen.
@@ -40,9 +40,9 @@ Die Funktion zum Verändern der derzeitigen Anzeige, wird von den untergeordnete
 
 \subsubsection{Features}
 \label{sec:feature}
-Es werden auch Funktionen implementiert, welche das Benützen der Webseite erleichtern.
+Es sollen auch Funktionen implementiert werden, welche das Benützen der Webseite erleichtern.
 \\\\
-Es ist möglich bei erneutem Laden der Webseite auf die zuletzt geöffnete Seite zu gelangen. Bei Beenden des Browsers speichert die Webseite die aktuelle Seite und lädt diese bei erneutem Aufrufen der Webseite.
+Es soll möglich sein bei erneutem Laden der Webseite auf die zuletzt geöffnete Seite zu gelangen. Beim Beenden des Browsers speichert die Webseite die aktuelle Seite und lädt diese bei erneutem Aufrufen der Webseite.
 \\\\
 Es ist auch möglich zwischen den Seiten durch die Browser-Pfeile zu navigieren. Dies ist wichtig, da durch versehentliches Drücken einer falschen Komponente ein Benutzer möglichst schnell wieder auf die vorherige Seite gelangen können muss. Durch die Implementierung der Browser-Pfeile ist es möglich intuitiv auf die vorherige Seite zu wechseln. Andere Funktionen, welche die selben Funktionalität haben, werden durch diese Implementierung auch unterstützt.
 \newpage
@@ -88,15 +88,15 @@ Die Webseite besitzt auch einige Aktionen, die von Benutzern ausgeführt werden 
 \end{figure}
 
 \subsubsection{Aktion ausführen}
-Eine Aktion wird ausgeführt, wenn z.B: auf eine Komponente gedrückt wird. Dies ruft eine Funktion auf, bei der ein Befehl erstellt wird.
+Eine Aktion wird ausgeführt wenn z.B: auf eine Komponente gedrückt wird. Dies ruft eine Funktion auf bei der ein Befehl erstellt wird.
 
 \subsubsection{Befehl senden}
-Der Befehl beinhaltet alle wichtigen Informationen für das Backend. Beispielsweise, falls eine neue Nachricht gelöscht werden soll, wird die ID der Nachricht mitgesendet.
+Der Befehl beinhaltet alle wichtigen Informationen für das Backend. Falls eine neue Nachricht gelöscht werden soll, wird die ID der Nachricht mitgesendet.
 
 \subsubsection{Antwort interpretieren}
-Sobald das Backend den Befehl ausgeführt hat, wird eine Antwort an das Frontend gesendet und wird dort interpretiert. Die Interpretation der Antwort wird durch den Status der Antwort geschehen. Der Status der Antwort beinhaltet einen Code, welcher aussagt, ob der Befehl funktioniert hat oder fehlgeschlagen ist. Sollte der Befehl fehlgeschlagen sein, so deutet der Code auf den genauen Fehlergrund hin.
+Sobald das Backend den Befehl ausgeführt hat, wird eine Antwort an das Frontend gesendet und soll dort interpretiert werden. Die Interpretation der Antwort soll durch den Status der Antwort geschehen. Der Status der Antwort beinhaltet einen Code, welcher aussagt, ob der Befehl funktioniert hat oder fehlgeschlagen ist. Sollte der Befehl fehlschlagen, so deutet der Code auf den genauen Fehlergrund hin.
 
 \subsubsection{Information anzeigen}
 Tritt ein Fehler auf, wird dem Benutzer dies offensichtlich mitgeteilt werden.\\
-Sollte kein Fehler aufgetreten sein, soll dem Benutzer je nach Befehl dies auf unterschiedliche Weise mitgeteilt werden.\\
-Um weiterhin das Beispiel zu nutzen: Wenn eine Nachricht gelöscht werden soll, dann wird dem Benutzer mitgeteilt, dass die Nachricht gelöscht worden ist, wenn diese Nachricht verschwindet.
+Sollte kein Fehler auftreten, soll dem Benutzer je nach Befehl dies auf unterschiedliche Weise mitgeteilt werden.\\
+Um weiterhin das Beispiel zu nutzen: Wenn eine Nachricht gelöscht wird, dann wird dem Benutzer mitgeteilt, dass die Nachricht gelöscht worden ist, wenn diese Nachricht verschwindet.
