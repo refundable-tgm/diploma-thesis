@@ -259,7 +259,7 @@ axios.post(this.url + "/login", {	// Sendet ein POST-Abfrage an das Backend
 \captionof{listing}{POST-Abfrage für den Login}~\\
 
 \subsubsection{Spezielle Situationen}
-In besonderen Fällen, wie in Kapitel \hyperref[sec:antrag_viewer]{7.2.1.4} beschrieben, wird der Benutzer nicht auf die Hauptseite weitergeleitet, sondern auf den Antrag-Viewer oder auf die Antrag Ansicht.
+In besonderen Fällen, wie in Kapitel \hyperref[sec:antrag_viewer]{7.3.1.4} beschrieben, wird der Benutzer nicht auf die Hauptseite weitergeleitet, sondern auf den Antrag-Viewer oder auf die Antrag Ansicht.
 \begin{code}{js}
 switch (this.forward.name) {	// Es wird entschieden, auf welche Unterseite navigiert werden soll
 	case "ApplicationSearch":	// Es wird auf den Antrag-Viewer navigiert
@@ -366,7 +366,7 @@ Eine Fortbildung wird auf der Fortbildungs-Unterseite erstellt. Diese sieht wie 
 \newpage
 Bei einer Fortbildung kann unterschieden werden, welche Art von Fortbildung erstellt werden soll. Es kann zwischen Seminar, Tagung, Lehrgang und Sonstiges unterschieden werden. Das JSON-Objekt wird nach dem Drücken des ''Einreichen'' Knopfes erstellt und mit den angegebenen Daten befüllt. Das Objekt wird anschließend an das Backend gesendet.\\
 
-Das JSON-Objekt wird, wie in Kapitel \hyperref[code_submit_data]{7.2.4.1} beschrieben, erstellt. Für eine Fortbildung gibt es nur wenige Änderungen.
+Das JSON-Objekt wird, wie in Kapitel \hyperref[code_submit_data]{7.3.4.1} beschrieben, erstellt. Für eine Fortbildung gibt es nur wenige Änderungen.
 Statt dem \textit{SchoolEventDetails} Objekt, wird ein \textit{TrainingDetails} Objekt in den Antrag hinzugefügt und die Art des Antrags wird auf 0 gesetzt:
 \begin{code}{js}
 var data = {		// Das JSON-Objekt mit allen Informationen
@@ -395,7 +395,7 @@ Ein Sonstiger Antrag kann auf der Unterseite ''Anderer Grund'' erstellt werden. 
 \end{figure}
 Sonstige Anträge werden unterschieden in Pflegefreistellungen, Dienstaufträgen, Arztterminen und Sonstiges. Das JSON-Objekt wird nach dem Drücken des ''Einreichen'' Knopfes erstellt und mit den angegebenen Daten befüllt. Das Objekt wird anschließend an das Backend gesendet.\\
 
-Das JSON-Objekt wird, wie in Kapitel \hyperref[code_submit_data]{7.2.4.1} beschrieben, erstellt. Für einen Sonstigen Antrag gibt es nur wenige Änderungen.
+Das JSON-Objekt wird, wie in Kapitel \hyperref[code_submit_data]{7.3.4.1} beschrieben, erstellt. Für einen Sonstigen Antrag gibt es nur wenige Änderungen.
 Statt dem \textit{SchoolEventDetails} Objekt, wird ein \textit{OtherReasonDetails} Objekt in den Antrag hinzugefügt und die Art des Antrags wird auf 8 gesetzt:
 \begin{code}{js}
 var data = {		// Das JSON-Objekt mit allen Informationen
@@ -495,9 +495,9 @@ Wird auf den Knopf ''Antrag Betrachten'' gedrückt, wird der Antrag in der Ansic
 \newpage
 \subsection{Administrator}
 \subsubsection{Antrag Ansicht}
-Der Aufbau der Antrag Ansicht ähnelt dem aus dem Kapitel \hyperref[sec:antrag_ansicht]{7.2.5}.\\
+Der Aufbau der Antrag Ansicht ähnelt dem aus dem Kapitel \hyperref[sec:antrag_ansicht]{7.3.5}.\\
 Ein Administrator kann alle Informationen eines Antrags einsehen und diesen akzeptieren. Des Weiteren können alle PDFs des Antrags geöffnet werden. Der Antrag kann auch abgelehnt werden, wodurch der Fortschritt zurückgesetzt wird. Wenn der Antrag abgelehnt wird, kann ein Grund für das Ablehnen angegeben werden. Der Antragsteller kann daraufhin die Informationen des Antrags aktualisieren und damit den Antrag erneut einreichen, oder den Antrag schließen.
 \subsubsection{Antrag Übersicht}
-Die Übersichtsseite für Administratoren ähnelt dem Aufbau aus dem Kapitel \hyperref[sec:antrag_uebersicht]{7.2.6}.\\
+Die Übersichtsseite für Administratoren ähnelt dem Aufbau aus dem Kapitel \hyperref[sec:antrag_uebersicht]{7.3.6}.\\
 Der Administrator sieht wer den Antrag gestellt hat und kann mehrere Anträge auswählen um diese in einer PDF anzuzeigen.
 Des Weiteren kann auf den Knopf ''Antrag beachten'' gedrückt werden, wodurch der Administrator auf die Antrag Ansicht für Administratoren weitergeleitet wird.
