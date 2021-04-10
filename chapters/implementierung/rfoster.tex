@@ -233,7 +233,7 @@ Beim Laden der Webseite wird mithilfe von Cookies auf die zuletzt besuchte Seite
 Die Browser-Pfeile navigieren durch die History des Browsers. Da die Webseite ein One-Pager ist, muss das Schreiben in die History selbst übernommen werden. Dies wird durch den folgenden Code umgesetzt:
 \begin{code}{js}
 window.addEventListener("popstate", e => {			// Es wird ein Listener auf die Webseite gesetzt
-	if (this.generateState(e.state) === "Escorts") {	// Dies ist eine  extra Abfrage, welche verhindert auf die Escorts-Seite zu gelangen.
+	if (this.generateState(e.state) === "Escorts") {	// Dies ist eine extra Abfrage, welche verhindert auf die Escorts-Seite zu gelangen.
 		this.changeComponent("School", false);
 	} else {
 		this.changeComponent(this.generateState(e.state), false);	// Es wird auf die Unterseite navigiert.
@@ -418,7 +418,7 @@ var data = {		// Das JSON-Objekt mit allen Informationen
 \label{sec:antrag_ansicht}
 Wenn die Unterseite, die einen Antrag anzeigen soll, geladen wird, so wird der Unterseite die ID des Antrags mitgegeben. Mit dieser ID wird, sobald die Komponente geladen wird, eine Abfrage an das Backend gesendet, um den gesamten Antrag zu laden. Die Informationen werden interpretiert und angezeigt.
 \subsubsection{Progress Bar}
-Jeder Antrag besitzt einen Fortschritt, welcher graphisch durch eine ''Progress'' Komponente angezeigt wird. Die Komponente erhält von der  Antrag Ansicht den Fortschritt des Antrags und die Art des Antrags als Nummer, um die Informationen für den Benutzer lesbar anzuzeigen.
+Jeder Antrag besitzt einen Fortschritt, welcher graphisch durch eine ''Progress'' Komponente angezeigt wird. Die Komponente erhält von der Antrag Ansicht den Fortschritt des Antrags und die Art des Antrags als Nummer, um die Informationen für den Benutzer lesbar anzuzeigen.
 \begin{figure}
 	\centering
 	\includegraphics[width=1\linewidth]{images/progress}
