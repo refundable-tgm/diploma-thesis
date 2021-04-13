@@ -82,8 +82,8 @@ Die Login-Maske besteht aus einem eigenen Container, welcher ermöglicht die Mas
 										v-model="email"
 										type="text"
 										placeholder="E-Mail"
-										></b-form-input>
-										</b-input-group>
+									></b-form-input>
+								</b-input-group>
 							</b-col>
 						</b-row>
 						<b-row id="r-password">
@@ -311,9 +311,78 @@ Optisch wurde vor allem die Höhe des umschließenden Containers verändert, und
 \end{code}
 \paragraph{Menü-Element Mobil}
 ~\\
+Wie schon erwähnt ist die mobile Ansicht sehr schlicht gehalten, damit sie nicht überladen wirkt und dass sich auch vor allem die nicht Technik affinen Lehrer auskennen. Daher zeigen wir auf der mobilen Ansicht nur das Nötigste an (Siehe Abbildung 7.3). Alle Knöpfe werden nun vertikal angeordnet und mit einem passenden Icon bestückt. Die Newselemente unterscheiden sich kaum von denen, der Desktop-Version, die Elemente sind lediglich mit etwas weniger Details bestückt und sind nicht in einem scrollbaren Container, da man auf der mobilen Version sonst doppelt scrollen müsste.
+\begin{code}{html}
+	<!-- DASH MOBILE -->
+	<b-col class="d-block d-md-none" cols="12">
+	  <!-- Column -->
+	  <b-container fluid>
+		<b-row align-v="center" align-h="center">
+		  <b-col cols="12">
+			<center><h1 style="margin-top:10px;">Dashboard</h1></center>
+		  </b-col>
+		  <b-col cols="12">
+			<!-- Logout Button -->
+			<b-button
+			  variant="outline-danger"
+			  class="shadow-lg"
+			  v-on:click="logout"
+			  style="margin-top:0px; margin-bottom:20px; width:100%"
+			>
+			  <b-icon icon="person" aria-hidden="true"></b-icon> Ausloggen
+			  <!-- Icon -->
+			</b-button>
+		  </b-col>
+		  <b-col cols="12">
+			<!-- Neuer Antrag Button --><b-button
+			  size="lg"
+			  variant="outline-primary"
+			  v-on:click="newApplication"
+			  class="shadow-lg"
+			  style="margin-bottom:20px; width:100%"
+			>
+			  <b-icon icon="plus-circle" aria-hidden="true"></b-icon> Neuer
+			  Antrag
+			</b-button></b-col
+		  >	
+\end{code}
 
 \paragraph{Neuigkeiten-Element}
 ~\\
+Die Neuigkeiten-Elemente sind mit einer Illustration bestückt, die den momentanen Status, des jeweiligen Antrags beschreiben soll. Außerdem wird ein Titel der Neuigkeit mitgegeben, die zum Beispiel \enquote{Antrag X abgelehnt} heißen könnte. Etwas mehr Details werden dann noch in einem Beschreibungsfeld mitgegeben, das wegen der Übersichtlichkeit nur auf Desktopgeräten sichtbar ist.
+\begin{code}{html}
+	<b-row align-v="center">
+	<b-col cols="2">
+	  <b-container style="height: 100%">
+		<b-row align-v="center" align-h="center" style="height: 100%">
+		  <!-- Illustration Angenommen/Abgelehnt -->
+		  <img
+			src="@/assets/accepted_1.svg"
+			class="align-middle news-status"
+			style="height: 50px; width: auto"
+			alt="Illustration von arbeitenden Personen"
+		  />
+		</b-row>
+	  </b-container>
+	</b-col>
+	<b-col cols="10">
+	  <b-container>
+		<b-row align-h="center" align-v="center">
+		  <b-col cols="12">
+			<!-- Titel der Neuigkeit -->
+			<h3 class="news-elem-heading">{{ snews.title }}</h3>
+		  </b-col>
+		</b-row>
+		<b-row align-h="center" class="d-none d-md-block">
+		  <b-col cols="12">
+			<!-- Beschreibung der Neuigkeit -->
+			<h4 class="news-elem-heading">{{ snews.description }}</h4>
+		  </b-col>
+		</b-row>
+	  </b-container>
+	</b-col>
+  </b-row>	
+\end{code}
 
 \newpage
 \subsubsection{Neuer Antrag}
