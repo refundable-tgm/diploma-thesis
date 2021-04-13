@@ -14,7 +14,7 @@ ein neues Vue Projekt erstellen, das in diesem Fall \enquote{Refundable} heißt 
 \begin{code}{bash}
 	npm install vue bootstrap-vue
 \end{code}
-Damit ist die Arbeit aber noch nicht getan, um in den Komponenten Bootstrap und dessen vordefinierte Icons zu verwenden, muss man 
+Damit ist die Arbeit aber noch nicht getan, um in den Komponenten Bootstrap und dessen vordefinierte Icons zu verwenden, muss man in \enquote{main.js} folgendes importieren:
 \begin{code}{html}
 	import { BootstrapVue, BootstrapVueIcons } from "bootstrap-vue";
 	import "./plugins/bootstrap-vue";
@@ -22,26 +22,333 @@ Damit ist die Arbeit aber noch nicht getan, um in den Komponenten Bootstrap und 
 	Vue.use(BootstrapVue);
 	Vue.use(BootstrapVueIcons);
 \end{code}
-
+Alle Teile der Website sind in sogenannten Komponenten verpackt, die je nach Benutzereingaben dynamisch gewechselt werden. 
 
 \newpage
-\subsection{Visuelle Konzeption}
-\paragraph{Login-Seite}
+\subsection{Komponenten der Website}
+\subsubsection{Generell}
+Die Struktur der Komponenten ist so aufgebaut, dass die Seite sowohl für Desktop- als auch mobile Endgeräte optimiert ist. Dazu wird das \enquote{Grid-System} von Bootstrap verwendet, welches seinen Platz im \enquote{template-Tag}, der VueJS Komponente findet. Dieses besteht aus einem Container, einer Reihe (Row) und einer Spalte (Column). Da es am Anfang das Problem gab, dass nicht der ganze Bildschirm ausgenutzt wird, habe ich folgende Klassen in unserem CSS-Dokument erstellt:
+\begin{code}{css}
+	.template-main-container {
+		height: 100vh;
+		width: 100vw;
+		margin: 0;
+		padding: 0;
+	}
+	
+	.template-main-row {
+		height: 100vh;
+		width: 100vw;
+		margin: 0;
+		padding: 0;
+	}
+\end{code}
+Diese dienen dazu, dass der Hauptcontainer, als auch die Hauptreihe der Website, 100\% der Höhe (100 vertikale Einheiten), sowie 100\% der Breite (100 horizontale Einheiten) einnehmen. Außerdem wird in den Klassen definiert, dass die Elemente keinen Abstand zum Rand haben sollen.
+\newpage
+\subsubsection{Login-Seite}
+Uns war sehr wichtig, dass die Login-Seite sehr schlicht gehalten ist und sofort zu verstehen ist. Da das Tool Refundable nur von Lehrern des TGMs verwendet werden soll, haben wir uns dazu entschlossen, dass in der Loginmaske die E-Mail-Endung \enquote{@tgm.ac.at} vordefiniert und unveränderbar ist. Außerdem wollten wir dem Aufrufer der Website sofort klar machen, um was es sich bei dieser Website handelt und haben daher den Projektnamen Refundable, als auch unseren Slogan auf der Seite platziert. Des weiteren war aufgrund der DSGVO eine Meldung zu realisieren, die den Benutzer darüber informiert, dass Cookies verwendet werden. Falls diese Meldung nicht akzeptiert wird und man versucht sich anzumelden, wird eine Fehlermeldung dargestellt. Diese Meldung wird jedoch dynamisch mit VueJS erstellt und nicht direkt mittels Bootstrap. In der Realität schaut die Login-Seite wie folgt aus (Abbildung 7.1):
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\linewidth]{images/website/login}
+	\caption[Login]{Ein Bild der Endgültigen Login-Seite}
+	\label{fig:login}
+\end{figure}
+\paragraph{Login-Maske}
+~\\
+Die Login-Maske besteht aus einem eigenen Container, welcher ermöglicht die Maske vollkommen responsiv aufzubauen. Die Eingabefelder haben wir mit einer \enquote{input-groupe} gelößt (Code Z. 12). Um einen Wert optisch in einem Eingabefeld vorzugeben hat Bootstrap ein praktisches Element, namens \enquote{b-input-groupe-text} (Code Z. 14), welches vor oder nach dem Feld hinzugefügt werden kann. Da die Login-Daten, der TGM Server verwendet werden, haben wir einen Link eingebaut, falls man sein Passwort vergessen hat. Betätigt man diesen, wird man auf die entsprechende Seite des TGMs weitergeleitet.
+\begin{code}{html}
+	<!-- Anmeldungsformular -->
+	<b-col cols="12" md="6">
+		<b-container>
+			<b-row align-h="center">
+				<b-col cols="12" sm="10" md="10" lg="8" xl="6">
+					<b-container id="login-wrap" class="shadow-lg">
+						<b-row id="r-login" align-h="center">
+							<h2 id="lheading2">Anmeldung</h2>
+						</b-row>
+						<b-row align-h="center" id="r-email">
+							<b-col cols="12">
+								<!-- Input des Benutzernamens / der Email -->
+								<b-input-group size="lg">
+									<b-input-group-text
+										id="tgm-addon"
+										class="shadow"
+										slot="append"
+										><span>@tgm.ac.at</span></b-input-group-text
+										>
+									<b-form-input
+										id="email"
+										class="shadow login-inputs"
+										v-model="email"
+										type="text"
+										placeholder="E-Mail"
+										></b-form-input>
+										</b-input-group>
+							</b-col>
+						</b-row>
+						<b-row id="r-password">
+							<b-col cols="12">
+								<!-- Input des Passworts -->
+								<b-form-input
+									id="password"
+									class="shadow login-inputs"
+									v-model="password"
+									type="password"
+									placeholder="Password"
+									size="lg"
+								></b-form-input>
+							</b-col>
+						</b-row>
+						<b-row id="r-forgotten">
+							<b-col cols="12">
+								<!-- Passwort vergessen Weiterleitung auf Moodle -->
+								<a
+									id="forgotten-password"
+									href="https://elearning.tgm.ac.at/login/forgot_password.php"
+								>Passwort vergessen?</a
+								>
+							</b-col>
+						</b-row>
+						<b-row align-h="center" id="r-login-btn">
+							<!-- Login Button -->
+							<b-button size="lg" id="login-btn" v-on:click="login"
+							>Anmelden</b-button
+							>
+						</b-row>
+					</b-container>
+				</b-col>
+			</b-row>
+		</b-container>
+	</b-col>
+\end{code}
+Da einige Elemente unseren Ansprüchen optisch nicht genügt haben, haben wir eigene Änderungen in unserem CSS-Code hinzugefügt. Dabei wurde vor allem die Gestaltung, der Eingabefelder und des Buttons verändert, aber auch die des Containers, welcher die Maske beinhaltet. Genauer gesagt haben wir den Farbverlauf des Logos in der Maske eingebaut, die Ecken der Elemente etwas abgerundet und Schatten hinzugefügt.
+\begin{code}{css}
+/* -- Login -- */
+
+#login-wrap {
+	background: rgb(255, 255, 255);
+	background: -moz-linear-gradient(
+	0deg,
+	rgba(255, 255, 255, 1) 0%,
+	rgba(220, 248, 255, 1) 38%,
+	rgba(177, 239, 255, 1) 100%
+	);
+	background: -webkit-linear-gradient(
+	0deg,
+	rgba(255, 255, 255, 1) 0%,
+	rgba(220, 248, 255, 1) 38%,
+	rgba(177, 239, 255, 1) 100%
+	);
+	background: linear-gradient(
+	0deg,
+	rgba(255, 255, 255, 1) 0%,
+	rgba(220, 248, 255, 1) 38%,
+	rgba(177, 239, 255, 1) 100%
+	);
+	filter: progid: DXImageTransform.Microsoft.gradient(startColorstr="#ffffff", endColorstr="#b1efff", GradientType=1);
+	padding: 1.5rem;
+	border-radius: 2.5rem;
+}
+
+#email {
+	border-radius: 1rem 0 0 1rem;
+}
+
+#tgm-addon {
+	border-radius: 0 1rem 1rem 0;
+}
+
+.input-group-append {
+	border-radius: 0 1rem 1rem 0;
+}
+
+.input-group-text {
+	border-radius: 0 1rem 1rem 0;
+}
+
+#password {
+	border-radius: 1rem 1rem 1rem 1rem;
+}
+
+#login-btn {
+	font-family: "Rajdhani", sans-serif;
+	padding: 0.5rem 1.5rem 0.5rem 1.5rem;
+	font-size: 1.3rem;
+	letter-spacing: 2.5px;
+	font-weight: 500;
+	color: #000;
+	background-color: rgba(177, 239, 255, 1);
+	border: none;
+	border-radius: 45px;
+	box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
+	transition: all 0.3s ease 0s;
+	cursor: pointer;
+	outline: none;
+}
+
+#login-btn:hover {
+	background-color: #2ec0e5;
+	box-shadow: 0px 15px 20px rgba(46, 229, 157, 0);
+	color: #fff;
+	transform: translateY(3px);
+}
+\end{code}
+\paragraph{Cookie-Meldung}
+~\\
+Die Meldung, dass Cookies benutzt werden, sollte schlicht und einfach sein. Außerdem haben wir uns als Ziel gesetzt, dass sie dem Nutzer deutlich klar machen soll, dass wir ausschließlich funktionelle und notwendige Cookies verwenden. Für diese Meldung hat sich perfekt das vordefinierte \enquote{Alert-Element} von Bootstrap geeignet:
+\begin{code}{html}
+	<!-- Bestätigung, dass diese Seite Cookies benutzt -->
+	<b-alert
+		v-model="showBottom"
+		class="position-fixed fixed-bottom m-0 rounded-0"
+		style="z-index: 2000;"
+		variant="warning"
+		dismissible
+	>
+		Diese Seite <b>benötigt</b> Cookies um zu funktionieren. Dies sind nur
+		funktionelle Cookies, wir sammeln Ihre Daten <b>nicht</b>. Alle benötigten
+		Cookies
+		<!-- Button zum akzeptieren -->
+		<b-button variant="success" @click="validateCookies()"
+			>akzeptieren
+		</b-button>
+	</b-alert>
+\end{code}
+
+\newpage
+\subsubsection{Startseite}
+Die Startseite sollte so intuitiv und übersichtlich wie möglich sein. Deswegen haben wir uns für ein \enquote{Drei Spalten Design} entschieden. In der ersten Spalte befinden sich alle wichtigen Funktionen - drei Knöpfe, zum erstellen von neuen Anträgen, um alle aktiven Anträge anzuschauen und um alle Anträge zu betrachten, die man jemals gestellt hat. In der 2. Spalte befindet sich das Logo, eine Illustration für das Dashboard und ein Knopf zum Ausloggen. Falls man ein Administrator ist, wird hier ebenfalls ein Knopf, zum wechseln in die Administratoransicht angezeigt. In der dritten Spalte werden Neuigkeiten zu den Anträgen des Benutzers angezeigt, falls man auf eine Neuigkeit klickt, wird man zu dem jeweiligen Antrag weitergeleitet. In der Realität schaut die Startseite wie folgt aus (Abbildung 7.2):
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\linewidth]{images/website/dashboard}
+	\caption[Dashboard]{Ein Bild der Endgültigen Startseite}
+	\label{fig:dashboard}
+\end{figure}
+Jedoch ist dieses System auf mobilen Geräten nicht sonderlich übersichtlich, deshalb haben wir diese etwas abgeändert. Diese ist sehr schlicht gehalten, jedoch macht dies das Ganze auf Smartphones um einiges einfacher die Website zu bedienen. Die mobile Version der Startseite schaut in der Realität wie folgt aus (Abbildung 7.3):
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.4\linewidth]{images/website/dashboard_mobile}
+	\caption[Dashboard Mobil]{Ein Bild der Endgültigen Startseite (Mobil)}
+	\label{fig:dashboardmobile}
+\end{figure}
+
+\paragraph{Menü-Element Desktop}
+~\\
+Der Container mit den Funktionselementen, hat wie beim Login einen Schatten, der ihn von dem Hintergrund abhebt. In diesem Container befinden sich die Menü Bezeichnung und die klickbaren Elemente, die auch aus einem Container bestehen und eine responsive Illustration, die zu der jeweiligen Funktion passt und eine Bezeichnung, was dieser Knopf auslöst beinhaltet.
+\begin{code}{html}
+<b-col id="dash-main-cont" class="d-none d-md-block" cols="12" md="4">
+	<b-container>
+		<b-row
+			id="dash-row"
+			align-v="center"
+			align-h="center"
+			class="shadow-xl"
+		>
+			<b-col cols="12">
+				<center><h2 id="menu-h2">Menü</h2></center>
+			</b-col>
+			<!-- Custom Button für einen neuen Antrag -->
+			<b-col
+				id="new"
+				cols="12"
+				class="shadow-lg dash-elem"
+				v-on:click="newApplication"
+			>
+				<b-container style="height: 100%">
+					<b-row align-h="center" align-v="center" style="height: 100%">
+						<b-col cols="6" class="ill-wrapper d-none d-md-block">
+						<!-- Illustration neuer Antrag -->
+							<b-img
+								id="all-ill"
+								center
+								src="@/assets/new.svg"
+								alt="Illustration für alle Anträge"
+							></b-img>
+						</b-col>
+						<b-col cols="12" md="6">
+							<h2 id="new-h2" class="dh">Neuer Antrag</h2>
+						</b-col>
+					</b-row>
+				</b-container>
+			</b-col>
+			
+			...
+		</b-row>
+	</b-container>
+</b-col>
+\end{code}
+Optisch wurde vor allem die Höhe des umschließenden Containers verändert, und dessen umliegende Abstände. Wie man auf der Abbildung 7.2 sehen kann wurden hier auch wieder die Ecken abgerundet. Was man jedoch nicht sehen kann, ist, dass sich die Funktionselemente, optisch absenken und der Schatten entfernt wird und die Farbe verändert wird, wenn man mit der Maus, die sich zu einer zeigenden Hand verändert, über das Element fährt. 
+\begin{code}{css}
+#dash-main-cont {
+	height: 70vh;
+}
+
+#dash-row {
+	height: 70vh;
+	padding-left: 2rem;
+	padding-right: 2rem;
+	padding-bottom: 1.5rem;
+}
+
+.dash-elem {
+	background-color: rgb(255, 255, 255);
+	height: 22%;
+	transition: all 0.3s ease 0s;
+	cursor: pointer;
+	outline: none;
+}
+
+.dash-elem:hover {
+	background-color: #8ff2ff;
+	box-shadow: 0px 0px 50px rgba(0, 0, 0, 0.144);
+	color: rgb(141, 141, 141);
+	transform: translateY(3px);
+}
+
+#dash-row {
+	border-radius: 6rem 6rem 6rem 6rem;
+}
+\end{code}
+\paragraph{Menü-Element Mobil}
 ~\\
 
-\paragraph{Startseite}
+\paragraph{Neuigkeiten-Element}
 ~\\
 
-\paragraph{Neuer Antrag}
+\newpage
+\subsubsection{Neuer Antrag}
 ~\\
 
-\paragraph{Ansicht Alle Anträge}
+\newpage
+\subsubsection{Ansicht Alle Anträge}
 ~\\
 
-\paragraph{Ansicht Aktive Anträge}
+\newpage
+\subsubsection{Ansicht Aktive Anträge}
 ~\\
 
-\paragraph{Administrator Ansicht}
-
-\paragraph{Antragsansicht}
+\newpage
+\subsubsection{Antragsansicht}
 ~\\
+
+\newpage
+\subsubsection{Administrator Ansicht}
+~\\
+
+\newpage
+\paragraph{Administrator Antragsansicht}
+~\\
+
+\newpage
+\subsubsection{Seite nicht Gefunden}
+~\\
+
+\newpage
+\subsubsection{Antrag suchen}
+~\\
+
+\newpage
+\subsubsection{Rechte vergeben}
+~\\
+
+
