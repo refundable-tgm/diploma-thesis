@@ -2,13 +2,13 @@
 
 \section{Frontend - responsives Webdesign}
 	\subsection{Einleitung}
-	In diesem Kapitel werden die Anforderungen des Designs des \Gls{frontend}s geschildert. Da es mehrere Möglichkeiten gibt das Frontend zu realisieren werden hier drei wesentliche Methoden verglichen. Die erste Variante wäre ganz klassisch \Gls{html}, \Gls{css} und \Gls{js} zu verwenden. Die zweite Methode, die zum Vergleich hergezogen wird, ist statt \Gls{vanilla} CSS die etwas agilere Sprache \Gls{sass} zu verwenden. Die dritte und auch letzte Methode in diesem Vergleich ist, dass die Arbeit durch die Verwendung eines CSS \Gls{framework}s vereinfacht wird. Anschließend werden die drei verschiedenen Methoden gegenüber gestellt und die Variante, welche am Besten für unser Projekt Refundable geeignet ist wird ausgewählt. Zu guter Letzt wird das Design für die Zielgruppe analysiert, da Refundable explizit für Lehrer erstellt wird und diese Zielgruppe soll sich möglichst gut und schnell auf der Website zurecht finden.
+	In diesem Kapitel werden die Anforderungen des Designs des \Gls{frontend}s geschildert. Da es mehrere Möglichkeiten gibt, das Frontend zu realisieren, werden hier drei wesentliche Methoden verglichen. Die erste Variante wäre, ganz klassisch \Gls{html}, \Gls{css} und \Gls{js} zu verwenden. Die zweite Methode, die zum Vergleich herangezogen wird, verwendet statt \Gls{vanilla} CSS die etwas agilere Sprache \Gls{sass}. Die dritte und auch letzte Methode in diesem Vergleich ist, die Arbeit durch die Verwendung eines CSS \Gls{framework}s zu vereinfachen. Anschließend werden die drei verschiedenen Methoden gegenübergestellt und die für unser Projekt Refundable am besten geeignet Variante ausgewählt. Zu guter Letzt wird das Design im Hinblick auf die Zielgruppe der Lehrer analysiert, die sich möglichst gut und schnell auf der Website zurecht finden soll.
 	
 	\subsection{HTML, CSS, JS}
-	Der eigentliche Standard \textit{HTML5} wird in der Praxis meist als Überbegriff für \textit{HTML}, \textit{CSS} und \textit{JS} verwendet.\cite{html5-css3-handbuch} In den folgenden Kapiteln wird erklärt wozu \textit{HTML}, \textit{CSS} und \textit{JS} da sind und welche Funktionalitäten sie bieten.
+	Der eigentliche Standard \textit{HTML5} wird in der Praxis meist als Überbegriff für \textit{HTML}, \textit{CSS} und \textit{JS} verwendet \cite{html5-css3-handbuch}. In den folgenden Kapiteln wird erklärt wozu \textit{HTML}, \textit{CSS} und \textit{JS} da sind und welche Funktionalitäten sie bieten.
 	
 		\subsubsection{HTML}
-		HTML ist eine \Gls{auszeichnungssprache} steht für \enquote{Hypertext Markup Language} und wurde 1989 von dem britischen Informatiker Tim Burners-Lee veröffentlicht.\\ 
+		HTML ist eine \Gls{auszeichnungssprache}, sie steht für \enquote{Hypertext Markup Language} und wurde 1989 von dem britischen Informatiker Tim Burners-Lee veröffentlicht.\\ 
 		\textit{\enquote{Hypertext bezeichnet die Möglichkeit, Texte mit Hilfe von Hyperlinks oder kurz Links miteinander zu verbinden}}\cite{html5-css3-def}.\\ 
 		Dies heißt, dass man mittels Hypertexts (Links) auf der Seite beliebig zwischen Sektionen herum springen kann.
 		Auszeichnungssprachen werden im Fachjargon auch als \textit{Markup Language (ML)} bezeichnet \cite{auszeichnungssprachen}. \textit{Markup Languages} werden in zwei verschiedene Gruppen aufgeteilt, zum einen \textit{Procedural Markup Languages (PML)}, das sind jene Auszeichnungssprachen, die für die Verarbeitung von Daten optimiert sind. Zum anderen \textit{Descriptive Markup Languages (DML)}, diese sind für die logische Strukturierung von Daten da.\\Bekannte Beispiele hierfür wären:
@@ -53,10 +53,10 @@
 			\label{fig:htmlbsp}
 		\end{figure}
 		~\\
-		Da \textit{HTML} nur für die Grundstruktur einer Website gedacht ist, also zum Beschreiben der Struktur und des Inhalts, schaut die Seite noch nicht sonderlich ansprechend aus. Um dies zu verändern ist CSS benötigt.
+		Da \textit{HTML} nur für die Grundstruktur einer Website gedacht ist, also zum Beschreiben der Struktur und des Inhalts, schaut die Seite noch nicht sonderlich ansprechend aus, um dies zu verändern wird CSS benötigt.
 		
 		\subsubsection{CSS}
-		\textit{Cascading Stylesheets} oder kurz \textit{CSS} ist wie der Name schon sagt für den \textit{Style}, also für das Aussehen der Website verantwortlich. Da \textit{HTML} Anfangs nur im Printbereich verbreitet war, war es nicht notwendig die Seiten zu gestalten \cite{html5-css3-def, html5-css3-handbuch}. Das Internet bekam aber einen immer stärker werdenden Einfluss und daher auch eine höhere Bekanntheit. Deswegen wurde \textit{HTML} mit der Formatierungssprache \textit{CSS} ergänzt.\\
+		\textit{Cascading Stylesheets} oder kurz \textit{CSS} ist, wie der Name schon sagt, für den \textit{Style}, also für das Aussehen der Website verantwortlich. Da \textit{HTML} anfangs nur im Printbereich verbreitet wurde, war es nicht notwendig die Seiten zu gestalten \cite{html5-css3-def, html5-css3-handbuch}. Das Internet bekam aber einen immer stärker werdenden Einfluss und daher auch eine höhere Bekanntheit. Deswegen wurde \textit{HTML} mit der Formatierungssprache \textit{CSS} ergänzt.\\
 		Mittels CSS sind unter anderem folgende Dinge möglich:
 		\begin{itemize}
 			\item Hintergrund ändern
@@ -71,11 +71,11 @@
 			\subitem Hover-Effekt
 		\end{itemize}
 		Man kann \textit{CSS} auf verschiedene Arten in \textit{HTML} benützen. Als Beispiel werden wir eine Überschrift in die Mitte der Website setzen, die Schriftgröße auf \textit{40pt} stellen und die Schriftart auf \enquote{sans-serif} ändern.\\
-		Die Umsetzung kann auf mehrere Arten erfolgen. Entweder man fügt einem Element ein \textit{Style-Attribut} hinzu und ändert direkt im Element das Aussehen. Hierbei ist darauf zu achten, dass nur das Element in dem man diese Änderungen vornimmt verändert werden:
+		Die Umsetzung kann auf mehrere Arten erfolgen. Beispielsweise fügt man einem Element ein \textit{Style-Attribut} hinzu und ändert direkt im Element das Aussehen. Hierbei ist darauf zu achten, dass nur das Element in dem man diese Änderungen vornimmt verändert wird:
 		\begin{code}{html}
 			<h1 style="text-align: center; font-size: 40pt; font-family: sans-serif;">Ich bin eine tolle Überschrift</h1>
 		\end{code}
-		Man kann auch im \enquote{head} einen \textit{style-Bereich} eröffnen und dort das Aussehen verändern. Dabei ist darauf zu achten, dass man den Style von allen Elementen mit dem Tag, den man ausgewählt hat verändert. Um dies zu verhindern kann man Elementen auch eine \textit{ID} (für einzelne Elemente verwendbar) oder eine \textit{CLASS} (für mehrere Elemente verwendbar) hinzufügen und diese im CSS auswählen und verändern:
+		Man kann auch im \enquote{head} einen \textit{style-Bereich} eröffnen und dort das Aussehen verändern. Dabei ist darauf zu achten, dass man den Style von allen Elementen mit dem Tag, den man ausgewählt hat verändert. Um dies zu verhindern kann man Elementen auch eine \textit{ID} (für einzelne Elemente verwendbar), oder eine \textit{CLASS} (für mehrere Elemente verwendbar) hinzufügen und diese im CSS-Code auswählen und verändern:
 		\begin{code}{html}
 				<head>
 					<style>
@@ -112,11 +112,11 @@
 		\end{code}
 	\captionof{listing}{CSS Verlinkung}
 	\label{list:csslink} ~\\
-		Wie man erkennen kann, ist dem ganzen keine Ende gesetzt und mit viel Aufwand kann man alles denkbare verändern. Um den Aufwand jedoch gering zu halten, sind \textit{SASS} und \textit{CSS-Frameworks} da, welche in Kapitel 5.1.3 und 5.1.4 erklärt werden.
+		Wie man erkennen kann, ist dem ganzen keine Ende gesetzt und mit viel Aufwand kann man alles Denkbare verändern. Um den Aufwand jedoch gering zu halten, sind \textit{SASS} und \textit{CSS-Frameworks} da, welche in Kapitel 5.1.3 und 5.1.4 erklärt werden.
 		\subsubsection{Java Script}
-		\textit{JavaScript} wird verwendet um Elementen Funktionen zu geben. Zum Beispiel, dass wenn man auf einen Button drückt ein Fenster aufpoppt, ein neues Element hinzugefügt wird oder ein Element im Nachhinein verändert wird. Da \textit{JavaScript} eine Skriptsprache ist kann man auch eigene Funktionen schreiben und Variablen verwenden. Für das Designen brauch man JS nur, wenn man nur mit \textit{CSS} oder \textit{SASS} arbeitet. Wird ein \textit{Framework} verwendet, haben diese meist ein \textit{JavaScript-Framework} inkludiert und man muss kein \textit{JavaScript} mehr verwenden.
+		\textit{JavaScript} wird verwendet, um Elementen Funktionen zu geben. Zum Beispiel, dass wenn man auf einen Button drückt ein Fenster aufpoppt, ein neues Element hinzugefügt wird oder ein Element im Nachhinein verändert wird. Da \textit{JavaScript} eine Skriptsprache ist, kann man auch eigene Funktionen schreiben und Variablen verwenden. Für das Designen brauch man JS nur, wenn man mit \textit{CSS} oder \textit{SASS} arbeitet. Wird ein \textit{Framework} verwendet, hat dieses meist ein \textit{JavaScript-Framework} inkludiert und man muss kein \textit{JavaScript} mehr verwenden.
 	\subsection{SASS}
-	\textit{Syntactically Awesome Style Sheets} oder kurz \textit{SASS} ist eine Erweiterung von \textit{CSS} \cite{jump-start-sass}. Es fügt \textit{CSS} ein paar Funktionalitäten von Java Script hinzu. \textit{SASS} wird aber nicht wie \textit{CSS} direkt in das \textit{HTML-File} eingebunden und kann auch nicht direkt in ein Element geschrieben werden. Das \textit{.sass} File muss erst kompiliert werden. Anschließend wird ein \textit{.css} File generiert, welches man im \textit{HTML-Code} einbinden kann. Man kann unter anderem Funktionen erstellen um Elemente zu verändern. Zusätzlich kann man Variablen festlegen und so zum Beispiel eine Primärfarbe festzulegen, wodurch man sich nicht immer den \textit{HEX-Code} von einer bestimmten Farbe merken muss. Ebenfalls kann man durch die Variablen die Farbe von mehreren Elementen auf Einmal ändern. Dadurch kann man zum Beispiel Light- und Darktheme in die Website einbauen.\\Beispiele für die oben genannten Funktionen wären:
+	\textit{Syntactically Awesome Style Sheets} oder kurz \textit{SASS} ist eine Erweiterung von \textit{CSS} \cite{jump-start-sass}. Es fügt \textit{CSS} ein paar Funktionalitäten von Java Script hinzu. \textit{SASS} wird aber nicht wie \textit{CSS} direkt in das \textit{HTML-File} eingebunden und kann auch nicht direkt in ein Element geschrieben werden. Das \textit{.sass} File muss erst kompiliert werden. Anschließend wird ein \textit{.css} File generiert, welches man im \textit{HTML-Code} einbinden kann. Man kann unter anderem Funktionen erstellen, um Elemente zu verändern. Zusätzlich kann man Variablen kreieren und so zum Beispiel eine Primärfarbe festlegen, wodurch man sich nicht immer den \textit{HEX-Code} von einer bestimmten Farbe merken muss. Ebenfalls kann man durch die Variablen die Farbe von mehreren Elementen auf Einmal ändern. Dadurch kann man zum Beispiel Light- und Darktheme in die Website einbauen.\\Beispiele für die oben genannten Funktionen wären:
 
 %	\begin{code}{sass}
 	%	$standard-width: 200px
@@ -139,14 +139,14 @@
 	
 	
 	\subsection{Frameworks}
-	Frameworks für HTML, CSS und JS beinhalten vorgestaltete Komponenten, welche mittels Klassen einem HTML Element hinzugefügt werden. Da Frameworks das Arbeiten an einer Website wesentlich einfacher machen und wir dieses Hilfsmittel auch benutzen werden müssen folgende Fragen beantwortet werden um das optimale Framework für dieses Projekt auszuwählen:
+	Frameworks für HTML, CSS und JS beinhalten vorgestaltete Komponenten, welche mittels Klassen einem HTML Element hinzugefügt werden. Da Frameworks das Arbeiten an einer Website wesentlich einfacher machen und wir dieses Hilfsmittel auch benutzen werden, müssen folgende Fragen beantwortet werden, um das optimale Framework für dieses Projekt auszuwählen:
 	\begin{itemize}
 		\item \textbf{Welche CSS-Frameworks unterstützen explizit die User-Experience und Usability?}
 		\item \textbf{Welche Vor- und Nachteile bringen diese Frameworks mit sich?}
 	\end{itemize}
 	Zum Vergleich werden vier sehr verbreitete und geschätzte Frameworks herangezogen:
 		\subsubsection{Bootstrap}
-		Bootstrap ist ein Framework, welches am bekanntesten ist und am meisten verwendet wird \cite{introduction-bootstrap, learning-bootstrap}. Das von Twitter entwickelte Framework hat mit der aktuellen Version 4.5 viele verschiedene Komponenten, die optimal für erfahrene Entwickler als auch für Anfänger geeignet sind. In der Dokumentation von Bootstrap gibt es einige Templates und sehr viel gut dokumentierten Beispiel Code\cite{introduction-bootstrap}. Bootstrap kann über einen Paketmanager, ein CDN oder als heruntergeladene Dateien zur HTML Datei hinzugefügt werden \cite{bootstrap-docu}. Durch diesen großen Verwendungsgrad gibt es viele Erweiterungen und zahlreiche Plattformen auf denen man sich informieren kann, falls man Probleme bei der Entwicklung der Website hat \cite{learning-bootstrap}. Bootstrap bietet mit seinem überschaubaren Grid-System eine gute Umsetzung für die Responsivität der Seite, damit sie auf allen möglichen Endgeräten perfekt ausschaut.
+		Bootstrap ist ein Framework, welches am bekanntesten ist und am meisten verwendet wird \cite{introduction-bootstrap, learning-bootstrap}. Das von Twitter entwickelte Framework hat in der aktuellen Version 4.5 viele verschiedene Komponenten, die optimal für erfahrene Entwickler, aber auch für Anfänger geeignet sind. In der Dokumentation von Bootstrap gibt es einige Templates und sehr viel gut dokumentierten Beispiel Code\cite{introduction-bootstrap}. Bootstrap kann über einen Paketmanager, ein CDN oder als heruntergeladene Dateien zur HTML Datei hinzugefügt werden \cite{bootstrap-docu}. Durch diesen großen Verwendungsgrad gibt es viele Erweiterungen und zahlreiche Plattformen auf denen man sich informieren kann, falls man Probleme bei der Entwicklung der Website hat \cite{learning-bootstrap}. Bootstrap bietet mit seinem überschaubaren Grid-System eine gute Umsetzung für die Responsivität der Seite, damit sie auf allen möglichen Endgeräten perfekt ausschaut.
 		\paragraph{Pro / Contra}
 		\subparagraph{Pro}
 		\begin{itemize}
@@ -167,7 +167,7 @@
 		\end{itemize}
 	
 		\subsubsection{Materialize}
-		Materialize ist wie Bootstrap ein intuitives HTML, CSS und JS Framework \cite{materialize-intro}. Es ist Bootstrap sogar sehr ähnlich. Es ist ein einfacher aufgebaut. Dadurch hat es auch nicht so viele verschiedene Komponenten und nicht so viel Beispiel Code wie Bootstrap. Materialize legt vor allem Wert auf das Design, welches von Google's Material Design abstammt. Ein weiterer großer Punkt ist Usability und User Experience, welche unter anderem Hand in Hand mit dem Design gehen. Um die User Experience möglichst hoch zu halten arbeitet Materialize viel mit Animationen. Materialize kann ebenfalls über ein \Gls{cdn}, Paketmanager oder als Datei in das Projekt eingebunden werden. Falls man das Design verändern will stellt Materialize ebenfalls noch eine SASS Version zur Verfügung \cite{WebDocMaterialize}.
+		Materialize ist wie Bootstrap ein intuitives HTML, CSS und JS Framework \cite{materialize-intro}. Es ist Bootstrap sogar sehr ähnlich, aber einfacher aufgebaut. Dadurch hat es auch nicht so viele verschiedene Komponenten und nicht so viel Beispiel Code wie Bootstrap. Materialize legt vor allem Wert auf das Design, welches von Google's Material Design abstammt. Ein weiterer großer Punkt ist Usability und User Experience, welche unter anderem Hand in Hand mit dem Design gehen. Um die User Experience möglichst hoch zu halten, arbeitet Materialize viel mit Animationen. Materialize kann ebenfalls über ein \Gls{cdn}, Paketmanager oder als Datei in das Projekt eingebunden werden. Falls man das Design verändern will stellt Materialize ebenfalls noch eine SASS Version zur Verfügung \cite{WebDocMaterialize}.
 		\paragraph{Pro / Contra}
 		\subparagraph{Pro}
 		\begin{itemize}
@@ -175,8 +175,8 @@
 			\item Mittels SASS veränderbar
 			\item Ansehnliches Standard-Design 
 			\item Viele Animationen
-			\item viele Einbindungsmöglichkeiten
-			\item einfach zu verstehen
+			\item Viele Einbindungsmöglichkeiten
+			\item Einfach zu verstehen
 			\item Responsiv
 		\end{itemize}
 		\subparagraph{Contra}
@@ -187,7 +187,7 @@
 		\end{itemize}
 	
 		\subsubsection{ZURB Foundation}
-		Foundation wird wie Bootstrap und Materialize als intuitives Web-Framework bezeichnet \cite{foundation-intro}. Das von Zurb entwickelte Framework beinhaltet viele verschiedenen Komponenten, die für die mobilen Geräte optimiert sind. Das Framework ist dafür optimiert schnell und effizient Webseiten zu gestalten. Darum ist es auch in zwei verschiedene Kategorien geteilt, nämlich in das Framework für das Web und in das Framework, welches explizit für html-Mails ist. Man kann sich Foundation als \enquote{Complete-Version} herunterladen, darin sind alle Komponenten enthalten. In der \enquote{Essential-Version} sind nur die essentiellen Komponenten, wie zum Beispiel Buttons, enthalten. Man kann sich seine ZURB-Datei auch mit allen Komoinenten, die man benötigt selbst konfigurieren. Auch eine SASS Version ist verfügbar, falls man nur das Aussehen der Komponenten verändern möchte. Natürlich ist auch die CDN Einbindung möglich, die für die schnellste Ladegeschwindigkeit optimiert ist.
+		Foundation wird wie Bootstrap und Materialize als intuitives Web-Framework bezeichnet \cite{foundation-intro}. Das von Zurb entwickelte Framework beinhaltet viele verschiedenen Komponenten, die für mobile Endgeräte optimiert sind. Das Framework ist dafür optimiert, schnell und effizient Webseiten zu gestalten. Darum ist es auch in zwei verschiedene Kategorien geteilt, in das Framework für das Web und in das Framework, welches explizit für html-Mails gedacht ist. Man kann sich Foundation als \enquote{Complete-Version} herunterladen, darin sind alle Komponenten enthalten. In der \enquote{Essential-Version} sind nur die essentiellen Komponenten, wie zum Beispiel Buttons, enthalten. Man kann sich seine ZURB-Datei auch mit allen Komponenten, die man benötigt, selbst konfigurieren. Auch eine SASS Version ist verfügbar, falls man nur das Aussehen der Komponenten verändern möchte. Natürlich ist auch eine CDN Einbindung möglich, die für die schnellste Ladegeschwindigkeit optimiert ist.
 		\paragraph{Pro / Contra}
 		\subparagraph{Pro}
 		\begin{itemize}
@@ -208,8 +208,8 @@
 		\end{itemize}
 
 	\subsection{Vergleich}
-	Der Vergleich der Frameworks setzt sich aus dem Umfang, den Erweiterungen, dem Aussehen, der Leichtigkeit im Bezug auf das Erlernen des Frameworks, dem Umfang der Dokumentation, der Kompatibilität mit VueJS und unserer Erfahrung mit dem jeweiligen Framework.\\
-	Die Punkte (0-9) setzen sich immer in der Relation mit den anderen Frameworks zusammen, wobei 9 die beste, als auch maximale Punktzahl ist. Die Basis 0 ist in diesem Vergleich mit den Funktionen als auch Aufwand von vanilla CSS gleichzusetzen. Alle dafür benötigten Informationen wurden von der jeweiligen Dokumentationsseite entzogen.
+	Der Vergleich der Frameworks setzt sich aus dem Umfang, den Erweiterungen, dem Aussehen, der Leichtigkeit im Bezug auf das Erlernen des Frameworks, dem Umfang der Dokumentation, der Kompatibilität mit VueJS und unserer Erfahrung mit dem jeweiligen Framework zusammen.\\
+	Die Punkte (0-9) setzen sich immer in der Relation mit den anderen Frameworks zusammen, wobei 9 die beste, also maximale Punktzahl ist. Die Basis 0 ist in diesem Vergleich mit den Funktionen und Aufwand von vanilla CSS gleichzusetzen. Alle dafür benötigten Informationen wurden von der jeweiligen Dokumentationsseite bezogen.
 	\begin{center}
 		\begin{table}
 			\centering
@@ -235,16 +235,16 @@ Bootstrap hat durch das langjährige Bestehen und durch die große Reichweite un
 \subsubsection{Aussehen}
 Bei dem Aussehen des Standard-Designs gewinnt klar und deutlich Materialize, da es die ansprechendste Darstellung mit einem schönen Design bietet \cite{WebDocMaterialize}. Bootstrap und Foundation legen mehr Wert auf die Funktionalität des Frameworks und legen weniger Wert auf das Aussehen \cite{bootstrap-docu, foundation-docu}. Dies merkt man dadurch, dass die Elemente optisch nur minimal von den HTML-Standardelementen abweichen. Materialize hat hingegen ein komplett neues und modernes Design aufgezogen.
 \subsubsection{Leichtigkeit}
-Aus eigener Erfahrung können wir sagen, dass Materialize wirklich einfach zu erlernen ist \cite{WebDocMaterialize}. Bei einem groben Einlernen in Foundation hat das Team festgestellt, dass es dem Aufbau von Materialize sehr ähnelt. Bootstrap hingegen sah auf den ersten Blick sehr kompliziert aus und war am Anfang sehr schwer zu verstehen. Nach ein paar Stunden einlernen war jedoch schon ein sehr guter Workflow vorhanden.
+Aus eigener Erfahrung können wir sagen, dass Materialize wirklich einfach zu erlernen ist \cite{WebDocMaterialize}. Bei einem groben Einlernen in Foundation hat das Team festgestellt, dass es dem Aufbau von Materialize sehr ähnelt. Bootstrap hingegen sah auf den ersten Blick sehr kompliziert aus und war am Anfang sehr schwer zu verstehen. Nach ein paar Stunden Einlernen war jedoch schon ein sehr guter Workflow vorhanden.
 \subsubsection{Dokumentation}
-Auf den ersten Blick erscheint die Dokumentation von Materialize als sehr gut, jedoch ist der Beispielcode zu einzelnen Komponenten in manchen Fällen unvollständig und man muss sich mit mühsamer Recherche nach Lösungen erkunden \cite{WebDocMaterialize}. Bootstrap und Foundation sind sehr gut dokumentiert, haben viele Code-Beispiele und in manchen Fällen sogar mit \Gls{codepen} Beispielen bestückt \cite{bootstrap-docu, foundation-docu}.
+Auf den ersten Blick erscheint die Dokumentation von Materialize als sehr gut, jedoch ist der Beispielcode zu einzelnen Komponenten in manchen Fällen unvollständig und man muss sich mit mühsamer Recherche nach Lösungen erkunden \cite{WebDocMaterialize}. Bootstrap und Foundation sind sehr gut dokumentiert, haben viele Code-Beispiele und sind in manchen Fällen sogar mit \Gls{codepen} Beispielen bestückt \cite{bootstrap-docu, foundation-docu}.
 
 \subsubsection{Kompatibilität}
-Wie im Kapitel 5.3 geschildert wird, werden wir als JS Framework VueJS verwenden. Kompatibel sind alle Frameworks, jedoch ist Bootstrap für die Zusammenarbeit mit Vue optimiert \cite{bootstrap-docu}. Da das Projektteam in einem früheren Projekt bereits Materialize mit Vue benutzt hat, ist bekannt, dass es mit den zwei Frameworks in Verbindung Probleme auftreten können. Foundation ist nicht speziell dafür optimiert mit Vue zusammenzuarbeiten, die Funktionalität ist trotzdem vorhanden. Jedoch wurde Foundation bis jetzt von keinem Mitglied der Projektes in Verbindung mit Vue verwendet.
+Wie in Kapitel 5.3 geschildert, werden wir als JS Framework VueJS verwenden. Kompatibel sind alle Frameworks, jedoch ist Bootstrap für die Zusammenarbeit mit Vue optimiert \cite{bootstrap-docu}. Da das Projektteam in einem früheren Projekt bereits Materialize mit Vue benutzt hat, ist bekannt, dass in Verbindung der beiden Frameworks Probleme auftreten können. Foundation ist nicht speziell dafür optimiert mit Vue zusammenzuarbeiten, die Funktionalität ist trotzdem vorhanden. Jedoch wurde Foundation bis jetzt von keinem Mitglied der Projektes in Verbindung mit Vue verwendet.
 
 \subsubsection{Erfahrung}
 Das Frontend-Team hat bis jetzt hauptsächlich Erfahrung mit Materialize gemacht. Bootstrap wurde in der Schule kurz angeschnitten, aber im privaten Umfeld etwas vertieft. Mit Foundation hingegen wurde noch keine Erfahrung gemacht.
 
 \subsubsection{Fazit}
-Nach dem Vergleich, der in dieser Arbeit durchgeführt wurde ist es leicht die optimale Auswahl der Umsetzung für Refundable zu treffen. Eine Entwicklung ohne ein Framework kommt durch die Analyse nicht zu Stande, da der Aufwand wesentlich höher ist und nicht so viel Zeit zur Verfügung steht. Wir haben uns schließlich für Bootstrap, da es eindeutig im Vergleich die Nase vorn hat und auch am Besten mit VueJS harmoniert.
+Nach dem Vergleich, der in dieser Arbeit durchgeführt wurde, ist es leicht, die optimale Auswahl der Umsetzung für Refundable zu treffen. Eine Entwicklung ohne ein Framework kommt auf Basis der Analyse nicht zu Stande, da der Aufwand wesentlich höher ist und nicht so viel Zeit zur Verfügung steht. Wir haben uns schließlich für Bootstrap entschieden, da es eindeutig im Vergleich die Nase vorn hat und auch am Besten mit VueJS harmoniert.
 
