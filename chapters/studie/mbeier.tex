@@ -2,7 +2,7 @@
 
 \section{Backend - REST-Schnittstelle und Infrastruktur}
 	\subsection{Einleitung}
-	Das Backend besteht aus mehreren Komponenten. Einerseits wird eine gewisse System-Infrastruktur aufgebaut werden, um das \gls{webinterface} und die REST-Schnittstelle bereitzustellen. Andererseits muss die Anwendung selbst entwickelt werden. Diese besteht aus mehreren Teilen. Darunter fällt die REST-Schnittstelle, inklusive der implementierten Endpoints, Schnittstellen zu diversen Diensten, wie dem TGM-LDAP Server, zur Datenbank und zu WebUntis, aber auch die allgemeine Funktionalität der Anwendung, unter anderem das Erstellen von PDF-Dateien. Für die Verbindung zu den Schnittstellen sowie zur Implementierung der geforderten Funktionalität werden diverse  \gls{tpp} genutzt werden. Die folgende Grafik gibt einen Überblick hinter der Infrastruktur und den verwendeten Diensten:
+	Das Backend besteht aus mehreren Komponenten. Einerseits eine gewisse System-Infrastruktur aufgebaut werden, um das \gls{webinterface} und die REST-Schnittstelle bereitzustellen. Andererseits muss die Anwendung selbst entwickelt werden. Diese besteht aus mehreren Teilen. Darunter fällt die REST-Schnittstelle, inklusive der implementierten Endpoints, Schnittstellen zu diversen Diensten, wie dem TGM-LDAP Server, zur Datenbank und zu WebUntis, aber auch die allgemeine Funktionalität der Anwendung, unter anderem das Erstellen von PDF-Dateien. Für die Verbindung zu den Schnittstellen sowie zur Implementierung der geforderten Funktionalität werden diverse  \gls{tpp} genutzt werden. Die folgende Grafik gibt einen Überblick hinter der Infrastruktur und den verwendeten Diensten:
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.8\linewidth]{images/uebersicht}
@@ -13,10 +13,10 @@
 	\newpage
 	In den folgenden Kapiteln werden die aktuell verfügbaren Technologien, welche für die Umsetzung im Backendbereich in Frage kommen, beschrieben und gegebenenfalls - sofern mehrere sinnvolle Kandidaten vorhanden sind - auch verglichen. Auf einen detaillierten Vergleich jeglicher verwendbaren Third Party Packages, welche dazu genutzt werden könnten die Funktionalität im Backend zu implementieren, wird auf Grund der extrem hohen Anzahl im Sinne der Übersichtlichkeit verzichtet. Darunter fallen jedenfalls Module wie maroto (zum Erstellen von PDF-Dateien \cite{maroto}), excelize (zum Erstellen von Excel-Dateien \cite{excelize}) und jwt-go (zum Erstellen von \Gls{jwt} \cite{jwt-go}) 
 	\subsection{Docker}
-	Um die Infrastruktur des Projektes einfach aufbauen zu können, wird \Gls{docker} genutzt. Da es sich hier um eine komplex strukturierte Infrastruktur handelt wird zusätzlich das Werkzeug \Gls{dcompose} genutzt. Mit Docker Compose kann eine Infrastruktur aufgebaut werden, die der \hyperref[fig:uebersicht]{Abbildung - Übersicht} entspricht. Für diese sind folgende Container vorgesehen, die in den nächsten Kapiteln noch im Detail beschrieben werden.
+	Um die Infrastruktur des Projektes einfach aufbauen zu können, wird \Gls{docker} genutzt. Da es sich hier um eine komplex strukturierte Infrastruktur handelt, wird zusätzlich das Werkzeug \Gls{dcompose} genutzt. Mit Docker Compose kann eine Infrastruktur aufgebaut werden, die der \hyperref[fig:uebersicht]{Abbildung - Übersicht} entspricht. Für diese sind folgende Container vorgesehen, die in den nächsten Kapiteln noch im Detail beschrieben werden.
 		\subsubsection{Datenbank}
 		\label{sec:db}
-		Um die Daten, die durch Refundable erhoben und generiert werden, zu speichern, benötigen wir eine \gls{db}. Auf Grund der Daten, welche sich durch unterschiedliche Datenstrukturen auszeichnen, ist der Einsatz einer \gls{relDb} nicht sinnvoll. Stattdessen empfiehlt sich die Verwendung einer \gls{nosqlDb}.
+		Um die Daten, die durch Refundable erhoben und generiert werden, zu speichern, wird eine \gls{db} benötigt. Auf Grund der Daten, welche sich durch unterschiedliche Datenstrukturen auszeichnen, ist der Einsatz einer \gls{relDb} nicht sinnvoll. Stattdessen empfiehlt sich die Verwendung einer \gls{nosqlDb}.
 		Standardmäßig wird zwischen 4 verschiedenen Typen von NoSQL Datenbanken unterschieden, welche jeweils nur in ihrem eigenen Use Cases sinnvoll anwendbar sind \cite{nosqltypes}:
 		\begin{itemize}
 			\item Key-Value Datenbank
@@ -44,8 +44,8 @@
 	\subsection{Deployment}
 	
 	Das Deployment soll automatisch geschehen. Um dies einfach zu ermöglichen, werden die oben zuvor beschriebenen Docker-Container, GitHub und ein Skript, welches die Schritte ausführt, genutzt. Das Skript ist hier der Hauptbaustein, welcher den Vorgang startet und steuert. Zusätzlich zum Installationsvorgang, soll das Skript auch die weitere Steuerung der Software, also starten, stoppen, updaten, cleanen und deinstallieren, beinhalten.~\\
-	Das Skript liegt in einem eigenem Install-\Gls{repo}, in welchem sonst keine weiteren Dateien liegen. Dadurch kann es einfach gecloned und direkt installiert werden; die restlichen Installations-Schritte werden automatisch erledigt.~\\
-	Da das Deployment auf einer Linux-Maschine ermöglicht werden soll, wird \Gls{bash} als Standard-Skriptsprache benutzt. Zur Verteilung des Scripts wird wie erwähnt \Gls{git} mit dem Online Repository-Hosting Service \Gls{github} verwendet.
+	Das Skript liegt in einem eigenem Install-\Gls{repo}, in welchem sonst keine weiteren Dateien liegen. Dadurch kann es einfach geklont und direkt installiert werden; die restlichen Installations-Schritte werden automatisch erledigt.~\\
+	Da das Deployment auf einer Linux-Maschine ermöglicht werden soll, wird \Gls{bash} als Standard-Skriptsprache benutzt. Zur Verteilung des Scripts wird, wie erwähnt, \Gls{git} mit dem Online Repository-Hosting Service \Gls{github} verwendet.
 	\subsection{REST-Schnittstelle}
 	Bei einer REST-Schnittstelle handelt es sich um einen bestimmten Aufbau einer Softwareschnittstelle bei verteilten Systemen \cite{Patni2017}. Das hierbei angewendete Prinzip nennt sich \enquote{Representational State Transfer} (kurz REST). Es zeichnet sich durch folgende Eigenschaften aus:
 	\begin{itemize}
@@ -62,10 +62,11 @@
 		Java ist eine der bekanntesten Programmiersprachen. Sie zeichnet sich durch Plattform-Unabhängigkeit aus \cite{jdkDocs}. Um dies zu erreichen, wird Bytecode von einem eigenem Programm, der Java Virtual Machine, interpretiert. Java arbeitet objektorientiert und ist statisch typisiert. Dies bedeutet, dass bereits vor dem Ausführen die Datentypen definiert sind. Java unterstützt auch Multithreading. Um einfach eine REST-Schnittstelle in Java bauen zu können, wird Spring Boot genutzt \cite{springDocs}. Die Verwendung von Spring ermöglicht Webapps, Tasks oder Microservices einfacher umzusetzen. Prinzipiell arbeitet Spring asynchron und flexibel, sodass es einfach zu skalieren ist. 
 		
 		\subsubsection{Python und Flask}
-		Um mit Python eine REST-Schnittstelle zu realisieren muss auf das Package (Framework) Python Flask zurückgegriffen werden \cite{flaskDocs}. Flask wird hierbei dazu genutzt, um den Webservice zu bauen. Python und Java unterscheiden sich prinzipiell sehr. Python ist im Gegensatz zu Java dynamisch typisiert, dies bedeutet, dass eine Variablendeklaration nicht notwendig ist und der Datentyp einer Variable erst zur Laufzeit klar ist \cite{pythonDocs}. Anders als Java setzt Python auf Third-Party Packages, welche sehr einfach importiert werden können. Durch die große Community Pythons ist ein Großteil der Tools, die man benötigt, meist schon vorprogrammiert und kann einfach importiert werden. Zusätzlich ist der Syntax (speziell was Zeichensetzung anbelangt) einfacher zu Verstehen, als jener von Java.
+		Um mit Python eine REST-Schnittstelle zu realisieren muss auf das Package (Framework) Python Flask zurückgegriffen werden \cite{flaskDocs}. Flask wird hierbei dazu genutzt, um den Webservice zu bauen. Python und Java unterscheiden sich prinzipiell sehr. Python ist im Gegensatz zu Java dynamisch typisiert, dies bedeutet, dass eine Variablendeklaration nicht notwendig ist und der Datentyp einer Variable erst zur Laufzeit klar ist \cite{pythonDocs}. Anders als Java setzt Python auf Third-Party Packages, welche sehr einfach importiert werden können. Durch die große Community Pythons ist ein Großteil der Tools, die man benötigt, meist schon vorprogrammiert und kann einfach importiert werden. Zusätzlich ist der Syntax (speziell was Zeichensetzung anbelangt) einfacher zu verstehen, als jener von Java.
 		
 		\subsubsection{Golang}
 		Golang (kurz Go) ist eine von Google entwickelte und publizierte Programmiersprache \cite{goDocs}. Sie wurde aus der Unzufriedenheit über Java, C++ und Python heraus entwickelt, welche am häufigsten bei Google eingesetzt wurden. All diese Programmiersprachen haben Nachteile in Googles Business Case, deswegen wurde Go speziell für skalierbare Netzwerkdienste und Cloud Computing entwickelt. Aus diesem Grund besitzt Go auch eine native Möglichkeit für den einfachen Aufbau von REST-Schnittstellen. Da bei der Entwicklung von Go speziell aus den Fehlern in Performance und Sprachdesign aus anderen Sprachen gelernt wurde, verbindet Go die Vorteile der anderen Sprachen. Darunter fallen die starke und statische Typisierung, Objektorientierung, Pointer und eine verbesserte Compiler-Effizienz.
+		\newpage
 		\subsubsection{Vergleich}
 		Diese drei Sprache werden nun in den Aspekten der Performance, dem Sprachdesign, der Komplexität des Aufbaus einer REST-Schnittstelle, das Vorhandensein von Frameworks, die Erfahrung des Teams und eine vorhandene ausführliche Dokumentation. Hierbei wird auf einer Punkteskala von 0 - 9 bewertet.
 		\begin{table}
@@ -85,7 +86,10 @@
 		\captionof{table}{Vergleich zwischen Java, Python und Golang}\label{tbl:comparisonlang}~\\
 		Daraus und aus der durchgeführten Recherche, lässt sich schließen, dass Golang sich speziell bei den Punkten Performance und Sprachdesign durchsetzen kann. Ansonsten schneiden die verschiedenen Sprachen inklusive der teilweise benötigten Frameworks großteils ähnlich hoch ab. Zusammenfassend eignet sich die Verwendung von Golang am Besten als Programmiersprache für unser Projekt, da sie im numerischen Vergleich mit der höchsten Punktezahl abschnitt, aber auch durch die speziellen Hintergründe ihrer Entwicklung genau zu den Voraussetzungen passt.
 	\subsection{Kommunikation und Datenformate}
-	Wie bereits erwähnt, zeichnen sich REST-Schnittstellen unter anderem dadurch aus, dass sie ein einheitliches Datenformat voraussetzen. Aus diesem Grund stellen sich die Fragen: Welche Datenformate eignen sich für einen konsistenten und performanten Datenaustausch zwischen Datenbank, REST-Schnittstelle und Client? Welche Vor- und Nachteile bringen diese im Hinblick auf Performance, Softwarewartung und -evolution?
+	Wie bereits erwähnt, zeichnen sich REST-Schnittstellen unter anderem dadurch aus, dass sie ein einheitliches Datenformat voraussetzen. Aus diesem Grund stellen sich die Fragen: \\~\\
+	Welche Datenformate eignen sich für einen konsistenten und performanten Datenaustausch zwischen Datenbank, REST-Schnittstelle und Client? \\~\\
+	Welche Vor- und Nachteile bringen diese im Hinblick auf Performance, Softwarewartung und -evolution?\\~\\
+	Um diese Fragen zu beantworten werden in den nächsten Kapiteln entsprechende Datenformate vorgestellt, beschrieben und analysiert.
 	
 	\newpage
 		\label{sec:json}
@@ -150,7 +154,7 @@
 		\newpage
 		
 		\subsubsection{CSV}
-		CSV (Comma-Separated Values) ist ein Textformat, mit welchem man Tabellen textbasiert darstellen kann \cite{rfc4180}. Hierbei werden Spalten durch \dq , \dq (Beistriche) getrennt und Zeilen durch einen Zeilenumbruch (CRLF; LF). Die erste Zeile repräsentiert die Namen der Spalten. Eine Beschreibung einer Tabelle mit CSV sieht wie folgt aus:
+		CSV (Comma-Separated Values) ist ein Textformat, mit welchem man Tabellen textbasiert darstellen kann \cite{rfc4180}. Hierbei werden Spalten durch \dq , \dq  (Beistriche) getrennt und Zeilen durch einen Zeilenumbruch (CRLF; LF). Die erste Zeile repräsentiert die Namen der Spalten. Eine Beschreibung einer Tabelle mit CSV sieht wie folgt aus:
 		\begin{code}{python}
 			Class,lastYear,students,class-rep
 			1AHIT,false,35,null
