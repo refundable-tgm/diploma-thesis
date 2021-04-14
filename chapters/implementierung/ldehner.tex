@@ -22,6 +22,8 @@ Damit ist die Arbeit aber noch nicht getan, um in den Komponenten Bootstrap und 
 	Vue.use(BootstrapVue);
 	Vue.use(BootstrapVueIcons);
 \end{code}
+\captionof{listing}{Benötigte Befehle um Bootstrap im VueJS Projekt einzubinden}
+	\label{list:requcommands} ~\\
 Alle Teile der Website sind in sogenannten Komponenten verpackt, die je nach Benutzereingaben dynamisch gewechselt werden. 
 
 \newpage
@@ -43,6 +45,8 @@ Die Struktur der Komponenten ist so aufgebaut, dass die Seite sowohl für Deskto
 		padding: 0;
 	}
 \end{code}
+\captionof{listing}{CSS Klassen für die Haupt- Contianer und Reihen}
+	\label{list:cssmaincont} ~\\
 Diese dienen dazu, dass der Hauptcontainer, als auch die Hauptreihe der Website, 100\% der Höhe (100 vertikale Einheiten), sowie 100\% der Breite (100 horizontale Einheiten) einnehmen. Außerdem wird in den Klassen definiert, dass die Elemente keinen Abstand zum Rand haben sollen.
 \newpage
 \subsubsection{Login-Seite}
@@ -50,7 +54,7 @@ Uns war sehr wichtig, dass die Login-Seite sehr schlicht gehalten ist und sofort
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\linewidth]{images/website/login}
-	\caption[Login]{Ein Bild der Endgültigen Login-Seite}
+	\caption[Login]{Ein Bild der endgültigen Login-Seite}
 	\label{fig:login}
 \end{figure}
 \paragraph{Login-Maske}
@@ -121,6 +125,8 @@ Die Login-Maske besteht aus einem eigenen Container, welcher ermöglicht die Mas
 		</b-container>
 	</b-col>
 \end{code}
+\captionof{listing}{HTML Code der Login-Maske}
+	\label{list:loginmask} ~\\
 Da einige Elemente unseren Ansprüchen optisch nicht genügt haben, haben wir eigene Änderungen in unserem CSS-Code hinzugefügt. Dabei wurde vor allem die Gestaltung, der Eingabefelder und des Buttons verändert, aber auch die des Containers, welcher die Maske beinhaltet. Genauer gesagt haben wir den Farbverlauf des Logos in der Maske eingebaut, die Ecken der Elemente etwas abgerundet und Schatten hinzugefügt.
 \begin{code}{css}
 /* -- Login -- */
@@ -193,6 +199,8 @@ Da einige Elemente unseren Ansprüchen optisch nicht genügt haben, haben wir ei
 	transform: translateY(3px);
 }
 \end{code}
+\captionof{listing}{CSS Code der Login-Maske}
+	\label{list:csslogin} ~\\
 \paragraph{Cookie-Meldung}
 ~\\
 Die Meldung, dass Cookies benutzt werden, sollte schlicht und einfach sein. Außerdem haben wir uns als Ziel gesetzt, dass sie dem Nutzer deutlich klar machen soll, dass wir ausschließlich funktionelle und notwendige Cookies verwenden. Für diese Meldung hat sich perfekt das vordefinierte \enquote{Alert-Element} von Bootstrap geeignet:
@@ -214,21 +222,22 @@ Die Meldung, dass Cookies benutzt werden, sollte schlicht und einfach sein. Auß
 		</b-button>
 	</b-alert>
 \end{code}
-
+\captionof{listing}{HTML Code Cookie akzeptieren }
+	\label{list:cookiehtml} ~\\
 \newpage
 \subsubsection{Startseite}
 Die Startseite sollte so intuitiv und übersichtlich wie möglich sein. Deswegen haben wir uns für ein \enquote{Drei Spalten Design} entschieden. In der ersten Spalte befinden sich alle wichtigen Funktionen - drei Knöpfe, zum erstellen von neuen Anträgen, um alle aktiven Anträge anzuschauen und um alle Anträge zu betrachten, die man jemals gestellt hat. In der 2. Spalte befindet sich das Logo, eine Illustration für das Dashboard und ein Knopf zum Ausloggen. Falls man ein Administrator ist, wird hier ebenfalls ein Knopf, zum wechseln in die Administratoransicht angezeigt. In der dritten Spalte werden Neuigkeiten zu den Anträgen des Benutzers angezeigt, falls man auf eine Neuigkeit klickt, wird man zu dem jeweiligen Antrag weitergeleitet. In der Realität schaut die Startseite wie folgt aus (Abbildung 7.2):
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\linewidth]{images/website/dashboard}
-	\caption[Dashboard]{Ein Bild der Endgültigen Startseite}
+	\caption[Dashboard]{Ein Bild der endgültigen Startseite}
 	\label{fig:dashboard}
 \end{figure}
 Jedoch ist dieses System auf mobilen Geräten nicht sonderlich übersichtlich, deshalb haben wir diese etwas abgeändert. Diese ist sehr schlicht gehalten, jedoch macht dies das Ganze auf Smartphones um einiges einfacher die Website zu bedienen. Die mobile Version der Startseite schaut in der Realität wie folgt aus (Abbildung 7.3):
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.4\linewidth]{images/website/dashboard_mobile}
-	\caption[Dashboard Mobil]{Ein Bild der Endgültigen Startseite (Mobil)}
+	\caption[Dashboard Mobil]{Ein Bild der endgültigen Startseite (Mobil)}
 	\label{fig:dashboardmobile}
 \end{figure}
 
@@ -277,6 +286,8 @@ Der Container mit den Funktionselementen, hat wie beim Login einen Schatten, der
 	</b-container>
 </b-col>
 \end{code}
+\captionof{listing}{HTML-Code-Teile des Startseitenmenüs}
+	\label{list:menuhtml} ~\\
 Optisch wurde vor allem die Höhe des umschließenden Containers verändert, und dessen umliegende Abstände. Wie man auf der Abbildung 7.2 sehen kann wurden hier auch wieder die Ecken abgerundet. Was man jedoch nicht sehen kann, ist, dass sich die Funktionselemente, optisch absenken und der Schatten entfernt wird und die Farbe verändert wird, wenn man mit der Maus, die sich zu einer zeigenden Hand verändert, über das Element fährt. 
 \begin{code}{css}
 #dash-main-cont {
@@ -309,6 +320,8 @@ Optisch wurde vor allem die Höhe des umschließenden Containers verändert, und
 	border-radius: 6rem 6rem 6rem 6rem;
 }
 \end{code}
+\captionof{listing}{Teile des CSS Codes, des Startseitenmenüs}
+	\label{list:cssmenu} ~\\
 \paragraph{Menü-Element Mobil}
 ~\\
 Wie schon erwähnt ist die mobile Ansicht sehr schlicht gehalten, damit sie nicht überladen wirkt und dass sich auch vor allem die nicht Technik affinen Lehrer auskennen. Daher zeigen wir auf der mobilen Ansicht nur das Nötigste an (Siehe Abbildung 7.3). Alle Knöpfe werden nun vertikal angeordnet und mit einem passenden Icon bestückt. Die Newselemente unterscheiden sich kaum von denen, der Desktop-Version, die Elemente sind lediglich mit etwas weniger Details bestückt und sind nicht in einem scrollbaren Container, da man auf der mobilen Version sonst doppelt scrollen müsste.
@@ -346,7 +359,8 @@ Wie schon erwähnt ist die mobile Ansicht sehr schlicht gehalten, damit sie nich
 			</b-button></b-col
 		  >	
 \end{code}
-
+\captionof{listing}{Teile des HTML-Codes der mobilen Startseite}
+	\label{list:startmobile} ~\\
 \paragraph{Neuigkeiten-Element}
 ~\\
 Die Neuigkeiten-Elemente sind mit einer Illustration bestückt, die den momentanen Status, des jeweiligen Antrags beschreiben soll. Außerdem wird ein Titel der Neuigkeit mitgegeben, die zum Beispiel \enquote{Antrag X abgelehnt} heißen könnte. Etwas mehr Details werden dann noch in einem Beschreibungsfeld mitgegeben, das wegen der Übersichtlichkeit nur auf Desktopgeräten sichtbar ist.
@@ -383,10 +397,137 @@ Die Neuigkeiten-Elemente sind mit einer Illustration bestückt, die den momentan
 	</b-col>
   </b-row>	
 \end{code}
-
+\captionof{listing}{HTML Code, des Neuigkeiten Elementes}
+	\label{list:htmlnews} ~\\
 \newpage
 \subsubsection{Neuer Antrag}
+Auf diese Seite gelangt der Nutzer entweder, durch die Betätigung des \enquote{Neuer Antrag} Buttons auf der Startseite, oder über die Verknüpfung auf der \enquote{Alle Anträge} oder \enquote{Aktive Anträge} Ansicht. Da es nicht möglich ist ein einheitliches Formular zu kreieren, haben wir uns dazu Entschieden, vor dem Formular eine Auswahlmöglichkeit der Antragsart einzubauen.
+\paragraph{Auswahl}
 ~\\
+Die von uns gewählte Auswahlmöglichkeit ist sehr einfach und intuitiv gestaltet. Die drei verschiedenen Hauptarten von Anträgen sind klar und deutlich zu unterscheiden. Optisch sind die Knöpfe ähnlich strukturiert, wie die der Hauptseite, damit sich ein einheitliches Design, durch die Website zieht.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\linewidth]{images/website/neu}
+	\caption[Neuer Antrag Auswahl]{Ein Bild der endgültigen Seite, um ein einen neuen Antrag auszuwählen}
+	\label{fig:neuauswahl}
+\end{figure}
+Die Knöpfe sind wiedermals in eigenen Containern dargestellt, um sie optimal der Größe des Endgerätes anzupassen. In dem Container, der sich mit einem Schatten vom Hintergrund abhebt, ist eine eindeutige Bezeichnung, der Funktion, des jeweiligen Elementes. Fährt man mit der Maus über einen Knopf, wird dieser, wie auf der Startseite in seiner Farbe verändert.
+\begin{code}{html}
+	<b-container id="school-button" class="na-elem shadow-xl">
+	<!-- Custom Button zum erstellen eines Schulantrages -->
+	<b-row
+	  class="na-elem-sr"
+	  align-v="center"
+	  v-on:click="school()"
+	>
+	  <b-col cols="12">
+		<h2 class="na-elem-h">Schulveranstaltung</h2>
+	  </b-col>
+	</b-row>
+  </b-container>	
+\end{code}
+\captionof{listing}{HTML Code, einer Auswahlmöglichkeit}
+	\label{list:htmlselect} ~\\
+\paragraph{Schulveranstaltung}
+~\\
+Der Antrag für eine neue Schulveranstaltung ist der komplexeste Antrag, mit den meisten Eingabefeldern. Außerdem gehören zu dem Antrag für eine Schulveranstaltung auch die Begleitpersonen Anträge. Um die Eingabe von Uhrzeiten und Daten einfacher zu machen, haben wir die Elemente \enquote{b-form-datepicker} und \enquote{b-form-timepicker} verwendet. Dies sind standardmäßige Elemente, die von BootstrapVue vordefiniert sind. Um den Lehrern auf den ersten Blick klar zu machen, welche Daten in welches Feld eingefügt werden, haben wir alle Eingabefelder mit einem Titel und einer Info bestückt.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\linewidth]{images/website/schul_1}
+	\caption[Neuer Schulantrag]{Ein Bild der Schulantrags Seite (Teil 1)}
+	\label{fig:schulantrag1}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\linewidth]{images/website/schul_2}
+	\caption[Neuer Schulantrag]{Ein Bild der Schulantrags Seite (Teil 2)}
+	\label{fig:schulantrag2}
+\end{figure}
+Alle Eingabefelder sind in sogenannte \enquote{b-form-groups} eingefügt. Diese Elemente bieten die Möglichkeit, einen Titel, der in unserem Fall auf der linken Seite angebracht ist und eine Beschreibung, die unterhalb des Eingabefelds eingefügt ist hinzuzufügen - natürlich sind diese Elemente auch responsiv. In der \enquote{form-group} wird dann das jeweilige Element eingefügt, welches man eigentlich einbauen will. Diese Elemente können Beispielsweise normale Eingabefelder sein, Checkboxe, Radiobuttons, Timepicker, Datepicker, etc.. 
+\begin{code}{html}
+	<b-form-group
+        id="bez"
+        label-cols-sm="4"
+        label-cols-lg="3"
+        content-cols-sm
+        content-cols-lg="7"
+        description="Geben Sie die Bezeichnung der Schulveranstaltung ein."
+        label="Bezeichnung"
+        label-for="bezeichnung"
+    >
+        <b-form-input
+            id="bezeichnung"
+            v-model="data.Name"
+            :readonly="readonly"
+            @input="updateData"
+        ></b-form-input>
+    </b-form-group>
+\end{code}
+\captionof{listing}{Beispiel für eine Eingabegruppe}
+Das Timepicker Element kann ganz einfach, wie im oberen Absatz beschrieben, in eine Eingabegruppe eingefügt werden. Da das Element von Bootstrap vordefiniert ist, muss man leidiglich die üblichen Werte, wie ID und Platzhalter setzen. Das Einzige was man wirklich beachten muss, ist, dass man die Richtige Zeitzone (Auflistung 7.13 locale) wählt.
+\begin{code}{html}
+	<b-form-timepicker
+		id="stz"
+		v-model="startTime"
+		:readonly="readonly"
+		@input="updateTime"
+		locale="de"
+		placeholder="Zeit auswählen"
+  	></b-form-timepicker>
+\end{code}
+\captionof{listing}{Timepicker}
+Der Datepicker ist noch einfacher zu bedienen, als der Timepicker. Hier sind nur die üblichen Parameter zu setzen.
+\begin{code}{html}
+	<b-form-datepicker
+		id="end"
+		v-model="endDate"
+		:readonly="readonly"
+		@input="updateTime"
+		class="mb-2"
+		placeholder="Datum auswählen"
+  	></b-form-datepicker>
+\end{code}
+\captionof{listing}{Datepicker}
+	\label{list:bspinputgroup} ~\\
+Aus den im Formular angegebenen Daten, wird automatisch ein weiteres Formular generiert. Dies geschieht, nachdem der \enquote{weiter} Button betätigt wurde und alle Daten als Valide anerkannt wurden. Das Formular beinhaltet für jede Begleitperson die geforderten Eingabefelder (Abbildung 7.7). Die Struktur dieser Elemente ist exakt die Selbe, wie die, der Elemente, die in Abbildung 7.11 besprochen wurden. 
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\linewidth]{images/website/schul_3_1}
+	\caption[Neuer Schulantrag]{Ein Bild des Begleitformulars (Teil 1)}
+	\label{fig:schulantrag3}
+\end{figure}
+\paragraph{Fortbildung}
+Das Fotrbildungsformular ist für Seminare, Tagungen, Lehrgänge und sonstige Events in dieser Art gedacht. Um die Formulare einheitlich zu halten, wurde auch hier wieder die selbe Struktur der Eingabefelder verwendet. Falls man die sonstige Art auswählt, fügt sich automatisch eine zusätzliche Eingabe hinzu, in der man das Anliegen genauer spezifizieren kann.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\linewidth]{images/website/fortbildung_1}
+	\caption[Neuer Schulantrag]{Ein Bild des Begleitformulars (Teil 2)}
+	\label{fig:frotbildung}
+\end{figure}
+
+\paragraph{Sonstige Anträge}
+Zu den sonstigen Anträgen gehören Anliegen, wie Pflegefreistellungen, Dienstaufträge, Arzttermine und sonstige Freistellungen dieser Arten. Wählt man einen Dienstauftrag als Art aus erscheinen automatisch noch Eingabefelder, die das Eingeben der GZ und des Titels, des Dienstauftrages ermöglichen.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\linewidth]{images/website/dienstauftrag}
+	\caption[Neuer Schulantrag]{Ein Bild des Begleitformulars (Teil 2)}
+	\label{fig:dienst}
+\end{figure}
+
+\paragraph{Reiseantrag}
+Der Reiseantrag wird automatisch bei den Formularen, der Anträge angehangen, bei denen eine Reise nötig ist. Ist keine Reise für einen bestimmten Antrag (zum Beispiel ein Arztbesuch) vorgesehen, dann wird das Formular nicht angehangen und es müssen keine unnötigen Daten eingegeben werden. Die Struktur der Elemente ist ident zu denen, die bereits besprochen wurden.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\linewidth]{images/website/zusatz_1.png}
+	\caption[Neuer Schulantrag]{Ein Bild des Reiseantrages (Teil 2)}
+	\label{fig:zusatz1}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\linewidth]{images/website/zusatz_2.png}
+	\caption[Neuer Schulantrag]{Ein Bild des Reiseantrages (Teil 2)}
+	\label{fig:zusatz2}
+\end{figure}
 
 \newpage
 \subsubsection{Ansicht Alle Anträge}
@@ -398,6 +539,14 @@ Die Neuigkeiten-Elemente sind mit einer Illustration bestückt, die den momentan
 
 \newpage
 \subsubsection{Antragsansicht}
+~\\
+\paragraph{Fortschrittsanzeige}
+~\\
+\paragraph{Dokumente anzeigen}
+~\\
+\paragraph{Reiserechnung ausfüllen}
+~\\
+\paragraph{Funktionen}
 ~\\
 
 \newpage
