@@ -204,6 +204,7 @@ Da einige Elemente unseren Ansprüchen optisch nicht genügt haben, haben wir ei
 \paragraph{Cookie-Meldung}
 ~\\
 Die Meldung, dass Cookies benutzt werden, sollte schlicht und einfach sein. Außerdem haben wir uns als Ziel gesetzt, dass sie dem Nutzer deutlich klar machen soll, dass wir ausschließlich funktionelle und notwendige Cookies verwenden. Für diese Meldung hat sich perfekt das vordefinierte \enquote{Alert-Element} von Bootstrap geeignet:
+\makeatletter
 \begin{code}{html}
 	<!-- Bestätigung, dass diese Seite Cookies benutzt -->
 	<b-alert
@@ -222,6 +223,7 @@ Die Meldung, dass Cookies benutzt werden, sollte schlicht und einfach sein. Auß
 		</b-button>
 	</b-alert>
 \end{code}
+\makeatother
 \captionof{listing}{HTML Code Cookie akzeptieren }
 	\label{list:cookiehtml} ~\\
 \newpage
@@ -518,23 +520,22 @@ Zu den sonstigen Anträgen gehören Anliegen, wie Pflegefreistellungen, Dienstau
 Der Reiseantrag wird automatisch bei den Formularen, der Anträge angehangen, bei denen eine Reise nötig ist. Ist keine Reise für einen bestimmten Antrag (zum Beispiel ein Arztbesuch) vorgesehen, dann wird das Formular nicht angehangen und es müssen keine unnötigen Daten eingegeben werden. Die Struktur der Elemente ist ident zu denen, die bereits besprochen wurden.
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=1\linewidth]{images/website/zusatz_1.png}
+	\includegraphics[width=1\linewidth]{images/website/zusatz_1}
 	\caption[Neuer Schulantrag]{Ein Bild des Reiseantrages (Teil 2)}
 	\label{fig:zusatz1}
 \end{figure}
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=1\linewidth]{images/website/zusatz_2.png}
-	\caption[Neuer Schulantrag]{Ein Bild des Reiseantrages (Teil 2)}
-	\label{fig:zusatz2}
-\end{figure}
 
-\newpage
-\subsubsection{Ansicht Alle Anträge}
-~\\
+\subsubsection{Reisekostenabrechnung}
+
 
 \newpage
 \subsubsection{Ansicht Aktive Anträge}
+
+~\\
+
+\newpage
+\subsubsection{Ansicht Alle Anträge}
+
 ~\\
 
 \newpage
@@ -559,14 +560,35 @@ Der Reiseantrag wird automatisch bei den Formularen, der Anträge angehangen, be
 
 \newpage
 \subsubsection{Seite nicht Gefunden}
+Falls der momentane Nutzer von Refundable eine ungültige URL aufruft wollten wir diesem sofort klar machen, dass er etwas falsch gemacht hat. Des weiteren wollten wir dem Nutzer direkt eine Lösung vorschlagen, wie er dieses Problem beheben kann - ein \textit{Button}, der den Nutzer wieder zur Startseite bringt. Um dem Nutzer zu visualisieren, dass dieser Knopf die richtige Wahl ist, haben wir ihn in einem Grün hervorgehoben. Außerdem wird dem Aufrufer der Seite mit schimmernden grauen Boxen, die einen \enquote{Lade-Zustand} visualisieren sollen, dass die Seite, die der Nutzer aufrufen wollte nicht richtig lädt.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\linewidth]{images/website/notfound}
+	\caption[Neuer Schulantrag]{Ein Bild der nicht Gefunden Seite}
+	\label{fig:notfoundsite}
+\end{figure}
 ~\\
 
 \newpage
 \subsubsection{Antrag suchen}
+Um den Administratoren während ihren Tätigkeiten ein wenig Arbeit abzunehmen, haben wir eine Möglichkeit eingebaut, einen Antrag direkt über eine Seite zu suchen. Dazu muss der Administrator nur die Unterseite \enquote{/viewer} aufrufen und kann, wie man in Abbildung 7.13 sehen kann die Antrags ID suchen und so direkt zu dem gewünschten Antrag gelangen.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\linewidth]{images/website/search}
+	\caption[Neuer Schulantrag]{Ein Bild der Antrag suchen Seite}
+	\label{fig:searchsite}
+\end{figure}
 ~\\
 
-\newpage
+\newpage 
 \subsubsection{Rechte vergeben}
+Während der Entwicklung ist uns aufgefallen, dass die Funktion fehlt, einem bestimmten Benutzer gewisse Rechte zu geben. Daher ist es dem \textit{Superuser} möglich über das Admindashboard Rechte zu vergeben. Dazu muss er nur die E-Mail der bestimmten Person eingeben und kann mittels \textit{Radio-Buttons} die gewünschten Rechte auswählen. Auch hier wurden wieder die bekannten Elemente der restlichen Website verwendet.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\linewidth]{images/website/rechte}
+	\caption[Neuer Schulantrag]{Ein Bild der Rechte vergeben Seite}
+	\label{fig:rightssite}
+\end{figure}
 ~\\
 
 
