@@ -470,11 +470,11 @@ Mit folgendem Code wird eine PDF erstellt und in einem neuen Tab geöffnet \cite
 	"#toolbar=0\&navpanes=0\&scrollbar=0'></embed></body></html>"
 	);
 \end{code}
+\captionof{listing}{PDF erstellen und öffnen}~\\
 \paragraph{Änderungen speichern}~\\
 Der Benutzer kann die Änderungen eines Antrags speichern. Dies kann in bestimmten Phasen eines Antrags geschehen. Die Änderungen werden an das Backend gesendet, sobald auf den ''Änderungen Speichern''-Knopf gedrückt wird.
 \paragraph{Antrag schließen}~\\
 Der Leiter eines Antrags kann den Antrag schließen. Sobald der Antrag geschlossen ist, wird dieser im Backend gelöscht.
-\newpage
 \subsection{Antrag Übersicht}
 \label{sec:antrag_uebersicht}
 Um einen Überblick über die Anträge zu haben, gibt es zwei Übersichtsseiten, welche die Anträge auflisten. In den Auflistungen sieht man die groben Daten des Antrags und kann diese in der \textit{Antrag-Ansicht} öffnen. Sobald eine Übersichtsseite aufgerufen wird, werden die Anträge abgefragt und in einer Liste angezeigt:
@@ -503,3 +503,29 @@ Ein Administrator kann alle Informationen eines Antrags einsehen und diesen akze
 Die Übersichtsseite für Administratoren ähnelt dem Aufbau aus Kapitel \hyperref[sec:antrag_uebersicht]{7.3.6}.\\
 Der Administrator sieht, wer den Antrag gestellt hat, und kann mehrere Anträge auswählen, um diese in einer PDF anzuzeigen.
 Des Weiteren kann auf den Knopf ''Antrag betrachten'' gedrückt werden, wodurch der Administrator auf die Antrag Ansicht für Administratoren weitergeleitet wird.
+\newpage
+\subsubsection{Rechte}
+Die Rechte für Benutzer können über ein Formular bearbeitet werden. Die E-Mail-Adresse des zu bearbeitenden Lehrers wird in dem Formular angegeben. Zusätzlich werden über die Auswahl die Rechte von dem Benutzer gesetzt.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\linewidth]{images/rights}
+	\caption[Formular der Rechte]{Formular, um Rechte eines Benutzers zu setzen}
+	\label{fig:rightsform}
+\end{figure}
+Sobald auf den ''Rechte speichern''-Knopf gedrückt wird, wird das Formular ausgelesen und damit die Anfrage für das Backend erstellt. Die Anfrage an das Backend wird folgendermaßen gesendet:
+\begin{code}{js}
+	axios.get(this.url + "/setTeacherPermissions?uuid=" + response.data.uuid,
+	{
+		headers: {
+			Authorization: "Basic " + this.token
+		}
+	}, rechte	// Die im Formular eingestellten Rechte
+	)
+	.then(res => {
+		if (res.status === 200) {
+			this.saveComplete();
+			this.reset();
+		}
+	});
+\end{code}
+\captionof{listing}{Anfrage zum setzen der Rechte eines Benutzers}~\\
