@@ -2,13 +2,13 @@
 
 \section{Frontend - Webapplikation als REST-Client}
 \subsection{Einleitung}
-Das \Gls{backend} muss mit dem \Gls{frontend} verbunden werden. Es gibt unterschiedliche Möglichkeiten dies zu realisieren. Beim Realisieren, muss darauf geachtet werden, dass eine Struktur vorhanden ist. Es werden zwei verschiedene \Gls{designpattern} betrachtet und verglichen. Umgesetzt wird dann ein Entwurfsmuster mithilfe von \Gls{js}. Hier kann ein \Gls{js}-\Gls{framework} zum Einsatz kommen. Dazu werden hier verschiedene JavaScript-Frameworks miteinander verglichen. Für die Verarbeitung der Daten ist es wichtig, Datenformate festzulegen. Die Aufbereitung der Elemente für das Frontend mit den Daten des Backends wird ebenfalls untersucht.
+Das \Gls{backend} muss mit dem \Gls{frontend} verbunden werden. Es gibt unterschiedliche Möglichkeiten dies zu realisieren. Beim Realisieren muss darauf geachtet werden, dass eine Struktur vorhanden ist. Es werden zwei verschiedene \Gls{designpattern} betrachtet und verglichen. Umgesetzt wird dann ein Entwurfsmuster mithilfe von \Gls{js}. Hier kann ein \Gls{js}-\Gls{framework} zum Einsatz kommen. Dazu werden hier verschiedene JavaScript-Frameworks miteinander verglichen. Für die Verarbeitung der Daten ist es wichtig, Datenformate festzulegen. Die Aufbereitung der Elemente für das Frontend mit den Daten des Backends wird ebenfalls untersucht.
 \\\\
 Die Fragestellung der Studie ist erstens, welche Unterschiede es bei der Datenrepräsentation und -manipulation zwischen den Entwurfsmustern Model-View-ViewModel (\Gls{mvvm}) und Model-View-Controller (\Gls{mvc}) gibt und zweitens, mit welchen Werkzeugen bzw. JavaScript-Frameworks die jeweiligen Methoden zugriffsperformant umgesetzt werden können.
 \subsection{Entwurfsmuster}
-Dieser Teil des Projektes wird in Verwendung eines Entwurfsmusters umgesetzt. Zwei \Gls{mv*} Entwurfsmuster werden hierbei in Betrachtung gezogen. Zum einen MVVM und zum anderen MVC. Es kommen diese zwei Entwurfsmuster in Frage, da MVC ein sehr bekanntes Entwurfsmuster ist und MVVM eine neuere und spezifischere Variante von MVC ist \cite{mvvm_vue}.
+Dieser Teil des Projektes wird in Verwendung eines Entwurfsmusters umgesetzt. Zwei \Gls{mv*} Entwurfsmuster werden hierbei in Betrachtung gezogen: zum einen MVVM und zum anderen MVC. Es kommen diese zwei Entwurfsmuster in Frage, da MVC ein sehr bekanntes Entwurfsmuster ist und MVVM eine neuere und spezifischere Variante von MVC ist \cite{mvvm_vue}.
 \subsubsection{MVC}
-\Gls{mvc} ist ein Entwurfsmuster mit dem eine Software in die drei Teile (Model, View und Controller) geteilt wird \cite{mvc}. Das Model beinhaltet alle Daten der Software und auch alle Funktionen, die mit den Daten interagieren oder mit ihnen rechnen. Die View ist der Teil der Software, den Benutzer sehen und mit denen sie interagieren. Dieser Teil der Software beinhaltet keine wichtigen Daten oder Funktionen, welche Daten bearbeiten. Sie hört nur auf Benutzereingaben und zeigt die bereitgestellten Daten an. Der Controller ist der Teil der Software, der Model und View verbindet. Im Controller wird auf die Benutzereingaben reagiert und es werden die gewünschten Funktionen aus dem Model aufgerufen.
+\Gls{mvc} ist ein Entwurfsmuster, mit dem eine Software in die drei Teile (Model, View und Controller) geteilt wird \cite{mvc}. Das Model beinhaltet alle Daten der Software und auch alle Funktionen, die mit den Daten interagieren oder mit ihnen rechnen. Die View ist der Teil der Software, den Benutzer sehen und mit dem sie interagieren. Dieser Teil der Software beinhaltet keine wichtigen Daten oder Funktionen, welche Daten bearbeiten. Die View hört nur auf Benutzereingaben und zeigt die bereitgestellten Daten an. Der Controller ist der Teil der Software, der Model und View verbindet. Im Controller wird auf die Benutzereingaben reagiert und es werden die gewünschten Funktionen aus dem Model aufgerufen.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.8\linewidth]{images/mvc}
@@ -17,8 +17,8 @@ Dieser Teil des Projektes wird in Verwendung eines Entwurfsmusters umgesetzt. Zw
 \end{figure}
 \subsubsection{MVVM}
 \Gls{mvvm} oder auch \Gls{mvvc} ist ein \Gls{designpattern} mit dem eine Software in drei Teile geteilt wird \cite{mvvm_vue}. Jedoch wird bei MVVM die Software in Model, View und ViewModel aufgeteilt. 
-Das Model beinhaltet wie im konventionellen \Gls{mvc}-Pattern alle wichtigen Daten und Funktionen. 
-Die View ist, wie beim MVC-Pattern, der Teil der Software mit dem der Benutzer interagiert. 
+Das Model beinhaltet, wie im konventionellen \Gls{mvc}-Pattern, alle wichtigen Daten und Funktionen. 
+Die View ist, wie beim MVC-Pattern, der Teil der Software, mit dem der Benutzer interagiert. 
 Das ViewModel ist ein Bindeglied zwischen Model und View \cite{mvvm_vue}. Dabei stellt das ViewModel der View Funktionen zur Verfügung. Diese können auch Daten verändern bzw. mit Daten rechnen. Das Model kann über das ViewModel auch mit der View direkt interagieren. 
 MVVM sieht nicht vor, dass ein Controller verwendet wird. Diese Funktion übernimmt zu einem gewissen Teil das ViewModel bzw. auch die View und das Model.
 \begin{figure}[H]
@@ -125,7 +125,7 @@ In der letzten Zeile des body-Tags, wird auf \textit{likebutton.js} referenziert
 \captionof{listing}{React-Komponente Beispiel}
 \newpage
 \subsubsection{Ohne Framework}
-Die Schnittstelle zwischen \Gls{backend} und \Gls{frontend} kann auch ohne ein \Gls{framework} umgesetzt werden. Dies ist bei kleinen und leichten Applikationen von Vorteil, da keine umständlichen \Gls{js}-\Gls{framework}s aufgesetzt und richtig implementiert werden müssen. Ohne Framework implementiert man einfach eine \Gls{js}-Datei in eine Webseite, um die gewünschte Funktionalität einzufügen. Mit folgendem Code kann eine Implementierung einer JavaScript-Datei umgesetzt werden:
+Die Schnittstelle zwischen \Gls{backend} und \Gls{frontend} kann auch ohne ein \Gls{framework} umgesetzt werden. Dies ist bei kleinen und leichten Applikationen von Vorteil, da keine umständlichen \Gls{js}-\Gls{framework}s aufgesetzt und richtig implementiert werden müssen. Ohne Framework implementiert man eine \Gls{js}-Datei in eine Webseite, um die gewünschte Funktionalität einzufügen. Mit folgendem Code kann eine Implementierung einer JavaScript-Datei umgesetzt werden:
 \begin{code}{html}
 	<!DOCTYPE html>
 	<html lang="de">
@@ -144,7 +144,7 @@ Die Schnittstelle zwischen \Gls{backend} und \Gls{frontend} kann auch ohne ein \
 	</html>
 \end{code}
 \captionof{listing}{Ohne Framework Beispiel}~\\
-Es kann auch direkt in ein \Gls{html}-File \Gls{js} in ein <script></script> geschrieben werden.
+Es kann auch direkt in ein \Gls{html}-File \Gls{js} in ein \textit{<script></script>} geschrieben werden.
 \newpage
 \subsubsection{Vergleich}
 Verglichen werden diese unterschiedlichen Umsetzungsmöglichkeiten an Design, Entwicklungszeit, Performanz und \Gls{loc}.\\
@@ -161,8 +161,8 @@ Folgende Tabelle zeigt die unterschiedlichen Werte bei der Umsetzung der Beispie
 	\centering
 	\refstepcounter{table}
 	\label{center}
-	\begin{tabular}{lcccc}
-		Kriterium        & \multicolumn{1}{l}{Maximale Punkte} & \multicolumn{1}{l}{VueJS} & \multicolumn{1}{l}{React} & \multicolumn{1}{l}{Ohne Framework}  \\
+	\begin{tabular}{l|c|c|c|c}
+		Kriterium        & Maximale Punkte & VueJS & React & Ohne Framework  \\\hline
 		Design           & -                        &            \checkmark               &             \checkmark              &          \checkmark                           \\
 		Entwicklungszeit & 10                         &             9              &               7            &               10                      \\
 		Performanz       & 10                         &             8              &               5            &                 10                    \\
@@ -172,21 +172,21 @@ Folgende Tabelle zeigt die unterschiedlichen Werte bei der Umsetzung der Beispie
 \end{table}
 \textbf{Kriterien:}\\\\
 \textbf{Design}\\
-Das Design fällt in die Wertung, da hier angegeben wird, ob die Beispiel-Website so umgesetzt werden kann, oder ob die Umsetzung in diesem Design nicht möglich ist.\\\\
+Das Design fällt in die Wertung, da hier angegeben wird, ob die Beispiel-Website so umgesetzt werden kann oder ob die Umsetzung in diesem Design nicht möglich ist.\\\\
 \newpage
 \textbf{Entwicklungszeit}\\
 \Gls{vue}: 40min\\
 \Gls{react}: 55min\\
 Ohne \Gls{framework}: 20min\\
-Die Entwicklungszeit zwischen den zwei \Gls{framework}s ist sehr ähnlich. Jedoch ist zu beachten, dass bei dem VueJS-Framework bereits mit Komponenten gearbeitet worden ist, und dadurch die Entwicklungszeit höher ist als notwendig. Ohne Framework war die Entwicklungszeit am kürzesten, da nichts installiert, importiert oder aufgesetzt werden musste.\\\\
+Die Entwicklungszeit zwischen den zwei \Gls{framework}s ist sehr ähnlich. Jedoch ist zu beachten, dass bei dem VueJS-Framework bereits mit Komponenten gearbeitet worden ist und dadurch die Entwicklungszeit höher ist als notwendig. Ohne Framework war die Entwicklungszeit am kürzesten, da nichts installiert, importiert oder aufgesetzt werden musste.\\\\
 \textbf{Performanz}\\
 \Gls{vue}: 112ms\\
 \Gls{react}: 175ms\\
 Ohne \Gls{framework}: 21ms\\
 Ohne Framework ist die Performanz sehr gut, da im Hintergrund keine Frameworks geladen werden müssen. Das \Gls{js} wird direkt ausgeführt. Bei VueJS und React werden viele Bibliotheken im Hintergrund geladen, wodurch die Performanz sinkt. Obwohl Komponenten verwendet worden sind, ist VueJS performanter als React.\\\\
 \textbf{Lines of Code}\\
-Die beiden Frameworks haben besonders gut abgeschnitten, da für die Umsetzung mit VueJS nur wenige Codezeilen geschrieben werden mussten. Durch die Funktionalität von VueJS konnten viele Codezeilen erspart werden. React ist auch sehr gut, da auch sehr wenige Codezeilen geschrieben werden mussten. Jedoch wurde hier mehr selbst geschrieben, wodurch das Framework nicht die vollen Punkte erreicht.
-Ohne \Gls{framework} gab es am wenigsten Punkte, da die Umsetzung im Vergleich nicht nur unübersichtlich und kompliziert ist, sondern auch damit zu rechnen ist, dass die Umsetzung bei größeren Beispielen noch komplizierter und unübersichtlicher wird.
+Die beiden Frameworks haben besonders gut abgeschnitten, da für die Umsetzung mit VueJS nur wenige Codezeilen geschrieben werden mussten. Durch die Funktionalität von VueJS können viele Codezeilen eingespart werden. React ist in dem Aspekt auch sehr gut, da auch sehr wenige Codezeilen geschrieben werden mussten. Jedoch wurde hier mehr selbst geschrieben, wodurch das Framework nicht die vollen Punkte erreicht.
+Ohne \Gls{framework} gibt es am wenigsten Punkte, da die Umsetzung im Vergleich nicht nur unübersichtlich und kompliziert ist, sondern auch damit zu rechnen ist, dass die Umsetzung bei größeren Beispielen noch komplizierter und unübersichtlicher wird.
 \newpage
 \subsection{Aufbereitung der Daten}
 Die Daten, welche von der REST-Schnittstelle gelesen werden, sind im \Gls{json}-Format. Dies wird genauer im Kapitel \hyperref[sec:json]{5.2.5} erklärt. Um die Daten von der REST-Schnittstelle zu bekommen, wird \Gls{axios} verwendet. Mit dieser Bibliothek kann eine \Gls{http}-Anfrage gesendet und damit die Daten von der REST-Schnittstelle ausgelesen werden. Im folgenden Code wird eine Beispiel-Anfrage gesendet:
@@ -223,4 +223,4 @@ Die praktische Durchführung ist, wie bereits im vorherigen Kapitel besprochen, 
 
 \subsection{Fazit}
 \label{sec:rfoster_fazit}
-Nach dieser Arbeit ist die Entscheidung für eine Umsetzungsmöglichkeit relativ leicht. \Gls{mvvm} ist genau auf webbasierte Anwendungen zugeschnitten und bei \Gls{vue} kann durch die vordefinierten Komponenten viel Zeit und Arbeit gespart werden. VueJS hat im Vergleich zu \Gls{react} den Vorteil, das hier bereits mehr Erfahrung in der Umsetzung besteht, woraus folgt, dass VueJS die effizienteste Variante für die Umsetzung ist.
+Nach dieser Arbeit ist die Entscheidung für eine Umsetzungsmöglichkeit relativ leicht. \Gls{mvvm} ist genau auf webbasierte Anwendungen zugeschnitten und bei \Gls{vue} kann durch die vordefinierten Komponenten viel Zeit und Arbeit gespart werden. VueJS hat im Vergleich zu \Gls{react} den Vorteil, dass hier bereits mehr Erfahrung in der Umsetzung besteht, woraus folgt, dass VueJS die effizienteste Variante für die Umsetzung ist.
