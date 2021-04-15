@@ -135,7 +135,7 @@ Die Komponente muss noch im \textit{Manager} angezeigt werden. Dies wird im \tex
 \captionof{listing}{Anzeigen der Komponenten im \textit{Manager}}~\\
 Im Code wird nicht nur die Komponente angezeigt, sondern auch Daten an die Komponenten gebunden.\\
 \textit{v-if}-Attribute sorgen dafür, dass das Rendern nur unter der angegebenen Bedingung erfolgt. Die Komponente wird nur angezeigt, wenn die Variable \textit{currentComponent} den Namen einer Komponente annimmt.\\
-\textit{v-bind}-Attribute binden Daten von der übergeordneten Komponente in die eingebundene Komponente ein. Bei dem Beispiel \textit{v-bind:cookieset=''cookies''} wird an die \textit{Login}-Komponente ein Attribut \textit{cookieset} mit dem Wert von der Variable \textit{cookies} mitgegeben.
+\textit{v-bind}-Attribute binden Daten von der übergeordneten Komponente in die eingebundene Komponente ein. Bei dem Beispiel \textit{v-bind:cookieset=''cookies''} wird an die Login-Komponente ein Attribut \textit{cookieset} mit dem Wert von der Variable \textit{cookies} mitgegeben.
 \newpage
 Diese Attribute können mit folgendem Code aufgefangen und in diesen eingebundenen Komponenten verwendet werden:
 \begin{code}{html}
@@ -191,7 +191,7 @@ Der \textit{Antrag-Viewer} wird über den Link \textit{/viewer} aufgerufen. Dies
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\linewidth]{images/antrag_viewer}
-	\caption[Webseite Antrag-Viewer]{Die Antrag-Viewer Seite der Webseite}
+	\caption[Webseite \textit{Antrag-Viewer}]{Die \textit{Antrag-Viewer} Seite der Webseite}
 	\label{fig:antragviewer}
 \end{figure}
 
@@ -205,7 +205,7 @@ Sollte der Benutzer nicht angemeldet sein, so wird er zuerst auf die Login-Seite
 		props: route => ({ query: route.query.uuid }) // Der Parameter in der URL
 	},
 \end{code}
-\captionof{listing}{Route für den Antrag-Viewer}~\\
+\captionof{listing}{Route für den \textit{Antrag-Viewer}}~\\
 Es wird die Home-Komponente (der \textit{Manager}) aufgerufen, da dieser das Verarbeiten der URL und das Weiterleiten auf die Login- und Antragsansicht übernimmt.
 \newpage
 \subsubsection{Features}
@@ -418,7 +418,7 @@ var data = {		// Das JSON-Objekt mit allen Informationen
 \label{sec:antrag_ansicht}
 Wenn die Unterseite, die einen Antrag anzeigen soll, geladen wird, so wird der Unterseite die ID des Antrags mitgegeben. Sobald die Komponente geladen wird, wird mit dieser ID eine Anfrage an das Backend gesendet, um den gesamten Antrag zu laden. Die Informationen werden interpretiert und angezeigt.
 \subsubsection{Progress Bar}
-Jeder Antrag besitzt einen Fortschritt, welcher graphisch durch eine \textit{Progress}-Komponente angezeigt wird. Die Komponente erhält von der Antrag-Ansicht den Fortschritt des Antrags und die Art des Antrags als Nummer, um die Informationen für den Benutzer lesbar anzuzeigen.
+Jeder Antrag besitzt einen Fortschritt, welcher graphisch durch eine \textit{Progress}-Komponente angezeigt wird. Die Komponente erhält von der \textit{Antrag-Ansicht} den Fortschritt des Antrags und die Art des Antrags als Nummer, um die Informationen für den Benutzer lesbar anzuzeigen.
 \begin{figure}
 	\centering
 	\includegraphics[width=1\linewidth]{images/progress}
@@ -477,7 +477,7 @@ Der Leiter eines Antrags kann den Antrag schließen. Sobald der Antrag geschloss
 \newpage
 \subsection{Antrag Übersicht}
 \label{sec:antrag_uebersicht}
-Um einen Überblick über die Anträge zu haben, gibt es zwei Übersichtsseiten, welche die Anträge auflisten. In den Auflistungen sieht man die groben Daten des Antrags und kann diese in der Antrag-Ansicht öffnen. Sobald eine Übersichtsseite aufgerufen wird, werden die Anträge abgefragt und in einer Liste angezeigt:
+Um einen Überblick über die Anträge zu haben, gibt es zwei Übersichtsseiten, welche die Anträge auflisten. In den Auflistungen sieht man die groben Daten des Antrags und kann diese in der \textit{Antrag-Ansicht} öffnen. Sobald eine Übersichtsseite aufgerufen wird, werden die Anträge abgefragt und in einer Liste angezeigt:
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\linewidth]{images/liste_antrag}
@@ -488,16 +488,16 @@ Um einen Überblick über die Anträge zu haben, gibt es zwei Übersichtsseiten,
 \subsubsection{Alle Anträge}
 Auf dieser Übersichtsseite werden alle Anträge angezeigt, die mit dem angemeldeten Benutzer zusammenhängen.
 \subsubsection{Aktive Anträge}
-In der Auflistung der aktiven Anträge, werden alle Anträge angezeigt, welche nicht abgeschlossen sind. Ist nur ein Antrag in der Liste der aktiven Anträge, so wird der Antrag sofort in der Antrag-Ansicht geöffnet.
+In der Auflistung der aktiven Anträge, werden alle Anträge angezeigt, welche nicht abgeschlossen sind. Ist nur ein Antrag in der Liste der aktiven Anträge, so wird der Antrag sofort in der \textit{Antrag-Ansicht} geöffnet.
 \subsubsection{Aktionen}
 \paragraph{Schnelle Informationen}~\\
 Wird auf den Knopf ''Schnelle Informationen'' gedrückt, öffnet sich ein Fenster, in dem die groben Informationen des Antrags angezeigt werden.
 \paragraph{Antrag betrachten}~\\
-Wird auf den Knopf ''Antrag betrachten'' gedrückt, wird der Antrag in der Antrag-Ansicht geöffnet.
+Wird auf den Knopf ''Antrag betrachten'' gedrückt, wird der Antrag in der \textit{Antrag-Ansicht} geöffnet.
 \newpage
 \subsection{Administrator}
 \subsubsection{Antrag Ansicht}
-Der Aufbau der Antrag-Ansicht ähnelt dem aus Kapitel \hyperref[sec:antrag_ansicht]{7.3.5}.\\
+Der Aufbau der \textit{Antrag-Ansicht} ähnelt dem aus Kapitel \hyperref[sec:antrag_ansicht]{7.3.5}.\\
 Ein Administrator kann alle Informationen eines Antrags einsehen und diesen akzeptieren. Des Weiteren können alle PDFs des Antrags geöffnet werden. Der Antrag kann auch abgelehnt werden, wodurch der Fortschritt zurückgesetzt wird. Wenn der Antrag abgelehnt wird, kann ein Grund für das Ablehnen angegeben werden. Der Antragsteller kann daraufhin die Informationen des Antrags aktualisieren und damit den Antrag erneut einreichen oder den Antrag schließen.
 \subsubsection{Antrag Übersicht}
 Die Übersichtsseite für Administratoren ähnelt dem Aufbau aus Kapitel \hyperref[sec:antrag_uebersicht]{7.3.6}.\\
