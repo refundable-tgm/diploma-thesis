@@ -499,6 +499,7 @@ Aus den im Formular angegebenen Daten, wird automatisch ein weiteres Formular ge
 	\label{fig:schulantrag3}
 \end{figure}
 \paragraph{Fortbildung}
+~\\
 Das Fotrbildungsformular ist für Seminare, Tagungen, Lehrgänge und sonstige Events in dieser Art gedacht. Um die Formulare einheitlich zu halten, wurde auch hier wieder die selbe Struktur der Eingabefelder verwendet. Falls man die sonstige Art auswählt, fügt sich automatisch eine zusätzliche Eingabe hinzu, in der man das Anliegen genauer spezifizieren kann.
 \begin{figure}[H]
 	\centering
@@ -508,6 +509,7 @@ Das Fotrbildungsformular ist für Seminare, Tagungen, Lehrgänge und sonstige Ev
 \end{figure}
 
 \paragraph{Sonstige Anträge}
+~\\
 Zu den sonstigen Anträgen gehören Anliegen, wie Pflegefreistellungen, Dienstaufträge, Arzttermine und sonstige Freistellungen dieser Arten. Wählt man einen Dienstauftrag als Art aus erscheinen automatisch noch Eingabefelder, die das Eingeben der GZ und des Titels, des Dienstauftrages ermöglichen.
 \begin{figure}[H]
 	\centering
@@ -517,6 +519,7 @@ Zu den sonstigen Anträgen gehören Anliegen, wie Pflegefreistellungen, Dienstau
 \end{figure}
 
 \paragraph{Reiseantrag}
+~\\
 Der Reiseantrag wird automatisch bei den Formularen, der Anträge angehangen, bei denen eine Reise nötig ist. Ist keine Reise für einen bestimmten Antrag (zum Beispiel ein Arztbesuch) vorgesehen, dann wird das Formular nicht angehangen und es müssen keine unnötigen Daten eingegeben werden. Die Struktur der Elemente ist ident zu denen, die bereits besprochen wurden.
 \begin{figure}[H]
 	\centering
@@ -526,38 +529,384 @@ Der Reiseantrag wird automatisch bei den Formularen, der Anträge angehangen, be
 \end{figure}
 
 \subsubsection{Reisekostenabrechnung}
+Das Formular der Reisekostenabrechnung fordert sehr viele verschiedene Werte, von den Lehrern. Wir haben unser Bestes getan, um das Formular so einfach, wie möglich zu gestalten, jedoch ist vor allem die Tabelle mit der Berechnung der gesamten Kosten etwas komplizierter geworden. Durch die Unterstützung der Website, ist das Eingeben der Daten, aber wesentlich einfacher, als auf dem Papier, da gewisse Felder, je nach Eingabe des Benutzers automatisch ausgegraut werden. Wenn wir uns zum Beispiel die Tabelle in folgender Abbildung anschauen, kann man nur in jene Felder schreiben, die man mit den Checkboxen angeklickt hat. Außerdem kann man direkt digital seine Belege an die Reisekostenabrechnung anhängen. Außerdem wird automatisch die Zeitspanne, des jeweiligen Antrages berechnet und entsprechend viele Zeilen in der Tabelle erzeugt.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\linewidth]{images/website/reiserechnung_1}
+	\caption[Neuer Schulantrag]{Ein Bild der Reiserechnung}
+	\label{fig:reiserechnungsite}
+\end{figure}
+Hier wurden wieder die bekannten Elemente verwendet. Es gibt jedoch auch noch nicht verwendete Elemente, wie die Datei Auswahl und die Tabelle.
+\paragraph{Datei Auswahl}
+~\\
+Als auch bei den anderen Elementen der Formulare, wie zum Beispiel bei dem Timepicker hat Bootstrap uns hier das Leben um einiges erleichtert. 
+\begin{code}{html}
+	<!-- Belege Input -->
+	<b-form-group
+	  id="belg"
+	  label-cols-sm="4"
+	  label-cols-lg="3"
+	  content-cols-sm
+	  content-cols-lg="7"
+	  description="Fügen Sie Belege per Klick oder Drag and Drop hinzu"
+	  label="Belege"
+	  label-for="bel"
+	>
+	  <b-form-file
+		multiple
+		id="bel"
+		v-model="invoices"
+		v-on:input="convert"
+		:disabled="readonly"
+	  >
+		<template slot="file-name" slot-scope="{ names }">
+		  <b-badge variant="dark">{{ names[0] }}</b-badge>
+		  <b-badge v-if="names.length > 1" variant="dark" class="ml-1">
+			+ {{ names.length - 1 }} More files
+		  </b-badge>
+		</template>
+	  </b-form-file>
+	</b-form-group>
+\end{code}
+\captionof{listing}{Code - Datei auswählen}
+	\label{list:dateiselect} ~\\
+Wie auch andere Elemente wird das Element, zum Hochladen von Dateien in eine Eingabegruppe, mit Titel und Beschreibung eingesetzt. Nach dem einsetzen des Elementes, kann sofort per Klick oder Drag and Drop eine, oder mehrere Dateien hinzugefügt werden. Bis die Funktionalität von dem Schnittstellen-Team hinzugefügt wurden ist, werden die Dateien nur rein optisch auf die Seite \enquote{hochgeladen}. 
+\paragraph{Tabelle}
+~\\
+Um eine Tabelle zu erstellen, kann das Element \enquote{b-table} von Bootstrap benutzt werden. In diesem kann man direkt definieren, wie groß die Tabelle sein soll, was auf mobilen Geräten passieren soll, ob die Tabelle gestreift ist, oder nicht und so weiter. In diesem Element, haben wir dann wiederrum die verschiedenen Spalten eingebaugt. Dies passiert wie folgt:
+\begin{code}{html}
+	<b-table
+          striped
+          :items="data.items"
+          :fields="fields"
+          stacked="md"
+          show-empty
+          small
+    >
 
+		...
 
+		<template #cell(start)="data">
+			<b-form-timepicker
+				style="min-width: 100px;"
+				id="begin"
+				locale="de"
+				placeholder="Zeit"
+				v-model="data.item.start"
+				:readonly="readonly"
+				v-on:input="update()"
+			></b-form-timepicker>
+		</template>
+
+		...
+
+	</b-table>
+\end{code}
+\captionof{listing}{Beispielcode Tabelle}
+	\label{list:bsptable} ~\\
+Die Spalten werden mittels \enquote{Templates} erzeugt, danach können variabel Verte in diese Spalte, in jeder Zeile eingefügt werden. In diesem Fall befindet sich in der Zelle ein Timepicker, welcher zum auswählen der Startzeit dient.
 \newpage
 \subsubsection{Ansicht Aktive Anträge}
-
+Um den Lehrern das betrachten von aktiven Anträgen einfacher zu machen, haben wir uns dazu entschlossen, eine extra Seite zu kreieren, die über das Menü auf der Startseite erreichbar ist. Hier werden alle aktiven Anträge (Ein Antrag gilt als \enquote{aktiv}, von der Antragsstellung, bis zur Rechnungsphase). Der Lehrer sieht mittels Farben (Rot: Antrag wurde abgelehnt, Gelb: Antrag wird bearbeitet, Grün: Antrag wurde angenommen) auf den ersten Blick, welchen Status der jeweilige Antrag hat. Außerdem werden in der Tabelle, der Titel des Antrages, der Leiter, das Einreichdatum und der genaue Status (In Bearbeitung, Rechnungsphase, ...) angezeigt. Falls der Lehrer viele Anträge auf Einmal hat, haben wir eine Funktion zum suchen von Anträgen im oberen Teil der Seite eingebaut. Ebenfalls ist es möglich jede Spalte auf- und absteigend zu sortieren. Falls der Knopf namens \enquote{Antrag betrachten} betätigt wurde, kommt der Nutzer auf die \enquote{Antrags Ansicht}.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\linewidth]{images/website/aktiv}
+	\caption[Aktiv]{Ein Bild der aktiven Anträge Seite}
+	\label{fig:antragaktiv}
+\end{figure}
+Um die oben genannten Daten in einer geordneten Liste zu sehen kann der Lehrer auf \enquote{Schnelle Information} klicken. Dieser Vorgang öffnet folgendes Fenster:
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.6\linewidth]{images/website/aktiv_detail}
+	\caption[Aktiv]{Ein Bild der Detail-Ansicht der aktiven Anträge Seite}
+	\label{fig:antragaktivdetail}
+\end{figure}
+\paragraph{Such-Funktion}
 ~\\
+Auc die Erstellung der Suchfunktion wurde wieder essentiell von den BootstrapVue Komponenten unterstützt. Wir mussten lediglich eine Eingabegruppe erstellen, die ein Eingabefeld mit dem Typ \enquote{search} hat. Um eine Eingabe schneller zu löschen haben wir dann noch einen Knopf hinzugefügt, der erscheint, sobald man etwas eintippt. Durch die gute Integration von Bootstrap in VueJS war die Implementierung der Suchfunktion für die Tabelle reibungslos. Die vergabe der Funktionalität der Such-Funktion wurde im Backend/Frontend Teil durchgeführt.
+\begin{code}{html}
+	<!-- Such Element -->
+    <b-row align-h="center" style="margin-top: 1rem; margin-bottom: 2rem">
+      <b-col cols="12" md="6">
+        <b-form-group
+          label="Filter"
+          label-for="filter-input"
+          label-cols-sm="3"
+          label-align-sm="right"
+          label-size="sm"
+          class="mb-0"
+        >
+          <b-input-group size="sm">
+            <b-form-input
+              id="filter-input"
+              v-model="filter"
+              type="search"
+              placeholder="Begriff suchen"
+            ></b-form-input>
 
-\newpage
+            <b-input-group-append>
+              <b-button :disabled="!filter" @click="filter = ''"
+                >Löschen</b-button
+              >
+            </b-input-group-append>
+          </b-input-group>
+        </b-form-group>
+      </b-col>
+    </b-row>
+\end{code}
+\captionof{listing}{Code - Anträge Suchfunktion}
+	\label{list:antragsearchcode} ~\\
+\paragraph{Filterbare Tabelle}
+~\\
+Die Aktivierung der filterbaren Tabelle ist mittels BootstrapVue kinderleicht. Man muss lediglich folgende 3 Festlegungen im \enquote{b-table} Element hinzufügen:
+\begin{code}{html}
+	<b-table
+		...
+		:sort-by.sync="sortBy"
+      	:sort-desc.sync="sortDesc"
+      	:sort-direction="sortDirection"
+		...
+	>
+	...
+	</b-table>
+\end{code}
+\captionof{listing}{Code - Anträge filtern}
+	\label{list:antragfiltercode} ~\\
+\paragraph{Pop-Up Fenster}
+~\\
+Das Pop-Up Fenster haben wir mittels einem \enquote{Modal} von Bootstrap verwirklicht. Dieses kann über einen zugewiesenen Button geöffnet werden und beinhaltet, je nach Antrag, dessen spezifische Daten.
+\begin{code}{html}
+	<!-- Info modal -->
+    <b-modal
+      :id="infoModal.id"
+      :title="infoModal.title"
+      ok-only
+      @hide="resetInfoModal"
+    >
+      <pre>{{ infoModal.content }}</pre>
+    </b-modal>
+\end{code}
+\captionof{listing}{Code - Pop-Up Fenster}
+	\label{list:codepopup} ~\\
+
 \subsubsection{Ansicht Alle Anträge}
-
+Diese Seite ist sehr ähnlich zu der \enquote{Aktive Anträge} Seite. Der einzige Unterschied ist, dass der Lehrer hier auch bereits abgeschlossene Anträge sieht. Auch hier haben wir die \enquote{Suchen} Funktion eingebaut, die hier eine wesentlich wichtigere Rolle spielt, als bei der Seite, der aktiven Anträge. Auch das filtern der einzelnen Spalten ist wieder möglich.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\linewidth]{images/website/alle}
+	\caption[Aktiv]{Ein Bild der alle Anträge Seite}
+	\label{fig:antragalle}
+\end{figure}
 ~\\
 
 \newpage
 \subsubsection{Antragsansicht}
+Die Antragsansicht bietet den Lehrern allte möglichen Informationen, zu ihrem Antrag, die sie brauchen. Um den Lehrkräften einen besseren Überblick zu schaffen, in welcher Phase sich ihr Antrag befindet, haben wir eine Fortschrittsanzeige als erstes Element auf der Seite eingebaut. Des weiteren findet das Lehrpersonal eine aufklappbare Liste auf der Seite, in der sie je nach Status des Antrages die Daten anzeigen und/oder editieren können. Außerdem bietet diese Seite die Funktion, eine generierte PDF von jedem Antrag zu öffnen. Falls der Lehrer Daten geändert hat, kann er diese Änderung mit einem Knopf, der sich am Schluss der Website befindet speicher. Ebenfalls ist es möglich den Antrag zu schließen, hierbei öffnet sich aber eine Warnmeldung, in der man das schließen des Antrages nochmal bestätigen muss.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\linewidth]{images/website/antrag_zu}
+	\caption[Aktiv]{Ein Bild der Detail-Ansicht der aktiven Anträge Seite}
+	\label{fig:antragaktivdetail}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\linewidth]{images/website/antrag}
+	\caption[Aktiv]{Ein Bild der Detail-Ansicht der aktiven Anträge Seite}
+	\label{fig:antragaktivdetail}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.6\linewidth]{images/website/antrag_schliessen}
+	\caption[Aktiv]{Ein Bild der Detail-Ansicht der aktiven Anträge Seite}
+	\label{fig:antragaktivdetail}
+\end{figure}
+
 ~\\
 \paragraph{Fortschrittsanzeige}
 ~\\
+Die Fortschrittsanzeige schaut sehr kompliziert aus, in Wahrheit ist sie das aber nicht. Ein Schritt der Fortschrittsanzeige besteht aus einem \enquote{div}, in dem sich ein \enquote{span} befindet. Das \enquote{div} ist ein \enquote{Strich} und in dem \enquote{span} befindet sich ein Icon, welches den Zustand beschreibt. Je nach Status des Fortschritts wird die Farbe mittels CSS-Klassen geändert.
+\begin{code}{html}
+	<div
+            :class="{
+              active: progress >= 1
+            }"
+            class="step"
+          >
+            <span class="icon">
+              <i
+                :class="{
+                  'fa-check': progress >= 1,
+                  'fa-circle': progress < 1 && progress > 0,
+                  'fa-exclamation': progress == 0
+                }"
+                class="fa"
+              ></i>
+            </span>
+            <span class="text text-truncate d-none d-md-block"
+              >Einreichung</span
+            >
+          </div>
+\end{code}
+\captionof{listing}{Codeausschnitt - Fortschrittsanzeige}
+	\label{list:codeprogress} ~\\
+
+\begin{code}{css}
+.track .step.fail:before {
+  background: #ff3e3e;
+}
+
+.track .step.fail .icon {
+  background: #ff3e3e;
+  color: #fff;
+}
+
+.track .step.active .icon {
+  background: #69e769;
+  color: #fff;
+}
+
+.track .step.active:before {
+  background: #69e769;
+}
+\end{code}
+\captionof{listing}{CSS - Fortschrittsanzeige Farbklassen}
+	\label{list:progresscolor} ~\\
+
 \paragraph{Dokumente anzeigen}
 ~\\
-\paragraph{Reiserechnung ausfüllen}
-~\\
+Die verschiedenen Dokumente, die zu einem gewissen Antrag angehören werden in einer Tabelle gelistet. Falls man auf den \enquote{Bearbeitung öffnen} Knopf drückt, wird der Tabelle eine weitere Reihe hinzugefügt, mit allen Informationen zu dem jeweiligen Antrag. Wir verwenden mittels VueJS die bestehenden Formulare wieder (hier als Beispiel einen Schulveranstaltungsantrag), binden sie in der Tabelle ein und dann werden die Eingabefelder über die Datenschnittstelle mit Daten befüllt.
+\begin{code}{html}
+	<template #row-details="row">
+        <b-card>
+            <!-- Schulveranstaltung -->
+            <SchoolGeneral
+            v-bind:readonly="sgreadonly"
+            v-bind:data="app"
+            v-bind:token="token"
+            v-bind:url="url"
+            v-on:update="updateSG"
+            v-if="isLeader && row.item.title == 'Allgemeine Infos'"
+            />
+		</b-card>
+	</template>
+\end{code}
+\captionof{listing}{Code - Dokumente anzeigen}
+	\label{list:docanz} ~\\
+
 \paragraph{Funktionen}
+~\\
+Wird der \enquote{Antrag schließen} Knopf betätigt, erscheint eine Sicherheitsmeldung. Diese wird mit einem \enquote{Modal} erstellt, welches einen Text beinhaltet, der den Lehrer vor den Folgen dieser Tat warnt und zwei weitere Knöpfe. Einen grünen Knopf, um den Vorgang abzubrechen und einen Roten Knopf, der einen rot blinkenden \enquote{Spinner} beinhaltet, um den Lehrkräften klar zu machen, dass man sich das schließen, des Antrages gut überlegen sollte.
+\begin{code}{html}
+	<!-- Sicherheitshinweis Antrag schließen -->
+    <b-modal ref="close-modal" hide-footer title="Antrag schließen">
+      <b-container fluid>
+        <b-row
+          ><b-col cols="12">
+            <div class="d-block text-center">
+              <p>
+                Sind Sie sich sicher, dass Sie den Antrag schließen wollen? Er
+                wird danach nicht mehr für die Prüfer sichtbar sein und
+                <b>kann nicht mehr geöffnet werden!</b>
+              </p>
+            </div>
+          </b-col></b-row
+        >
+        <b-row>
+          <b-col cols="6">
+            <!-- Antrag schließen bestätigung -->
+            <b-button class="mt-2" variant="outline-danger" block @click="delAn"
+              >Antrag schließen <b-spinner small type="grow"></b-spinner
+            ></b-button>
+          </b-col>
+          <b-col cols="6">
+            <!-- Abbrechen Button --><b-button
+              class="mt-2"
+              variant="outline-success"
+              block
+              @click="hideClose"
+              >Abbrechen</b-button
+            ></b-col
+          >
+        </b-row>
+      </b-container>
+    </b-modal>
+\end{code}
+\captionof{listing}{Code - Antrag schließen Sicherheitshinweis}
+	\label{list:securityalert} ~\\
 ~\\
 
 \newpage
 \subsubsection{Administrator Ansicht}
+Die Administratoransicht ist wie die \enquote{alle Anträge} oder \enquote{aktive Anträge} Ansicht der Lehrer mit der Struktur einer Tabelle aufgebaut und hat eine Such- als auch Filterfunktion. Eine Zusatzfunktion, die es gibt, ist, dass man direkt in der Übersicht, einen oder mehrere Anträge auswählen kann und diese direkt als PDFs exportieren kann. Außerdem sehen die Admitistratoren auf den ersten Blick wesentlich mehr Informationen, als normale Nutzer. Es wird der Titel des Antrages angezeigt, die Art, das Enreichdatum, für wann der Antrag ist, den Status (je nach Status sehen gewisse Rollen die Anträge) und den Antragssteller in Kurzschreibweise. Auch hier ist es wieder möglich die Antragsansticht zu öffnen.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\linewidth]{images/website/admin}
+	\caption[Aktiv]{Ein Bild der Admin Ansicht}
+	\label{fig:adminview}
+\end{figure}
+Die farbig hinterlegten Elemente heißen \enquote{badges} und können werden wie folgt erstellt:
+\begin{code}{html}
+	<b-badge variant="danger">Rote Badge</b-badge>
+	<b-badge variant="success">Grüne Badge</b-badge>
+	<b-badge>Graue Badge</b-badge>
+\end{code}
+\captionof{listing}{Code - Badge Beispiel}
+	\label{list:badgebsp} ~\\
 ~\\
 
 \newpage
 \paragraph{Administrator Antragsansicht}
 ~\\
-
+Die Administrator Antragsansicht schaut exakt gleich aus, wie die Ansicht der Lehrer - mit einem Unterschied. Die Administratoren haben nicht die Funktionen \enquote{Speichern} und \enquote{Antrag schließen}, sondern \enquote{Antrag annehmen} und \enquote{Antrag ablehnen}. Falls der Antrag abgelehnt wird taucht wieder eine Sicherheitsmeldung auf. Hier muss der Administrator eine Begründung, mit dem Grund für die Ablehnung angeben. 
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.6\linewidth]{images/website/admin_antrag_schiessen}
+	\caption[Aktiv]{Ein Bild der Antrag ablehnen Meldung}
+	\label{fig:adminclose}
+\end{figure}
+Im Code wird dieses Eingabefeld im \enquote{Modal} wie folgt erstellt:
+\begin{code}{html}
+	<!-- Antrag Ablehnen Warnhinweis -->
+    <b-modal ref="close-modal" hide-footer title="Antrag ablehnen">
+      <b-container fluid>
+        <b-row
+          ><b-col cols="12">
+            <div class="d-block text-center">
+              <p>
+                Sind Sie sich sicher, dass Sie den Antrag ablehnen wollen?
+              </p>
+              <!-- Begründung der Ablehnung -->
+              <b-form-textarea
+                id="decline-reason"
+                placeholder="Begründung"
+                rows="3"
+                no-resize
+              ></b-form-textarea>
+            </div> </b-col
+        ></b-row>
+        <b-row>
+          <b-col cols="6">
+            <!-- Antrag ablehnen Bestätigung -->
+            <b-button class="mt-2" variant="outline-danger" block @click="delAn"
+              >Antrag ablehnen <b-spinner small type="grow"></b-spinner
+            ></b-button>
+          </b-col>
+          <b-col cols="6">
+            <!-- Abbrechen Button -->
+            <b-button
+              class="mt-2"
+              variant="outline-success"
+              block
+              @click="hideClose"
+              >Abbrechen</b-button
+            ></b-col
+          >
+        </b-row>
+      </b-container>
+    </b-modal>
+\end{code}
+\captionof{listing}{Code - Antrag ablehnen}
+	\label{list:badgebsp} ~\\
 \newpage
 \subsubsection{Seite nicht Gefunden}
 Falls der momentane Nutzer von Refundable eine ungültige URL aufruft wollten wir diesem sofort klar machen, dass er etwas falsch gemacht hat. Des weiteren wollten wir dem Nutzer direkt eine Lösung vorschlagen, wie er dieses Problem beheben kann - ein \textit{Button}, der den Nutzer wieder zur Startseite bringt. Um dem Nutzer zu visualisieren, dass dieser Knopf die richtige Wahl ist, haben wir ihn in einem Grün hervorgehoben. Außerdem wird dem Aufrufer der Seite mit schimmernden grauen Boxen, die einen \enquote{Lade-Zustand} visualisieren sollen, dass die Seite, die der Nutzer aufrufen wollte nicht richtig lädt.
@@ -568,6 +917,12 @@ Falls der momentane Nutzer von Refundable eine ungültige URL aufruft wollten wi
 	\label{fig:notfoundsite}
 \end{figure}
 ~\\
+Die Elemente, welche den Lade-Zustand verkörpern sollen heißen \enquote{b-skeleton-img} und werden wie folgt erstellt:
+\begin{code}{html}
+	<b-skeleton-img animation="fade"></b-skeleton-img>
+\end{code}
+\captionof{listing}{Code - Skeleton}
+	\label{list:codeskeleton} ~\\
 
 \newpage
 \subsubsection{Antrag suchen}
@@ -589,6 +944,3 @@ Während der Entwicklung ist uns aufgefallen, dass die Funktion fehlt, einem bes
 	\caption[Neuer Schulantrag]{Ein Bild der Rechte vergeben Seite}
 	\label{fig:rightssite}
 \end{figure}
-~\\
-
-
