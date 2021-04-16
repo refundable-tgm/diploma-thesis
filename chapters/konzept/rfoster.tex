@@ -22,7 +22,7 @@ Wird ein Link eingegeben, welcher nicht auf die Seite selbst oder eine definiert
 \end{figure}
 
 \subsubsection{Manager}
-Der \textit{Manager} ist der Hauptbestandteil der Webseite. Er beinhaltet alle einzelnen Seiten und zeigt immer die gewünschte Seite an. In dem \textit{Manager} werden auch Cookie-Einstellungen und Rechte gespeichert. Fast alle Komponenten werden dem Manager untergeordnet. Der \textit{Manager} ist auch dafür verantwortlich, Daten zwischen Komponenten zu übermitteln.
+Der \textit{Manager} ist der Hauptbestandteil der Webseite. Er beinhaltet alle einzelnen Seiten und zeigt immer die gewünschte Seite an. In dem \textit{Manager} werden auch Cookie-Einstellungen und Rechte gespeichert. Fast alle Komponenten werden dem \textit{Manager} untergeordnet. Der \textit{Manager} ist auch dafür verantwortlich, Daten zwischen Komponenten zu übermitteln.
 
 \subsubsection{Komponenten}
 Einzelne Komponenten laden die Daten eigenständig aus dem Backend. Dies ist eine Maßnahme, um den \textit{Manager} nicht mit Funktionen zu überladen und damit nicht bei jedem Aufruf Daten vom \textit{Manager} an die einzelnen Komponenten gesendet werden müssen.\\
@@ -34,7 +34,7 @@ Es soll eine weitere Seite vorhanden sein, auf die man durch einen Link gelangen
 Wird in den Parametern des Links bereits spezifiziert, welcher Antrag geöffnet werden soll, wird dem Benutzer nach der Anmeldung dieser Antrag angezeigt. Es können nur jene Anträge angezeigt werden, zu denen der Benutzer die erforderlichen Berechtigungen besitzt. Besitzt der Benutzer nicht die erforderlichen Berechtigungen, wird eine Fehlermeldung ausgegeben.
 
 \subsubsection{Navigation}
-Da fast alle Komponenten dem Manager untergeordnet sind, ist es auch die Verantwortung des Managers die Navigation zu steuern. Dazu gibt es eine zentrale Funktion im Manager, welche die derzeit geladene Seite verändern kann. Des Weiteren werden die benötigten Informationen geladen bzw. erstellt, welche die Komponenten benötigen.
+Da fast alle Komponenten dem \textit{Manager} untergeordnet sind, ist es auch die Verantwortung des \textit{Manager}s die Navigation zu steuern. Dazu gibt es eine zentrale Funktion im \textit{Manager}, welche die derzeit geladene Seite verändern kann. Des Weiteren werden die benötigten Informationen geladen bzw. erstellt, welche die Komponenten benötigen.
 \\\\
 Die Funktion zum Verändern der derzeitigen Anzeige wird von den untergeordneten Komponenten aufgerufen. Hinzu kommt, dass mit dem Aufruf der Funktion auch spezifiziert wird, welche Seite geladen werden soll. Spezielle Seiten, wie z.B: der \textit{Antrag-Viewer}, benötigen zusätzlichen Informationen, welche über diese Funktion mitgegeben werden.
 

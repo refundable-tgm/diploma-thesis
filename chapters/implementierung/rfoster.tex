@@ -68,7 +68,7 @@ Die Codezeile wird beim Aufruf der Unterseite im \textit{Manager} hinzugefügt.\
 Die beschriebenen Signale werden von den Unterseiten mittels folgendem Code bzw. folgender Funktion gesendet:
 \begin{code}{js}
 	changeComponent(component, back, application, escortsdata) {
-		this.\$emit("change-component", component, back, application, escortsdata);
+		this.$emit("change-component", component, back, application, escortsdata);
 	}
 \end{code}
 \captionof{listing}{Signal senden}~\\
@@ -123,11 +123,6 @@ Die Komponente muss noch im \textit{Manager} angezeigt werden. Dies wird im \tex
 			v-bind:appid="appid"
 			v-bind:user="user"
 		/>
-		<PageNotFound
-			v-if="currentComponent == 'PageNotFound'"
-			v-on:change-component="changeComponent"
-			v-bind:url="url"
-		/>
 		<!-- Weitere Komponenten -->
 	</div>
 </template>
@@ -135,8 +130,7 @@ Die Komponente muss noch im \textit{Manager} angezeigt werden. Dies wird im \tex
 \captionof{listing}{Anzeigen der Komponenten im \textit{Manager}}~\\
 Im Code wird nicht nur die Komponente angezeigt, sondern auch Daten an die Komponenten gebunden.\\
 \textit{v-if}-Attribute sorgen dafür, dass das Rendern nur unter der angegebenen Bedingung erfolgt. Die Komponente wird nur angezeigt, wenn die Variable \textit{currentComponent} den Namen einer Komponente annimmt.\\
-\textit{v-bind}-Attribute binden Daten von der übergeordneten Komponente in die eingebundene Komponente ein. Bei dem Beispiel \textit{v-bind:cookieset=''cookies''} wird an die Login-Komponente ein Attribut \textit{cookieset} mit dem Wert von der Variable \textit{cookies} mitgegeben.
-\newpage
+\textit{v-bind}-Attribute binden Daten von der übergeordneten Komponente in die eingebundene Komponente ein. Bei dem Beispiel \textit{v-bind:cookieset=''cookies''} wird an die \textit{Login}-Komponente ein Attribut \textit{cookieset} mit dem Wert von der Variable \textit{cookies} mitgegeben.
 Diese Attribute können mit folgendem Code aufgefangen und in diesen eingebundenen Komponenten verwendet werden:
 \begin{code}{html}
 		props: ["url", "forward", "cookieset"]
@@ -195,7 +189,7 @@ Der \textit{Antrag-Viewer} wird über den Link \textit{/viewer} aufgerufen. Dies
 	\label{fig:antragviewer}
 \end{figure}
 
-Sollte der Benutzer nicht angemeldet sein, so wird er zuerst auf die Login-Seite weitergeleitet, bevor er die ID des Antrags eingeben kann. Sollte der eingegebene Link bereits den Parameter \textit{uuid} besitzen, wird der Benutzer auf die Antragsansichtsseite weitergeleitet, sofern dieser angemeldet ist. Ansonsten wird der Benutzer zuerst auf die Login-Seite weitergeleitet.
+Sollte der Benutzer nicht angemeldet sein, so wird er zuerst auf die \textit{Login}-Seite weitergeleitet, bevor er die ID des Antrags eingeben kann. Sollte der eingegebene Link bereits den Parameter \textit{uuid} besitzen, wird der Benutzer auf die Antragsansichtsseite weitergeleitet, sofern dieser angemeldet ist. Ansonsten wird der Benutzer zuerst auf die \textit{Login}-Seite weitergeleitet.
 \begin{code}{js}
 	{
 		// Die Route des Antrag-Viewers
@@ -206,7 +200,7 @@ Sollte der Benutzer nicht angemeldet sein, so wird er zuerst auf die Login-Seite
 	},
 \end{code}
 \captionof{listing}{Route für den \textit{Antrag-Viewer}}~\\
-Es wird die Home-Komponente (der \textit{Manager}) aufgerufen, da dieser das Verarbeiten der URL und das Weiterleiten auf die Login- und Antragsansicht übernimmt.
+Es wird die Home-Komponente (der \textit{Manager}) aufgerufen, da dieser das Verarbeiten der URL und das Weiterleiten auf die \textit{Login}- und Antragsansicht übernimmt.
 \newpage
 \subsubsection{Features}
 Die Features in Kapitel \hyperref[sec:feature]{6.3.1.6} wurden folgendermaßen implementiert.
@@ -253,7 +247,7 @@ axios.post(this.url + "/login", {	// Sendet ein POST-Abfrage an das Backend
 	password: this.password // Das eingegebene Passwort
 }).then(response => {
 	var data = response.data
-	// Es werden die Daten aus der Abfrage an den \textit{Manager} gesendet, damit eine valide Sitzung erstellt wird.
+	// Es werden die Daten aus der Abfrage an den Manager gesendet, damit eine valide Sitzung erstellt wird.
 })
 \end{code}
 \captionof{listing}{POST-Abfrage für den Login}~\\
@@ -263,10 +257,10 @@ In besonderen Fällen, wie in Kapitel \hyperref[sec:antrag_viewer]{7.3.1.4} besc
 \begin{code}{js}
 switch (this.forward.name) {	// Es wird entschieden, auf welche Unterseite navigiert werden soll
 	case "ApplicationSearch":	// Es wird auf den Antrag-Viewer navigiert
-	this.\$emit("change-component", this.forward.name);
+	this.$emit("change-component", this.forward.name);
 	break;
 	case "ApplicationView":	// Es wird auf die Antrag Ansicht navigiert
-	this.\$emit(
+	this.$emit(
 	"change-component",
 	this.forward.name,
 	true,
@@ -274,7 +268,7 @@ switch (this.forward.name) {	// Es wird entschieden, auf welche Unterseite navig
 	);
 	break;
 	default:	// Es wird auf die Hauptseite navigiert
-	this.\$emit("change-component", "Index");
+	this.$emit("change-component", "Index");
 	break;
 }
 \end{code}
@@ -283,7 +277,7 @@ switch (this.forward.name) {	// Es wird entschieden, auf welche Unterseite navig
 Da \textit{Refundable} die Anmeldedaten von \textit{LDAP} verwendet, wird der Benutzer auf \href{https://owa.tgm.ac.at}{OWA} weitergeleitet, wenn auf ''Passwort vergessen'' gedrückt wird.
 \newpage
 \subsection{Abmelden}
-Wird auf den ''Abmelden''-Knopf gedrückt, wird ein Abfrage mit dem derzeit aktiven Token an das Backend gesendet, um den Authentifizierungstoken zu terminieren. Dies bedeutet, dass der Benutzer keinen validen Token mehr besitzt und auf die Login-Seite weitergeleitet wird.
+Wird auf den ''Abmelden''-Knopf gedrückt, wird ein Abfrage mit dem derzeit aktiven Token an das Backend gesendet, um den Authentifizierungstoken zu terminieren. Dies bedeutet, dass der Benutzer keinen validen Token mehr besitzt und auf die \textit{Login}-Seite weitergeleitet wird.
 \begin{code}{js}
 axios.post(this.url + "/logout", {	// Sendet ein POST-Abfrage an das Backend
 	headers: { Authorization: this.token }	// Der Token des Benutzers
@@ -300,7 +294,7 @@ axios.post(this.url + "/logout", {	// Sendet ein POST-Abfrage an das Backend
 \captionof{listing}{Gesamte Abfrage für das Abmelden}~\\
 \newpage
 \subsection{Antrag Erstellen}
-Ein Antrag kann von jedem Lehrer, der im System angemeldet ist, erstellt werden. Dazu wird auf die ''Antrag erstellen''-Unterseite navigiert, bei der der Benutzer aussuchen kann, ob er eine Schulveranstaltung, Fortbildung oder einen anderen Antrag erstellen möchte. Auf diesen Unterseiten werden die notwendigen Informationen vom Benutzer in die Eingabefelder eingegeben. Diese Informationen werden in ein \textit{JSON}-Objekt gegeben und an das Backend gesendet.
+Ein Antrag kann von jedem Lehrer, der im System angemeldet ist, erstellt werden. Dazu wird auf die \textit{Antrag erstellen}-Unterseite navigiert, bei der der Benutzer aussuchen kann, ob er eine Schulveranstaltung, Fortbildung oder einen anderen Antrag erstellen möchte. Auf diesen Unterseiten werden die notwendigen Informationen vom Benutzer in die Eingabefelder eingegeben. Diese Informationen werden in ein \textit{JSON}-Objekt gegeben und an das Backend gesendet.
 \\
 In den folgenden Codebeispielen werden oft die Befehle \textit{returnString}, \textit{returnBoolean} und \textit{returnValue} verwendet. Diese dienen dazu die Datentypen auf die des Backends anzupassen. 
 \subsubsection{Schulveranstaltung}
@@ -396,7 +390,7 @@ Ein \textit{Sonstiges}-Antrag kann auf der Unterseite ''Anderer Grund'' erstellt
 \textit{Sonstiges}-Anträge werden unterschieden in Pflegefreistellungen, Dienstaufträge, Arzttermine und Sonstiges. Das \textit{JSON}-Objekt wird nach dem Drücken des ''Einreichen''-Knopfes erstellt und mit den angegebenen Daten befüllt. Das Objekt wird anschließend an das Backend gesendet.\\
 
 Das \textit{JSON}-Objekt wird so erstellt, wie in Kapitel \hyperref[code_submit_data]{7.3.4.1} beschrieben. Für einen \textit{Sonstiges}-Antrag gibt es nur wenige Änderungen.
-Statt dem \textit{SchoolEventDetails}-Objekt wird ein \textit{OtherReasonDetails}-Objekt in den Antrag hinzugefügt und die Art des Antrags wird auf 8 gesetzt:
+Statt dem \textit{SchoolEventDetails}-Objekt wird ein \textit{OtherReasonDetails}-Objekt in den Antrag hinzugefügt und die Art des Antrags wird auf 6 gesetzt:
 \begin{code}{js}
 var data = {		// Das JSON-Objekt mit allen Informationen
 	Name: this.returnString(this.escorts.description),	// Der Name des Antrags
