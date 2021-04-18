@@ -447,6 +447,24 @@ Ein Reiseformular wird bei den meisten Arten von Antrag erstellt. In einem Reise
 \paragraph{Reiserechnung}~\\
 Eine Reiserechnung wird bei den meisten Arten von Antrag erstellt. In einer Reiserechnung werden Informationen über die Kosten des Antrags gespeichert und wie diese entstanden sind. Des weiteren können Belege hochgeladen werden, um diese dem Antrag zu hinterlegen.
 \subsubsection{Aktionen}
+\paragraph{Excel herunterladen}~\\
+Der Benutzer kann Reiseformulare und Reiserechnungen als Excel-Datei herunterladen. Diese werden mit folgendem Code erstellt und heruntergeladen \cite{down_excel}:
+\begin{code}{js}
+	var anchor_href =
+	"data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64," +
+	excel;	// Wandelt die Daten vom Backend in eine Excel-Datei um
+	var exportLinkElement = document.createElement("a");
+	
+	exportLinkElement.hidden = true;
+	exportLinkElement.download = "HelloWorld.xlsx";
+	exportLinkElement.href = anchor_href;
+	exportLinkElement.text = "downloading...";
+	
+	document.body.appendChild(exportLinkElement);
+	exportLinkElement.click();
+	exportLinkElement.remove();
+\end{code}
+\captionof{listing}{Excel erstellen und herunterladen}~\\
 \paragraph{PDF öffnen}~\\
 Der Benutzer kann die PDFs der Dokumente öffnen. Die PDFs werden in einem neuen Tab im Browser angezeigt.\\
 Mit folgendem Code wird eine PDF erstellt und in einem neuen Tab geöffnet \cite{sof_pdf}:
