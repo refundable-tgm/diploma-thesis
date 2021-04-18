@@ -1,13 +1,13 @@
 %!TEX root=../../main.tex
 \section{Frontend}
-In diesem Kapitel wird die Erstellung eines Konzepts für das Frontend erläutert. Dabei müssen Faktoren, wie beispielsweise die Zielgruppe, unsere Lehrerschaft, beachtet werden. Im folgenden Kapitel werden die theoretischen Hintergründe des Konzeptes überlegt erörtert und danach werden erste Entwürfe mittels Mockups erstellt. 
+In diesem Kapitel wird die Erstellung eines Konzepts für das Frontend erläutert. Dabei müssen unter anderem Faktoren, wie die Zielgruppe, unsere Lehrerschaft, beachtet werden. Im folgenden Kapitel werden die theoretischen Hintergründe des Konzeptes überlegt, erörtert und im Anschluss werden erste Entwürfe mittels Mockups erstellt. 
 \subsection{Theoretische Konzeption}
-Da die Zielgruppe \enquote{Lehrer} nicht gleichaltrig ist, sondern die darin enthaltenen Menschen ein Alter von 25 bis 65 Jahren haben, gibt es keine Literatur zur \enquote{perfekten Usability für Lehrpersonal}. Daher richten wir uns nach den Büchern \enquote{Don't Make Me Think: A Common Sense Approche to Web Usability} von Steve Krug und  \enquote{101 UX Principles} von Will Grant. Um eine gute Usability für die Lehrer des TGMs zu gewährleisten, werden wir den Prozess der Entwicklung streng in Kontakt zu Lehrern begleiten und das Produkt auch mit nicht Technik affinen Menschen testen.  
+Da die Zielgruppe \enquote{Lehrer} nicht gleichaltrig ist, sondern die darin enthaltenen Menschen ein Alter von 25 bis 65 Jahren haben, gibt es keine Literatur zur \enquote{perfekten Usability für Lehrpersonal}. Daher richten wir uns nach den Büchern \enquote{Don't Make Me Think: A Common Sense Approche to Web Usability} von Steve Krug und  \enquote{101 UX Principles} von Will Grant. Um eine gute Usability für die Lehrer des TGMs zu gewährleisten, werden wir den Prozess der Entwicklung streng in Kontakt zu Lehrern begleiten und das Produkt auch mit Technik unvertrauten Menschen testen.  
 \newpage
 \subsection{Visuelle Konzeption}
 \paragraph{Login-Seite}
 ~\\
-Wie man auf der Abbildung 6.1 sehen kann, ist die Login-Seite sehr schlicht gehalten. Neben dem Schriftzug \enquote{Refundable} soll das Formular zum einloggen dargestellt sein. Da die Plattform nur für das Personal des TGMs zugänglich sein soll, wird bei der Eingabe der E-Mail Adresse automatisch eine \enquote{@tgm.ac.at} Endung angefügt. Wird der \enquote{Passwort vergessen?} Link betätigt, soll automatisch auf die Seite des TGMs verwiesen werden, da wir über LDAP die Daten der Lehrer abrufen. Bei der Eingabe von validen Daten und dem Betätigen des \enquote{Anmelden} Buttons wird der Benutzer auf die Startseite weitergeleitet.
+Wie man auf der Abbildung 6.1 sehen kann, ist die Login-Seite sehr schlicht gehalten. Neben dem Schriftzug \enquote{Refundable} soll das Formular zum Einloggen dargestellt sein. Da die Plattform nur für das Personal des TGMs zugänglich sein soll, wird bei der Eingabe der E-Mail Adresse automatisch eine \enquote{@tgm.ac.at} Endung angefügt. Wird der \enquote{Passwort vergessen?} Link betätigt, soll automatisch auf die Seite des TGMs verwiesen werden, da die Daten über LDAP, der Lehrer abgerufen wird. Bei der Eingabe von validen Daten und dem Betätigen des \enquote{Anmelden} Buttons wird der Benutzer auf die Startseite weitergeleitet.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\linewidth]{images/Mockup-Startseite}
@@ -40,7 +40,7 @@ Zur Veranschaulichung der oben genannten Prozesse ist in Abbildung 6.4 ein beisp
 \end{figure}
 \paragraph{Neuer Antrag}
 ~\\
-Nachdem man auf den Button zum erstellen eines neues Antrages gedrückt hat, soll man zu einer Auswahl kommen, in der man auswählen kann, welchen Antrag man erstellen möchte (Abbildung 6.5). Danach sollen je nach Antragsart, wie man auf der Abbildung 6.6 sieht, Eingabefelder erscheinen, in denen die benötigten Daten zu dem Antrag eingetragen werden sollen.
+Nachdem man auf den Button zum Erstellen eines neues Antrages gedrückt hat, soll man zu einer Auswahl kommen, in der man auswählen kann, welche Art von Antrag man erstellen möchte (Abbildung 6.5). Danach sollen je nach Antragsart, wie man auf der Abbildung 6.6 sieht, Eingabefelder erscheinen, in denen die benötigten Daten zu dem Antrag eingetragen werden sollen.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\linewidth]{images/Mockup-Neuer-Antrag}
@@ -63,7 +63,7 @@ Zur Veranschaulichung der oben genannten Prozesse ist in Abbildung 6.7 ein beisp
 \newpage
 \paragraph{Ansicht Alle Anträge}
 ~\\
-Auf der \enquote{Alle Anträge} Seite, sieht man alle Anträge, mit denen man in Verbindung steht. Sowie akzeptierte, abgelehnte Anträge, als auch Anträge, die noch in Bearbeitung sind, werden hier angezeigt und können über das Menü auf der rechten Seite geöffnet werden (Abbildung 6.8).
+Auf der \textit{Alle Anträge} Seite, sieht man alle Anträge, mit denen man in Verbindung steht. Akzeptierte, abgelehnte, als auch Anträge, die noch in Bearbeitung sind, werden hier angezeigt und können über das Menü auf der rechten Seite geöffnet werden (Abbildung 6.8).
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\linewidth]{images/Mockup-Alle-Anträge}
