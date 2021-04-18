@@ -269,7 +269,7 @@ Unter der Bedingung, dass die erste Anfrage den Fehlercode \textit{401} zurückg
 		}
 	}).then(resp => {
 		switch (resp.status) {
-			case 200:
+			case 201:
 				this.$emit"updateToken", resp.data.access_token, resp.data.refresh_token);
 				// Die Anfrage wird erneut durchgeführt
 				break;
