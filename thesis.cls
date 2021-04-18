@@ -140,7 +140,7 @@
 \ifcolor\hypersetup{breaklinks=true, colorlinks=true,   % Color hyperlinks
                     linkcolor=MyBlue, urlcolor=MyBlue, citecolor=MyBlue}
 \else\hypersetup{breaklinks=true, colorlinks=false,     % Do not color hyperlinks
-                    linkcolor=Black, urlcolor=Black, citecolor=Black}\fi
+                    linkcolor=Black, urlcolor=Black, citecolor=Black, hidelinks=true}\fi
 
 % :: Headers ::
 \pagestyle{fancy}\fancyhf{}

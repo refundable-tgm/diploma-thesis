@@ -149,6 +149,8 @@ Die REST-Schnittstelle im Backend ist die Kommunikationsschnittstelle mit dem Sy
 
 Die folgende Tabelle beschreibt die geplanten Endpoints, wobei  sie jeweils mit der Protokollmethode (GET, POST, PUT oder DELETE), dem Pfad zum Endpoint, einer kurzen Beschreibung, Rückgaben, Eingaben und dem Erfordernis eines Tokens beschrieben werden.
 
+\captionof{table}[REST-Endpoints 1]{Übersicht REST-Endpoints: Teil 1}
+\label{table:endpoints1}
 \begin{table}
 	\centering
 	\begin{tabular}{|l|l|l|l|l|}
@@ -169,9 +171,11 @@ Die folgende Tabelle beschreibt die geplanten Endpoints, wobei  sie jeweils mit 
 		
 	\end{tabular}
 \end{table}	
-\captionof{table}[REST-Endpoints 1]{Übersicht REST-Endpoints: Teil 1}
-\label{table:endpoints1}
+
+\newpage
 		
+\captionof{table}[REST-Endpoints 2]{Übersicht REST-Endpoints: Teil 2}	
+\label{table:endpoints2}
 \begin{table}
 	\centering
 	\begin{tabular}{|l|l|l|l|l|}
@@ -192,8 +196,6 @@ Die folgende Tabelle beschreibt die geplanten Endpoints, wobei  sie jeweils mit 
 		POST                                   & /saveBillingReceipt                                                                     & \begin{tabular}[c]{@{}l@{}}Speichert einen \\ Beleg als PDF ab\end{tabular}                                 & \multicolumn{1}{c|}{--}                                                                   & PDF                                                                                                            \\ \hline
 	\end{tabular}
 \end{table}
-\captionof{table}[REST-Endpoints 2]{Übersicht REST-Endpoints: Teil 2}	
-\label{table:endpoints2}
 
 \newpage
 
@@ -247,6 +249,8 @@ Um jenen in \autoref{fig:ldapauthenticate} abgebildeten Ablauf einfach implement
 
 Die Datei- und Formularerstellung ist die Hauptfunktion der Software. Das Generieren folgender Forms wird unterstützt. Bei \enquote{Reiserechnung} und \enquote{Dienstreiseantrag} werden auf Grund des festgelegten Designs auch eine Excel Variante angeboten, in der dieses umgesetzt ist. Das Format steht hierbei für Hoch- oder Querformat, wobei Portrait das Hochformat und Landscape das Querformat ist.
 
+\captionof{table}[Dateierstellung - Dateien]{Übersicht über die verschiedenen Dateien, die durch das Backend erstellt werden.}	
+\label{tbl:files}
 \begin{table}
 	\centering
 	\begin{tabular}{|l|l|l|}
@@ -261,8 +265,7 @@ Die Datei- und Formularerstellung ist die Hauptfunktion der Software. Das Generi
 		Dienstreiseantrag & Excel & Portrait \\ \hline
 	\end{tabular}
 \end{table}
-\captionof{table}[Dateierstellung - Dateien]{Übersicht über die verschiedenen Dateien, die durch das Backend erstellt werden.}	
-\label{tbl:files}
+
 ~\\
 Alle eigens generierten PDFs sind jedenfalls mit einer Kopfzeile ausgestattet. In dieser ist in der linken Ecke das tgm-Logo zu sehen, in der Mitte steht der Name des Formulars (siehe \autoref{tbl:files}) und rechts ein QR-Code, welcher einen nach dem Scan auf die Website führt und den zugehörigen Antrag dort direkt öffnet.
 
