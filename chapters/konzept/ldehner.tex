@@ -1,13 +1,16 @@
 %!TEX root=../../main.tex
 \section{Frontend}
+\label{chapter:konzept-frontend}
 In diesem Kapitel wird die Erstellung eines Konzepts für das Frontend erläutert. Dabei müssen unter anderem Faktoren, wie die Zielgruppe, unsere Lehrerschaft, beachtet werden. Im folgenden Kapitel werden die theoretischen Hintergründe des Konzeptes überlegt, erörtert und im Anschluss werden erste Entwürfe mittels Mockups erstellt. 
 \subsection{Theoretische Konzeption}
+\label{chapter:konzept-frontend-theorie}
 Da die Zielgruppe \enquote{Lehrer} nicht gleichaltrig ist, sondern die darin enthaltenen Menschen ein Alter von 25 bis 65 Jahren haben, gibt es keine Literatur zur \enquote{perfekten Usability für Lehrpersonal}. Daher richten wir uns nach den Büchern \enquote{Don't Make Me Think: A Common Sense Approche to Web Usability} von Steve Krug und  \enquote{101 UX Principles} von Will Grant. Um eine gute Usability für die Lehrer des TGMs zu gewährleisten, werden wir den Prozess der Entwicklung streng in Kontakt zu Lehrern begleiten und das Produkt auch mit Technik unvertrauten Menschen testen.  
 \newpage
 \subsection{Visuelle Konzeption}
+\label{chapter:konzept-frontend-visuell}
 \paragraph{Login-Seite}
 ~\\
-Wie man auf der Abbildung 6.1 sehen kann, ist die Login-Seite sehr schlicht gehalten. Neben dem Schriftzug \enquote{Refundable} soll das Formular zum Einloggen dargestellt sein. Da die Plattform nur für das Personal des TGMs zugänglich sein soll, wird bei der Eingabe der E-Mail Adresse automatisch eine \enquote{@tgm.ac.at} Endung angefügt. Wird der \enquote{Passwort vergessen?} Link betätigt, soll automatisch auf die Seite des TGMs verwiesen werden, da die Daten über LDAP, der Lehrer abgerufen wird. Bei der Eingabe von validen Daten und dem Betätigen des \enquote{Anmelden} Buttons wird der Benutzer auf die Startseite weitergeleitet.
+Wie man auf der \autoref{fig:mockupLogin} sehen kann, ist die Login-Seite sehr schlicht gehalten. Neben dem Schriftzug \enquote{Refundable} soll das Formular zum Einloggen dargestellt sein. Da die Plattform nur für das Personal des TGMs zugänglich sein soll, wird bei der Eingabe der E-Mail Adresse automatisch eine \enquote{@tgm.ac.at} Endung angefügt. Wird der \enquote{Passwort vergessen?} Link betätigt, soll automatisch auf die Seite des TGMs verwiesen werden, da die Daten über LDAP, der Lehrer abgerufen wird. Bei der Eingabe von validen Daten und dem Betätigen des \enquote{Anmelden} Buttons wird der Benutzer auf die Startseite weitergeleitet.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\linewidth]{images/Mockup-Startseite}

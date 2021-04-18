@@ -1,7 +1,9 @@
 %!TEX root=../../main.tex
 \section{Frontend}
+\label{chapter:implementierung-frontend}
 In diesem Kapitel wird die Erstellung eines Konzepts für das Frontend erläutert. Dabei werden Faktoren, wie unsere Zielgruppe,  beachtet werden. Im folgenden Kapitel werden die theoretischen Hintergründe des Konzeptes überlegt. Danach werden erste Entwürfe mittels Mockups erstellt. 
 \subsection{Vorbereitung}
+\label{chapter:implementierung-frontend-vorbereitung}
 Wie im Kapitel 5.1 und 5.3 festgelegt wird im Frontend Bootstrap in Verbindung mit VueJS verwendet. Zu aller erst muss daher VueJS auf dem Computer, auf dem das Projekt erstellt wird, installiert werden. Dies geschieht auf Windows über den Node Packet Manager (NPM) \cite{vue-install}. Der Befehl um VueJS zu installieren schaut wie folgt aus:
 \begin{code}{bash}
 	npm install -g @vue/cli
@@ -28,7 +30,9 @@ Alle Teile der Website sind in sogenannten Komponenten verpackt, die je nach Ben
 
 \newpage
 \subsection{Komponenten der Website}
+\label{chapter:implementierung-frontend-komponenten}
 \subsubsection{Generell}
+\label{chapter:implementierung-frontend-komponenten-generell}
 Die Struktur der Komponenten ist so aufgebaut, dass die Seite sowohl für Desktop- als auch mobile Endgeräte optimiert ist. Dazu wird das \enquote{Grid-System} von Bootstrap verwendet, welches seinen Platz im \enquote{template-Tag}, der VueJS Komponente findet. Dieses besteht aus einem Container, einer Reihe (Row) und einer Spalte (Column). Da es am Anfang das Problem gab, dass nicht der ganze Bildschirm ausgenutzt wird, wurden folgende Klassen im CSS-Dokument erstellt:
 \begin{code}{css}
 	.template-main-container {
@@ -50,6 +54,7 @@ Die Struktur der Komponenten ist so aufgebaut, dass die Seite sowohl für Deskto
 Diese dienen dazu, dass der Hauptcontainer, als auch die Hauptreihe der Website, 100\% der Höhe (100 vertikale Einheiten), sowie 100\% der Breite (100 horizontale Einheiten) einnehmen. Außerdem wird in den Klassen definiert, dass die Elemente keinen Abstand zum Rand, der Seite haben sollen.
 \newpage
 \subsubsection{Login-Seite}
+\label{chapter:implementierung-frontend-komponenten-login}
 Die Login-Seite sollte sehr schlicht gehalten werden und sofort verstamden werden können. Da das Tool \textit{Refundable} nur von Lehrern des TGMs verwendet werden soll, wurde in der Loginmaske die E-Mail-Endung \enquote{@tgm.ac.at} vordefiniert. Außerdem soll dem Aufrufer der Website sofort klar machen, worum es sich bei dieser Website handelt und haben daher den Projektnamen \textit{Refundable}, als auch unseren Slogan auf der Seite platziert. Des weiteren war aufgrund der DSGVO eine Meldung zu realisieren, die den Benutzer darüber informiert, dass Cookies verwendet werden. Falls diese Meldung nicht akzeptiert wird und man sich anzumelden möchte, wird eine Fehlermeldung dargestellt. Diese Meldung wird jedoch dynamisch mit VueJS erstellt und nicht direkt mittels Bootstrap. In der Umsetzung schaut die Login-Seite wie folgt aus (Abbildung 7.1):
 \begin{figure}[H]
 	\centering
@@ -228,6 +233,7 @@ Die Meldung, dass Cookies benutzt werden, sollte schlicht und einfach sein. Es w
 	\label{list:cookiehtml} ~\\
 \newpage
 \subsubsection{Startseite}
+\label{chapter:implementierung-frontend-komponenten-startseite}
 Die Startseite sollte so intuitiv und übersichtlich wie möglich sein. Deswegen wurde ein \enquote{Drei Spalten Design} umgesetzt. In der ersten Spalte befinden sich alle wichtigen Funktionen - drei Knöpfe, zum Erstellen von neuen Anträgen, um alle aktiven Anträge anzuzeigen und um alle Anträge zu betrachten, die man jemals gestellt hat. In der 2. Spalte befindet sich das Logo, eine Illustration für das Dashboard und ein Knopf zum Ausloggen. Falls man sich mit einm Administratorkonto anmeldet, wird hier ebenfalls ein Knopf, zum Wechseln in die Administratoransicht angezeigt. In der dritten Spalte werden Neuigkeiten zu den Anträgen des Benutzers angezeigt. Klickt man auf eine Neuigkeit, wird man zu dem jeweiligen Antrag weitergeleitet. Abbildung 7.2 zeigt die Umsetzung der Startseite.
 \begin{figure}[H]
 	\centering
@@ -403,6 +409,7 @@ Die Neuigkeiten-Elemente sind mit einer Illustration bestückt, die den momentan
 	\label{list:htmlnews} ~\\
 \newpage
 \subsubsection{Neuer Antrag}
+\label{chapter:implementierung-frontend-komponenten-neu}
 Auf diese Seite gelangt der Nutzer entweder, durch die Betätigung des \textit{Neuer Antrag} Buttons auf der Startseite oder über die Verknüpfung auf der \textit{Alle Anträge} oder \textit{Aktive Anträge} Ansicht. Da es nicht möglich ist, ein einheitliches Formular zu kreieren, wurde vor dem Formular eine Auswahlmöglichkeit der Antragsart eingebaut.
 \paragraph{Auswahl}
 ~\\
@@ -531,6 +538,7 @@ Der Reiseantrag wird automatisch bei den Formularen der Anträge angehangen, bei
 \end{figure}
 
 \subsubsection{Reisekostenabrechnung}
+\label{chapter:implementierung-frontend-komponenten-rechnung}
 Das Formular der Reisekostenabrechnung fordert sehr viele verschiedene Werte von den Lehrern. Durch die Unterstützung der Website, ist das Eingeben der Daten wesentlich einfacher, als auf dem Papier, da gewisse Felder, je nach Eingabe des Benutzers, automatisch ausgegraut werden. Wenn zum Beispiel die Tabelle in Abbildung 7.11 betrachtet wird, kann man nur in jene Felder schreiben, die man mit den Checkboxen angeklickt hat. Außerdem können direkt digital Belege an die Reisekostenabrechnung anhängt werden. Zudem wird automatisch die Zeitspanne des jeweiligen Antrages berechnet und entsprechend viele Zeilen in der Tabelle erzeugt.
 \begin{figure}[H]
 	\centering
@@ -609,6 +617,7 @@ Um eine Tabelle zu erstellen, kann das Element \enquote{b-table} von Bootstrap b
 Die Spalten werden mittels \textit{Templates} erzeugt. Danach können variabel Werte in jene Spalte, bzw. in jeder Zeile eingefügt werden. In diesem Fall befindet sich in der Zelle ein \textit{Timepicker}, welcher zum Auswählen der Startzeit dient.
 \newpage
 \subsubsection{Ansicht aktive Anträge}
+\label{chapter:implementierung-frontend-komponenten-aktiv}
 Um den Lehrern das Betrachten von aktiven Anträgen einfacher zu machen, wurde eine extra Seite erstellt, die über das Menü auf der Startseite erreichbar ist. Hier werden alle aktiven Anträge (ein Antrag gilt als \enquote{aktiv}, von der Antragsstellung, bis zur Rechnungsphase). Der Benutzer sieht mittels Farben auf den ersten Blick, welchen Status der jeweilige Antrag hat, Rot: Antrag wurde abgelehnt, Gelb: Antrag wird bearbeitet, Grün: Antrag wurde angenommen. Außerdem werden in der Tabelle, der Titel des Antrages, der Leiter, das Einreichdatum und der genaue Status (In Bearbeitung, Rechnungsphase, ...) angezeigt. Falls der Benutzer viele Anträge auf einmal hat, wurde eine Funktion zum Suchen von Anträgen im oberen Teil der Seite eingebaut. Ebenfalls ist es möglich, jede Spalte auf- und absteigend zu sortieren. Falls der Knopf namens \enquote{Antrag betrachten} betätigt wurde, kommt der Nutzer auf die \enquote{Antrags Ansicht}.
 \begin{figure}[H]
 	\centering
@@ -692,6 +701,7 @@ Das Pop-Up Fenster wurde mittels einem \enquote{Modal} von Bootstrap verwirklich
 	\label{list:codepopup} ~\\
 
 \subsubsection{Ansicht Alle Anträge}
+\label{chapter:implementierung-frontend-komponenten-alle}
 Diese Seite ist sehr ähnlich zu der \enquote{Aktive Anträge} Seite. Der Unterschied ist, dass der Nutzer hier auch bereits abgeschlossene Anträge sieht. Auch hier wurde die \enquote{Suchen} Funktion eingebaut, die hier eine wesentlich wichtigere Rolle spielt, als bei der Seite, der aktiven Anträge. Auch das Filtern der einzelnen Spalten ist wieder möglich.
 \begin{figure}[H]
 	\centering
@@ -703,6 +713,7 @@ Diese Seite ist sehr ähnlich zu der \enquote{Aktive Anträge} Seite. Der Unters
 
 \newpage
 \subsubsection{Antragsansicht}
+\label{chapter:implementierung-frontend-komponenten-antragsansicht}
 Die Antragsansicht bietet den Nutzern alle möglichen Informationen zu ihrem Antrag, die sie brauchen. Um den Nutzern einen besseren Überblick zu schaffen, in welcher Phase sich ihr Antrag befindet, wurde eine Fortschrittsanzeige als erstes Element auf der Seite eingebaut. Desweiteren findet der Benutzer eine aufklappbare Liste auf der Seite, in der je nach Status des Antrages, die Daten angezeigt und/oder editiert werden können. Außerdem bietet diese Seite die Funktion, eine generierte PDF-Datei von jedem Antrag zu öffnen. Falls der Nutzer Daten geändert hat, kann er diese Änderung mit einem Knopf, der sich am Schluss der Website befindet speichern. Ebenfalls ist es möglich den Antrag zu schließen, hierbei öffnet sich aber eine Warnmeldung, in der man das Schließen des Antrages nochmal bestätigen muss.
 \begin{figure}[H]
 	\centering
@@ -776,7 +787,7 @@ Ein Schritt der Fortschrittsanzeige besteht aus einem \enquote{div}, in dem sich
 
 \paragraph{Dokumente anzeigen}
 ~\\
-Die verschiedenen Dokumente, die zu einem gewissen Antrag angehören, werden in einer Tabelle gelistet. Falls der Nutzer auf den \enquote{Bearbeitung öffnen} Knopf drückt, wird der Tabelle eine weitere Reihe hinzugefügt, die alle Informationen zu dem jeweiligen Antrag beinhaltet. Mittels VueJS wurden die bestehenden Formulare (hier als Beispiel einen Schulveranstaltungsantrag), in der Tabelle eingebunden und die Eingabefelder über die Datenschnittstelle mit Daten befüllt.
+Die verschiedenen Dokumente, die zu einem gewissen Antrag angehören, werden in einer Tabelle gelistet. Falls der Nutzer auf den \enquote{Bearbeitung öffnen} Knopf drückt, wird der Tabelle eine weitere Reihe hinzugefügt, die alle Informationen zu dem jeweiligen Antrag beinhaltet. Mittels VueJS wurden die bestehenden Formulare (hier als Beispiel einen Schulveranstaltungsantrag), in der Tabelle eingebunden und die Eingabefelder über die Datenschnittstelle (\autoref{chapter:implementierung-datenschnittstelle}) mit Daten befüllt.
 \begin{code}{html}
 	<template #row-details="row">
         <b-card>
@@ -839,6 +850,7 @@ Wird der \enquote{Antrag schließen} Knopf betätigt, erscheint eine Sicherheits
 
 \newpage
 \subsubsection{Administrator Ansicht}
+\label{chapter:implementierung-frontend-komponenten-admin}
 Die Administratoransicht ist, wie die \enquote{alle Anträge} oder \enquote{aktive Anträge} Ansicht der Nutzer mit der Struktur einer Tabelle aufgebaut und verfügt über eine Such- als auch Filterfunktion. Eine Zusatzfunktion, damit man direkt in der Übersicht, einen oder mehrere Anträge auswählen kann und diese direkt als PDFs exportieren kann. Außerdem sehen die Admitistratoren auf den ersten Blick wesentlich mehr Informationen, als normale Nutzer. Es wird der Titel des Antrages angezeigt, die Art, das Enreichdatum, für wann der Antrag ist, den Status (je nach Status sehen gewisse Rollen die Anträge) und den Antragssteller in Kurzschreibweise. Auch hier ist es wieder möglich die Antragsansicht zu öffnen.
 \begin{figure}[H]
 	\centering
@@ -911,6 +923,7 @@ Im Code wird dieses Eingabefeld im \enquote{Modal} wie folgt erstellt:
 	\label{list:badgebsp} ~\\
 \newpage
 \subsubsection{Seite nicht Gefunden}
+\label{chapter:implementierung-frontend-komponenten-notfound}
 Falls der momentane Nutzer von \textit{Refundable} eine ungültige URL aufrufen möchte, wird dieser sofort informiert, dass er etwas falsch gemacht hat. Desweiteren wird dem Nutzer direkt eine Lösung vorgeschlaen, wie er dieses Problem beheben kann. Um dem Nutzer zu visualisieren, dass der \enquote{Website} Knopf die richtige Wahl ist, haben wir ihn in einem Grün hervorgehoben. Außerdem wird dem Aufrufer, der Seite mit schimmernden grauen Boxen, die einen \enquote{Lade-Zustand} visualisieren sollen gezeigt, dass die Seite, die der Nutzer aufrufen wollte nicht richtig lädt.
 \begin{figure}[H]
 	\centering
@@ -928,6 +941,7 @@ Die Elemente, welche den Lade-Zustand verkörpern sollen, heißen \enquote{b-ske
 
 \newpage
 \subsubsection{Antrag suchen}
+\label{chapter:implementierung-frontend-komponenten-suchen}
 Um den Administratoren während ihren Tätigkeiten ein wenig Arbeit abzunehmen, wurde eine Möglichkeit eingebaut, einen Antrag direkt über eine Seite zu suchen. Dazu muss der Administrator die Unterseite \enquote{/viewer} aufrufen und kann, wie man in Abbildung 7.13 sehen kann, die Antrags ID suchen und so direkt zu dem gewünschten Antrag gelangen.
 \begin{figure}[H]
 	\centering
@@ -939,6 +953,7 @@ Um den Administratoren während ihren Tätigkeiten ein wenig Arbeit abzunehmen, 
 
 \newpage 
 \subsubsection{Rechte vergeben}
+\label{chapter:implementierung-frontend-komponenten-rechte}
 Während der Entwicklung ist uns aufgefallen, dass eine Funktion fehlt, einem bestimmten Benutzer mit gewissen Rechten auszustatten. Daher ist es dem \textit{Superuser} möglich über das Admindashboard Rechte zu vergeben. Dazu muss er nur die E-Mail Adresse des bestimmten Nutzers eingeben und mittels \textit{Radio-Buttons} die gewünschten Rechte auswählen. Auch hier wurden wieder die bekannten Elemente der restlichen Website verwendet.
 \begin{figure}[H]
 	\centering
