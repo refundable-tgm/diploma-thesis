@@ -2,9 +2,9 @@
 
 \section{Backend und Infrastruktur}
 \subsection{Einleitung}
-Der Anspruch an die Infrastruktur und an das Backend besteht darin, die Software als ganzes zu steuern und zu erhalten. Die Infrastruktur muss einfach zu aufbauen und zu starten sein. Die folgenden Kapiteln erläutern nach der generellen Analyse von Lösungsmöglichkeiten im \autoref{chap:backendsota} nun einen ausgearbeiteten Plan, wie die später folgende Implementierung aussehen soll. Hierfür werden Graphiken oder Tabelle verwendet. Sie sollen ausreichend Informationen über Abläufe oder verschiedene Funktionalität vorgeben, um diese entsprechend daraufhin zu implementieren. Des Weiteren sollen die genormten Diagrammarten dazu dienen das komplexe Backend und die Infrastruktur einfach und übersichtlich darzustellen, um speziell die Schnittstellenherausforderungen verständlich zu machen.
+Der Anspruch an die Infrastruktur und an das Backend besteht darin, die Software als ganzes zu steuern und zu erhalten. Die Infrastruktur muss einfach aufzubauen und zu starten sein. Die folgenden Kapiteln erläutern nach der generellen Analyse von Lösungsmöglichkeiten im \autoref{chap:backendsota} nun einen ausgearbeiteten Plan, wie die später folgende Implementierung aussehen soll. Hierfür werden Graphiken oder Tabelle verwendet. Sie sollen ausreichend Informationen über Abläufe oder verschiedene Funktionalitäten vorgeben, um diese entsprechend daraufhin zu implementieren. Des Weiteren sollen die genormten Diagrammarten dazu dienen das komplexe Backend und die Infrastruktur einfach und übersichtlich darzustellen, um speziell die Schnittstellenherausforderungen verständlich zu machen.
 \subsection{Infrastruktur}
-Die Infrastruktur enthält jegliche Dienste und Anwendungen, welche von der Software in der Projektumgebung benötigt werden. Um diese Dienste mit einfach aufbauen zu können wird eine Virtualisierung über Container mittels Docker umgesetzt. Diese virtuellen Instanzen verbunden in einem Docker-Compose Stack werden über ein eigenes Skript gesteuert.
+Die Infrastruktur enthält jegliche Dienste und Anwendungen, welche von der Software in der Projektumgebung benötigt werden. Um diese Dienste einfach mit aufbauen zu können wird eine Virtualisierung über Container mittels Docker umgesetzt. Diese virtuellen Instanzen, verbunden in einem Docker-Compose Stack, werden über ein eigenes Skript gesteuert.
 \subsubsection{Docker Stack}
 \begin{figure}[H]
 	\centering
@@ -17,11 +17,11 @@ Die Infrastruktur enthält jegliche Dienste und Anwendungen, welche von der Soft
 
 Diese in Docker Container befindlichen Dienste und Anwendungen werden benötigt um die Software funktionsfähig bereitzustellen. Der automatische Aufbau dieser Container-Infrastruktur geschieht auf Basis einer Docker-Compose Konfiguration automatisch. \\
 
-Docker Container stellen eigene Umgebungen dar, welche nach dem stoppen oftmals vollständig zerstört und gelöscht werden. Die Daten, auf die die Software und auch die anderen Anwendungen zugreifen müssen, sind jedoch über die Lebenszeit eines Docker Container darüber hinaus zu persistieren. Um dies garantieren zu können, werden Volumes in die Container eingehängt, so dass die Daten prinzipiell außerhalb der Container gespeichert wird und nur von außen in die Umgebungen eingehängt werden. Dies ist bei dem MongoDB Container erforderlich, um die Daten, welche in der Datenbank gespeichert werden, permanent zu speichern. Ebenso ist es erforderlich die generierten Dateien des Golang-Backends zu persistieren, um auf diese später wieder zugreifen zu können. Auch werden im Backend diverse gleichbleibende Passphrasen, beispielsweise zum Signieren von Tokens, auf die gleiche Art und Weise gespeichert. \\
+Docker Container stellen eigene Umgebungen dar, welche nach dem Stoppen oftmals vollständig zerstört und gelöscht werden. Die Daten, auf die die Software und auch die anderen Anwendungen zugreifen müssen, sind jedoch über die Lebenszeit eines Docker Containers hinaus zu persistieren. Um dies garantieren zu können, werden Volumes in die Container eingehängt, sodass die Daten prinzipiell außerhalb der Container gespeichert werden und nur von außen in die Umgebungen eingehängt werden. Dies ist bei dem MongoDB Container erforderlich um die Daten, welche in der Datenbank gespeichert werden, permanent zu speichern. Ebenso ist es erforderlich die generierten Dateien des Golang-Backends zu persistieren, um auf diese später wieder zugreifen zu können. Auch werden im Backend diverse gleichbleibende Passphrasen, beispielsweise zum Signieren von Tokens, auf die gleiche Art und Weise gespeichert. \\
 
-Die Zugangsdaten für den Nutzeraccount, welche beim Installieren abgefragt werden (siehe \autoref{fig:install}), der Datenbank werden über Dockers Secrets-Management sowohl in den Datenbank-, als auch in den Golang-Container, damit sich dieser zur Datenbank verbinden kann, eingehängt. In der Datenbank müssen initial neben den Datenbanknutzern auch die Datenbankinstanz selbst angelegt werden. Dies geschieht über ein eigenes zum Start ausführendes Skript. \\
+Die Zugangsdaten für den Nutzeraccount, welche beim Installieren abgefragt werden (siehe \autoref{fig:install}), der Datenbank werden über Dockers Secrets-Management sowohl in den Datenbank-, als auch in den Golang-Container eingehängt, damit sich dieser zur Datenbank verbinden kann. In der Datenbank müssen initial neben den Datenbanknutzern auch die Datenbankinstanz selbst angelegt werden. Dies geschieht über ein eigenes zum Start ausführendes Skript. \\
 
-Das Frontend selbst besteht aus zwei Ebenen. Zu Beginn am Start wird das Frontend selbst kompiliert und installiert. Hierfür gibt es einen eigenen Container, der hierfür eine Umgebung bietet. Danach wird der eigentliche Webserver-Container gestartet und die zuvor kompilierten Dateien werden in den neuen Container kopiert. Ebenfalls wird eine angelegte Konfigurationsdatei, die den Webserver Dienst weitergehend konfiguriert, in das entsprechende Verzeichnis hinzugefügt.\\
+Das Frontend selbst besteht aus zwei Ebenen. Zu Beginn wird das Frontend selbst kompiliert und installiert. Hierfür gibt es einen eigenen Container, der hierfür eine Umgebung bietet. Danach wird der eigentliche Webserver-Container gestartet und die zuvor kompilierten Dateien werden in den neuen Container kopiert. Ebenfalls wird eine angelegte Konfigurationsdatei, die den Webserver Dienst weitergehend konfiguriert, in das entsprechende Verzeichnis hinzugefügt.\\
 
 % ToDo HTTPS Certificates
 
@@ -30,13 +30,13 @@ Das Frontend selbst besteht aus zwei Ebenen. Zu Beginn am Start wird das Fronten
 \subsubsection{Steuerungsskript}
 
 Das Steuerungsskript ermöglicht die genaue und einfache Steuerung der Infrastruktur.
-Hierfür implementiert das Steuerungsskript folgende Submethoden mit entsprechenden Abläufen und Funktionalität:\\
+Hierfür implementiert das Steuerungsskript folgende Submethoden mit entsprechenden Abläufen und Funktionalitäten:\\
 
 \textbf{Installationsvorgang:}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.5\linewidth]{images/mbeier_konzept/Install}
+	\includegraphics[width=0.5\linewidth]{images/mbeier_konzept/Install_border}
 	\caption[Flussdiagramm über den Installationsvorgang]{Flussdiagramm über den Installationsvorgang}
 	\label{fig:install}
 \end{figure}
@@ -50,7 +50,7 @@ Die Idee hinter der Etablierung eines Installationsvorganges soll die Einfachhei
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.5\linewidth]{images/mbeier_konzept/Start}
+	\includegraphics[width=0.5\linewidth]{images/mbeier_konzept/Start_border}
 	\caption[Flussdiagramm über den Startvorgang]{Flussdiagramm über den Startvorgang}
 	\label{fig:start}
 \end{figure}
@@ -63,13 +63,13 @@ Der Startvorgang baut die Docker-Images, sofern diese noch nicht vorhanden sind,
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.5\linewidth]{images/mbeier_konzept/Stop}
+	\includegraphics[width=0.5\linewidth]{images/mbeier_konzept/Stop_border}
 	\caption[Flussdiagramm über den Stoppvorgang]{Flussdiagramm über den Stoppvorgang}
 	\label{fig:stop}
 \end{figure}
 
 ~\\
-Der Stoppvorgang stoppt die laufenden Docker-Container und entfernt diese aus der Docker Umgebung. Dies führt dazu, dass garantiert wird, dass sich die wieder neu aufbauende Umgebung tatsächlich neu ist, und nicht nur eine alte Instanz wiederverwendet wird.
+Der Stoppvorgang beendet die laufenden Docker-Container und entfernt diese aus der Docker Umgebung. Dies führt dazu, dass garantiert wird, dass die sich wieder neu aufbauende Umgebung tatsächlich neu ist, und nicht nur eine alte Instanz wiederverwendet wird.
 
 \newpage
 
@@ -77,7 +77,7 @@ Der Stoppvorgang stoppt die laufenden Docker-Container und entfernt diese aus de
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.5\linewidth]{images/mbeier_konzept/Restart}
+	\includegraphics[width=0.5\linewidth]{images/mbeier_konzept/Restart_border}
 	\caption[Flussdiagramm über den Neustartvorgang]{Flussdiagramm über den Neustartvorgang}
 	\label{fig:restart}
 \end{figure}
@@ -90,7 +90,7 @@ Der Neustartvorgang kombiniert den Start- und Stoppvorgang und führt diese beid
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.47\linewidth]{images/mbeier_konzept/Update}
+	\includegraphics[width=0.47\linewidth]{images/mbeier_konzept/Update_border}
 	\caption[Flussdiagramm über den Aktualisierungsvorgang]{Flussdiagramm über den Aktualisierungsvorgang}
 	\label{fig:update}
 \end{figure}
@@ -108,7 +108,7 @@ Der Aktualisierungsvorgang ist dem Installationsvorgang sehr ähnlich. Da es sic
 	\label{fig:clean}
 \end{figure}
 ~\\
-Der Bereinigungsvorgang nutzt die Docker Funktionen zum Löschen von nicht mehr benutzten Docker Images (Dangling Images). Nachdem werden die danach nicht mehr benutzten Ressourcen über die entsprechende Docker-Funktion aus dem System und der Docker Umgebung entfernt.
+Der Bereinigungsvorgang nutzt die Docker Funktionen zum Löschen von nicht mehr benutzten Docker Images (Dangling Images). Nachdem werden die nicht mehr benutzten Ressourcen über die entsprechende Docker-Funktion aus dem System und der Docker Umgebung entfernt.
 
 \newpage
 
@@ -116,7 +116,7 @@ Der Bereinigungsvorgang nutzt die Docker Funktionen zum Löschen von nicht mehr 
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.48\linewidth]{images/mbeier_konzept/Purge}
+	\includegraphics[width=0.48\linewidth]{images/mbeier_konzept/Purge_border}
 	\caption[Flussdiagramm über die Deinstallation]{Flussdiagramm über die Deinstallation}
 	\label{fig:purge}
 \end{figure}
@@ -127,7 +127,7 @@ Der Vorgang hinter der Deinstallation löscht jegliche Information der Software 
 
 \subsection{Datenmodell}
 
-Auf Basis der zu erstellenden Anträge und der allgemeinen Nutzerverwaltung wurde folgendes Datenmodell entwickelt. Darin wurde speziell darauf geachtet, dass jegliche Information auch wirklich dort zu finden ist, wo sie auch auf einem papieren Antrag zu finden wäre. 
+Auf Basis der zu erstellenden Anträge und der allgemeinen Nutzerverwaltung wurde folgendes Datenmodell entwickelt. Darin wurde speziell darauf geachtet, dass jegliche Information auch wirklich dort zu finden ist, wo sie auch auf einem papierenen Antrag zu finden wäre. 
 
 \begin{figure}[H]
 	\centering
@@ -136,13 +136,13 @@ Auf Basis der zu erstellenden Anträge und der allgemeinen Nutzerverwaltung wurd
 	\label{fig:datamodel}
 \end{figure}
 
-Im Gesamten gibt es zehn verschiedene Datenstrukturen, wobei hierbei neun die eigentlichen Anträge inklusive Subinformationen widerspiegeln und einer die Lehrkraft-Datenstruktur, welche das Schlüsselelement der Nutzerverwaltung darstellt.
+Insgesamt gibt es zehn verschiedene Datenstrukturen, wobei hierbei neun die eigentlichen Anträge inklusive Subinformationen widerspiegeln und einer die Lehrkraft-Datenstruktur, welche das Schlüsselelement der Nutzerverwaltung darstellt.
 
 \newpage
 
 \subsection{REST-Schnittstelle}
 
-Die REST-Schnittstelle im Backend ist die Kommunikationsschnittstelle mit dem Systemeigenen Frontend. Sie stellt jegliche Daten und generierte Files zur Verfügung und nimmt diverse Eingaben durch Lehrkräfte auf. Um jeweils diese Daten anzunehmen oder zurückzugeben werden sogenannte Endpoints erstellt. Diese sind in sich abgeschlossene Vorgänge, welche sich jeweils immer auf eine Aufgabe beschränken. Im folgenden Kapitel sind alle geplanten Endpoints beschrieben.
+Die REST-Schnittstelle im Backend ist die Kommunikationsschnittstelle mit dem systemeigenen Frontend. Sie stellt jegliche Daten und generierte Files zur Verfügung und nimmt diverse Eingaben durch Lehrkräfte auf. Um diese Daten anzunehmen oder zurückzugeben werden sogenannte Endpoints erstellt. Diese sind in sich abgeschlossene Vorgänge, welche sich jeweils immer auf eine Aufgabe beschränken. Im folgenden Kapitel sind alle geplanten Endpoints beschrieben.
 
 \subsubsection{Endpoints}
 \label{chapter:endpoints}
@@ -201,9 +201,9 @@ Die folgende Tabelle beschreibt die geplanten Endpoints, wobei  sie jeweils mit 
 
 \subsubsection{Token System}
 
-Die Implementierung eines nicht-persistenten Token Systems, um die Kommunikation mit der REST-Schnittstelle weiter zu schützen, ist gerade, wenn es sich um sensible Daten handelt sehr wichtig. Ansonsten könnte jeder einfach die Endpoints der Schnittstelle ansprechen. Durch die Ausgabe von sogenannten \enquote{Access Tokens} und \enquote{Refresh Tokens} werden diese jedoch abgesichert. Dies geschieht dadurch, dass diese bei jeder Anfrage nach dem Login mit übergeben werden müssen (im Headerfeld \enquote{Authorization}), wodurch sich der Absender als eingeloggte Lehrkraft verifiziert. Anfragen ohne Tokens werden in Folge automatisch abgewiesen. 
+Die Implementierung eines nicht-persistenten Token Systems, um die Kommunikation mit der REST-Schnittstelle weiter zu schützen, ist wenn es sich um sensible Daten handelt, sehr wichtig. Ansonsten könnte einfach jeder die Endpoints der Schnittstelle ansprechen. Durch die Ausgabe von sogenannten \enquote{Access Tokens} und \enquote{Refresh Tokens} werden diese jedoch abgesichert. Diese müssen bei jeder Anfrage nach dem Login mit übergeben werden (im Headerfeld \enquote{Authorization}), wodurch sich der Absender als eingeloggte Lehrkraft verifiziert. Anfragen ohne Tokens werden in Folge automatisch abgewiesen. 
 \\Diese Tokens sind verschlüsselte Zeichenketten, welche nur durch das Backend entschlüsselbar sind, da nur das System selbst den Schlüssel hierfür kennt. Im Token selbst werden Informationen über die Sitzung und den Nutzer gespeichert, sodass er nur durch die Angabe des Tokens verifiziert werden kann.\\
-Das \enquote{Access Token} ist genau 15 Minuten lang gültig und erlaubt solange direkten Zugriff auf die Schnittstelle. Sobald dieses abgelaufen ist, kann mit dem \enquote{Refresh Token}, welches 7 Tage lang gültig ist, ein neues Tokenpaar bei der Schnittstelle generiert werden. Da es sich um zwei komplett neue Tokens handelt, verlängert sich auch die Gültigkeit des Logins hierbei. Sollte keines der beiden Token mehr gültig sein, so muss ein neues Paar durch einen neuen Loginvorgang erstellt werden.
+Das \enquote{Access Token} ist genau 15 Minuten lang gültig und erlaubt solange direkten Zugriff auf die Schnittstelle. Sobald dieses abgelaufen ist, kann mit dem \enquote{Refresh Token}, welches 7 Tage lang gültig ist, ein neues Tokenpaar bei der Schnittstelle generiert werden. Da es sich um zwei komplett neue Tokens handelt, verlängert sich hierbei auch die Gültigkeit des Logins. Sollte keines der beiden Token mehr gültig sein, so muss ein neues Paar durch einen neuen Loginvorgang erstellt werden.
 
 \subsection{Backend}
 Um jene in  \autoref{chapter:endpoints} beschriebenen Endpoints auch mit Funktionalität ausstatten zu können, müssen entsprechende Methoden im Backend implementiert werden. Hierzu gehören hauptsächlich die Schnittstellen zu folgenden Diensten und die Implementierungen von Hauptfunktionen des Systems. Diese sind in den folgenden Abschnitten beschrieben.
@@ -223,7 +223,7 @@ Die offizielle Untis-Schnittstelle ermöglicht dem System die Abfrage des aktuel
 
 \subsubsection{LDAP}
 
-LDAP ist ein Zugriffsprotokoll um auf ein Active Directory zugreifen zu können. In diesem wird im tgm weitere Informationen zu den Lehrkräften und Schülern gespeichert. Um diese Daten einsehen zu können, muss man sich bei diesem Dienst anmelden, was mit den jeweils eigenen tgm-Account Zugangsdaten möglich ist. Dadurch ist die Anmeldung mit den tgm-Nutzerdaten zu realisieren. Des Weiteren ist die Abfrage weiterer benötigter Daten hierdurch möglich. Der Ablauf einer solchen Interaktion über LDAP wird in folgendem Flussdiagramm veranschaulicht.
+LDAP ist ein Zugriffsprotokoll um auf ein Active Directory zugreifen zu können. In diesem wird im TGM weitere Informationen zu den Lehrkräften und Schülern gespeichert. Um diese Daten einsehen zu können, muss man sich bei diesem Dienst anmelden, was mit den jeweils eigenen TGM-Account Zugangsdaten möglich ist. Dadurch ist die Anmeldung mit den TGM-Nutzerdaten zu realisieren. Des Weiteren ist die Abfrage weiterer benötigter Daten hierdurch möglich. Der Ablauf einer solchen Interaktion über LDAP wird in folgendem Flussdiagramm veranschaulicht.
 
 \begin{figure}[H]
 	\centering
@@ -234,7 +234,7 @@ LDAP ist ein Zugriffsprotokoll um auf ein Active Directory zugreifen zu können.
 
 \newpage
 
-Um jenen in \autoref{fig:ldapauthenticate} abgebildeten Ablauf einfach implementieren zu können, bietet sich folgender Aufbau eines LDAP-Clients an. Dieser kann dann hierbei die Zugangsdaten durch eine einfache Anmeldung beim Dienst verifizieren und auch die benötigten Daten, den kompletten Namen der Lehrkraft, beim Dienst abfragen.
+Um jenen in \autoref{fig:ldapauthenticate} abgebildeten Ablauf einfach implementieren zu können, bietet sich folgender Aufbau eines LDAP-Clients an. Dieser kann hierbei die Zugangsdaten durch eine einfache Anmeldung beim Dienst verifizieren und auch die benötigten Daten, wie den kompletten Namen der Lehrkraft, beim Dienst abfragen.
 
 \begin{figure}[H]
 	\centering
@@ -247,7 +247,7 @@ Um jenen in \autoref{fig:ldapauthenticate} abgebildeten Ablauf einfach implement
 
 \subsubsection{Dateierstellung}
 
-Die Datei- und Formularerstellung ist die Hauptfunktion der Software. Das Generieren folgender Forms wird unterstützt. Bei \enquote{Reiserechnung} und \enquote{Dienstreiseantrag} werden auf Grund des festgelegten Designs auch eine Excel Variante angeboten, in der dieses umgesetzt ist. Das Format steht hierbei für Hoch- oder Querformat, wobei Portrait das Hochformat und Landscape das Querformat ist.
+Die Datei- und Formularerstellung ist die Hauptfunktion der Software. Das Generieren folgender Formulare wird unterstützt. Bei \enquote{Reiserechnung} und \enquote{Dienstreiseantrag} werden auf Grund des festgelegten Designs auch eine Excel Variante angeboten, in der dieses umgesetzt ist. Das Format steht hierbei für Hoch- oder Querformat, wobei Portrait das Hochformat und Landscape das Querformat ist.
 
 \captionof{table}[Dateierstellung - Dateien]{Übersicht über die verschiedenen Dateien, die durch das Backend erstellt werden.}	
 \label{tbl:files}
@@ -267,7 +267,7 @@ Die Datei- und Formularerstellung ist die Hauptfunktion der Software. Das Generi
 \end{table}
 
 ~\\
-Alle eigens generierten PDFs sind jedenfalls mit einer Kopfzeile ausgestattet. In dieser ist in der linken Ecke das tgm-Logo zu sehen, in der Mitte steht der Name des Formulars (siehe \autoref{tbl:files}) und rechts ein QR-Code, welcher einen nach dem Scan auf die Website führt und den zugehörigen Antrag dort direkt öffnet.
+Alle eigens generierten PDFs sind jedenfalls mit einer Kopfzeile ausgestattet. In dieser ist in der linken Ecke das TGM-Logo zu sehen, in der Mitte steht der Name des Formulars (siehe \autoref{tbl:files}) und rechts ein QR-Code, welcher eine URL beinhaltet, die den zugehörigen Antrag direkt im Frontend öffnet.
 
 \begin{figure}[H]
 	\centering
