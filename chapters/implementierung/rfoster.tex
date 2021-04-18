@@ -37,7 +37,7 @@ Die Unterseiten werden in den \textit{Manager} geladen und je nach Gebrauch ange
 		}
 	}
 \end{code}
-\captionof{listing}{Funktion zum Ändern der angezeigten Komponente}~\\
+\captionof{listing}[Funktion Anzeige ändern]{Funktion zum Ändern der angezeigten Komponente}~\\
 \newpage
 Diese Funktion besteht hauptsächlich aus einer Verzweigung, die entscheidet, welche Seite angezeigt werden soll.
 Des Weiteren gibt es bei manchen Komponenten den Zusatz einer \textit{load}-Funktion, welche Daten für die jeweilige Komponente vorbereitet bzw. berechnet.
@@ -56,14 +56,14 @@ Die referenzierte \textit{change}-Funktion übernimmt das tatsächliche Ändern 
 			this.setCookie(page);	// Es wird der Cookie gesetzt
 		}
 \end{code}
-\captionof{listing}{Funktion für das Managment der \textit{Cookies} und \textit{History} des Browsers}~\\
+\captionof{listing}[Funktion Managment der \textit{Cookies} und \textit{History}]{Funktion für das Managment der \textit{Cookies} und \textit{History} des Browsers}~\\
 Hier werden nicht nur die angezeigte Seite verändert, sondern auch je nach Parameter die \textit{Cookies} sowie die \textit{History} des Browsers gesetzt.\\
 Die beschriebenen Funktionen müssen von den Komponenten aufgerufen werden können. Deswegen hört der \textit{Manager} auf Signale der Unterseiten, falls diese die Seite geändert werden soll. Dies wird mittels VueJS erledigt, da das Framework hierfür bereits Funktionen implementiert hat:
 \begin{code}{js}
 	v-on:change-component="changeComponent"
 	// Es wird auf das Signal change-component gehört und die Funktion changeComponent aufgerufen
 \end{code}
-\captionof{listing}{Event Handling mittels v-on}~\\
+\captionof{listing}[Event Handling]{Event Handling mittels v-on}~\\
 Die Codezeile wird beim Aufruf der Unterseite im \textit{Manager} hinzugefügt.\\
 Die beschriebenen Signale werden von den Unterseiten mittels folgendem Code bzw. folgender Funktion gesendet:
 \begin{code}{js}
@@ -71,7 +71,7 @@ Die beschriebenen Signale werden von den Unterseiten mittels folgendem Code bzw.
 		this.$emit("change-component", component, back, application, escortsdata);
 	}
 \end{code}
-\captionof{listing}{Signal senden}~\\
+\captionof{listing}[Signal senden]{Ein Signal an die übergeordnete Komponente senden}~\\
 Hier wird durch \textit{this.\$emit()} ein Befehl an die übergeordnete Seite gesendet.
 \newpage
 \subsubsection{Komponenten}
@@ -90,7 +90,7 @@ Das Importieren erfolgt mit folgendem Code:
 	}
 </script>
 \end{code}
-\captionof{listing}{Importieren und Laden einer Komponente}~\\
+\captionof{listing}[Importieren und Laden einer Komponente]{Umsetzung des Importieren und Laden einer Komponente im \textit{Manager}}~\\
 In dem Code werden von \textit{@/components/} die einzelnen Komponenten geladen. Aufgrund der Verwendung von \textit{@} wird das Angeben des vollen Pfades nicht mehr benötigt, da dies auf den relativen Pfad der Softwarestruktur zeigt.
 \newpage
 Die Komponente muss noch im \textit{Manager} angezeigt werden. Dies wird im \textit{Template} des \textit{Managers} mit folgendem Code umgesetzt:
@@ -127,7 +127,7 @@ Die Komponente muss noch im \textit{Manager} angezeigt werden. Dies wird im \tex
 	</div>
 </template>
 \end{code}
-\captionof{listing}{Anzeigen der Komponenten im \textit{Manager}}~\\
+\captionof{listing}[Anzeige der Komponenten]{Anzeigen der Komponenten im \textit{Manager}}~\\
 Im Code wird nicht nur die Komponente angezeigt, sondern auch Daten an die Komponenten gebunden.\\
 \textit{v-if}-Attribute sorgen dafür, dass das Rendern nur unter der angegebenen Bedingung erfolgt. Die Komponente wird nur angezeigt, wenn die Variable \textit{currentComponent} den Namen einer Komponente annimmt.\\
 \textit{v-bind}-Attribute binden Daten von der übergeordneten Komponente in die eingebundene Komponente ein. Bei dem Beispiel \textit{v-bind:cookieset=''cookies''} wird an die \textit{Login}-Komponente ein Attribut \textit{cookieset} mit dem Wert von der Variable \textit{cookies} mitgegeben.
@@ -135,7 +135,7 @@ Diese Attribute können mit folgendem Code aufgefangen und in diesen eingebunden
 \begin{code}{html}
 		props: ["url", "forward", "cookieset"]
 \end{code}
-\captionof{listing}{Auffangen übergebener Variablen}~\\
+\captionof{listing}[Auffangen übergebener Variablen]{Auffangen übergebener Variablen in einer untergeordneten Komponente}~\\
 In dem Code werden die übergebenen Variablen, welche in der übergeordneten Komponente definiert worden sind, aufgefangen. Diese können als normale Variablen verwendet werden.
 \newpage
 \subsubsection{Seite nicht gefunden}
@@ -176,7 +176,7 @@ const router = new VueRouter({
 
 export default router;
 \end{code}
-\captionof{listing}{Router, welcher die Pfade der Software verwaltet}~\\
+\captionof{listing}[Pfadverwaltung]{Router, welcher die Pfade der Software verwaltet}~\\
 
 Wird ein Link eingegeben, welcher nicht ''/'' oder ''/viewer'' entspricht, so wird die \textit{PageNotFound}-Komponente geladen und somit dem Benutzer mitteilt, dass der eingegebene Link nicht funktioniert.
 \subsubsection{Antrag-Viewer}
@@ -199,7 +199,7 @@ Sollte der Benutzer nicht angemeldet sein, so wird er zuerst auf die \textit{Log
 		props: route => ({ query: route.query.uuid }) // Der Parameter in der URL
 	},
 \end{code}
-\captionof{listing}{Route für den \textit{Antrag-Viewer}}~\\
+\captionof{listing}[Route für den \textit{Antrag-Viewer}]{Route für den \textit{Antrag-Viewer} mit Parametern}~\\
 Es wird die Home-Komponente (der \textit{Manager}) aufgerufen, da dieser das Verarbeiten der URL und das Weiterleiten auf die \textit{Login}- und Antragsansicht übernimmt.
 \newpage
 \subsubsection{Features}
@@ -221,7 +221,7 @@ Beim Laden der Webseite wird mithilfe von \textit{Cookies} auf die zuletzt besuc
 		this.changeComponent("Login");
 	}
 \end{code}
-\captionof{listing}{Navigation auf die zuletzt besuchte Seite}~\\
+\captionof{listing}[Navigation zuletzt besuchte Seite]{Navigation auf die zuletzt besuchte Seite}~\\
 
 \paragraph{Browser-Pfeile}~\\
 Die Browser-Pfeile navigieren durch die \textit{History} des Browsers. Da die Webseite ein One-Pager ist, muss das Schreiben in die \textit{History} selbst übernommen werden. Dies wird durch den folgenden Code umgesetzt:
@@ -234,11 +234,11 @@ window.addEventListener("popstate", e => {			// Es wird ein Listener auf die Web
 	}
 });
 \end{code}
-\captionof{listing}{Unterstützung der Browser-Pfeile}~\\
+\captionof{listing}[Unterstützung Browser-Pfeile]{Unterstützung der Browser-Pfeile}~\\
 Das Hinzufügen der einzelnen \textit{Histories} für die jeweiligen Unterseiten wird in \autoref{sec:navigation} beschrieben.
 \newpage
 \subsection{Daten laden \& Befehle senden}
-Das Laden, sowie das Befehle senden, wird mittels \Gls{axios} umgesetzt. Mit folgender Struktur können Daten geladen werden von dem Backend, bzw. der REST-Schnittstelle:
+Das Laden, sowie das Befehle senden, wird mittels \Gls{axios} umgesetzt. Es gibt vier Arten der Anfragen per \Gls{axios}, welche verwendet werden. \textit{Get} (Anfrage von Daten), \textit{put} (Aktualisieren von Daten), \textit{post} (Erstellen von Daten) und \textit{delete} (Löschen von Daten). Mit folgender Struktur können Daten geladen werden von dem Backend, bzw. der REST-Schnittstelle:
 \begin{code}{js}
 	axios.get(this.url + "/getNews", {
 		headers: {
@@ -259,7 +259,8 @@ Das Laden, sowie das Befehle senden, wird mittels \Gls{axios} umgesetzt. Mit fol
 	}
 	});
 \end{code}
-\captionof{listing}{Laden der Neuigkeiten auf der Startseite}~\\
+\captionof{listing}[Laden von Neuigkeiten]{Laden der Neuigkeiten auf der Startseite}~
+\newpage
 Unter der Bedingung, dass die erste Anfrage den Fehlercode \textit{401} zurückgibt, wird eine Anfrage an das Backend gesendet, um die Sitzung des Nutzers zu aktualisieren. Dies wird mit folgendem Code umgesetzt:
 \begin{code}{js}
 	axios.post(this.url + "/login/refresh", {
@@ -279,7 +280,7 @@ Unter der Bedingung, dass die erste Anfrage den Fehlercode \textit{401} zurückg
 		}
 	});
 \end{code}
-\captionof{listing}{Anfrage um Sitzung des Nutzers zu aktualisieren}~\\
+\captionof{listing}[Sitzung aktualisieren]{Anfrage um Sitzung des Nutzers zu aktualisieren}~\\
 Bei erfolgreicher Erneuerung der Sitzung, wird die anfangs durchgeführte Anfrage erneut gesendet. Diese reagiert, bis auf die fehlende Behandlung des Fehlercodes \textit{401}, ident, wie die originale Anfrage.
 \newpage
 \subsection{Anmelden}
@@ -295,7 +296,7 @@ axios.post(this.url + "/login", {	// Sendet ein POST-Anfrage an das Backend
 	// Es werden die Daten aus der Anfrage an den Manager gesendet, damit eine valide Sitzung erstellt wird.
 })
 \end{code}
-\captionof{listing}{POST-Anfrage für den Login}~\\
+\captionof{listing}[Umsetzung Login]{POST-Anfrage für den Login}~\\
 
 \subsubsection{Spezielle Situationen}
 In besonderen Fällen, wie in \autoref{sec:antrag_viewer} beschrieben, wird der Benutzer nicht auf die Hauptseite weitergeleitet, sondern auf den \textit{Antrag-Viewer} oder auf die \textit{Antrag-Ansicht}.
@@ -317,7 +318,7 @@ switch (this.forward.name) {	// Es wird entschieden, auf welche Unterseite navig
 	break;
 }
 \end{code}
-\captionof{listing}{Weiterleitung nach erfolgreichem Anmelden}~\\
+\captionof{listing}[Login Weiterleitung]{Weiterleitung nach erfolgreichem Anmelden}~\\
 \subsubsection{Passwort vergessen}
 Da \textit{Refundable} die Anmeldedaten von \textit{LDAP} verwendet, wird der Benutzer auf \href{https://owa.tgm.ac.at}{OWA} weitergeleitet, wenn auf ''Passwort vergessen'' gedrückt wird.
 \newpage
@@ -336,7 +337,7 @@ axios.post(this.url + "/logout", {	// Sendet ein POST-Anfrage an das Backend
 	}
 });
 \end{code}
-\captionof{listing}{Gesamte Anfrage für das Abmelden}~\\
+\captionof{listing}[Anfrage Abmelden]{Gesamte Anfrage für das Abmelden}~\\
 \newpage
 \subsection{Antrag erstellen}
 Ein Antrag kann von jedem Lehrer, der im System angemeldet ist, erstellt werden. Dazu wird auf die \textit{Antrag erstellen}-Unterseite navigiert, bei der der Benutzer aussuchen kann, ob er eine Schulveranstaltung, Fortbildung oder einen anderen Antrag erstellen möchte. Auf diesen Unterseiten werden die notwendigen Informationen vom Benutzer in die Eingabefelder eingegeben. Diese Informationen werden in ein \textit{JSON}-Objekt gegeben und an das Backend gesendet.
@@ -392,7 +393,7 @@ var data = {		// Das JSON-Objekt mit allen Informationen
 	TravelInvoices: invoices	// Die Reiserechnungen für alle Lehrer beteiligt an dem Antrag
 };
 \end{code}
-\captionof{listing}{\textit{JSON}-Objekt einer Schulveranstaltung}~\\
+\captionof{listing}[\textit{JSON} Schulveranstaltung]{\textit{JSON}-Objekt einer Schulveranstaltung}~\\
 \newpage
 \subsubsection{Fortbildung}
 Eine Fortbildung wird auf der Fortbildung-Unterseite erstellt. Diese sieht wie folgt aus und beinhaltet Eingabefelder für alle notwendigen Informationen der Fortbildung.
@@ -422,7 +423,7 @@ var data = {		// Das JSON-Objekt mit allen Informationen
 	TravelInvoices: invoices	// Die Reiserechnung für den Lehrer
 };
 \end{code}
-\captionof{listing}{\textit{JSON}-Objekt einer Fortbildung}~\\
+\captionof{listing}[\textit{JSON} Fortbildung]{\textit{JSON}-Objekt einer Fortbildung}~\\
 \newpage
 \subsubsection{Sonstiges}
 Ein \textit{Sonstiges}-Antrag kann auf der Unterseite ''Anderer Grund'' erstellt werden. Er sieht wie folgt aus und beinhaltet Eingabefelder für alle notwendigen Informationen für den Antrag.
@@ -451,7 +452,7 @@ var data = {		// Das JSON-Objekt mit allen Informationen
 	TravelInvoices: invoices	// Die Reiserechnung für den Lehrer
 };
 \end{code}
-\captionof{listing}{\textit{JSON}-Objekt eines \textit{Sonstiges}-Antrags}~\\
+\captionof{listing}[\textit{JSON} \textit{Sonstiges}-Antrag]{\textit{JSON}-Objekt eines \textit{Sonstiges}-Antrags}~\\
 \newpage
 \subsection{Antrag Ansicht}
 \label{sec:antrag_ansicht}
@@ -509,7 +510,7 @@ Der Benutzer kann Reiseformulare und Reiserechnungen als Excel-Datei herunterlad
 	exportLinkElement.click();
 	exportLinkElement.remove();
 \end{code}
-\captionof{listing}{Excel erstellen und herunterladen}~
+\captionof{listing}[Excel Download]{Excel erstellen und herunterladen}~
 \newpage
 \paragraph{PDF öffnen}~\\
 Der Benutzer kann die PDFs der Dokumente öffnen. Die PDFs werden in einem neuen Tab im Browser angezeigt.\\
@@ -528,7 +529,7 @@ Mit folgendem Code wird eine PDF erstellt und in einem neuen Tab geöffnet \cite
 	"#toolbar=0\&navpanes=0\&scrollbar=0'></embed></body></html>"
 	);
 \end{code}
-\captionof{listing}{PDF erstellen und öffnen}~\\
+\captionof{listing}[PDF erstellen und öffnen]{PDF erstellen und öffnen im Browser}~\\
 \paragraph{Änderungen speichern}~\\
 Der Benutzer kann die Änderungen eines Antrags speichern. Dies kann in bestimmten Phasen eines Antrags geschehen. Die Änderungen werden an das Backend gesendet, sobald auf den ''Änderungen Speichern''-Knopf gedrückt wird.
 \paragraph{Antrag schließen}~\\
@@ -589,4 +590,4 @@ Sobald auf den ''Rechte speichern''-Knopf gedrückt wird, wird das Formular ausg
 		}
 	});
 \end{code}
-\captionof{listing}{Anfrage zum Setzen der Rechte eines Benutzers}~\\
+\captionof{listing}[Anfrage Rechte setzen]{Anfrage zum Setzen der Rechte eines Benutzers}~\\

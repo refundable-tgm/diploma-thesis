@@ -66,7 +66,7 @@ Um einzelnen Elementen VueJS-Funktionalität zu geben, kann auf diese Elemente f
 		</body>
 	</html>
 \end{code}
-\captionof{listing}{VueJS Beispiel}~\\
+\captionof{listing}[VueJS Beispiel]{Beispiel für VueJS Webseite}~\\
 \subsubsection{React}
 \Gls{react} ist eine \Gls{js}-Bibliothek, mit der man Benutzeroberflächen entwickeln kann \cite{reactdoc}. React hat, wie \Gls{vue}, Komponenten. Dies bedeutet, dass man einzelne Elemente mehrfach verwenden kann, falls man dies benötigt.\\
 React wurde von Facebook entwickelt und wurde 2013 als \Gls{opensource}-Lösung veröffentlicht.\\
@@ -92,7 +92,7 @@ Folgender Code beschreibt eine Beispiel-React-Webseite \cite{reactdoc}:
 		</body>
 	</html>
 \end{code}
-\captionof{listing}{React-Webseite Beispiel}~\\
+\captionof{listing}[React-Webseite Beispiel]{Beispiel für React Webseite}~\\
 \newpage
 In der letzten Zeile des body-Tags, wird auf \textit{likebutton.js} referenziert. Dies ist eine Komponente und muss noch erstellt werden \cite{reactdoc}:
 \begin{code}{js}
@@ -122,7 +122,7 @@ In der letzten Zeile des body-Tags, wird auf \textit{likebutton.js} referenziert
 	const domContainer = document.querySelector('#likebuttoncontainer');
 	ReactDOM.render(e(LikeButton), domContainer);
 \end{code}
-\captionof{listing}{React-Komponente Beispiel}
+\captionof{listing}[React-Komponente Beispiel]{Beispiel für eine React-Komponente}
 \newpage
 \subsubsection{Ohne Framework}
 Die Schnittstelle zwischen \Gls{backend} und \Gls{frontend} kann auch ohne ein \Gls{framework} umgesetzt werden. Dies ist bei kleinen und leichten Applikationen von Vorteil, da keine umständlichen \Gls{js}-\Gls{framework}s aufgesetzt und richtig implementiert werden müssen. Ohne Framework implementiert man eine \Gls{js}-Datei in eine Webseite, um die gewünschte Funktionalität einzufügen. Mit folgendem Code kann eine Implementierung einer JavaScript-Datei umgesetzt werden:
@@ -143,7 +143,7 @@ Die Schnittstelle zwischen \Gls{backend} und \Gls{frontend} kann auch ohne ein \
 		</body>
 	</html>
 \end{code}
-\captionof{listing}{Ohne Framework Beispiel}~\\
+\captionof{listing}[Ohne Framework Beispiel]{Beispiel für Webseite ohne Framework}~\\
 Es kann auch direkt in ein \Gls{html}-File \Gls{js} in ein \textit{<script></script>} geschrieben werden.
 \newpage
 \subsubsection{Vergleich}
@@ -158,7 +158,7 @@ Die Webseite, die für den Vergleich umgesetzt werden soll, wird mit den untersc
 \end{figure}
 Folgende Tabelle zeigt die unterschiedlichen Werte bei der Umsetzung der Beispielwebseite:
 \begin{table}
-	\captionof{table}{Vergleich von \Gls{js}-\Gls{framework}s}\label{tab:vergleich}
+	\captionof{table}[Vergleich JavaScript-Frameworks]{Vergleich von \Gls{js}-\Gls{framework}s}\label{tab:vergleich}
 	\centering
 	\refstepcounter{table}
 	\label{center}
@@ -210,7 +210,7 @@ Die Daten, welche von der REST-Schnittstelle gelesen werden, sind im \Gls{json}-
 		</body>
 	</html>
 \end{code}
-\captionof{listing}{HTTP-Anfrage mittels Axios}~\\
+\captionof{listing}[HTTP-Anfrage mittels Axios]{Umsetzung einer HTTP-Anfrage mittels Axios}~\\
 Die Daten, welche von der Anfrage zurückkommen, können dann verwendet werden, um \Gls{html}-Elemente zu erstellen oder zu verändern, um das \Gls{frontend} dynamisch mit den Daten zu füllen.\\Nachdem nicht alle Daten immer benötigt werden, kann bei den Anfragen die Endung verändert werden, um spezifische Daten abzufragen. Dies muss natürlich von der REST-Schnittstelle unterstützt werden. Eine Beispielanfrage für solch eine spezifische Anfrage ist wie folgt:
 \begin{code}{js}
 	// Hier werden z.B.: die Daten von dem Benutzer 1234 abgefragt.
@@ -219,7 +219,7 @@ Die Daten, welche von der Anfrage zurückkommen, können dann verwendet werden, 
 		console.log(response.data);
 	})
 \end{code}
-\captionof{listing}{Axios Abfrage mit genauem Pfad}~\\
+\captionof{listing}[Axios Anfrage mit genauem Pfad]{Umsetzung einer Axios Anfrage unter Verwendung eines genauen Pfades}~\\
 Die praktische Durchführung ist, wie bereits im vorherigen Kapitel besprochen, bei den Umsetzungsmöglichkeiten unterschiedlich.
 \subsection{Zusammenfassung}
 \label{sec:rfoster_fazit}
