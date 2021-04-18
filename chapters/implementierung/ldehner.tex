@@ -4,19 +4,19 @@
 In diesem Kapitel wird die Implementierung des Frontends von \textit{Refundable} erläutert. Dabei wird als Erstes die Vorbereitung im \autoref{chapter:implementierung-frontend-vorbereitung} erklärt. Danach werden die einzelnen Komponenten im \autoref{chapter:implementierung-frontend-komponenten} der Website erklärt und vorgeführt.
 \subsection{Vorbereitung}
 \label{chapter:implementierung-frontend-vorbereitung}
-Wie im \autoref{chapter:study-frontend} und \autoref{chapter:study-datenschnittstelle} festgelegt wird im Frontend Bootstrap in Verbindung mit VueJS verwendet. Zu aller erst muss daher VueJS auf dem Computer, auf dem das Projekt erstellt wird, installiert werden. Dies geschieht auf Windows über den Node Packet Manager (NPM) \cite{vue-install}. Der Befehl um VueJS zu installieren schaut wie folgt aus:
+Wie im \autoref{chapter:study-frontend} und \autoref{chapter:study-datenschnittstelle} festgelegt wird im Frontend \textit{Bootstrap} in Verbindung mit \textit{VueJS} verwendet. Zu aller erst muss daher \textit{VueJS} auf dem Computer, auf dem das Projekt erstellt wird, installiert werden. Dies geschieht auf Windows über den Node Packet Manager (NPM) \cite{vue-install}. Der Befehl um \textit{VueJS} zu installieren schaut wie folgt aus:
 \begin{code}{bash}
 	npm install -g @vue/cli
 \end{code}
-Nachdem VueJS installiert ist kann man in das gewünschte Verzeichnis wechseln und über
+Nachdem \textit{VueJS} installiert ist kann man in das gewünschte Verzeichnis wechseln und über
 \begin{code}{bash}
 	vue create refundable
 \end{code}
-ein neues Vue Projekt erstellen, das in diesem Fall \textit{Refundable} heißt \cite{vue-create-project}. Um die Funktionalität von Bootstrap und VueJS optimal auszunutzen, wird Bootstrap direkt mit dem Node Packet Manager zu VueJS installiert \cite{bootstrap-vue-getting-started}:
+ein neues Vue Projekt erstellen, das in diesem Fall \textit{Refundable} heißt \cite{vue-create-project}. Um die Funktionalität von \textit{Bootstrap} und \textit{VueJS} optimal auszunutzen, wird \textit{Bootstrap} direkt mit dem Node Packet Manager zu \textit{VueJS} installiert \cite{bootstrap-vue-getting-started}:
 \begin{code}{bash}
 	npm install vue bootstrap-vue
 \end{code}
-Um in den Komponenten Bootstrap und dessen vordefinierte Icons zu verwenden, muss man in \enquote{main.js} folgendes importieren:
+Um in den Komponenten \textit{Bootstrap} und dessen vordefinierte Icons zu verwenden, muss man in \enquote{main.js} folgendes importieren:
 \begin{code}{html}
 	import { BootstrapVue, BootstrapVueIcons } from "bootstrap-vue";
 	import "./plugins/bootstrap-vue";
@@ -24,7 +24,7 @@ Um in den Komponenten Bootstrap und dessen vordefinierte Icons zu verwenden, mus
 	Vue.use(BootstrapVue);
 	Vue.use(BootstrapVueIcons);
 \end{code}
-\captionof{listing}{Benötigte Befehle um Bootstrap im VueJS Projekt einzubinden}
+\captionof{listing}{Benötigte Befehle um \textit{Bootstrap} im \textit{VueJS} Projekt einzubinden}
 	\label{list:requcommands} ~\\
 Alle Teile der Website sind in sogenannten Komponenten verpackt, die je nach Benutzereingaben dynamisch gewechselt werden. 
 
@@ -33,7 +33,7 @@ Alle Teile der Website sind in sogenannten Komponenten verpackt, die je nach Ben
 \label{chapter:implementierung-frontend-komponenten}
 \subsubsection{Generell}
 \label{chapter:implementierung-frontend-komponenten-generell}
-Die Struktur der Komponenten ist so aufgebaut, dass die Seite sowohl für Desktop- als auch mobile Endgeräte optimiert ist. Dazu wird das \enquote{Grid-System} von Bootstrap verwendet, welches seinen Platz im \enquote{template-Tag}, der VueJS Komponente findet. Dieses besteht aus einem Container, einer Reihe (Row) und einer Spalte (Column). Da es am Anfang das Problem gab, dass nicht der ganze Bildschirm ausgenutzt wird, wurden folgende Klassen im CSS-Dokument erstellt:
+Die Struktur der Komponenten ist so aufgebaut, dass die Seite sowohl für Desktop- als auch mobile Endgeräte optimiert ist. Dazu wird das \enquote{Grid-System} von \textit{Bootstrap} verwendet, welches seinen Platz im \enquote{template-Tag}, der \textit{VueJS} Komponente findet. Dieses besteht aus einem Container, einer Reihe (Row) und einer Spalte (Column). Da es am Anfang das Problem gab, dass nicht der ganze Bildschirm ausgenutzt wird, wurden folgende Klassen im CSS-Dokument erstellt:
 \begin{code}{css}
 	.template-main-container {
 		height: 100vh;
@@ -55,7 +55,7 @@ Diese dienen dazu, dass der Hauptcontainer, als auch die Hauptreihe der Website,
 \newpage
 \subsubsection{Login-Seite}
 \label{chapter:implementierung-frontend-komponenten-login}
-Die Login-Seite sollte sehr schlicht gehalten werden und sofort verstamden werden können. Da das Tool \textit{Refundable} nur von Lehrern des TGMs verwendet werden soll, wurde in der Loginmaske die E-Mail-Endung \enquote{@tgm.ac.at} vordefiniert. Außerdem soll dem Aufrufer der Website sofort klar machen, worum es sich bei dieser Website handelt und haben daher den Projektnamen \textit{Refundable}, als auch unseren Slogan auf der Seite platziert. Des weiteren war aufgrund der DSGVO eine Meldung zu realisieren, die den Benutzer darüber informiert, dass Cookies verwendet werden. Falls diese Meldung nicht akzeptiert wird und man sich anzumelden möchte, wird eine Fehlermeldung dargestellt. Diese Meldung wird jedoch dynamisch mit VueJS erstellt und nicht direkt mittels Bootstrap. In der Umsetzung schaut die Login-Seite wie folgt aus (\autoref{fig:login}):
+Die Login-Seite sollte sehr schlicht gehalten werden und sofort verstamden werden können. Da das Tool \textit{Refundable} nur von Lehrern des TGMs verwendet werden soll, wurde in der Loginmaske die E-Mail-Endung \enquote{@tgm.ac.at} vordefiniert. Außerdem soll dem Aufrufer der Website sofort klar machen, worum es sich bei dieser Website handelt und haben daher den Projektnamen \textit{Refundable}, als auch unseren Slogan auf der Seite platziert. Des weiteren war aufgrund der DSGVO eine Meldung zu realisieren, die den Benutzer darüber informiert, dass Cookies verwendet werden. Falls diese Meldung nicht akzeptiert wird und man sich anzumelden möchte, wird eine Fehlermeldung dargestellt. Diese Meldung wird jedoch dynamisch mit \textit{VueJS} erstellt und nicht direkt mittels \textit{Bootstrap}. In der Umsetzung schaut die Login-Seite wie folgt aus (\autoref{fig:login}):
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\linewidth]{images/website/login}
@@ -64,7 +64,7 @@ Die Login-Seite sollte sehr schlicht gehalten werden und sofort verstamden werde
 \end{figure}
 \paragraph{Login-Maske}
 ~\\
-Die Login-Maske besteht aus einem eigenen Container, welcher ermöglicht die Maske vollkommen responsiv aufzubauen. Die Eingabefelder wurden mit einer \enquote{input-groupe} gelößt (Code Z. 12). Um einen Wert optisch in einem Eingabefeld, vorzugeben hat Bootstrap ein Element, namens \enquote{b-input-groupe-text} (Code Z. 14), welches vor oder nach dem Feld hinzugefügt werden kann. Da die Login-Daten, der TGM Server verwendet werden, haben wir einen Link eingebaut, falls man sein Passwort vergessen hat. Betätigt man diesen, wird man auf die entsprechende Seite des TGMs weitergeleitet.
+Die Login-Maske besteht aus einem eigenen Container, welcher ermöglicht die Maske vollkommen responsiv aufzubauen. Die Eingabefelder wurden mit einer \enquote{input-groupe} gelößt (Code Z. 12). Um einen Wert optisch in einem Eingabefeld, vorzugeben hat \textit{Bootstrap} ein Element, namens \enquote{b-input-groupe-text} (Code Z. 14), welches vor oder nach dem Feld hinzugefügt werden kann. Da die Login-Daten, der TGM Server verwendet werden, haben wir einen Link eingebaut, falls man sein Passwort vergessen hat. Betätigt man diesen, wird man auf die entsprechende Seite des TGMs weitergeleitet.
 \begin{code}{html}
 	<!-- Anmeldungsformular -->
 	<b-col cols="12" md="6">
@@ -208,7 +208,7 @@ Da einige Elemente unseren Ansprüchen optisch nicht genügt haben, wurden eigen
 	\label{list:csslogin} ~\\
 \paragraph{Cookie-Meldung}
 ~\\
-Die Meldung, dass Cookies benutzt werden, sollte schlicht und einfach sein. Es wurden die Anforderungen an die Meldung gestellt, dass sie dem Nutzer informieren soll, dass ausschließlich funktionelle und notwendige Cookies verwendet werden. Für diese Meldung hat sich perfekt das vordefinierte \enquote{Alert-Element} von Bootstrap geeignet:
+Die Meldung, dass Cookies benutzt werden, sollte schlicht und einfach sein. Es wurden die Anforderungen an die Meldung gestellt, dass sie dem Nutzer informieren soll, dass ausschließlich funktionelle und notwendige Cookies verwendet werden. Für diese Meldung hat sich perfekt das vordefinierte \enquote{Alert-Element} von \textit{Bootstrap} geeignet:
 \makeatletter
 \begin{code}{html}
 	<!-- Bestätigung, dass diese Seite Cookies benutzt -->
@@ -439,7 +439,7 @@ Die Knöpfe sind in eigenen Containern dargestellt, um sie optimal der Größe d
 	\label{list:htmlselect} ~\\
 \paragraph{Schulveranstaltung}
 ~\\
-Der Antrag für eine neue Schulveranstaltung ist der komplexeste Antrag mit den meisten Eingabefeldern. Außerdem gehören zu dem Antrag für eine Schulveranstaltung auch die Anträge der Begleitpersonen . Um die Eingabe von Uhrzeiten und Daten einfacher zu gestalten, wurden die Elemente \enquote{b-form-datepicker} und \enquote{b-form-timepicker} verwendet. Dies sind standardmäßige Elemente, die von BootstrapVue vordefiniert sind. Um eine korrekte Eingabe sicherzustellen, wurde alle Eingabefelder mit einem Titel und einer Zusatzinformation ausgestattet.
+Der Antrag für eine neue Schulveranstaltung ist der komplexeste Antrag mit den meisten Eingabefeldern. Außerdem gehören zu dem Antrag für eine Schulveranstaltung auch die Anträge der Begleitpersonen . Um die Eingabe von Uhrzeiten und Daten einfacher zu gestalten, wurden die Elemente \enquote{b-form-datepicker} und \enquote{b-form-timepicker} verwendet. Dies sind standardmäßige Elemente, die von \textit{BootstrapVue} vordefiniert sind. Um eine korrekte Eingabe sicherzustellen, wurde alle Eingabefelder mit einem Titel und einer Zusatzinformation ausgestattet.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\linewidth]{images/website/schul_1}
@@ -452,7 +452,7 @@ Der Antrag für eine neue Schulveranstaltung ist der komplexeste Antrag mit den 
 	\caption[Neuer Schulantrag Seite (Teil 2)]{Ein Bild der Schulantrags Seite (Teil 2)}
 	\label{fig:schulantrag2}
 \end{figure}
-Alle Eingabefelder sind in sogenannte \enquote{b-form-groups} eingefügt. Diese Elemente bieten die Möglichkeit, einen Titel, der in unserem Fall auf der linken Seite angebracht ist und eine Beschreibung, die unterhalb des Eingabefelds eingefügt ist, hinzugefügt. Diese Elemente sind ebenfalls responsiv. In der \enquote{form-group} wird das jeweilige Element eingefügt, welches man eigentlich einbauen will. Diese Elemente können unter anderem normale Eingabefelder sein, Checkboxe, Radiobuttons, Timepicker, Datepicker, etc.. 
+Alle Eingabefelder sind in sogenannte \enquote{b-form-groups} eingefügt. Diese Elemente bieten die Möglichkeit, einen Titel, der in unserem Fall auf der linken Seite angebracht ist und eine Beschreibung, die unterhalb des Eingabefelds eingefügt ist, hinzugefügt. Diese Elemente sind ebenfalls responsiv. In der \enquote{form-group} wird das jeweilige Element eingefügt, welches man eigentlich einbauen will. Diese Elemente können unter anderem normale Eingabefelder sein, \textit{Checkboxen}, \textit{Radiobuttons}, \textit{Timepicker}, \textit{Datepicker}, etc.. 
 \begin{code}{html}
 	<b-form-group
         id="bez"
@@ -474,7 +474,7 @@ Alle Eingabefelder sind in sogenannte \enquote{b-form-groups} eingefügt. Diese 
 \end{code}
 \captionof{listing}{Beispiel für eine Eingabegruppe}
 ~\\
-Das \textit{Timepicker} Element kann ganz einfach, wie im oberen Absatz beschrieben, in eine Eingabegruppe eingefügt werden. Da das Element von Bootstrap vordefiniert ist, muss man leidiglich die üblichen Werte, wie ID und Platzhalter, setzen. Das Einzige, was beachtet werden sollte, ist, dass man die richtige Zeitzone (Auflistung 7.13 locale) wählt.
+Das \textit{Timepicker} Element kann ganz einfach, wie im oberen Absatz beschrieben, in eine Eingabegruppe eingefügt werden. Da das Element von \textit{Bootstrap} vordefiniert ist, muss man leidiglich die üblichen Werte, wie ID und Platzhalter, setzen. Das Einzige, was beachtet werden sollte, ist, dass man die richtige Zeitzone (Auflistung 7.13 locale) wählt.
 \begin{code}{html}
 	<b-form-timepicker
 		id="stz"
@@ -500,7 +500,7 @@ Der \textit{Datepicker} ist noch einfacher zu bedienen, als der \textit{Timepick
 \end{code}
 \captionof{listing}{Datepicker}
 	\label{list:bspinputgroup} ~\\
-Aus den, im Formular angegebenen Daten, wird automatisch ein weiteres Formular generiert. Dies geschieht, nachdem der \enquote{Weiter} Button betätigt wurde und alle Daten als valide anerkannt wurden. Das Formular beinhaltet für jede Begleitperson die geforderten Eingabefelder (\autoref{fig:schulantrag3}). Die Struktur dieser Elemente ist exakt die selbe, wie jene, der Elemente, die in \autoref{fig:schulantrag1} dargestellt wurden. 
+Aus den, im Formular angegebenen Daten, wird automatisch ein weiteres Formular generiert. Dies geschieht, nachdem der \enquote{Weiter} \textit{Button} betätigt wurde und alle Daten als valide anerkannt wurden. Das Formular beinhaltet für jede Begleitperson die geforderten Eingabefelder (\autoref{fig:schulantrag3}). Die Struktur dieser Elemente ist exakt die selbe, wie jene, der Elemente, die in \autoref{fig:schulantrag1} dargestellt wurden. 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\linewidth]{images/website/schul_3_1}
@@ -549,7 +549,7 @@ Das Formular der Reisekostenabrechnung fordert sehr viele verschiedene Werte von
 In \autoref{fig:reiserechnungsite} wurden Elemente verwendet, die uns im Gegensatz zu normalen Eingaben nicht bekannt sind, einerseits Tabellen, andererseits die Dateiauswahl.
 \paragraph{Dateiauswahl}
 ~\\
-Wie auch bei den anderen Elementen der Formulare, wie zum Beispiel bei dem \textit{Timepicker}, hat Bootstrap ein veorgefertigtes Element für die Dateiauswahl. 
+Wie auch bei den anderen Elementen der Formulare, wie zum Beispiel bei dem \textit{Timepicker}, hat \textit{Bootstrap} ein veorgefertigtes Element für die Dateiauswahl. 
 \begin{code}{html}
 	<!-- Belege Input -->
 	<b-form-group
@@ -583,7 +583,7 @@ Wie auch bei den anderen Elementen der Formulare, wie zum Beispiel bei dem \text
 Wie auch andere Elemente, wird das Element zum Hochladen von Dateien in eine Eingabegruppe, mit Titel und Beschreibung eingesetzt. Nach dem Einsetzen des Elementes, kann sofort per Klick oder Drag and Drop eine, oder mehrere Dateien hinzugefügt werden.
 \paragraph{Tabelle}
 ~\\
-Um eine Tabelle zu erstellen, kann das Element \enquote{b-table} von Bootstrap benutzt werden. In diesem kann man direkt definieren, wie groß die Tabelle sein soll, was auf mobilen Geräten passieren soll, ob die Tabelle gestreift ist, oder nicht und noch weitere Parameter. In diesem Element, wurden die verschiedenen Spalten eingebaut. Dies wurde wie folgt umgesetzt:
+Um eine Tabelle zu erstellen, kann das Element \enquote{b-table} von \textit{Bootstrap} benutzt werden. In diesem kann man direkt definieren, wie groß die Tabelle sein soll, was auf mobilen Geräten passieren soll, ob die Tabelle gestreift ist, oder nicht und noch weitere Parameter. In diesem Element, wurden die verschiedenen Spalten eingebaut. Dies wurde wie folgt umgesetzt:
 \begin{code}{html}
 	<b-table
           striped
@@ -629,12 +629,12 @@ Um die oben genannten Daten in einer geordneten Liste zu sehen, kann der Lehrer 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.6\linewidth]{images/website/aktiv_detail}
-	\caption[Aktive Anträge Pop-Up Fenster]{Ein Bild der Detail-Ansicht der aktiven Anträge Seite}
+	\caption[Aktive Anträge \textit{Pop-Up Fenster}]{Ein Bild der Detail-Ansicht der aktiven Anträge Seite}
 	\label{fig:antragaktivdetail}
 \end{figure}
 \paragraph{Such-Funktion}
 ~\\
-Die Erstellung der Suchfunktion wurde wieder essentiell von den BootstrapVue Komponenten unterstützt. Es mussten eine Eingabegruppe erstellt werden, die ein Eingabefeld mit dem Typ \textit{\enquote{search}} hat. Um eine Eingabe schneller zu löschen wurde noch ein Knopf hinzugefügt, der erscheint, sobald man etwas eintippt. Durch die gute Integration von Bootstrap in VueJS war die Implementierung der Suchfunktion für die Tabelle reibungslos. Die Vergabe der Funktionalität der Such-Funktion wurde im Backend/Frontend Teil umgesetzt.
+Die Erstellung der Suchfunktion wurde wieder essentiell von den \textit{BootstrapVue} Komponenten unterstützt. Es mussten eine Eingabegruppe erstellt werden, die ein Eingabefeld mit dem Typ \textit{\enquote{search}} hat. Um eine Eingabe schneller zu löschen wurde noch ein Knopf hinzugefügt, der erscheint, sobald man etwas eintippt. Durch die gute Integration von \textit{Bootstrap} in \textit{VueJS} war die Implementierung der Suchfunktion für die Tabelle reibungslos. Die Vergabe der Funktionalität der Such-Funktion wurde im Backend/Frontend Teil umgesetzt.
 \begin{code}{html}
 	<!-- Such Element -->
     <b-row align-h="center" style="margin-top: 1rem; margin-bottom: 2rem">
@@ -685,7 +685,7 @@ Die Aktivierung der filterbaren Tabelle ist mittels \textit{BootstrapVue} mögli
 	\label{list:antragfiltercode} ~\\
 \paragraph{Pop-Up Fenster}
 ~\\
-Das Pop-Up Fenster wurde mittels einem \enquote{Modal} von Bootstrap verwirklicht. Dieses kann über einen zugewiesenen Button geöffnet werden und beinhaltet, je nach Antrag, dessen spezifische Daten.
+Das \textit{Pop-Up Fenster} wurde mittels einem \enquote{Modal} von \textit{Bootstrap} verwirklicht. Dieses kann über einen zugewiesenen \textit{Button} geöffnet werden und beinhaltet, je nach Antrag, dessen spezifische Daten.
 \begin{code}{html}
 	<!-- Info modal -->
     <b-modal
@@ -697,7 +697,7 @@ Das Pop-Up Fenster wurde mittels einem \enquote{Modal} von Bootstrap verwirklich
       <pre>{{ infoModal.content }}</pre>
     </b-modal>
 \end{code}
-\captionof{listing}{Pop-Up Fenster Code}
+\captionof{listing}{\textit{Pop-Up Fenster} Code}
 	\label{list:codepopup} ~\\
 
 \subsubsection{Ansicht Alle Anträge}
@@ -787,7 +787,7 @@ Ein Schritt der Fortschrittsanzeige besteht aus einem \enquote{div}, in dem sich
 
 \paragraph{Dokumente anzeigen}
 ~\\
-Die verschiedenen Dokumente, die zu einem gewissen Antrag angehören, werden in einer Tabelle gelistet. Falls der Nutzer auf den \enquote{Bearbeitung öffnen} Knopf drückt, wird der Tabelle eine weitere Reihe hinzugefügt, die alle Informationen zu dem jeweiligen Antrag beinhaltet. Mittels VueJS wurden die bestehenden Formulare (hier als Beispiel einen Schulveranstaltungsantrag), in der Tabelle eingebunden und die Eingabefelder über die Datenschnittstelle (\autoref{chapter:implementierung-datenschnittstelle}) mit Daten befüllt.
+Die verschiedenen Dokumente, die zu einem gewissen Antrag angehören, werden in einer Tabelle gelistet. Falls der Nutzer auf den \enquote{Bearbeitung öffnen} Knopf drückt, wird der Tabelle eine weitere Reihe hinzugefügt, die alle Informationen zu dem jeweiligen Antrag beinhaltet. Mittels \textit{VueJS} wurden die bestehenden Formulare (hier als Beispiel einen Schulveranstaltungsantrag), in der Tabelle eingebunden und die Eingabefelder über die Datenschnittstelle (\autoref{chapter:implementierung-datenschnittstelle}) mit Daten befüllt.
 \begin{code}{html}
 	<template #row-details="row">
         <b-card>
