@@ -184,10 +184,10 @@ Die Entwicklungszeit zwischen den zwei \Gls{framework}s ist sehr ähnlich. Jedoc
 \Gls{vue}: 112ms\\
 \Gls{react}: 175ms\\
 Ohne \Gls{framework}: 21ms\\
-Ohne Framework ist die Performanz sehr gut, da im Hintergrund keine Frameworks geladen werden müssen. Das \Gls{js} wird direkt ausgeführt. Bei VueJS und React werden viele Bibliotheken im Hintergrund geladen, wodurch die Performanz sinkt. Obwohl Komponenten verwendet worden sind, ist VueJS performanter als React.\\\\
+Ohne Framework ist die Performanz sehr gut, da im Hintergrund keine Frameworks geladen werden müssen. Das \Gls{js} wird direkt ausgeführt. Bei VueJS und React werden viele Bibliotheken im Hintergrund geladen, wodurch die Performanz sinkt. Obwohl Komponenten bei der Umsetzung mittels VueJS verwendet worden sind, ist VueJS performanter als React.\\\\
 \textbf{Lines of Code}\\
-Die beiden Frameworks haben besonders gut abgeschnitten, da für die Umsetzung mit VueJS nur wenige Codezeilen geschrieben werden mussten. Durch die Funktionalität von VueJS können viele Codezeilen eingespart werden. React ist in dem Aspekt auch sehr gut, da auch sehr wenige Codezeilen geschrieben werden mussten. Jedoch wurde hier mehr selbst geschrieben, wodurch das Framework nicht die vollen Punkte erreicht.
-Ohne \Gls{framework} gibt es am wenigsten Punkte, da die Umsetzung im Vergleich nicht nur unübersichtlich und kompliziert ist, sondern auch damit zu rechnen ist, dass die Umsetzung bei größeren Beispielen noch komplizierter und unübersichtlicher wird.
+Die beiden Frameworks haben besonders gut abgeschnitten, da für die Umsetzung mit VueJS nur wenige Codezeilen geschrieben werden mussten. Durch die Funktionalität von VueJS können viele Codezeilen eingespart werden. React ist in dem Aspekt für das Projekt geeignet, da auch sehr wenige Codezeilen geschrieben werden mussten. Jedoch musste bei React deutlich mehr entwickelt werden, wodurch es nicht die vollen Punkte erreicht.
+Ohne \Gls{framework} konnten weniger Punkte erreicht werden, da die Umsetzung im Vergleich nicht nur unübersichtlicher und komplizierter ist, sondern auch damit zu rechnen ist, dass die Umsetzung bei größeren Beispielen zu großen Problemen führen kann.
 \newpage
 \subsection{Aufbereitung der Daten}
 Die Daten, welche von der REST-Schnittstelle gelesen werden, sind im \Gls{json}-Format. Dies wird genauer im Kapitel \hyperref[sec:json]{5.2.5} erklärt. Um die Daten von der REST-Schnittstelle zu bekommen, wird \Gls{axios} verwendet. Mit dieser Bibliothek kann eine \Gls{http}-Anfrage gesendet und damit die Daten von der REST-Schnittstelle ausgelesen werden. Im folgenden Code wird eine Beispiel-Anfrage gesendet:
