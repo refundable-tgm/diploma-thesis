@@ -4,7 +4,7 @@
 In diesem Kapitel wird die Implementierung des Frontends von \textit{Refundable} erläutert. Dabei wird als Erstes die Vorbereitung im \autoref{chapter:implementierung-frontend-vorbereitung} erklärt. Danach werden die einzelnen Komponenten im \autoref{chapter:implementierung-frontend-komponenten} der Website aufgezeigt und vorgeführt.
 \subsection{Vorbereitung}
 \label{chapter:implementierung-frontend-vorbereitung}
-Wie im \autoref{chapter:study-frontend} und \autoref{chapter:study-datenschnittstelle} festgelegt wird im Frontend \textit{Bootstrap} in Verbindung mit \textit{VueJS} verwendet. Zu aller erst muss daher \textit{VueJS} auf dem Computer, auf dem das Projekt erstellt wird, installiert werden. Dies geschieht auf Windows über den Node Packet Manager (NPM) \cite{vue-install}. Der Befehl um \textit{VueJS} zu installieren schaut wie folgt aus:
+Wie im \autoref{chapter:study-frontend} und \autoref{chapter:study-datenschnittstelle} festgelegt wird im Frontend \textit{Bootstrap} in Verbindung mit \textit{VueJS} verwendet. Zu aller erst muss daher \textit{VueJS} auf dem Computer, auf dem das Projekt erstellt wird, installiert werden. Dies geschieht auf Windows über den Node Packet Manager (NPM) \cite{vue-install}. Der Befehl um \textit{VueJS} zu installieren sieht wie folgt aus:
 \begin{code}{bash}
 	npm install -g @vue/cli
 \end{code}
@@ -55,7 +55,7 @@ Diese dienen dazu, dass der Hauptcontainer, als auch die Hauptreihe der Website,
 \newpage
 \subsubsection{Login-Seite}
 \label{chapter:implementierung-frontend-komponenten-login}
-Die Login-Seite sollte sehr schlicht gehalten werden und sofort verstamden werden können. Da das Tool \textit{Refundable} nur von Lehrern des TGMs verwendet werden soll, wurde in der Loginmaske die E-Mail-Endung \enquote{@tgm.ac.at} vordefiniert. Außerdem soll dem Aufrufer der Website sofort klar machen, worum es sich bei dieser Website handelt und haben daher den Projektnamen \textit{Refundable}, als auch unseren Slogan auf der Seite platziert. Des weiteren war aufgrund der DSGVO eine Meldung zu realisieren, die den Benutzer darüber informiert, dass Cookies verwendet werden. Falls diese Meldung nicht akzeptiert wird und man sich anzumelden möchte, wird eine Fehlermeldung dargestellt. Diese Meldung wird jedoch dynamisch mit \textit{VueJS} erstellt und nicht direkt mittels \textit{Bootstrap}. In der Umsetzung schaut die Login-Seite wie folgt aus (\autoref{fig:login}):
+Die Login-Seite sollte sehr schlicht gehalten werden und sofort verstanden werden können. Da das Tool \textit{Refundable} nur von Lehrern des TGMs verwendet werden soll, wurde in der Login-Maske die E-Mail-Endung \enquote{@tgm.ac.at} vordefiniert. Außerdem soll dem Aufrufer der Website sofort klar sein, worum es sich bei dieser Website handelt und haben daher den Projektnamen \textit{Refundable}, als auch unseren Slogan auf der Seite platziert. Des weiteren war aufgrund der DSGVO eine Meldung zu realisieren, die den Benutzer darüber informiert, dass Cookies verwendet werden. Falls diese Meldung nicht akzeptiert wird und man sich anmelden möchte, wird eine Fehlermeldung dargestellt. Diese Meldung wird jedoch dynamisch mit \textit{VueJS} erstellt und nicht direkt mittels \textit{Bootstrap}. In der Umsetzung sieht die Login-Seite wie folgt aus (\autoref{fig:login}):
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\linewidth]{images/ldehner_implementierung/login}
@@ -234,7 +234,7 @@ Die Meldung, dass Cookies benutzt werden, sollte schlicht und einfach sein. Es w
 \newpage
 \subsubsection{Startseite}
 \label{chapter:implementierung-frontend-komponenten-startseite}
-Die Startseite sollte so intuitiv und übersichtlich wie möglich sein. Deswegen wurde ein \enquote{Drei Spalten Design} umgesetzt. In der ersten Spalte befinden sich alle wichtigen Funktionen - drei Knöpfe, zum Erstellen von neuen Anträgen, um alle aktiven Anträge anzuzeigen und um alle Anträge zu betrachten, die man jemals gestellt hat. In der 2. Spalte befindet sich das Logo, eine Illustration für das Dashboard und ein Knopf zum Ausloggen. Falls man sich mit einm Administratorkonto anmeldet, wird hier ebenfalls ein Knopf, zum Wechseln in die Administratoransicht angezeigt. In der dritten Spalte werden Neuigkeiten zu den Anträgen des Benutzers angezeigt. Klickt man auf eine Neuigkeit, wird man zu dem jeweiligen Antrag weitergeleitet. \autoref{fig:dashboard} zeigt die Umsetzung der Startseite.
+Die Startseite sollte so intuitiv und übersichtlich wie möglich sein. Deswegen wurde ein \enquote{Drei Spalten Design} umgesetzt. In der ersten Spalte befinden sich alle wichtigen Funktionen - drei Knöpfe, zum Erstellen von neuen Anträgen, um alle aktiven Anträge anzuzeigen und um alle Anträge zu betrachten, die jemals gestellt wurden. In der 2. Spalte befindet sich das Logo, eine Illustration für das Dashboard und ein Knopf zum Ausloggen. Falls man sich mit einem Administratorkonto anmeldet, wird hier ebenfalls ein Knopf, zum Wechseln in die Administratoransicht angezeigt. In der dritten Spalte werden Neuigkeiten zu den Anträgen des Benutzers angezeigt. Klickt man auf eine Neuigkeit, wird man zu dem jeweiligen Antrag weitergeleitet. \autoref{fig:dashboard} zeigt die Umsetzung der Startseite.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\linewidth]{images/ldehner_implementierung/dashboard}
@@ -371,7 +371,7 @@ Wie bereits erwähnt, ist die mobile Ansicht sehr schlicht gehalten, damit sie n
 	\label{list:startmobile} ~\\
 \paragraph{Neuigkeiten-Element}
 ~\\
-Die Neuigkeiten-Elemente sind mit einer Illustration bestückt, die den momentanen Status des jeweiligen Antrags beschreiben soll. Außerdem wird ein Titel der Neuigkeit mitgegeben, die zum Beispiel \enquote{Antrag X abgelehnt} heißen könnte. Etwas mehr Details werden noch in einem Beschreibungsfeld mitgegeben, das wegen der Übersichtlichkeit nur auf Desktopgeräten sichtbar ist.
+Die Neuigkeiten-Elemente sind mit einer Illustration bestückt, die den momentanen Status des jeweiligen Antrags beschreiben soll. Außerdem wird ein Titel der Neuigkeit mitgegeben, die zum Beispiel \enquote{Antrag X abgelehnt} heißen könnte. Etwas mehr Details werden noch in einem Beschreibungsfeld mitgegeben, das in Hinblick auf die Übersichtlichkeit nur auf Desktopgeräten sichtbar ist.
 \begin{code}{html}
 	<b-row align-v="center">
 	<b-col cols="2">
@@ -591,7 +591,7 @@ Das Formular der Reisekostenabrechnung fordert sehr viele verschiedene Werte von
 In \autoref{fig:reiserechnungsite} wurden Elemente verwendet, die uns im Gegensatz zu normalen Eingaben nicht bekannt sind, einerseits Tabellen, andererseits die Dateiauswahl.
 \paragraph{Dateiauswahl}
 ~\\
-Wie auch bei den anderen Elementen der Formulare, wie zum Beispiel bei dem \textit{Timepicker}, hat \textit{Bootstrap} ein veorgefertigtes Element für die Dateiauswahl. 
+Wie auch bei den anderen Elementen der Formulare, wie zum Beispiel bei dem \textit{Timepicker}, hat \textit{Bootstrap} ein vorgefertigtes Element für die Dateiauswahl. 
 \begin{code}{html}
 	<!-- Belege Input -->
 	<b-form-group
@@ -676,7 +676,7 @@ Um die oben genannten Daten in einer geordneten Liste zu sehen, kann der Lehrer 
 \end{figure}
 \paragraph{Such-Funktion}
 ~\\
-Die Erstellung der Suchfunktion wurde wieder essentiell von den \textit{BootstrapVue} Komponenten unterstützt. Es mussten eine Eingabegruppe erstellt werden, die ein Eingabefeld mit dem Typ \textit{\enquote{search}} hat. Um eine Eingabe schneller zu löschen wurde noch ein Knopf hinzugefügt, der erscheint, sobald man etwas eintippt. Durch die gute Integration von \textit{Bootstrap} in \textit{VueJS} war die Implementierung der Suchfunktion für die Tabelle reibungslos. Die Vergabe der Funktionalität der Such-Funktion wurde im Backend/Frontend Teil umgesetzt.
+Die Erstellung der Suchfunktion wurde wieder essentiell von den \textit{BootstrapVue} Komponenten unterstützt. Es mussten eine Eingabegruppe erstellt werden, die ein Eingabefeld mit dem Typ \textit{\enquote{search}} hat. Um eine Eingabe schneller zu löschen wurde noch ein Knopf hinzugefügt, dieser erscheint, sobald man etwas eintippt. Durch die gute Integration von \textit{Bootstrap} in \textit{VueJS} war die Implementierung der Suchfunktion für die Tabelle reibungslos. Die Vergabe der Funktionalität der Such-Funktion wurde im Backend/Frontend Teil umgesetzt.
 \begin{code}{html}
 	<!-- Such Element -->
     <b-row align-h="center" style="margin-top: 1rem; margin-bottom: 2rem">
@@ -709,9 +709,9 @@ Die Erstellung der Suchfunktion wurde wieder essentiell von den \textit{Bootstra
 \end{code}
 \captionof{listing}{Anträge Suchfunktion Code}
 	\label{list:antragsearchcode} ~\\
-\paragraph{Filterbare Tabelle}
+\paragraph{Filtrierbare Tabelle}
 ~\\
-Die Aktivierung der filterbaren Tabelle ist mittels \textit{BootstrapVue} möglich. Dazu wurden folgende drei Festlegungen im \textit{\enquote{b-table}} Element hinzufügen:
+Die Aktivierung der filtrierbaren Tabelle ist mittels \textit{BootstrapVue} möglich. Dazu wurden folgende drei Festlegungen im \textit{\enquote{b-table}} Element hinzugefügt:
 \begin{code}{html}
 	<b-table
 		...
@@ -836,7 +836,7 @@ Ein Schritt der Fortschrittsanzeige besteht aus einem \enquote{div}, in dem sich
 
 \paragraph{Dokumente anzeigen}
 ~\\
-Die verschiedenen Dokumente, die zu einem gewissen Antrag angehören, werden in einer Tabelle gelistet. Falls der Nutzer auf den \enquote{Bearbeitung öffnen} Knopf drückt, wird der Tabelle eine weitere Reihe hinzugefügt, die alle Informationen zu dem jeweiligen Antrag beinhaltet. Mittels \textit{VueJS} wurden die bestehenden Formulare (hier als Beispiel einen Schulveranstaltungsantrag), in der Tabelle eingebunden und die Eingabefelder über die Datenschnittstelle (\autoref{chapter:implementierung-datenschnittstelle}) mit Daten befüllt.
+Die verschiedenen Dokumente, die zu einem gewissen Antrag gehören, werden in einer Tabelle gelistet. Falls der Nutzer auf den \enquote{Bearbeitung öffnen} Knopf drückt, wird der Tabelle eine weitere Reihe hinzugefügt, die alle Informationen zu dem jeweiligen Antrag beinhaltet. Mittels \textit{VueJS} wurden die bestehenden Formulare (hier als Beispiel ein Schulveranstaltungsantrag), in der Tabelle eingebunden und die Eingabefelder über die Datenschnittstelle (\autoref{chapter:implementierung-datenschnittstelle}) mit Daten befüllt.
 \begin{code}{html}
 	<template #row-details="row">
         <b-card>
@@ -920,7 +920,7 @@ Die farbig hinterlegten Elemente heißen \enquote{badges} und können wie folgt 
 \newpage
 \paragraph{Administrator Antragsansicht}
 ~\\
-Die Administrator Antragsansicht schaut gleich aus, wie die Ansicht der normalen Benutzer - mit einem Unterschied. Die Administratoren haben nicht die Funktionen \enquote{Speichern} und \enquote{Antrag schließen}, sondern \enquote{Antrag annehmen} und \enquote{Antrag ablehnen}. Falls der Antrag abgelehnt wird, taucht wieder eine Sicherheitsmeldung auf. Hier muss der Administrator eine Begründung, für die Ablehnung angeben. 
+Die Administrator Antragsansicht sieht gleich aus, wie die Ansicht der normalen Benutzer - mit einem Unterschied. Die Administratoren haben nicht die Funktionen \enquote{Speichern} und \enquote{Antrag schließen}, sondern \enquote{Antrag annehmen} und \enquote{Antrag ablehnen}. Falls der Antrag abgelehnt wird, taucht wieder eine Sicherheitsmeldung auf. Hier muss der Administrator eine Begründung, für die Ablehnung angeben. 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.6\linewidth]{images/ldehner_implementierung/admin_antrag_schiessen}
@@ -971,9 +971,9 @@ Im Code wird dieses Eingabefeld im \enquote{Modal} wie folgt erstellt:
 \captionof{listing}{Antrag ablehnen Code}
 	\label{list:badgebsp} ~\\
 \newpage
-\subsubsection{Seite nicht Gefunden}
+\subsubsection{Seite nicht gefunden}
 \label{chapter:implementierung-frontend-komponenten-notfound}
-Falls der momentane Nutzer von \textit{Refundable} eine ungültige URL aufrufen möchte, wird dieser sofort informiert, dass er etwas falsch gemacht hat. Desweiteren wird dem Nutzer direkt eine Lösung vorgeschlaen, wie er dieses Problem beheben kann. Um dem Nutzer zu visualisieren, dass der \enquote{Website} Knopf die richtige Wahl ist, haben wir ihn in einem Grün hervorgehoben. Außerdem wird dem Aufrufer, der Seite mit schimmernden grauen Boxen, die einen \enquote{Lade-Zustand} visualisieren sollen gezeigt, dass die Seite, die der Nutzer aufrufen wollte nicht richtig lädt.
+Falls der momentane Nutzer von \textit{Refundable} eine ungültige URL aufrufen möchte, wird dieser sofort informiert, dass er etwas falsch gemacht hat. Desweiteren wird dem Nutzer direkt eine Lösung vorgeschlagen, wie er dieses Problem beheben kann. Um dem Nutzer zu visualisieren, dass der \enquote{Website} Knopf die richtige Wahl ist, haben wir ihn in einem Grün hervorgehoben. Außerdem wird dem Aufrufer, der Seite mit schimmernden grauen Boxen, die einen \enquote{Lade-Zustand} visualisieren sollen gezeigt, dass die Seite, die der Nutzer aufrufen wollte nicht richtig lädt.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\linewidth]{images/ldehner_implementierung/notfound}

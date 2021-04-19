@@ -4,13 +4,13 @@
 In diesem Kapitel wird die Erstellung eines Konzepts für das Frontend erläutert. Dabei müssen unter anderem Faktoren, wie die Zielgruppe, unsere Lehrerschaft, beachtet werden. Im folgenden Kapitel werden die theoretischen Hintergründe des Konzeptes überlegt, erörtert und im Anschluss werden erste Entwürfe mittels Mockups erstellt. 
 \subsection{Theoretische Konzeption}
 \label{chapter:konzept-frontend-theorie}
-Da die Zielgruppe \enquote{Lehrer} nicht gleichaltrig ist, sondern die darin enthaltenen Menschen ein Alter von 25 bis 65 Jahren haben, gibt es keine Literatur zur \enquote{perfekten Usability für Lehrpersonal}. Daher richten wir uns nach den Büchern \enquote{Don't Make Me Think: A Common Sense Approche to Web Usability} von Steve Krug und  \enquote{101 UX Principles} von Will Grant. Um eine gute Usability für die Lehrer des TGMs zu gewährleisten, werden wir den Prozess der Entwicklung streng in Kontakt zu Lehrern begleiten und das Produkt auch mit Technik unvertrauten Menschen testen.  
+Da die Zielgruppe \enquote{Lehrer} nicht gleichaltrig ist, sondern die darin enthaltenen Menschen ein Alter von 25 bis 65 Jahren haben, gibt es keine Literatur zur \enquote{perfekten Usability für Lehrpersonal}. Daher richten wir uns nach den Büchern \enquote{Don't Make Me Think: A Common Sense Approche to Web Usability} von Steve Krug und  \enquote{101 UX Principles} von Will Grant. Um eine gute Usability für die Lehrer des TGMs zu gewährleisten, werden wir den Prozess der Entwicklung streng in Kontakt zu Lehrern begleiten und das Produkt auch mit Technik nicht versierten Anwendern testen.  
 \newpage
 \subsection{Visuelle Konzeption}
 \label{chapter:konzept-frontend-visuell}
 \paragraph{Login-Seite}
 ~\\
-Wie man auf der \autoref{fig:mockupLogin} sehen kann, ist die Login-Seite sehr schlicht gehalten. Neben dem Schriftzug \enquote{Refundable} soll das Formular zum Einloggen dargestellt sein. Da die Plattform nur für das Personal des TGMs zugänglich sein soll, wird bei der Eingabe der E-Mail Adresse automatisch eine \enquote{@tgm.ac.at} Endung angefügt. Wird der \enquote{Passwort vergessen?} Link betätigt, soll automatisch auf die Seite des TGMs verwiesen werden, da die Daten über LDAP, der Lehrer abgerufen wird. Bei der Eingabe von validen Daten und dem Betätigen des \enquote{Anmelden} Buttons wird der Benutzer auf die Startseite weitergeleitet.
+Wie man auf der \autoref{fig:mockupLogin} erkennen kann, ist die Login-Seite sehr schlicht gehalten. Neben dem Schriftzug \enquote{Refundable} soll das Formular zum Einloggen dargestellt sein. Da die Plattform nur für das Personal des TGMs zugänglich sein soll, wird bei der Eingabe der E-Mail Adresse automatisch eine \enquote{@tgm.ac.at} Endung angefügt. Wird der \enquote{Passwort vergessen?} Link betätigt, soll automatisch auf die Seite des TGMs verwiesen werden, da die Daten über LDAP, der Lehrer abgerufen wird. Bei der Eingabe von validen Daten und dem Betätigen des \enquote{Anmelden} Buttons wird der Benutzer auf die Startseite weitergeleitet.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\linewidth]{images/ldehner_konzept/Mockup-Startseite}
@@ -43,7 +43,7 @@ Zur Veranschaulichung der oben genannten Prozesse ist in \autoref{fig:ucStart} e
 \end{figure}
 \paragraph{Neuer Antrag}
 ~\\
-Nachdem man auf den Button zum Erstellen eines neues Antrages gedrückt hat, soll man zu einer Auswahl kommen, in der man auswählen kann, welche Art von Antrag man erstellen möchte (\autoref{fig:mockupNeu}). Danach sollen je nach Antragsart, wie man auf der \autoref{fig:mockupErstellen} sieht, Eingabefelder erscheinen, in denen die benötigten Daten zu dem Antrag eingetragen werden sollen.
+Nachdem man auf den Button zum Erstellen eines neuen Antrages gedrückt hat, soll man zu einer Auswahl kommen, in der man auswählen kann, welche Art von Antrag man erstellen möchte (\autoref{fig:mockupNeu}). Danach sollen je nach Antragsart, wie man auf der \autoref{fig:mockupErstellen} sieht, Eingabefelder erscheinen, in denen die benötigten Daten zu dem Antrag eingetragen werden sollen.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\linewidth]{images/ldehner_konzept/Mockup-Neuer-Antrag}
@@ -64,9 +64,9 @@ Zur Veranschaulichung der oben genannten Prozesse ist in \autoref{fig:ucNew} ein
 	\label{fig:ucNew}
 \end{figure}
 \newpage
-\paragraph{Ansicht Alle Anträge}
+\paragraph{Ansicht alle Anträge}
 ~\\
-Auf der \textit{Alle Anträge} Seite, sieht man alle Anträge, mit denen man in Verbindung steht. Akzeptierte, abgelehnte, als auch Anträge, die noch in Bearbeitung sind, werden hier angezeigt und können über das Menü auf der rechten Seite geöffnet werden (\autoref{fig:mockupAlle}).
+Auf der \textit{alle Anträge} Seite, sieht man alle Anträge, mit denen man in Verbindung steht. Akzeptierte, abgelehnte, als auch Anträge, die noch in Bearbeitung sind, werden hier angezeigt und können über das Menü auf der rechten Seite geöffnet werden (\autoref{fig:mockupAlle}).
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\linewidth]{images/ldehner_konzept/Mockup-Alle-Anträge}
@@ -81,9 +81,9 @@ Zur Veranschaulichung der oben genannten Prozesse ist in \autoref{fig:ucAll} ein
 	\label{fig:ucAll}
 \end{figure}
 \newpage
-\paragraph{Ansicht Aktive Anträge}
+\paragraph{Ansicht aktive Anträge}
 ~\\
-Auf der \enquote{Aktive Anträge} Seite, sieht man alle Anträge, die aktiv sind (also in Bearbeitung oder vorerst abgelehnt) und mit denen man in Verbindung steht. Diese können über das Menü auf der rechten Seite geöffnet werden (\autoref{fig:mockupAktive}).
+Auf der \textit{aktive Anträge} Seite, sieht man alle Anträge, die aktiv sind (also in Bearbeitung oder vorerst abgelehnt) und mit denen man in Verbindung steht. Diese können über das Menü auf der rechten Seite geöffnet werden (\autoref{fig:mockupAktive}).
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\linewidth]{images/ldehner_konzept/Mockup-Aktive-Anträge}
@@ -100,7 +100,7 @@ Zur Veranschaulichung der oben genannten Prozesse ist in \autoref{fig:ucAktiv} e
 \newpage
 \paragraph{Administrator Ansicht}
 ~\\
-Auf der Administrator Seite können bestimmte Nutzer (wie AV, Rechnungsstelle, etc.) Anträge verwalten. Wie man auf der \autoref{fig:mockupAdmin} sehen kann, werden dem Benutzer einige wichtige Daten in einer durchsuchbaren und filtrierbaren Tabelle angezeigt. Um den Antrag anzunehmen oder abzulehnen, kann der \enquote{Öffnen} Knopf auf der rechten Seite der Tabelle betätigt werden.
+Auf der \textit{Administrator} Seite können bestimmte Nutzer (wie AV, Rechnungsstelle, etc.) Anträge verwalten. Wie man auf der \autoref{fig:mockupAdmin} sehen kann, werden dem Benutzer einige wichtige Daten in einer durchsuchbaren und filtrierbaren Tabelle angezeigt. Um den Antrag anzunehmen oder abzulehnen, kann der \enquote{Öffnen} \textit{Button} auf der rechten Seite der Tabelle betätigt werden.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\linewidth]{images/ldehner_konzept/Mockup-Admin}
