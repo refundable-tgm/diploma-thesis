@@ -185,7 +185,7 @@ Wird ein Link eingegeben, welcher nicht ''/'' oder ''/viewer'' entspricht, so wi
 Der \textit{Antrag-Viewer} wird über den Link \textit{/viewer} aufgerufen. Dies führt dazu, dass der Benutzer auf eine Seite weitergeleitet wird, auf der er die ID eines Antrags eingeben kann.
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=1\linewidth]{images/antrag_viewer}
+	\includegraphics[width=1\linewidth]{images/rfoster_implementierung/antrag_viewer}
 	\caption[Webseite \textit{Antrag-Viewer}]{Die \textit{Antrag-Viewer} Seite der Webseite}
 	\label{fig:antragviewer}
 \end{figure}
@@ -349,7 +349,7 @@ In den folgenden Codebeispielen werden oft die Befehle \textit{returnString}, \t
 Im ersten Schritt, werden allgemeine Informationen der Schulveranstaltung eingegeben.
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=1\linewidth]{images/schoolgeneral}
+	\includegraphics[width=1\linewidth]{images/rfoster_implementierung/schoolgeneral}
 	\caption[Schulveranstaltung]{Eingabefelder für allgemeine Informationen einer Schulveranstaltung}
 	\label{fig:schoolgeneral}
 \end{figure}
@@ -358,7 +358,7 @@ Im ersten Schritt, werden allgemeine Informationen der Schulveranstaltung eingeg
 Nach der Eingabe aller allgemeinen Informationen wird der Benutzer nach dem Drücken des ''weiter''-Knopfes auf eine weitere Unterseite weitergeleitet. Auf dieser können Informationen zu den im vorherigen Schritt angegebenen Begleitlehrern angegeben werden.
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.7\linewidth]{images/escorts}
+	\includegraphics[width=0.7\linewidth]{images/rfoster_implementierung/escorts}
 	\caption[Schulveranstaltung 2]{Eingabefelder für Informationen von Begleitlehrern}
 	\label{fig:escorts}
 \end{figure}
@@ -400,7 +400,7 @@ var data = {		// Das JSON-Objekt mit allen Informationen
 Eine Fortbildung wird auf der Fortbildung-Unterseite erstellt. Diese sieht wie folgt aus und beinhaltet Eingabefelder für alle notwendigen Informationen der Fortbildung.
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.9\linewidth]{images/workshop}
+	\includegraphics[width=0.63\linewidth]{images/rfoster_implementierung/workshop}
 	\caption[Fortbildung]{Eingabefelder einer Fortbildung}
 	\label{fig:workshop}
 \end{figure}
@@ -430,7 +430,7 @@ var data = {		// Das JSON-Objekt mit allen Informationen
 Ein \textit{Sonstiges}-Antrag kann auf der Unterseite ''Anderer Grund'' erstellt werden. Er sieht wie folgt aus und beinhaltet Eingabefelder für alle notwendigen Informationen für den Antrag.
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.9\linewidth]{images/othercause}
+	\includegraphics[width=0.6\linewidth]{images/rfoster_implementierung/othercause}
 	\caption[Sonstiges Antrag]{Eingabefelder für \textit{Sonstiges}-Antrag}
 	\label{fig:othercause}
 \end{figure}
@@ -475,7 +475,7 @@ Wenn die Unterseite, die einen Antrag anzeigen soll, geladen wird, so wird der U
 Jeder Antrag besitzt einen Fortschritt, welcher graphisch durch eine \textit{Progress}-Komponente angezeigt wird. Die Komponente erhält von der \textit{Antrag-Ansicht} den Fortschritt des Antrags und die Art des Antrags als Nummer, um die Informationen für den Benutzer lesbar anzuzeigen.
 \begin{figure}
 	\centering
-	\includegraphics[width=1\linewidth]{images/progress}
+	\includegraphics[width=1\linewidth]{images/rfoster_implementierung/progress}
 	\caption[Fortschrittsanzeige]{Fortschrittsanzeige für einen Antrag}
 	\label{fig:progress}
 \end{figure}
@@ -483,7 +483,7 @@ Jeder Antrag besitzt einen Fortschritt, welcher graphisch durch eine \textit{Pro
 In einem Antrag werden mehrere Dokumente gespeichert. Die Dokumente können je nach Fortschritt des Antrags bearbeitet werden und werden in einer Liste angezeigt:
 \begin{figure}
 	\centering
-	\includegraphics[width=1\linewidth]{images/documents}
+	\includegraphics[width=1\linewidth]{images/rfoster_implementierung/documents}
 	\caption[Dokumente eines Antrags]{Die Dokumente einer Schulveranstaltung}
 	\label{fig:documents}
 \end{figure}
@@ -614,7 +614,7 @@ Der Leiter eines Antrags kann den Antrag löschen. Sobald auf den Knopf ''Antrag
 Um einen Überblick über die Anträge zu haben, gibt es zwei Übersichtsseiten, welche die Anträge auflisten. In den Auflistungen sieht man die groben Daten des Antrags und kann diese in der \textit{Antrag-Ansicht} öffnen. Sobald eine Übersichtsseite aufgerufen wird, werden die Anträge abgefragt und in einer Liste angezeigt:
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=1\linewidth]{images/liste_antrag}
+	\includegraphics[width=1\linewidth]{images/rfoster_implementierung/liste_antrag}
 	\caption[Liste der Anträge]{Auflistung von Anträgen auf der Übersichtsseite}
 	\label{fig:listeantrag}
 \end{figure}
@@ -642,7 +642,7 @@ Des Weiteren kann auf den Knopf ''Antrag betrachten'' gedrückt werden, wodurch 
 Die Rechte für Benutzer können über ein Formular bearbeitet werden. Die E-Mail-Adresse des zu bearbeitenden Nutzers wird in dem Formular angegeben. Zusätzlich werden über die Auswahl die Rechte von dem Benutzer gesetzt.
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=1\linewidth]{images/rights}
+	\includegraphics[width=1\linewidth]{images/rfoster_implementierung/rights}
 	\caption[Formular der Rechte]{Formular, um Rechte eines Benutzers zu setzen}
 	\label{fig:rightsform}
 \end{figure}
