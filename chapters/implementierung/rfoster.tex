@@ -247,10 +247,10 @@ Das Laden sowie das senden von Befehle wird mittels \Gls{axios} umgesetzt. Es gi
 		}
 	}).then(response => {
 		switch(response.status) {
-			case 200:
+			case 200: 	// Die Anfrage hat funktioniert
 				this.news = this.cutNews(response.data); // Hier werden die Neuigkeiten aus der Anfrage in die Startseite geladen
 				break;
-			case 401:
+			case 401:	// Die Anfrage hat einen ''Unauthorized'' Fehler geworfen
 				// Hier wird auf den Fehlercode 401 reagiert
 				break;
 			default:
@@ -270,7 +270,7 @@ Unter der Bedingung, dass die erste Anfrage den Fehlercode \textit{401} zurückg
 		}
 	}).then(resp => {
 		switch (resp.status) {
-			case 201:
+			case 201:	// Die Anfrage hat funktioniert
 				this.$emit"updateToken", resp.data.access_token, resp.data.refresh_token);
 				// Die Anfrage wird erneut durchgeführt
 				break;
