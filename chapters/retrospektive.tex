@@ -8,11 +8,31 @@ Durch diese Situation wurde die Entwicklung der Datenschnittstelle deutlich ersc
 Durch herausragende Zusammenarbeit gegen Ende des Projekts konnten jedoch alle Herausforderungen bewältigt werden.
 \section{Erkenntnisse}
 Die Kommunikation ist ein sehr essenzieller Teil eines Projektes, welcher auf gar keinen Fall vernachlässigt werden darf.
-\section{Verbesserungen}
-@michi, du kannst über deine Patterns schreiben.
 
-\subsection{Datenschnittstelle}
+\newpage
+
+\section{Backend und Infrastruktur}
+
+Sowohl das Backend, als auch die Infrastruktur, wurden komplett implementiert. Die Hauptfunktionalität wurde fertig programmiert und in das System und in die Betriebsumgebung eingepasst. Zusätzlich wurde auch die Infrastruktur entworfen und dynamisch deployable designt, sodass dieses einfach aufbaubar und steuerbar ist. Die REST-Schnittstelle bereitet Daten entsprechend auf und stellt sie auf Anfrage eines Clients zur Verfügung. Auch die Schnittstellenherausforderungen im Backend mit Diensten und Protokollen wie LDAP oder Untis wurden gelöst und auf eine Art und Weise, dass die Implementierung klar und effizient ablaufen kann.\\
+
+Jedoch gibt es immer meistens bei Softwareprojekten mit klaren Deadlines immer noch etwas, das noch implementiert, verbessert oder neu entworfen werden kann. So ist es auch hier im Backend und in der Infrastruktur. Aus dieser Erkenntnis heraus wurde eine Liste erstellt, welche weiteren Implementierungen und möglichen Verbesserungen wichtig für das System wären und die Software unterstützen könnten:
+
+\begin{itemize}
+	\item Versenden von Mails (bei Statusänderungen oder als Erinnerungen)
+	\item Ein umfangreichendes Logging-System, um jegliche Aktionen aufzeichnen zu können
+	\item Ein einfacheres Design des Datenmodells entwerfen
+	\item PDF-Vorlagen besser und übersichtlicher designen
+	\item Die REST-Schnittstelle mit weiteren Steuerungsmöglichkeiten und kleineren Endpoints zur Zustandsänderung ausstatten, wodurch große Endpoints (wie beispielsweise jener um Anträge zu bearbeiten) obsolet werden würden und die Endpointstruktur klarer und übersichtlicher werden würde.
+	\item modulare Wahl zwischen Datenbanken inklusive Datenbankschnittstelle über Strategy-Pattern implementieren, und über Nutzerkonfiguration bei der Installation Entscheidung ermöglichen.
+	\item Grenzwertüberprüfungen im Backend einbauen, sodass nur letztlich valide Werte genutzt werden können
+	\item Reduzierung der McCabe-Metrik (zyklomatische Komplexität)
+	\item Generelle Performance Verbesserungen
+	\item Weitere Sicherheitsmaßnahmen entwerfen und implementieren
+\end{itemize}
+\captionof{listing}[Auflistung von weiteren Ideen]{Auflistungen von Ideen zur weiteren Implementierung und Verbesserung}
+
+\section{Datenschnittstelle}
 Aus Zeitgründen wurden einige Anforderungen nicht umgesetzt. Dazu zählt die Schnittstelle zu \Gls{googlemaps}, welche automatisch die Entfernungen berechnet.
 
-\subsection{Webdesign}
-@lini, da kannst du dein Zeugs schreiben
+\section{Webdesign}
+%@lini, da kannst du dein Zeugs schreiben
