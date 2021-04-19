@@ -454,6 +454,19 @@ var data = {		// Das JSON-Objekt mit allen Informationen
 };
 \end{code}
 \captionof{listing}[\textit{JSON} \textit{Sonstiges}-Antrag]{\textit{JSON}-Objekt eines \textit{Sonstiges}-Antrags}~\\
+\subsubsection{Antrag einreichen}
+Sobald der Benutzer auf den "Einreichen"-Knopf drückt, wird das \textit{JSON}-Objekt erstellt und an das Backend gesendet. Dies erfolgt mit folgendem Code:
+\begin{code}{js}
+	axios.post(this.url + "/createApplication", // Es wird eine createApplication-Anfrage an das Backend gesendet
+	{
+		headers: {
+			Authorization: "Basic " + this.token
+		}
+	},
+	data // Der Antrag mit den eingegebenen Daten wird mit der Anfrage gesendet
+	)
+\end{code}
+\captionof{listing}[Antrag einreichen]{Beispiel um einen Antrag im Backend zu erstellen}~\\
 \newpage
 \subsection{Antrag Ansicht}
 \label{sec:antrag_ansicht}
@@ -492,7 +505,25 @@ In einem \textit{Sonstiges}-Antrag werden Informationen über den Grund des Antr
 \paragraph{Reiseformular}~\\
 Ein Reiseformular wird bei den meisten Arten von Antrag erstellt. In einem Reiseformular werden Informationen über den Lehrer und über dessen An- und Abreise gespeichert.
 \paragraph{Reiserechnung}~\\
-Eine Reiserechnung wird bei den meisten Arten von Antrag erstellt. In einer Reiserechnung werden Informationen über die Kosten des Antrags gespeichert und wie diese entstanden sind. Des weiteren können Belege hochgeladen werden, um diese dem Antrag zu hinterlegen.
+Eine Reiserechnung wird bei den meisten Arten von Antrag erstellt. In einer Reiserechnung werden Informationen über die Kosten des Antrags gespeichert und wie diese entstanden sind. Des weiteren können Belege hochgeladen werden, um diese dem Antrag zu hinterlegen. Ein Beleg wird mit folgendem Code hochgeladen:
+\begin{code}{js}
+	axios.post(this.url + "/saveBillingReceipt",
+	{
+		params: {
+			uuid: this.app.uuid, // Der Antrag wird spezifiziert, für den die Belege hochgeladen werden
+			shortname: this.user.short // Es wird der Lehrer spezifiziert, der die Belege hochlädt
+		}
+	},
+	{
+		headers: {
+			Authorization: "Basic " + this.token
+		}
+	},
+	belege // Die Belege, welche hochgeladen werden
+	)
+\end{code}
+\captionof{listing}[Belege hochladen]{Beispiel um Belege hochzuladen}~
+\newpage
 \subsubsection{Aktionen}
 \paragraph{Excel herunterladen}~\\
 Der Benutzer kann Reiseformulare und Reiserechnungen als Excel-Datei herunterladen. Diese werden mit folgendem Code erstellt und heruntergeladen \cite{down_excel}:
@@ -511,8 +542,7 @@ Der Benutzer kann Reiseformulare und Reiserechnungen als Excel-Datei herunterlad
 	exportLinkElement.click();
 	exportLinkElement.remove();
 \end{code}
-\captionof{listing}[Excel Download]{Excel erstellen und herunterladen}~
-\newpage
+\captionof{listing}[Excel Download]{Excel erstellen und herunterladen}~\\
 \paragraph{PDF öffnen}~\\
 Der Benutzer kann die PDFs der Dokumente öffnen. Die PDFs werden in einem neuen Tab im Browser angezeigt.\\
 Mit folgendem Code wird eine PDF erstellt und in einem neuen Tab geöffnet \cite{sof_pdf}:
@@ -530,13 +560,54 @@ Mit folgendem Code wird eine PDF erstellt und in einem neuen Tab geöffnet \cite
 	"#toolbar=0\&navpanes=0\&scrollbar=0'></embed></body></html>"
 	);
 \end{code}
-\captionof{listing}[PDF erstellen und öffnen]{PDF erstellen und öffnen im Browser}~\\
+\captionof{listing}[PDF erstellen und öffnen]{PDF erstellen und öffnen im Browser}~
+\newpage
 \paragraph{Änderungen speichern}~\\
-Der Benutzer kann die Änderungen eines Antrags speichern. Dies kann in bestimmten Phasen eines Antrags geschehen. Die Änderungen werden an das Backend gesendet, sobald auf den ''Änderungen Speichern''-Knopf gedrückt wird.
+Der Benutzer kann die Änderungen eines Antrags speichern. Dies kann in bestimmten Phasen eines Antrags geschehen. Die Änderungen werden an das Backend gesendet, sobald auf den ''Änderungen Speichern''-Knopf gedrückt wird. Das senden erfolgt mit folgendem Code:
+\begin{code}{js}
+	if (this.belege.length >= 1) {
+		this.sendReceipts(this.belege); // Falls Belege angegeben worden sind, werden diese hochgeladen
+	}
+	if (this.checkProgression()) {
+		this.app.progress = 2;	// Falls alle Begleitlehrer ihre Reiseformulare ausgefüllt haben, wird der Fortschritt auf den nächsten Schritt gesetzt
+	}
+	if (this.checkInvoices()) {
+		this.app.progress = 6; // Falls alle Begleitlehrer ihre Reiserechnungen ausgefüllt haben, wird der Fortschritt auf den nächsten Schritt gesetzt
+	}
+	this.app.last_changed = this.createNewDate(); // Das Datum der letzten Änderung wird im Antrag gespeichert.
+	axios.put(this.url + "/updateApplication?uuid=" + this.app.uuid,
+	{
+		headers: {
+			Authorization: "Basic " + this.token
+		}
+	},
+	this.app // Es wird der neue Antrag (Mit den neuen Änderungen) hochgeladen
+	)
+\end{code}
+\captionof{listing}[Antrag speichern]{Beispiel um die Änderungen eines Antrags zu speichern}~\\
 \paragraph{Antrag schließen}~\\
-Der Leiter eines Antrags kann den Antrag schließen. Sobald der Antrag geschlossen ist, wird dieser im Backend auf den Fortschritt abgeschlossen gesetzt.
+Der Leiter eines Antrags kann den Antrag schließen. Sobald der Antrag geschlossen ist, wird dieser im Backend auf den Fortschritt abgeschlossen gesetzt. Dies wird mit folgendem Code erreicht:
+\begin{code}{js}
+	if (this.app.kind === 0) {	// Der Fortschritt wird je nach Antragsart auf Abgeschlossen gesetzt
+		this.app.progress = 7;
+	} else {
+		this.app.progress = 6;
+	}
+	this.save(); // Der Antrag wird gespeichert
+	this.hideClose(); // Das Modal wird geschlossen
+\end{code}
+\captionof{listing}[Antrag schließen]{Beispiel um einen Antrag zu schließen}~\\
+\newpage
 \paragraph{Antrag löschen}~\\
-Der Leiter eines Antrags kann den Antrag löschen. Sobald auf den Knopf ''Antrag löschen'' gedrückt wird, wird dieser im Backend gelöscht. Der Benutzer wird daraufhin weitergeleitet auf die Startseite.
+Der Leiter eines Antrags kann den Antrag löschen. Sobald auf den Knopf ''Antrag löschen'' gedrückt wird, wird dieser im Backend gelöscht. Der Benutzer wird daraufhin weitergeleitet auf die Startseite. Ein Antrag wird mit folgender Anfrage gelöscht:
+\begin{code}{js}
+	axios.delete(this.url + "/deleteApplication?uuid=" + this.app.uuid, { // Es wird ein Delete-Request an das Backend gesendet
+		headers: {
+			Authorization: "Basic " + this.token
+		}
+	})
+\end{code}
+\captionof{listing}[Antrag löschen]{Beispiel um einen Antrag zu löschen}~\\
 \newpage
 \subsection{Antrag Übersicht}
 \label{sec:antrag_uebersicht}
