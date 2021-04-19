@@ -1,6 +1,7 @@
 %!TEX root=../../main.tex
 
 \section{Backend und Infrastruktur}
+\label{chapter:conceptbi}
 \subsection{Einleitung}
 Der Anspruch an die Infrastruktur und an das Backend besteht darin, die Software als ganzes zu steuern und zu erhalten. Die Infrastruktur muss einfach aufzubauen und zu starten sein. Die folgenden Kapiteln erläutern nach der generellen Analyse von Lösungsmöglichkeiten im \autoref{chap:backendsota} nun einen ausgearbeiteten Plan, wie die später folgende Implementierung aussehen soll. Hierfür werden Graphiken oder Tabelle verwendet. Sie sollen ausreichend Informationen über Abläufe oder verschiedene Funktionalitäten vorgeben, um diese entsprechend daraufhin zu implementieren. Des Weiteren sollen die genormten Diagrammarten dazu dienen das komplexe Backend und die Infrastruktur einfach und übersichtlich darzustellen, um speziell die Schnittstellenherausforderungen verständlich zu machen.
 \subsection{Infrastruktur}
@@ -22,8 +23,6 @@ Docker Container stellen eigene Umgebungen dar, welche nach dem Stoppen oftmals 
 Die Zugangsdaten für den Nutzeraccount, welche beim Installieren abgefragt werden (siehe \autoref{fig:install}), der Datenbank werden über Dockers Secrets-Management sowohl in den Datenbank-, als auch in den Golang-Container eingehängt, damit sich dieser zur Datenbank verbinden kann. In der Datenbank müssen initial neben den Datenbanknutzern auch die Datenbankinstanz selbst angelegt werden. Dies geschieht über ein eigenes zum Start ausführendes Skript. \\
 
 Das Frontend selbst besteht aus zwei Ebenen. Zu Beginn wird das Frontend selbst kompiliert und installiert. Hierfür gibt es einen eigenen Container, der hierfür eine Umgebung bietet. Danach wird der eigentliche Webserver-Container gestartet und die zuvor kompilierten Dateien werden in den neuen Container kopiert. Ebenfalls wird eine angelegte Konfigurationsdatei, die den Webserver Dienst weitergehend konfiguriert, in das entsprechende Verzeichnis hinzugefügt.\\
-
-% ToDo HTTPS Certificates
 
 \newpage
 
@@ -142,7 +141,7 @@ Insgesamt gibt es zehn verschiedene Datenstrukturen, wobei hierbei neun die eige
 
 \subsection{REST-Schnittstelle}
 
-Die REST-Schnittstelle im Backend ist die Kommunikationsschnittstelle mit dem systemeigenen Frontend. Sie stellt jegliche Daten und generierte Files zur Verfügung und nimmt diverse Eingaben durch Lehrkräfte auf. Um diese Daten anzunehmen oder zurückzugeben werden sogenannte Endpoints erstellt. Diese sind in sich abgeschlossene Vorgänge, welche sich jeweils immer auf eine Aufgabe beschränken. Im folgenden Kapitel sind alle geplanten Endpoints beschrieben.
+ erstellt. Diese sind in sich abgeschlossene Vorgänge, welche sich jeweils immer auf eine Aufgabe beschränken. Im folgenden Kapitel sind alle geplanten Endpoints beschrieben.
 
 \subsubsection{Endpoints}
 \label{chapter:endpoints}

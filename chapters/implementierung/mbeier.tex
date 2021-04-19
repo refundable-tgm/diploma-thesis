@@ -1,1 +1,782 @@
 %!TEX root=../../main.tex
+
+\section{Backend und Infrastruktur}
+
+\subsection{Einleitung}
+Wie im Konzept (in \autoref{chapter:conceptbi}) zuvor ausführlich beschrieben soll eine den Plänen entsprechende automatisch aufbaubare Infrastruktur erstellt und ein dem System angepasstes Backend programmiert werden. Hierfür wurde bereits in der Studie (in \autoref{chapter:golanganalyse}) Golang als zu benutzende Sprache ausgewählt.
+\subsection{Docker}
+
+In den folgenden Kapiteln wird die genaue Umsetzung der einzelnen Docker-Images, jeweils definiert in Dockerfiles, des Docker-Compose Stack und des Aufbaus der Volumen, Umgebungsvariablen und Secrets beschrieben.
+
+\subsubsection{MongoDB}
+
+Das Dockerfile in der \autoref{code:dockermongo} beschreibt die Datenbank, eine MongoDB Instanz, die einen eigenen Container erhält. Das aus dem Dockerfile resultierende Image basiert auf der neuesten Version des offiziellen mongo-Images, welches die eigentliche MongoDB-Instanz beinhaltet. Des Weiteren wird das Initskript hinzugefügt, sodass dieses beim Erstellen des Containers immer ausgeführt wird. Zuletzt wird noch der Port 27017, der Standard Port der MongoDB Anwendung, nach außen hin freigegeben.
+
+\begin{minted}{Dockerfile}
+FROM mongo:latest
+
+ADD ./init-db.sh /docker-entrypoint-initdb.d/
+
+EXPOSE 27017
+\end{minted}
+\captionof{listing}[MongoDB Dockerfile]{MongoDB Dockerfile}
+\label{code:dockermongo}
+~\\
+Das Bashskript in der \autoref{code:mongoskript} sorgt für die Erstellung eines Nutzers als Administrator, einer Datenbank und eines weiteren Benutzers mit einfacher Lese- und Schreibberechtigung. Dieser Vorgang ist nötig, damit die Datenbank direkt verwendbar ist, und nicht erst eine Datenbank von der Seite des Programmes aus erstellt werden muss. Der weitere User stellt ein Best-Practice da, indem man den User, mit welchen man jegliche Daten schreibt, nicht alle Berechtigungen zuschreibt, sondern lediglich jene, die er wirklich braucht. 
+
+\newpage
+
+\begin{minted}{bash}
+#!/bin/bash
+
+mongo -- "$MONGO_DATABASE" << EOF
+	var rootUser = '$(cat "$MONGO_INITDB_ROOT_USERNAME_FILE")';
+	var rootPassword = '$(cat "$MONGO_INITDB_ROOT_PASSWORD_FILE")';
+	var admin = db.getSiblingDB("$MONGO_INITDB_DATABASE");
+	admin.auth(rootUser, rootPassword);
+
+	var user = '$(cat "$MONGO_USERNAME_FILE")';
+	var passwd = '$(cat "$MONGO_PASSWORD_FILE")';
+	db.createUser({user: user, pwd: passwd, roles: ["readWrite"]});
+EOF
+\end{minted}
+\captionof{listing}[MongoDB Initskript]{MongoDB Initskript}
+\label{code:mongoskript}
+~\\
+Die \autoref{code:mongocompose} zeigt wie das eigens definierte MongoDB Image weiterverwendet wird, speziell wie die verschiedenen Nutzerinformationen in den Container weitergegeben werden. Dies geschieht über Secrets. \cite{secretmongo} Hierbei handelt es sich um einfache Dateien, welche sicher in den Container eingehängt und dann darin ausgelesen werden können. In diesem Fall werden die Dateien durch den Installationsvorgang des Systems erstellt. 
+
+\begin{minted}{yaml}
+mongo:
+	build: images/mongo/
+	container_name: 'mongo-database'
+	restart: always
+	ports:
+		- '27017:27017'
+	volumes:
+		- './volumes/mongo/:/data/db/'
+	environment:
+		MONGO_INITDB_ROOT_USERNAME_FILE: '/run/secrets/mongodb_root_username'
+		MONGO_INITDB_ROOT_PASSWORD_FILE: '/run/secrets/mongodb_root_password'
+		MONGO_INITDB_DATABASE: 'admin'
+		MONGO_USERNAME_FILE: '/run/secrets/mongodb_username'
+		MONGO_PASSWORD_FILE: '/run/secrets/mongodb_password'
+		MONGO_DATABASE: 'refundable'
+	secrets:
+		- mongodb_root_username
+		- mongodb_root_password
+		- mongodb_username
+		- mongodb_password
+\end{minted}
+\captionof{listing}[Docker-Compose File: MongoDB-Container]{Docker-Compose File: MongoDB-Container}
+\label{code:mongocompose}
+
+\newpage
+
+\subsubsection{Backend}
+
+Im Golang-Backend, welches in der \autoref{code:backgodocker} beschrieben wird, läuft nicht nur das Backend selbst, sondern es wird auch kompiliert. Dies bringt den Vorteil mit sich, dass es automatisch für das von Docker bereitgestellte System kompiliert wird und es also keine Auslieferung von bereits kompilierten Dateien braucht. Es wird hier ein neues Image gebaut, woraufhin in den Go-Path die Quellcodedateien hineinkopiert werden. Danach werden alle benötigten Dependencies heruntergeladen und das dann vollständige Projekt wird kompiliert. Nachdem der Port 8080 freigegeben wurde, wird das fertig kompilierte Programm gestartet.
+
+\begin{minted}{Dockerfile}
+FROM golang:1.14
+	
+WORKDIR /go/src/huginn
+COPY . .
+	
+RUN go get -d -v ./...
+RUN go install -v ./...
+	
+EXPOSE 8080
+	
+CMD ["huginn"]
+\end{minted}
+\captionof{listing}[Backend Dockerfile]{Backend Dockerfile}
+\label{code:backgodocker}
+~\\
+Dieses Docker-Image ist auch ein Teil des Docker-Stacks und somit ist es auch in der Docker-Compose Konfiguration vorhanden (\autoref{code:golangbackendcompose}). Hier werden verschiedene Volumen eingehängt, um Dateien, wie die generierten Formulare, oder Secrets zum Signieren von Tokens, permanent zu speichern. Außerdem werden wieder die selben Secrets, die im MongoDB Container, die Nutzerinformationen des Datenbanknutzers gespeichert hatten, hinzugefügt. \cite{secretmongo} Dies ist darauf zurückzuführen, dass diese gleich durch das Backend wiederverwendet werden, um sich mit dem Nutzer einloggen zu können.
+
+\begin{minted}{yaml}
+rest:
+	build: src/huginn/
+	container_name: 'rest-api-backend'
+	ports:
+		- '8080:8080'
+	volumes:
+		- './volumes/secrets/:/vol/secrets/'
+		- './volumes/files/:/vol/files/'
+	environment:
+		MONGO_USERNAME_FILE: '/run/secrets/mongodb_username'
+		MONGO_PASSWORD_FILE: '/run/secrets/mongodb_password'
+		MONGO_DATABASE: 'refundable'
+	secrets:
+		- mongodb_username
+		- mongodb_password
+\end{minted}
+\captionof{listing}[Docker-Compose File: Backend-Container]{Docker-Compose File: Backend-Container}
+\label{code:golangbackendcompose}
+
+\newpage
+
+\subsubsection{Frontend}
+
+Zuletzt wird noch das Frontend in \autoref{code:dockerfrontend} definiert. Hierbei wird ein ähnlicher Zugang wie mit dem Backend gewählt, sodass auch das Frontend erst in einem Docker-Container kompiliert wird. Dies ist nicht so einfach, wie im Backend, da eine eigene Node.js Umgebung hierfür benötigt wird. Aus diesem Grund baut das Image grundsätzlich mal so eine auf und ladet darin die entsprechenden Dependencies herunter. Diese werden dann kompiliert. Das fertig kompilierte Frontend wird dann in einen anderen Docker-Container verschoben, welcher den eigentlichen Webserver umfasst, der das Frontend dann bereit stellt. Der nginx-Webserver wird nachdem er den Port 80 freigegeben hat noch formell gestartet.
+
+\begin{minted}{Dockerfile}
+FROM node:lts-alpine AS vue-builder
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+COPY . .
+RUN npm run build
+	
+FROM nginx:stable-alpine as production
+COPY --from=vue-builder /app/dist /usr/share/nginx/html
+COPY history.conf /etc/nginx/conf.d/history.conf
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
+\end{minted}
+\captionof{listing}[Frontend Dockerfile]{Frontend Dockerfile}
+\label{code:dockerfrontend}
+~\\
+Auch dieses Image muss in der Docker-Konfiguration hinzugefügt werden. Dies wird durch die in \autoref{code:frontendcompose} aufgeführten Konfigurationen erreicht. Hierbei werden lediglich die entsprechenden Ports festgelegt, mehr Informationen, wie beispielsweise Secrets braucht der Webserver nicht.
+
+\begin{minted}{yaml}
+web:
+	build: src/web/
+	container_name: 'frontend-nginx-webapp'
+	ports:
+		- '80:80'
+		- '443:443'
+\end{minted}
+\captionof{listing}[Docker-Compose File: Web-Container]{Docker-Compose File: Web-Container}
+\label{code:frontendcompose}
+
+\newpage
+
+\subsubsection{Secrets}
+
+Nachdem nun die verschiedenen Images, aus denen der Docker-Compose Stack bestehen soll, konfiguriert und in die zentrale Docker-Compose Datei hinzugefügt wurden, müssen zuletzt noch die benutzten Secrets registriert werden. \cite{secretmongo} Dies erfolgt wie in \autoref{code:dockersecrets} ersichtlich. Der Name des Secrets wird einer Datei zugeordnet, diese Datei wird dann, wie bereits erwähnt, in den entsprechenden Containern eingehängt. Hierdurch lässt sich einfach die bei der Installation eingelesenen Daten in die Container weitergeben.
+
+\begin{minted}{yaml}
+secrets:
+	mongodb_root_username:
+		file: config/mongodb_root_username
+	mongodb_root_password:
+		file: config/mongodb_root_password
+	mongodb_username:
+		file: config/mongodb_username
+	mongodb_password:
+		file: config/mongodb_password
+\end{minted}
+\captionof{listing}[Docker-Compose File: Secrets]{Docker-Compose File: Secrets}
+\label{code:dockersecrets}
+
+\subsection{Steuerungsskript}
+\subsubsection{Docker Installation}
+
+Bei der Docker Installation, welche in \autoref{code:dockerinstall} ersichtlich ist, wird Docker und Docker-Compose während des Installationsvorganges installiert, sofern dies so angegeben ist. Hierfür existiert der Parameter -d. Ist dieser vorhanden, so wird das offizielle Docker-Installer Skript heruntergeladen und ausgeführt. Danach wird noch Docker-Compose installiert. Dies geschieht durch das Herunterladen des eigentlichen Programms und der anschließenden Rechtezuteilung zur Ausführung dessen.
+
+\begin{minted}{bash}
+if [ "$1" = "-d" ]; then
+	printf "Downloading Docker.\n"
+	curl -fsSL get.docker.com -o docker-install.sh > /dev/null
+	printf "Download complete. Now installing. This may take a while.\n"
+	sudo sh docker-install.sh
+	rm docker-install.sh
+	printf "\n------\n\n"
+	printf "Downloading Docker-Compose.\n"
+	sudo curl -L "https://github.com/docker/compose/releases/download/1.27.4/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+	printf "Download complete.\n"
+	sudo chmod +x /usr/local/bin/docker-compose
+	printf "Docker and Docker Compose installed successfully.\n"
+	printf "\n------\n"
+fi
+\end{minted}
+\captionof{listing}[Docker Installation - Steuerungsskript]{Docker Installation - Steuerungsskript}
+\label{code:dockerinstall}
+
+\subsubsection{Installation}
+
+In der \autoref{code:installer} ist der Installationsvorgang ersichtlich. Der Kommentar signalisiert, wo die Docker-Installation eigentlich in der Methode stehen würde. Der Installationsvorgang gliedert sich in zwei Teile. Im ersten werden alle Git-Repositories automatisch geklont. Dadurch wurden nun alle Quellcodedateien, welche nach dem Starten in etwaigen Docker-Containern enden würden, heruntergeladen. Zusätzlich wird der Nutzer nun auch noch die Nutzerinformationen des Datenbankadministrators und des Datenbanknutzers gefragt. Diese Informationen werden in die entsprechenden Dateien gespeichert, sodass sie danach von Docker als Secrets genutzt werden können. Zuletzt wird sowohl im Backend als auch im Frontend die Adresse benötigt unter welcher der Server erreichbar ist. Diese URL wird jeweils in eine dafür vorgesehene Datei im Backend und Frontend gespeichert, sodass diese auslesbar sind.
+
+\begin{minted}{bash}
+sub_install() {
+	# Docker Installation
+	mkdir src/
+	printf "Downloading the Backend (huginn).\n"
+	git clone --quiet https://github.com/refundable-tgm/huginn.git src/huginn > /dev/null
+	printf "Download complete\nDownloading the Frontend (web).\n"
+	git clone --quiet https://github.com/refundable-tgm/web.git src/web > /dev/null
+	printf "Download complete.\n"
+	printf "\n------\n\n"
+	read -rp "Choose a MongoDB Admin Username: " adminusername
+	read -srp "Choose a MongoDB Admin Password: " adminpassword
+	printf "\n"
+	read -rp "Choose a MongoDB Username: " username
+	read -srp "Choose a MongoDB User Password: " userpassword
+	echo "$adminusername" > config/mongodb_root_username
+	echo "$adminpassword" > config/mongodb_root_password
+	echo "$username" > config/mongodb_username
+	echo "$userpassword" > config/mongodb_password
+	printf "\n"
+	read -rp "Input the URL (without port, this is will be 8080 by default):" url
+	printf '{\n\t"url":"%s"\n}' "$url" > src/web/src/data.json
+	echo "$url" > volumes/files/.url
+	printf "\n"
+	read -rp "Input the name of the initial super user" superuser
+	echo "$superuser" > volumes/files/.url
+	printf "\nInstallation completed.\n"
+}
+\end{minted}
+\captionof{listing}[Installationvorgang - Steuerungsskript]{Installationvorgang - Steuerungsskript}
+\label{code:installer}
+
+\subsubsection{Startvorgang}
+
+Der Startvorgang ist sehr einfach aufgebaut. Er ist in der \autoref{code:start} ersichtlich. Zudem wird hier lediglich geprüft, ob das System installiert ist. Ist dies der Fall so wird die Infrastruktur über den entsprechenden Docker-Compose Befehl hochgefahren. 
+
+\newpage
+
+\begin{minted}{bash}
+sub_start() {
+	check_installed
+	printf "Refundable is starting.\n"
+	docker-compose up --build -d > /dev/null
+	printf "Refundable started.\n"
+}
+\end{minted}
+\captionof{listing}[Startvorgang - Steuerungsskript]{Startvorgang - Steuerungsskript}
+\label{code:start}
+
+\subsubsection{Stoppvorgang}
+
+Der in der \autoref{code:stopp} aufgeführte Stoppvorgang ist, analog des Startvorgang einfach aufgebaut.Er führt nach dem Überprüfen, ob das System installiert ist, lediglich den Befehl zum Stoppen des Docker-Compose Stacks aus.
+
+\begin{minted}{bash}
+sub_stop() {
+	check_installed
+	printf "Refundable is stopping.\n"
+	docker-compose down > /dev/null
+	printf "Refundable stopped.\n"
+}
+\end{minted}
+\captionof{listing}[Stoppvorgang - Steuerungsskript]{Stoppvorgang - Steuerungsskript}
+\label{code:stopp}
+
+\subsubsection{Neustart}
+
+Der in der \autoref{code:restart} aufgeführte Neustart ist ein Zusammenschluss aus dem Startvorgang und dem Stoppvorgang. Daraus resultiert ein inhärenter Vorgang, welcher durch den bereits beschriebenen einfachen Aufbau der beiden Abläufe nicht komplex ist.
+
+\begin{minted}{bash}
+sub_restart() {
+	check_installed
+	sub_start
+	sub_stop
+}
+\end{minted}
+\captionof{listing}[Neustartvorgang - Steuerungsskript]{Neustartvorgang - Steuerungsskript}
+\label{code:restart}
+
+\subsubsection{Aktualisierung}
+Die in der \autoref{code:update} gezeigte Aktualisierungsfunktion basiert auf dem Prinzip des Git-Repositories. Dadurch, dass während Installation Git-Repositories geklont werden, können diese nun einfach neue Erweiterungen der Software herunterladen. Dies geschieht dann über das Pullen der Änderungen des Repositories. Diese Operation wird in allen drei betroffen Ordnern (Backend, Frontend und Infrastruktur) ausgeführt, um die neuen Änderungen herunterzuladen. Danach wird der Docker-Compose Stack gestoppt und alle veralteten Komponenten werden aus dem System entfernt. Zuletzt werden auf Basis der heruntergeladenen Änderungen alle Komponenten erneut aufgebaut und gestartet.
+
+\newpage
+
+\begin{minted}{bash}
+sub_update() {
+	check_installed
+	printf "Backend (huginn) will be updated, if available.\n"
+	cd src/huginn
+	git pull --quiet origin master > /dev/null
+	printf "Process completed.\n\n------\n\n"
+	printf "Frontend (web) will be updated, if available.\n"
+	cd ../web
+	git pull --quiet origin master > /dev/null
+	printf "Process completed.\n\n------\n\n"
+	printf "Infrastructure will be updated, if available.\n"
+	cd ../..
+	git pull --quiet origin master > /dev/null
+	printf "Process completed.\n\n------\n\n"
+	sub_stop
+	printf "\n------\n\n"
+	clean
+	printf "\n------\n\n"
+	sub_start
+	printf "Update process completed.\n"
+}
+\end{minted}
+\captionof{listing}[Aktualisierungsvorgang - Steuerungsskript]{Aktualisierungsvorgang - Steuerungsskript}
+\label{code:update}
+
+\subsubsection{Bereinigungsvorgang}
+
+Der Bereinigungsvorgang, dargestellt in der \autoref{code:clean}, bereinigt das System von allen alten und nicht mehr genutzten Dokumenten. Hierfür wird eine Bestätigung benötigt, damit die Operation wirklich durchgeführt wird, da es sich um eine sehr invasive Aktion handelt.
+
+\begin{minted}{bash}
+sub_clean() {
+	check_installed
+	read -rp "All dangling components will be removed. Continue? [y|N] " y
+	printf "\n"
+	case $y in
+		"Y" | "y" )
+			clean
+			;;
+		*)
+			printf "Cleaning aborted.\n"
+			exit 0
+			;;
+	esac
+}
+\end{minted}
+\captionof{listing}[Bereinigungsvorgang - Steuerungsskript]{Bereinigungsvorgang - Steuerungsskript}
+\label{code:clean}
+
+\newpage
+
+\subsubsection{Deinstallation}
+Die in der \autoref{code:deinstall} dargestellte Deinstallation stoppt das System und fährt die Infrastruktur herunter. Danach werden alle verbleibenden Komponenten aus der Systemumgebung entfernt. Zusätzlich werden die heruntergeladenen Dateien allesamt gelöscht. Da es sich hier ebenfalls um eine invasive Aktion handelt, benötigt diese eine weitere Bestätigung.
+
+\begin{minted}{bash}
+sub_purge() {
+	read -rp "Refundable will be removed completely. Continue? [y|N] " y
+	printf "\n"
+	case $y in
+		"Y" | "y")
+			sub_stop
+			clean
+			rm -rf config images volumes docker-compose.yml README.md refundable.sh src .git docker-install.sh
+			printf "Refundable was removed.\n"
+			;;
+		*)
+			printf "Aborted.\n"
+			exit 0
+			;;
+	esac
+}
+\end{minted}
+\captionof{listing}[Deinstallation - Steuerungsskript]{Deinstallation - Steuerungsskript}
+\label{code:deinstall}
+
+\subsubsection{Subcommands}
+
+Die Subcommands dieses Steuerungsskripts werden namentlich auf die jeweiligen Methoden übertragen. \cite{shgist} Dieser Vorgang ist in der \autoref{code:subcommands} ersichtlich. Durch das Nutzen dieser Methodik können weitere Befehle sehr einfach hinzufügt werden.
+
+\begin{minted}{bash}
+sub=$1
+case $sub in
+	"" | "-h" | "--help" | "help")
+		sub_help
+		;;
+	*)
+		shift
+		sub_"${sub}" "$@"
+		if [ $? = 127 ]; then
+			echo "Error: '$sub' is not a known subcommand." >&2
+			sub_help
+			exit 1
+		fi
+		;;
+esac
+\end{minted}
+\captionof{listing}[Subcommand parsing - Steuerungsskript]{Subcommand parsing - Steuerungsskript \cite{shgist}}
+\label{code:subcommands}
+
+\newpage
+
+\subsection{MongoDB}
+
+Die Schnittstelle zwischen der MongoDB Instanz und dem Backend ist fundamental wichtig für das System. In dieser Datenbank werden alle Daten gespeichert, die für das System von Relevanz sind. Für diese Datenstrukturen gibt es verschiedene Methoden, um mit den Daten mittels der vier Hauptfunktionen, Erstellen, Lesen, Aktualisieren und Löschen, auf der Datenbank interagieren und arbeiten zu können. Die Schnittstelle zwischen Programm und Datenbank wurde hierbei mittels dem offiziellen Golang-MongoDB-Treiber umgesetzt. \cite{mongogo} Auf Basis dessen sind die folgenden Methoden implementiert.
+
+\begin{table}
+	\begin{tabular}{|l|l|l|l|}
+		\hline
+		\multicolumn{1}{|c|}{\textbf{Methodenname}} & \multicolumn{1}{c|}{\textbf{Beschreibung}} & \multicolumn{1}{c|}{\textbf{Parameter}} & \multicolumn{1}{c|}{\textbf{Rückgabe}} \\ \hline
+		Connect() & Öffnet die Verbindung zur DB & \multicolumn{1}{c|}{---} & ok \\ \hline
+		Close() & Schließt die Verbindung zur DB & \multicolumn{1}{c|}{---} & ok \\ \hline
+		CreateApplication() & Erstellt einen neuen Antrag & Application & ok \\ \hline
+		GetApplication() & Liest einen bestimmten Antrag aus & uuid & Application \\ \hline
+		GetAllApplications() & Liest alle Anträge aus & \multicolumn{1}{c|}{---} & {[}{]}Application \\ \hline
+		GetActiveApplications() & Liest alle aktiven Anträge aus & \multicolumn{1}{c|}{---} & {[}{]}Application \\ \hline
+		UpdateApplication() & Aktualisiert die Daten eines Antrags & uuid, Application & ok \\ \hline
+		DeleteApplication() & Löscht eine Antrags & uuid & ok \\ \hline
+		CreateTeacher() & Erstellt eine neue Lehrkraft & Teacher & ok \\ \hline
+		GetTeacherByShort() & Gibt die Daten der Lehrkraft zurück & username & Teacher \\ \hline
+		DoesTeacherExistByShort() & Überprüft ob die Lehrkraft existiert & username & bool \\ \hline
+		GetTeacherByUUID() & Gibt die Daten der Lehrkraft zurück & uuid & Teacher \\ \hline
+		UpdateTeacher() & Aktualisiert die Daten einer Lehrkraft & uuid, Teacher & ok \\ \hline
+		DeleteTeacher() & Löscht eine Lehrkraft aus der DB & uuid & ok \\ \hline
+		resolveURI() & Erstellt die URI zur Datenbank & \multicolumn{1}{c|}{---} & URI \\ \hline
+		getInitUserName() & Liest den initialen Usernamen aus & \multicolumn{1}{c|}{---} & username \\ \hline
+	\end{tabular}
+\end{table}
+\captionof{table}[Methoden der MongoDB Schnittstelle]{Methoden der MongoDB Schnittstelle}
+\label{tbl:mongomethods}
+
+\newpage
+
+Hierbei fungiert der offizielle Treiber als Mittel zur Kommunikation zwischen der Programmiersprache und der Datenbank-Instanz. Ein Beispiel kann wie folgt umgesetzt werden:
+
+\begin{minted}{go}
+func (m MongoDatabaseConnector) GetApplication(uuid string) (application Application) {
+	collection := m.client.Database(m.database).Collection(ApplicationCollection)
+	if err := collection.FindOne(m.context, bson.M{"uuid": uuid}).Decode(&application); err != nil {
+		log.Println(err)
+		return
+	}
+	return application
+}
+\end{minted}
+\captionof{listing}[MongoDB Treiber Beispiel]{MongoDB Treiber Beispiel: GetApplication Methode}
+
+~\\
+
+Die abgebildete Methode sucht nach einem bestimmten Antrag, welcher durch seine UUID identifiziert wird. Hierfür wird das Verzeichnis, die Kollektion, geöffnet, in der alle Anträge gespeichert sind. \cite{mongogo} Danach wird nach einen Antrag gesucht, wobei in diesem das Feld der UUID gleich dem Wert der gesuchten UUID sein muss. Das gefundene Objekt wird in eine Variable gespeichert und zurückgegeben.
+
+\newpage
+
+\subsection{LDAP}
+
+Neben der MongoDB muss eine Verbindung zum TGM-eigenen Active Directory über LDAP hergestellt werden. Der Grund dafür  ist, dass das System keine eigenen Accounts mit Passwörtern speichert, sondern jene des TGMs direkt übernehmen soll. Des Weiteren kann über diesen Dienst der komplette Name der Lehrkraft herausgefunden werden. Die Authentifizierung eines Nutzers gestaltet sich wie folgt:
+
+\begin{minted}{go}
+func AuthenticateUserCredentials(username, password string) bool {
+	cred := username + "@tgm.ac.at"
+	l, err := ldap.Dial("tcp", fmt.Sprintf("%s:%d", URL, Port))
+	if err != nil {
+		return false
+	}
+	err = l.Bind(cred, password)
+	if err != nil {
+		return false
+	}
+	mongo := db.MongoDatabaseConnector{}
+	defer mongo.Close()
+	if !mongo.Connect() {
+		return false
+	}
+	longname, err := GetLongName(username, password)
+	if err != nil {
+		return false
+	}
+	if !mongo.DoesTeacherExistsByShort(username) {
+		mongo.CreateTeacher(db.Teacher{
+			UUID:           uuid.NewString(),
+			Short:          username,
+			Longname:       longname,
+			SuperUser:      false,
+			AV:             false,
+			Administration: false,
+			PEK:            false,
+		})
+	}
+	return true
+}
+\end{minted}
+\captionof{listing}[LDAP-Schnittstelle: Authentifizierungsvorgang]{LDAP-Schnittstelle: Authentifizierungsvorgang \cite{go-ldap}}
+
+~\\
+Es wird sich mit dem TGM-eigene LDAP-Server verbunden. Daraufhin wird probiert den Nutzer mit den eingegebenen Daten dort anzumelden. Schlägt diese Aktion fehl sind die Anmeldedaten falsch. Sind die Informationen richtig wird überprüft ob es der erste Login der Lehrkraft ist. Ist dies der Fall, wird eine neue Lehrkraft in der systemeigenen Datenbank angelegt. Hierfür wird der ganze Name der Lehrkraft benötigt. Dieser wird über folgende Methode ausgelesen:
+
+\newpage
+
+\begin{minted}{go}
+func GetLongName(username, password string) (string, error) {
+	cred := username + "@tgm.ac.at"
+	l, err := ldap.Dial("tcp", fmt.Sprintf("%s:%d", URL, Port))
+	if err != nil {
+		return "", err
+	}
+	err = l.Bind(cred, password)
+	if err != nil {
+		return "", err
+	}
+	search := ldap.NewSearchRequest("DC=tgm,DC=ac,DC=at",
+		ldap.ScopeWholeSubtree,
+		ldap.NeverDerefAliases,
+		0,
+		0,
+		false,
+		fmt.Sprintf("(&(mailNickname=%s))", username),
+		[]string{"dn"},
+		nil,
+	)
+	res, err := l.Search(search)
+	if err != nil {
+		return "", err
+	}
+	if len(res.Entries) != 1 {
+		return "", fmt.Errorf("user does not exist or too many entries returned")
+	}
+	userdn := res.Entries[0]
+	cn := strings.Split(userdn.DN, ",")[0]
+	name := strings.Split(cn, "=")[1]
+	return name, nil
+}
+\end{minted}
+\captionof{listing}[LDAP-Schnittstelle: Namensabfrage]{LDAP-Schnittstelle: Namensabfrage \cite{go-ldap}}
+~\\
+Die Abfragemethode ist ähnlich der Authentifizierungsmethode aufgebaut. Beide beginnen mit der Anmeldung beim Dienst, wobei dieser in diesem Fall gelingen muss. Daraufhin wird eine Suche nach dem eigenen Anmeldenamen gestartet, welche einen Pfad zurückliefert \cite{go-ldap}. Dieser Pfad kann zerlegt werden, um auf den eigentlichen Namen zugreifen zu können.
+
+\newpage
+
+\subsection{Untis}
+
+Die Untis API wird verwendet, um auf den Stundenplan des TGMs zugreifen zu können. \cite{untis} Um diese effizient zu nutzen, wurde ein Client-Format implementiert. Diese speichert automatisch alle aktiven Sitzungen und ermöglicht ein effektives An- und Abmelden. Als Basis wurde eine Client Datenstruktur erstellt, welche in einer Map gespeichert wird, wodurch die Clients dem jeweiligen Nutzer zuordenbar sind.
+
+\begin{minted}{go}
+const URL = "https://neilo.webuntis.com/WebUntis/jsonrpc.do?school=tgm"
+var activeClients map[string]Client
+
+type Client struct {
+	Username string
+	Password string
+	SessionID string
+	PersonType int
+	PersonID int
+	Closed bool
+	Authenticated bool
+}
+\end{minted}
+\captionof{listing}[Grundstruktur des Untis Clients]{Grundstruktur des Untis Clients}
+
+~\\ Diese Clients werden beim Beginn der Sitzung erstellt. Sie werden direkt in die Liste von aktiven Clients eingetragen. Ist eine Abfrage von Untis-Daten nötig, so kann der Client wieder aufgerufen werden, indem man ihn über die Map auswählt. Bei der Abmeldung selbst, wird der aktive Client eines Nutzers wieder abgemeldet und aus der Liste ausgetragen. Dieser Vorgang wird durch folgenden Code implementiert: 
+
+\begin{minted}{go}
+func CreateClient(username, password string) *Client {
+	client := Client{
+		Username:      username,
+		Password:      password,
+		SessionID:     "",
+		PersonType:    -1,
+		PersonID:      -1,
+		Closed:        false,
+		Authenticated: false,
+	}
+	activeClients[username] = client
+	return &client
+}
+
+func GetClient(username string) *Client {
+	client := activeClients[username]
+	return &client
+}
+
+func (client Client) DeleteClient() {
+	delete(activeClients, client.Username)
+}
+\end{minted}
+\captionof{listing}[Grundstruktur des Untis Clients]{Grundstruktur des Untis Clients}
+
+Diese Struktur wird genutzt, um Sitzungen bei der Untis API starten zu können. Hierfür werden HTTP POST-Anfragen gesendet \cite{untis}. Diese Anfragen haben jeweils einen Methodennamen und Parameter. Um Anfragen einfach absenden zu können, wurde folgende Funktion implementiert, welche den Methodennamen und die Parameter richtig umwandelt und die Anfrage abschickt. Die Antwort darauf wird dabei automatisch zurückgegeben.
+ 
+\begin{minted}{go}
+func (client Client) sendRequest(method string, params map[string]interface{}) (*http.Response, int, error) {
+	id := rand.Intn(math.MaxInt64)
+	body, _ := json.Marshal(map[string]interface{}{
+		"id":      id,
+		"method":  method,
+		"params":  params,
+		"jsonrpc": "2.0",
+	})
+	req, err := http.NewRequest("POST", URL, bytes.NewBuffer(body))
+	if err != nil {
+		return nil, -1, err
+	}
+	req.Header.Set("JSESSIONID", client.SessionID)
+	reqClient := http.Client{}
+	resp, err := reqClient.Do(req)
+	return resp, id, err
+}
+\end{minted}
+\captionof{listing}[Hilffunktion für Anfragen]{Hilffunktion für Anfragen an die Untis Schnittstelle \cite{untis}}
+
+~\\Die folgenden Methoden werden unterstützt, um einfache Abfragen im beschriebenen Client-Format durchführen zu können:
+
+\newpage
+
+\captionof{table}[Weitere Methoden der Untis API]{Weitere Methoden der Untis API mit den entsprechenden Endpoints und einer Beschreibung \cite{untis}}
+\begin{table}
+	\begin{tabular}{|l|l|l|}
+		\hline
+		\multicolumn{1}{|c|}{\textbf{Funktion}} & \multicolumn{1}{c|}{\textbf{Endpunkt Units}} & \multicolumn{1}{c|}{\textbf{Beschreibung}} \\ \hline
+		Authenticate() & authenticate & Authentifiziert den Client und startet die Session \\ \hline
+		GetTimeTableOfTeacher() & getTimetable & Liefert den Stundenplan des angemeldeten Lehrers \\ \hline
+		GetTimetableOfClass() & getTimetable & Liefert den Stundenplan einer Klasse zurück \\ \hline
+		GetTimetableOfSpecificTeacher() & getTimetable & Liefert den Stundenplan eines bestimmten Lehrers \\ \hline
+		ResolveTeachers() & getTeachers & Ordnet IDs die entsprechenden Lehrkräfte zu \\ \hline
+		ResolveTeacherID() & getTeachers & Ordnet einer Lehrkraft die entsprechende ID zu \\ \hline
+		ResolveRooms() & getRooms & Ordnet IDs die entsprechenden Räume zu \\ \hline
+		ResolveClasses() & getKlassen & Ordnet IDs die entsprechenden Klassen zu \\ \hline
+		ResolveClassID() & getKlassen & Ordnet einer Klasse die entsprechende ID zu \\ \hline
+		Close() & logout & Beendet die Session \\ \hline
+	\end{tabular}
+\end{table}
+\newpage
+\subsection{Dateierstellung}
+
+
+Die Dateierstellung funktioniert über die Bibliothek maroto für das Erstellen von PDFs und über die Bibliothek excelize für das Bearbeiten der Excel-Templates \cite{marotoart} \cite{maroto} \cite{excelize}. Des Weiteren wird auch pdfcpu für das Zusammenfügen von PDFs verwendet \cite{pdfcpu}. Das folgende Beispiel zeigt die Erstellung eines einfachen PDFs über maroto:
+
+\begin{minted}{go}
+m := pdf.NewMaroto(consts.Portrait, consts.A4)
+m.SetPageMargins(10, 15, 10)
+m.SetDefaultFontFamily(consts.Helvetica)
+m.Line(3.0)
+m.Row(50, func() {
+	m.Col(12, func() {
+		m.QrCode("https://youtu.be/dQw4w9WgXcQ", props.Rect{
+			Percent: 100,
+			Center: true,
+		})
+	})
+})
+m.Row(20, func() {
+	m.Col(12, func() {
+		m.Text("YouTube-Video", props.Rect{
+			Align: consts.Center,
+			Style: consts.Bold,
+		})
+	})
+})
+m.Line(3.0)
+\end{minted}
+\captionof{listing}[Maroto Beispiel]{Maroto Beispiel zum Erstellen eines PDFs \cite{marotoart}}
+~\\
+Dieses Code-Beispiel würde ein PDF erstellen, welches einen großen zentrierten QR-Code zeigt und darunter den Text \enquote{YouTube-Video}. \cite{maroto} Diese zwei Elemente werden durch eine horizontale Linie oben und unten begleitet.
+
+\newpage
+\subsection{Token Management}
+
+Das Token Management bietet Sicherheit, da es den Zugang zu der REST-Schnittstelle beschränkt. \cite{jwt-go} \cite{tokenmanager} Zugriff ist auf die meisten Endpunkte nur noch durch eine Verifizierung mit einem bei der Anmeldung erhaltenen Token möglich. Die Tokens werden durch Responses an den Client geschickt. Das Token System basiert auf der Bibliothek jwt-go und enthält folgende Methoden:
+
+\captionof{table}[Methoden des Token Management]{Implementierte Methoden im Token Management}
+\begin{table}
+	\begin{tabular}{|l|l|l|c|}
+		\hline
+		\multicolumn{1}{|c|}{\textbf{Methodenname}} & \multicolumn{1}{c|}{\textbf{Beschreibung}} & \multicolumn{1}{c|}{\textbf{Parameter}} & \textbf{Rückgabe} \\ \hline
+		InitTokenManager() & Startet den Token Manager & \multicolumn{1}{c|}{---} & --- \\ \hline
+		CreateToken() & Erstellt ein Tokenpaar & username & \multicolumn{1}{l|}{Token} \\ \hline
+		SaveToken() & Sichert ein Token in der lokalen Map & \begin{tabular}[c]{@{}l@{}}username,\\ Token\end{tabular} & --- \\ \hline
+		ExtractToken() & Extrahiert das Token aus dem Request & Request & \multicolumn{1}{l|}{string} \\ \hline
+		VerifyToken() & Verifiziert den Ursprung des angegebene Token & Request & \multicolumn{1}{l|}{jwt.Token} \\ \hline
+		TokenValid() & Überprüft ob das angegebene Token valide ist & Request & \multicolumn{1}{l|}{bool} \\ \hline
+		ExtractTokenMeta() & Extrahiert die Meta Informationen aus dem Token & Request & \multicolumn{1}{l|}{Token} \\ \hline
+		readAccessSecret() & Liest das Access Secret aus oder generiert es & \multicolumn{1}{c|}{---} & --- \\ \hline
+		readRefreshSecret() & Liest das Refresh Secret aus oder generiert es & \multicolumn{1}{c|}{---} & --- \\ \hline
+		ttlCheck() & Asynchroner Thread zur Entfernung ungültiger Token & \multicolumn{1}{c|}{---} & --- \\ \hline
+	\end{tabular}
+\end{table}
+
+
+Das folgende Beispiel nutzt die in der \autoref{tbl:token} beschriebenen Methoden, um jene generelle Beschränkung der Anfragen durchzusetzen, die jegliche Anfrage ohne Token direkt ignoriert:
+
+\begin{minted}{go}
+func AuthWall() gin.HandlerFunc {
+	return func(con *gin.Context) {
+		ok, err := TokenValid(con.Request)
+		if !ok && err != nil {
+			con.JSON(http.StatusUnauthorized, Error{err.Error()})
+			con.Abort()
+			return
+		}
+		con.Next()
+	}
+}
+\end{minted}
+\captionof{listing}[Token System Beispiel]{Token System Beispiel\cite{tokenmanager}}
+
+~\\
+Die AuthWall fungiert wie eine Art Mauer zwischen der URL zum Endpoint und dem eigentlichen Endpoint und lässt ausschließlich Anfragen durch, welche ein valides Token besitzen. \cite{tokenmanager} Dadurch werden die Endpoints nicht durch unautorisierte Anfragen angesprochen und somit ist die Ressourcenlast niedriger.
+
+\newpage
+
+\subsection{REST-Schnittstelle}
+Die REST-Schnittstelle basiert auf Endpoints. Diese werden von der Library gin-gonic verwaltet und nach dem Start zur Verfügung gestellt. \cite{gingonic} Um einen Endpoint mit gin-gonic hinzuzufügen wird wie folgt vorgegangen:
+
+\begin{minted}{go}
+router := gin.Default()
+gin.SetMode(getMode())
+
+api := router.Group("/api")
+{
+	api.POST("/login", Login)
+	api.POST("/logout", AuthWall(), Logout)
+	api.GET("/getAllApplications", AuthWall(), GetAllApplications)
+	api.GET("/getNews", AuthWall(), GetNews)
+}
+log.Fatal(router.Run(":" + strconv.Itoa(Port)))
+\end{minted} 
+\captionof{listing}[REST router]{REST router - Endpoints zu gin-gonic hinzufügen}
+
+\subsubsection{Endpoints}
+
+Eine Liste aller implementierten Endpoints ist in \autoref{table:endpoints1} und in \autoref{table:endpoints2} ersichtlich. Ein Beispiel für einen implementierten Endpoint sieht wie folgt aus:
+
+\begin{minted}{go}
+func Login(con *gin.Context) {
+	u := User{}
+	if err := con.ShouldBindJSON(&u); err != nil {
+		con.JSON(http.StatusUnprocessableEntity, Error{"invalid request structure provided"})
+		return
+	}
+	if !ldap.AuthenticateUserCredentials(u.Username, u.Password) {
+		con.JSON(http.StatusUnauthorized, Error{"this credentials do not resolve into an authorized login"})
+		return
+	}
+	token, err := CreateToken(u.Username)
+	if err != nil {
+		con.JSON(http.StatusUnprocessableEntity, Error{err.Error()})
+		return
+	}
+	SaveToken(u.Username, token)
+	untis.CreateClient(u.Username, u.Password)
+	out := TokenPair{
+		AccessToken:  token.AccessToken,
+		RefreshToken: token.RefreshToken,
+	}
+	con.JSON(http.StatusOK, out)
+}
+\end{minted}
+\captionof{listing}[Implementierung Login-Endpoint]{mplementierung Login-Endpoint}
+Zuerst werden Nutzerinformationen aus der Anfrage extrahiert. Diese Informationen werden über die LDAP-Schnittstelle verifiziert. Sollte dies erfolgreich sein so wird ein Tokenpaar erstellt und zurückgesendet. Bei einem Fehler bei einem vorherigen Schritt wird eine Fehlermeldung gesendet.
+
+\subsubsection{Swagger}
+
+Swagger ist eine Dokumentationsmöglicht von REST-Schnittstellen. \cite{swaggo} Die einzelnen Endpoints wurden dokumentiert. Auf Basis dessen kann Swagger automatisch eine  komplette API-Dokumentation erstellen. Diese ist als eigener Endpoint der REST-Schnittstelle gestaltet und abrufbar. Damit die automatisch generierten Dateien von der REST-Schnittstelle ausgegeben werden können, müssen sie wie folgt importiert werden:
+
+\begin{minted}{go}
+import(
+	// import to make swagger docs accessible
+	_ "github.com/refundable-tgm/huginn/docs"
+	ginSwagger "github.com/swaggo/gin-swagger"   // gin swagger middleware
+	"github.com/swaggo/gin-swagger/swaggerFiles" // swagger files
+)
+\end{minted}
+\captionof{listing}[REST-Schnittstelle: Swagger Imports]{REST-Schnittstelle: Swagger Imports \cite{swagtut}}
+
+~\\ Um die importierte Dokumentation zu veröffentlichen, wird eine Route zu dem entsprechenden Daten gelegt. Es wurde ebenso eine Weiterleitung vom Wurzelpfad aus eingerichtet, sodass, wenn kein Endpoint aufgerufen wird, man die Dokumentation angezeigt bekommt.
+
+\begin{minted}{go}
+router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+router.GET("/", func(context *gin.Context) {
+	context.Redirect(http.StatusMovedPermanently, "swagger/index.html")
+})
+\end{minted}
+\captionof{listing}[REST-Schnittstelle: Swagger Routen]{REST-Schnittstelle: Swagger Routen}
+
+\subsubsection{Hauptmethode}
+
+Der REST-Service wird über die Main-Methode im package main gestartet. Diese Methode ist jener Einstiegspunkt, welcher in einer Go Applikation immer gestartet wird. Die Main-Funktion schaut in Falle dieses Systems wie folgt aus:
+
+\begin{minted}{go}
+package main
+
+import (
+	"github.com/refundable-tgm/huginn/rest"
+)
+
+// main function starting the rest service
+func main() {
+	rest.StartService()
+}
+\end{minted}
+\captionof{listing}[Hauptmethode des Backends]{Hauptmethode des Backends}
