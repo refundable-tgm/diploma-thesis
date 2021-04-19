@@ -1,7 +1,7 @@
 %!TEX root=../../main.tex
 \section{Frontend}
 \label{chapter:implementierung-frontend}
-In diesem Kapitel wird die Implementierung des Frontends von \textit{Refundable} erläutert. Dabei wird als Erstes die Vorbereitung im \autoref{chapter:implementierung-frontend-vorbereitung} erklärt. Danach werden die einzelnen Komponenten im \autoref{chapter:implementierung-frontend-komponenten} der Website erklärt und vorgeführt.
+In diesem Kapitel wird die Implementierung des Frontends von \textit{Refundable} erläutert. Dabei wird als Erstes die Vorbereitung im \autoref{chapter:implementierung-frontend-vorbereitung} erklärt. Danach werden die einzelnen Komponenten im \autoref{chapter:implementierung-frontend-komponenten} der Website aufgezeigt und vorgeführt.
 \subsection{Vorbereitung}
 \label{chapter:implementierung-frontend-vorbereitung}
 Wie im \autoref{chapter:study-frontend} und \autoref{chapter:study-datenschnittstelle} festgelegt wird im Frontend \textit{Bootstrap} in Verbindung mit \textit{VueJS} verwendet. Zu aller erst muss daher \textit{VueJS} auf dem Computer, auf dem das Projekt erstellt wird, installiert werden. Dies geschieht auf Windows über den Node Packet Manager (NPM) \cite{vue-install}. Der Befehl um \textit{VueJS} zu installieren schaut wie folgt aus:
@@ -474,6 +474,7 @@ Alle Eingabefelder sind in sogenannte \enquote{b-form-groups} eingefügt. Diese 
 \end{code}
 \captionof{listing}{Beispiel für eine Eingabegruppe}
 ~\\
+\subparagraph{Timepicker}~\\
 Das \textit{Timepicker} Element kann ganz einfach, wie im oberen Absatz beschrieben, in eine Eingabegruppe eingefügt werden. Da das Element von \textit{Bootstrap} vordefiniert ist, muss man leidiglich die üblichen Werte, wie ID und Platzhalter, setzen. Das Einzige, was beachtet werden sollte, ist, dass man die richtige Zeitzone (Auflistung 7.13 locale) wählt.
 \begin{code}{html}
 	<b-form-timepicker
@@ -487,6 +488,7 @@ Das \textit{Timepicker} Element kann ganz einfach, wie im oberen Absatz beschrie
 \end{code}
 \captionof{listing}{Timepicker}
 ~\\
+\subparagraph{Datepicker}~\\
 Der \textit{Datepicker} ist noch einfacher zu bedienen, als der \textit{Timepicker}. Hier sind nur die üblichen Parameter zu setzen.
 \begin{code}{html}
 	<b-form-datepicker
@@ -500,6 +502,46 @@ Der \textit{Datepicker} ist noch einfacher zu bedienen, als der \textit{Timepick
 \end{code}
 \captionof{listing}{Datepicker}
 	\label{list:bspinputgroup} ~\\
+\subparagraph{Tags}~\\
+Die Eingabe der Klassen, wowie Begleitlehrer wurde durch die Verwendung von \textit{Tags} etwas vereinfacht. Der Nutzer kann Einträge, verschiederner Klassen einfach mit Leerzeichen trennen. Um einzelne Klassen oder Begleitlehrer wieder zu löschen, muss der Ersteller nur auf das \enquote{X} drücken. Die Umsetzung ist in \autoref{fig:tags} zu sehen.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\linewidth]{images/website/tags}
+	\caption[Tags]{Ein Bild des \textit{Tag} Elements}
+	\label{fig:tags}
+\end{figure}
+Im Code schaut die Umsetzung wie folgt aus:
+\begin{code}{html}
+<!-- Bezeichnungen der Klassen -->
+<b-form-group
+	id="klassen"
+	label-cols-sm="4"
+	label-cols-lg="3"
+	content-cols-sm
+	content-cols-lg="7"
+	description="Geben Sie die Kürzel der Klassen ein z.B.: ''5BHIT''"
+	label="Jahrgänge"
+	label-for="kl"
+>
+	<b-form-tags
+		id="kl"
+		input-id="tags-pills"
+		v-model="data.class"
+		:state="Class"
+		v-on:input="checkClass"
+		tag-variant="primary"
+		tag-pills
+		separator=" "
+		placeholder="Einträge durch Leerzeichen trennen"
+	></b-form-tags>
+	<b-form-invalid-feedback id="kl-feedback">
+		Keine Jahrgänge angegeben!
+	</b-form-invalid-feedback>
+</b-form-group>
+\end{code}
+\captionof{listing}{Tags}
+\label{list:tags} ~\\
+\subparagraph{Begleitformular}~\\
 Aus den, im Formular angegebenen Daten, wird automatisch ein weiteres Formular generiert. Dies geschieht, nachdem der \enquote{Weiter} \textit{Button} betätigt wurde und alle Daten als valide anerkannt wurden. Das Formular beinhaltet für jede Begleitperson die geforderten Eingabefelder (\autoref{fig:schulantrag3}). Die Struktur dieser Elemente ist exakt die selbe, wie jene, der Elemente, die in \autoref{fig:schulantrag1} dargestellt wurden. 
 \begin{figure}[H]
 	\centering
@@ -714,25 +756,32 @@ Diese Seite ist sehr ähnlich zu der \enquote{Aktive Anträge} Seite. Der Unters
 \newpage
 \subsubsection{Antragsansicht}
 \label{chapter:implementierung-frontend-komponenten-antragsansicht}
-Die Antragsansicht bietet den Nutzern alle möglichen Informationen zu ihrem Antrag, die sie brauchen. Um den Nutzern einen besseren Überblick zu schaffen, in welcher Phase sich ihr Antrag befindet, wurde eine Fortschrittsanzeige als erstes Element auf der Seite eingebaut. Desweiteren findet der Benutzer eine aufklappbare Liste auf der Seite, in der je nach Status des Antrages, die Daten angezeigt und/oder editiert werden können. Außerdem bietet diese Seite die Funktion, eine generierte PDF-Datei von jedem Antrag zu öffnen. Falls der Nutzer Daten geändert hat, kann er diese Änderung mit einem Knopf, der sich am Schluss der Website befindet speichern. Ebenfalls ist es möglich den Antrag zu schließen, hierbei öffnet sich aber eine Warnmeldung, in der man das Schließen des Antrages nochmal bestätigen muss.
+Die Antragsansicht bietet den Nutzern alle möglichen Informationen zu ihrem Antrag, die sie brauchen. Um den Nutzern einen besseren Überblick zu schaffen, in welcher Phase sich ihr Antrag befindet, wurde eine Fortschrittsanzeige als erstes Element auf der Seite eingebaut. Desweiteren findet der Benutzer eine aufklappbare Liste auf der Seite, in der je nach Status des Antrages, die Daten angezeigt und/oder editiert werden können (\autoref{fig:antragzu} und \autoref{fig:antragoffen}). Außerdem bietet diese Seite die Funktion, eine generierte PDF-Datei von jedem Antrag bzw. bei einigen Anträgen auch eine Excel-Datei zu öffnen. Falls der Nutzer Daten geändert hat, kann er diese Änderung mit einem Knopf, der sich am Schluss der Website befindet speichern. Ebenfalls ist es möglich einen Antrag als abgeschlossen zu markieren, hierbei öffnet sich aber eine Warnmeldung, in der man das Schließen des Antrages nochmal bestätigen muss (\autoref{fig:antragschliessen}). Desweiteren wurde für den Nutzer eine Funktion eingebaut, um einen Antrag zu löschen, wie in \autoref{fig:antragloeschen} dargestellt.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\linewidth]{images/website/antrag_zu}
 	\caption[Antragsansicht]{Ein Bild der Antragsansicht}
-	\label{fig:antragaktivdetail}
+	\label{fig:antragzu}
 \end{figure}
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\linewidth]{images/website/antrag}
 	\caption[Antragsansicht geöffnet]{Ein Bild der Antragsansicht mit geöffneter Liste}
-	\label{fig:antragaktivdetail}
+	\label{fig:antragoffen}
 \end{figure}
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.6\linewidth]{images/website/antrag_schliessen}
 	\caption[Antrag schließen Warnung]{Ein Bild der Antrag schließen Warnung}
-	\label{fig:antragaktivdetail}
+	\label{fig:antragschliessen}
 \end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.6\linewidth]{images/website/antrag_löschen}
+	\caption[Antrag löschen Warnung]{Ein Bild der Antrag löschen Warnung}
+	\label{fig:antragloeschen}
+\end{figure}
+
 
 ~\\
 \paragraph{Fortschrittsanzeige}
