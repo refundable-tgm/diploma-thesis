@@ -1,10 +1,10 @@
 %!TEX root=../../main.tex
 \section{Frontend}
 \label{chapter:implementierung-frontend}
-In diesem Kapitel wird die Implementierung des Frontends von \textit{Refundable} erläutert. Dabei wird als Erstes die Vorbereitung im \autoref{chapter:implementierung-frontend-vorbereitung} erklärt. Danach werden die einzelnen Komponenten im \autoref{chapter:implementierung-frontend-komponenten} der Website aufgezeigt und vorgeführt.
+In diesem Kapitel wird die Implementierung des \textit{Frontends} von \textit{Refundable} erläutert. Dabei wird als Erstes die Vorbereitung im \autoref{chapter:implementierung-frontend-vorbereitung} erklärt. Danach werden die einzelnen Komponenten im \autoref{chapter:implementierung-frontend-komponenten} der Webseite aufgezeigt und vorgeführt.
 \subsection{Vorbereitung}
 \label{chapter:implementierung-frontend-vorbereitung}
-Wie im \autoref{chapter:study-frontend} und \autoref{chapter:study-datenschnittstelle} festgelegt, wird im Frontend \textit{Bootstrap} in Verbindung mit \textit{VueJS} verwendet. Zu aller erst muss daher \textit{VueJS} auf dem Computer, auf dem das Projekt erstellt wird, installiert werden. Dies geschieht auf Windows über den Node Packet Manager (NPM) \cite{vue-install}. Der Befehl um \textit{VueJS} zu installieren, sieht wie folgt aus:
+Wie im \autoref{chapter:study-frontend} und \autoref{chapter:study-datenschnittstelle} festgelegt, wird im Frontend \textit{Bootstrap} in Verbindung mit \textit{VueJS} verwendet. Zu aller erst muss daher \textit{VueJS} auf dem Computer, auf welchem das Projekt erstellt wird, installiert werden. Dies geschieht auf \textit{Windows} über den \textit{Node Packet Manager (NPM)} \cite{vue-install}. Der Befehl um \textit{VueJS} zu installieren, sieht wie folgt aus:
 \begin{code}{bash}
 	npm install -g @vue/cli
 \end{code}
@@ -12,7 +12,7 @@ Nachdem \textit{VueJS} installiert ist, kann man in das gewünschte Verzeichnis 
 \begin{code}{bash}
 	vue create refundable
 \end{code}
-ein neues Vue Projekt erstellen, das in diesem Fall \textit{Refundable} heißt \cite{vue-create-project}. Um die Funktionalität von \textit{Bootstrap} und \textit{VueJS} optimal auszunutzen, wird \textit{Bootstrap} direkt mit dem Node Packet Manager zu \textit{VueJS} installiert \cite{bootstrap-vue-getting-started}:
+ein neues \textit{Vue} Projekt erstellen, das in diesem Fall \textit{Refundable} heißt \cite{vue-create-project}. Um die Funktionalität von \textit{Bootstrap} und \textit{VueJS} optimal auszunutzen, wird \textit{Bootstrap} direkt mit dem \textit{Node Packet Manager} zu \textit{VueJS} installiert \cite{bootstrap-vue-getting-started}:
 \begin{code}{bash}
 	npm install vue bootstrap-vue
 \end{code}
@@ -26,14 +26,14 @@ Um in den Komponenten \textit{Bootstrap} und dessen vordefinierte Icons zu verwe
 \end{code}
 \captionof{listing}{Benötigte Befehle um \textit{Bootstrap} im \textit{VueJS} Projekt einzubinden}
 	\label{list:requcommands} ~\\
-Alle Teile der Website sind in sogenannten Komponenten verpackt, die je nach Benutzereingaben dynamisch gewechselt werden. 
+Alle Teile der Webseite sind in sogenannten Komponenten verpackt, die je nach Benutzereingaben dynamisch gewechselt werden. 
 
 \newpage
-\subsection{Komponenten der Website}
+\subsection{Komponenten der Webseite}
 \label{chapter:implementierung-frontend-komponenten}
 \subsubsection{Generell}
 \label{chapter:implementierung-frontend-komponenten-generell}
-Die Struktur der Komponenten ist so aufgebaut, dass die Seite sowohl für Desktop- als auch mobile Endgeräte optimiert ist. Dazu wird das \enquote{Grid-System} von \textit{Bootstrap} verwendet, welches seinen Platz im \enquote{template-Tag}, der \textit{VueJS} Komponente findet. Dieses besteht aus einem Container, einer Reihe (Row) und einer Spalte (Column). Da es am Anfang das Problem gab, dass nicht der ganze Bildschirm ausgenutzt wird, wurden folgende Klassen im CSS-Dokument erstellt:
+Die Struktur der Komponenten ist so aufgebaut, dass die Seite sowohl für Desktop- als auch mobile Endgeräte optimiert ist. Dazu wird das \textit{Grid-System} von \textit{Bootstrap} verwendet, welches seinen Platz im \textit{template-Tag}, der \textit{VueJS} Komponente findet. Dieses besteht aus einem \textit{Container}, einer Reihe \textit{(Row)} und einer Spalte \textit{(Column)}. Da es am Anfang das Problem gab, dass nicht der ganze Bildschirm ausgenutzt wird, wurden folgende Klassen im \textit{CSS}-Dokument erstellt:
 \begin{code}{css}
 	.template-main-container {
 		height: 100vh;
@@ -51,11 +51,11 @@ Die Struktur der Komponenten ist so aufgebaut, dass die Seite sowohl für Deskto
 \end{code}
 \captionof{listing}{CSS Klassen für die Haupt- Contianer und Reihen}
 	\label{list:cssmaincont} ~\\
-Diese dienen dazu, dass der Hauptcontainer und die Hauptreihe der Website 100\% der Höhe (100 vertikale Einheiten), sowie 100\% der Breite (100 horizontale Einheiten) einnehmen. Außerdem wird in den Klassen definiert, dass die Elemente keinen Abstand zum Rand, der Seite haben sollen.
+Diese dienen dazu, dass der \textit{Hauptcontainer} und die Hauptreihe der Webseite \textit{100\%} der Höhe (100 vertikale Einheiten), sowie \textit{100\%} der Breite (100 horizontale Einheiten) einnehmen. Außerdem wird in den Klassen definiert, dass die Elemente keinen Abstand zum Rand der Seite haben sollen.
 \newpage
 \subsubsection{Login-Seite}
 \label{chapter:implementierung-frontend-komponenten-login}
-Die Login-Seite sollte sehr schlicht gehalten werden und sofort verstanden werden können. Da das Tool \textit{Refundable} nur von Lehrern des TGMs verwendet werden soll, wurde in der Login-Maske die E-Mail-Endung \enquote{@tgm.ac.at} vordefiniert. Außerdem soll dem Aufrufer der Website sofort klar sein, worum es sich bei dieser Website handelt. Es wurde daher der Projektname \textit{Refundable}, als auch unser Slogan auf der Seite platziert. Des weiteren war aufgrund der DSGVO eine Meldung zu realisieren, die den Benutzer darüber informiert, dass Cookies verwendet werden. Falls diese Meldung nicht akzeptiert wird und man sich dennoch anmelden möchte, wird eine Fehlermeldung dargestellt. Diese Meldung wird jedoch dynamisch mit \textit{VueJS} erstellt und nicht direkt mittels \textit{Bootstrap}. In der Umsetzung sieht die Login-Seite wie folgt aus (\autoref{fig:login}):
+Die \textit{Login-Seite} sollte sehr schlicht gehalten werden und sofort verstanden werden können. Da das Tool \textit{Refundable} nur von Lehrern des \textit{TGMs} verwendet werden soll, wurde in der \textit{Login-Maske} die E-Mail-Endung \enquote{@tgm.ac.at} vordefiniert. Außerdem soll dem Aufrufer der Webseite sofort klar sein, worum es sich bei dieser Webseite handelt. Es wurde daher der Projektname \textit{Refundable} und unser Slogan auf der Seite platziert. Des weiteren war aufgrund der \textit{DSGVO} eine Meldung zu realisieren, die den Benutzer darüber informiert, dass \textit{Cookies} verwendet werden. Falls diese Meldung nicht akzeptiert wird und man sich dennoch anmelden möchte, wird eine Fehlermeldung dargestellt. Diese Meldung wird jedoch dynamisch mit \textit{VueJS} erstellt und nicht direkt mittels \textit{Bootstrap}. In der Umsetzung sieht die \textit{Login-Seite} wie folgt aus (\autoref{fig:login}):
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\linewidth]{images/ldehner_implementierung/login}
@@ -64,7 +64,7 @@ Die Login-Seite sollte sehr schlicht gehalten werden und sofort verstanden werde
 \end{figure}
 \paragraph{Login-Maske}
 ~\\
-Die Login-Maske besteht aus einem eigenen Container, welcher ermöglicht die Maske vollkommen responsiv aufzubauen. Die Eingabefelder wurden mit einer \enquote{input-groupe} gelöst (Code Z. 12). Um einen Wert optisch in einem Eingabefeld, vorzugeben hat \textit{Bootstrap} ein Element, namens \enquote{b-input-groupe-text} (Code Z. 14), welches vor oder nach dem Feld hinzugefügt werden kann. Da die Login-Daten, der TGM Server verwendet werden, haben wir einen Link eingebaut, falls man sein Passwort vergessen hat. Betätigt man diesen, wird man auf die entsprechende Seite des TGMs weitergeleitet.
+Die \textit{Login-Maske} besteht aus einem eigenen \textit{Container}, welcher ermöglicht, die Maske vollkommen responsiv aufzubauen. Die \textit{Eingabefelder} wurden mit einer \textit{input-groupe} gelöst (Code Z. 12). Um einen Wert optisch in einem \textit{Eingabefeld} vorzugeben, hat \textit{Bootstrap} ein Element namens \textit{b-input-groupe-text} (Code Z. 14), welches vor oder nach dem Feld hinzugefügt werden kann. Da die \textit{Login-Daten}, der \textit{TGM} Server verwendet werden, haben wir einen Link eingebaut, falls man sein Passwort vergessen hat. Betätigt man diesen, wird man auf die entsprechende Seite des \textit{TGMs} weitergeleitet.
 \begin{code}{html}
 	<!-- Anmeldungsformular -->
 	<b-col cols="12" md="6">
@@ -132,7 +132,7 @@ Die Login-Maske besteht aus einem eigenen Container, welcher ermöglicht die Mas
 \end{code}
 \captionof{listing}{HTML Code der Login-Maske}
 	\label{list:loginmask} ~\\
-Da einige Elemente unseren Ansprüchen optisch nicht genügt haben, wurden eigene Änderungen im CSS-Code hinzugefügt. Dabei wurde vor allem die Gestaltung, der Eingabefelder und des Buttons verändert, aber auch jene des Containers, welcher die Maske beinhaltet. Es wurde der Farbverlauf des Logos in der Maske eingebaut und die Ecken der Elemente etwas abgerundet.
+Da einige Elemente unseren Ansprüchen optisch nicht genügt haben, wurden eigene Änderungen im \textit{CSS-Code} hinzugefügt. Dabei wurde vor allem die Gestaltung, der \textit{Eingabefelder} und des \textit{Buttons} verändert, aber auch jene des \textit{Containers}, welcher die Maske beinhaltet. Es wurde der Farbverlauf des Logos in der Maske eingebaut und die Ecken der Elemente etwas abgerundet.
 \begin{code}{css}
 /* -- Login -- */
 
@@ -206,9 +206,10 @@ Da einige Elemente unseren Ansprüchen optisch nicht genügt haben, wurden eigen
 \end{code}
 \captionof{listing}{CSS Code der Login-Maske}
 	\label{list:csslogin} ~\\
+\newpage
 \paragraph{Cookie-Meldung}
 ~\\
-Die Meldung, dass Cookies benutzt werden, sollte schlicht und einfach sein. Es wurden die Anforderungen an die Meldung gestellt, dass sie den Nutzer informieren soll, dass ausschließlich funktionelle und notwendige Cookies verwendet werden. Für diese Meldung hat sich perfekt das vordefinierte \enquote{Alert-Element} von \textit{Bootstrap} geeignet:
+Die Meldung, dass \textit{Cookies} benutzt werden, sollte schlicht und einfach sein. Es wurden die Anforderungen an die Meldung gestellt, dass sie den Nutzer darüber informieren soll, dass ausschließlich funktionelle und notwendige \textit{Cookies} verwendet werden. Für diese Meldung hat sich das vordefinierte \textit{Alert-Element} von \textit{Bootstrap} perfekt geeignet:
 \makeatletter
 \begin{code}{html}
 	<!-- Bestätigung, dass diese Seite Cookies benutzt -->
@@ -234,14 +235,14 @@ Die Meldung, dass Cookies benutzt werden, sollte schlicht und einfach sein. Es w
 \newpage
 \subsubsection{Startseite}
 \label{chapter:implementierung-frontend-komponenten-startseite}
-Die Startseite sollte so intuitiv und übersichtlich wie möglich sein. Deswegen wurde ein \enquote{Drei Spalten Design} umgesetzt. In der ersten Spalte befinden sich alle wichtigen Funktionen - drei \textit{Buttons}, zum Erstellen von neuen Anträgen, um alle aktiven Anträge anzuzeigen und um alle Anträge zu betrachten, die jemals gestellt wurden. In der 2. Spalte befindet sich das Logo, eine Illustration für das Dashboard und ein \textit{Button} zum Ausloggen. Falls man sich mit einem Administratorkonto anmeldet, wird hier ebenfalls ein \textit{Button}, zum Wechseln in die Administratoransicht angezeigt. In der dritten Spalte werden Neuigkeiten zu den Anträgen des Benutzers angezeigt. Klickt man auf eine Neuigkeit, wird man zu dem jeweiligen Antrag weitergeleitet. \autoref{fig:dashboard} zeigt die Umsetzung der Startseite.
+Die \textit{Startseite} sollte so intuitiv und übersichtlich wie möglich sein. Deswegen wurde ein \enquote{Drei Spalten Design} umgesetzt. In der ersten Spalte befinden sich alle wichtigen Funktionen: drei \textit{Buttons}, zum Erstellen von neuen Anträgen, um alle \textit{aktiven Anträge} anzuzeigen und um \textit{alle Anträge} zu betrachten, die jemals gestellt wurden. In der 2. Spalte befindet sich das Logo, eine Illustration für das \textit{Dashboard} und ein \textit{Button} zum Ausloggen. Falls man sich mit einem Administratorkonto anmeldet, wird hier ebenfalls ein \textit{Button} zum Wechseln in die \textit{Administratoransicht} angezeigt. In der dritten Spalte werden Neuigkeiten zu den Anträgen des Benutzers angezeigt. Klickt man auf eine Neuigkeit, wird man zu dem jeweiligen Antrag weitergeleitet. \autoref{fig:dashboard} zeigt die Umsetzung der \textit{Startseite}.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\linewidth]{images/ldehner_implementierung/dashboard}
 	\caption[Dashboard Seite]{Ein Bild der endgültigen Startseite}
 	\label{fig:dashboard}
 \end{figure}
-Da dieses System auf mobilen Geräten nicht sonderlich übersichtlich ist, wurde diese hierfür etwas abgeändert. Die geänderte Startseite ist sehr schlicht gehalten, und macht die Bedienung auf Smartphones um einiges einfacher. Die mobile Version der Startseite ist in \autoref{fig:dashboardmobile} dargestellt:
+Da dieses System auf mobilen Geräten nicht sonderlich übersichtlich ist, wurde diese hierfür etwas abgeändert. Die geänderte \textit{Startseite} ist sehr schlicht gehalten, und macht die Bedienung auf \textit{Smartphones} um einiges einfacher. Die mobile Version der \textit{Startseite} ist in \autoref{fig:dashboardmobile} dargestellt:
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.4\linewidth]{images/ldehner_implementierung/dashboard_mobile}
@@ -251,7 +252,7 @@ Da dieses System auf mobilen Geräten nicht sonderlich übersichtlich ist, wurde
 
 \paragraph{Menü-Element Desktop}
 ~\\
-Der Container mit den Funktionselementen hat, wie beim Login, einen Schatten, der ihn vom Hintergrund abhebt. In diesem Container befinden sich die Menübezeichnung und die klickbaren Elemente, die auch aus einem Container bestehen, sowie eine responsive Illustration, die zu der jeweiligen Funktion passt, welche mit einem Icon versehen ist. 
+Der \textit{Container} mit den Funktionselementen hat, wie beim \textit{Login}, einen Schatten, der ihn vom Hintergrund abhebt. In diesem \textit{Container} befinden sich die Menübezeichnung und die klickbaren Elemente, die auch aus einem \textit{Container} bestehen, sowie eine responsive Illustration, die zu der jeweiligen Funktion passt, welche mit einem \textit{Icon} versehen ist. 
 \begin{code}{html}
 <b-col id="dash-main-cont" class="d-none d-md-block" cols="12" md="4">
 	<b-container>
@@ -296,7 +297,7 @@ Der Container mit den Funktionselementen hat, wie beim Login, einen Schatten, de
 \end{code}
 \captionof{listing}{HTML-Code-Teile des Startseitenmenüs}
 	\label{list:menuhtml} ~\\
-Optisch wurde vor allem die Höhe des umschließenden Containers verändert und dessen umliegende Abstände. Wie man auf der \autoref{fig:dashboard} sehen kann, wurden auch die Ecken abgerundet. Nicht ersichtlich ist, dass sich die Funktionselemente optisch absenken und der Schatten entfernt und die Farbe verändert wird, wenn man mit der Maus, die sich zu einer zeigenden Hand verändert, über das Element fährt. 
+Optisch wurde vor allem die Höhe des umschließenden \textit{Containers} und dessen umliegende Abstände verändert. Wie man auf der \autoref{fig:dashboard} sehen kann, wurden auch die Ecken abgerundet. Nicht ersichtlich ist, dass sich die Funktionselemente optisch absenken, der Schatten entfernt und die Farbe verändert wird, wenn man mit der Maus, die sich zu einer zeigenden Hand verändert, über das Element fährt. 
 \begin{code}{css}
 #dash-main-cont {
 	height: 70vh;
@@ -332,7 +333,7 @@ Optisch wurde vor allem die Höhe des umschließenden Containers verändert und 
 	\label{list:cssmenu} ~\\
 \paragraph{Menü-Element Mobil}
 ~\\
-Wie bereits erwähnt, ist die mobile Ansicht sehr schlicht gehalten, damit sie nicht überladen wirkt und sich vor allem auch jene Lehrer, die sich nicht viel mit Technik beschäftigen, auskennen. Daher wird auf der mobilen Ansicht nur das Nötigste angezeigt, siehe \autoref{fig:dashboardmobile}. Alle \textit{Buttons} werden nun vertikal angeordnet und mit einem passenden Icon bestückt. Die Newselemente unterscheiden sich kaum von denen der Desktop-Version, die Elemente sind lediglich mit etwas weniger Details bestückt und nicht in einem scrollbaren Container, da man auf der mobilen Version sonst doppelt scrollen müsste.
+Wie bereits erwähnt, ist die \textit{mobile Ansicht} sehr schlicht gehalten, damit sie nicht überladen wirkt und sich vor allem auch jene Lehrer, die sich nicht viel mit Technik beschäftigen, auskennen. Daher wird auf der \textit{mobilen Ansicht} nur das Nötigste angezeigt, siehe \autoref{fig:dashboardmobile}. Alle \textit{Buttons} werden nun vertikal angeordnet und mit einem passenden \textit{Icon} bestückt. Die \textit{Newselemente} unterscheiden sich kaum von denen der Desktop-Version. Die Elemente sind lediglich mit etwas weniger Details bestückt und nicht in einem \textit{scrollbaren Container}, da man auf der mobilen Version sonst doppelt scrollen müsste.
 \begin{code}{html}
 	<!-- DASH MOBILE -->
 	<b-col class="d-block d-md-none" cols="12">
@@ -371,7 +372,7 @@ Wie bereits erwähnt, ist die mobile Ansicht sehr schlicht gehalten, damit sie n
 	\label{list:startmobile} ~\\
 \paragraph{Neuigkeiten-Element}
 ~\\
-Die Neuigkeiten-Elemente sind mit einer Illustration bestückt, die den momentanen Status des jeweiligen Antrags beschreiben soll. Außerdem wird ein Titel der Neuigkeit mitgegeben, die zum Beispiel \enquote{Antrag X abgelehnt} heißen könnte. Etwas mehr Details werden noch in einem Beschreibungsfeld mitgegeben, das in Hinblick auf die Übersichtlichkeit nur auf Desktopgeräten sichtbar ist.
+Die \textit{Neuigkeiten-Elemente} sind mit einer Illustration bestückt, die den momentanen Status des jeweiligen Antrags beschreiben soll. Außerdem wird ein Titel der Neuigkeit mitgegeben, die zum Beispiel \enquote{Antrag X abgelehnt} heißen könnte. Etwas mehr Details werden in einem Beschreibungsfeld gegeben, das aufgrund der Übersichtlichkeit nur auf Desktopgeräten sichtbar ist.
 \begin{code}{html}
 	<b-row align-v="center">
 	<b-col cols="2">
@@ -410,17 +411,17 @@ Die Neuigkeiten-Elemente sind mit einer Illustration bestückt, die den momentan
 \newpage
 \subsubsection{Neuer Antrag}
 \label{chapter:implementierung-frontend-komponenten-neu}
-Auf diese Seite gelangt der Nutzer entweder, durch die Betätigung des \textit{Neuer Antrag} Buttons auf der Startseite oder über die Verknüpfung auf der \textit{Alle Anträge} oder \textit{Aktive Anträge} Ansicht. Da es nicht möglich ist, ein einheitliches Formular zu kreieren, wurde vor dem Formular eine Auswahlmöglichkeit der Antragsart eingebaut.
+Auf diese Seite gelangt der Nutzer entweder, durch die Betätigung des \textit{Neuer Antrag} \textit{Buttons} auf der \textit{Startseite} oder über die Verknüpfung auf der \textit{Alle Anträge} oder \textit{Aktive Anträge} Ansicht. Da es nicht möglich ist, ein einheitliches Formular zu kreieren, wurde vor dem Formular eine Auswahlmöglichkeit der Antragsart eingebaut.
 \paragraph{Auswahl}
 ~\\
-Die von uns gewählte Auswahlmöglichkeit ist sehr einfach und intuitiv gestaltet. Die drei verschiedenen Hauptarten von Anträgen sind klar und deutlich zu unterscheiden. Optisch sind die \textit{Buttons} ähnlich strukturiert, wie die der Hauptseite. Damit zieht sich ein einheitliches Design durch die Website.
+Die von uns gewählte Auswahlmöglichkeit ist sehr einfach und intuitiv gestaltet. Die drei verschiedenen Hauptarten von Anträgen sind klar und deutlich zu unterscheiden. Optisch sind die \textit{Buttons} ähnlich, wie die der \textit{Hauptseite} strukturiert. Damit zieht sich ein einheitliches \textit{Design} durch die Webseite.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\linewidth]{images/ldehner_implementierung/neu}
 	\caption[Neuen Antrag erstellen Seite]{Ein Bild der endgültigen Seite, um ein einen neuen Antrag auszuwählen}
 	\label{fig:neuauswahl}
 \end{figure}
-Die \textit{Buttons} sind in eigenen Containern dargestellt, um sie optimal der Größe des Endgerätes anzupassen. In dem Container, der sich mit einem Schatten vom Hintergrund abhebt, ist eine eindeutige Bezeichnung der Funktion, des jeweiligen Elementes. Fährt man mit der Maus über einen \textit{Button}, wird dieser, wie auf der Startseite, in seiner Farbe verändert.
+Die \textit{Buttons} sind in eigenen \textit{Containern} dargestellt, um sie optimal der Größe des Endgerätes anzupassen. In dem \textit{Container}, der sich mit einem Schatten vom Hintergrund abhebt, ist eine eindeutige Bezeichnung der Funktion des jeweiligen Elementes. Fährt man mit der Maus über einen \textit{Button}, wird dieser, wie auf der \textit{Startseite}, in seiner Farbe verändert.
 \begin{code}{html}
 	<b-container id="school-button" class="na-elem shadow-xl">
 	<!-- Custom Button zum erstellen eines Schulantrages -->
@@ -439,7 +440,7 @@ Die \textit{Buttons} sind in eigenen Containern dargestellt, um sie optimal der 
 	\label{list:htmlselect} ~\\
 \paragraph{Schulveranstaltung}
 ~\\
-Der Antrag für eine neue Schulveranstaltung ist der komplexeste Antrag mit den meisten Eingabefeldern. Außerdem gehören zu dem Antrag für eine Schulveranstaltung auch die Anträge der Begleitpersonen . Um die Eingabe von Uhrzeiten und Daten einfacher zu gestalten, wurden die Elemente \enquote{b-form-datepicker} und \enquote{b-form-timepicker} verwendet. Dies sind standardmäßige Elemente, die von \textit{BootstrapVue} vordefiniert sind. Um eine korrekte Eingabe sicherzustellen, wurde alle Eingabefelder mit einem Titel und einer Zusatzinformation ausgestattet.
+Der Antrag für eine neue Schulveranstaltung ist der komplexeste Antrag mit den meisten \textit{Eingabefeldern}. Außerdem gehören zu dem Antrag für eine Schulveranstaltung auch die Anträge der Begleitpersonen. Um die Eingabe von Uhrzeiten und Daten einfacher zu gestalten, wurden die Elemente \textit{b-form-datepicker} und \textit{b-form-timepicker} verwendet. Dies sind standardmäßige Elemente, die von \textit{BootstrapVue} vordefiniert sind. Um eine korrekte Eingabe sicherzustellen, wurden alle \textit{Eingabefelder} mit einem Titel und einer Zusatzinformation ausgestattet.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\linewidth]{images/ldehner_implementierung/schul_1}
@@ -452,7 +453,7 @@ Der Antrag für eine neue Schulveranstaltung ist der komplexeste Antrag mit den 
 	\caption[Neuer Schulantrag Seite (Teil 2)]{Ein Bild der Schulantrags Seite (Teil 2)}
 	\label{fig:schulantrag2}
 \end{figure}
-Alle Eingabefelder sind in sogenannte \enquote{b-form-groups} eingefügt. Diese Elemente bieten die Möglichkeit, einen Titel hinzuzufügen, der in unserem Fall auf der linken Seite angebracht ist, und eine Beschreibung, die unterhalb des Eingabefelds positioniert ist. Diese Elemente sind ebenfalls responsiv. In der \enquote{form-group} wird das jeweilige Element eingefügt, welches man eigentlich einbauen will. Diese Elemente können unter anderem normale Eingabefelder sein, \textit{Checkboxen}, \textit{Radiobuttons}, \textit{Timepicker}, \textit{Datepicker}, etc.. 
+Alle \textit{Eingabefelder} sind in sogenannte \textit{b-form-groups} eingefügt. Diese Elemente bieten die Möglichkeit, einen Titel hinzuzufügen, der in unserem Fall auf der linken Seite angebracht ist, und eine Beschreibung, die unterhalb des \textit{Eingabefelds} positioniert ist. Diese Elemente sind ebenfalls responsiv. In der \textit{form-group} wird das jeweilige Element eingefügt, welches man eigentlich einbauen will. Diese Elemente können unter anderem normale \textit{Eingabefelder} sein \textit{(Checkboxen, Radiobuttons, Timepicker, Datepicker, etc..)}.
 \begin{code}{html}
 	<b-form-group
         id="bez"
@@ -472,10 +473,10 @@ Alle Eingabefelder sind in sogenannte \enquote{b-form-groups} eingefügt. Diese 
         ></b-form-input>
     </b-form-group>
 \end{code}
-\captionof{listing}{Beispiel für eine Eingabegruppe}
+\captionof{listing}{Beispiel für eine \textit{Eingabegruppe}}
 ~\\
 \subparagraph{Timepicker}~\\
-Das \textit{Timepicker} Element kann ganz einfach, wie im oberen Absatz beschrieben, in eine Eingabegruppe eingefügt werden. Da das Element von \textit{Bootstrap} vordefiniert ist, muss man leidiglich die üblichen Werte, wie ID und Platzhalter, setzen. Das Einzige, was beachtet werden sollte, ist, dass man die richtige Zeitzone (Auflistung 7.13 locale) wählt.
+Das \textit{Timepicker} Element kann ganz einfach, wie im oberen Absatz beschrieben, in eine \textit{Eingabegruppe} eingefügt werden. Da das Element von \textit{Bootstrap} vordefiniert ist, muss man leidiglich die üblichen Werte, wie \textit{ID} und Platzhalter, setzen. Das Einzige, was beachtet werden sollte, ist, dass man die richtige Zeitzone (\autoref{list:timepickerlocale} \textit{locale}) wählt.
 \begin{code}{html}
 	<b-form-timepicker
 		id="stz"
@@ -486,7 +487,8 @@ Das \textit{Timepicker} Element kann ganz einfach, wie im oberen Absatz beschrie
 		placeholder="Zeit auswählen"
   	></b-form-timepicker>
 \end{code}
-\captionof{listing}{Timepicker}
+\captionof{listing}{\textit{Timepicker}}
+\label{list:timepickerlocale}
 ~\\
 \subparagraph{Datepicker}~\\
 Der \textit{Datepicker} ist noch einfacher zu bedienen, als der \textit{Timepicker}. Hier sind nur die üblichen Parameter zu setzen.
@@ -510,7 +512,7 @@ Die Eingabe der Klassen und Begleitlehrer wurde durch die Verwendung von \textit
 	\caption[Tags]{Ein Bild des \textit{Tag} Elements}
 	\label{fig:tags}
 \end{figure}
-Im Code schaut die Umsetzung wie folgt aus:
+Im Code sieht die Umsetzung wie folgt aus:
 \begin{code}{html}
 <!-- Bezeichnungen der Klassen -->
 <b-form-group
@@ -542,7 +544,7 @@ Im Code schaut die Umsetzung wie folgt aus:
 \captionof{listing}{Tags}
 \label{list:tags} ~\\
 \subparagraph{Begleitformular}~\\
-Aus den, im Formular angegebenen Daten, wird automatisch ein weiteres Formular generiert. Dies geschieht, nachdem der \enquote{Weiter} \textit{Button} betätigt wurde und alle Daten als valide anerkannt wurden. Das Formular beinhaltet für jede Begleitperson die geforderten Eingabefelder (\autoref{fig:schulantrag3}). Die Struktur dieser Elemente ist exakt die selbe, wie jene, der Elemente, die in \autoref{fig:schulantrag1} dargestellt wurden. 
+Aus den, im Formular angegebenen Daten, wird automatisch ein weiteres Formular generiert. Dies geschieht, nachdem der \textit{Weiter-Button} betätigt wurde und alle Daten als valide anerkannt wurden. Das Formular beinhaltet für jede Begleitperson die geforderten \textit{Eingabefelder} (\autoref{fig:schulantrag3}). Die Struktur dieser Elemente ist exakt die selbe, wie jene der Elemente, die in \autoref{fig:schulantrag1} dargestellt wurden. 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\linewidth]{images/ldehner_implementierung/schul_3_1}
@@ -551,7 +553,7 @@ Aus den, im Formular angegebenen Daten, wird automatisch ein weiteres Formular g
 \end{figure}
 \paragraph{Fortbildung}
 ~\\
-Das Fortbildungsformular ist für Seminare, Tagungen, Lehrgänge und sonstige Events dieser Art gedacht. Um die Formulare einheitlich zu halten, wurde auch hier wieder die selbe Struktur der Eingabefelder verwendet. Falls man die sonstige Art auswählt, fügt sich automatisch eine zusätzliche Eingabe hinzu, in der man das Anliegen genauer spezifizieren kann.
+Das Fortbildungsformular ist für Seminare, Tagungen, Lehrgänge und sonstige Events dieser Art gedacht. Um die Formulare einheitlich zu halten, wurde auch hier wieder die selbe Struktur der \textit{Eingabefelder} verwendet. Falls man die sonstige Art auswählt, fügt sich automatisch eine zusätzliche Eingabe hinzu, in der man das Anliegen genauer spezifizieren kann.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\linewidth]{images/ldehner_implementierung/fortbildung_1}
@@ -561,7 +563,7 @@ Das Fortbildungsformular ist für Seminare, Tagungen, Lehrgänge und sonstige Ev
 
 \paragraph{Sonstige Anträge}
 ~\\
-Zu den sonstigen Anträgen gehören Anliegen, wie Pflegefreistellungen, Dienstaufträge, Arzttermine und sonstige Freistellungen dieser Arten. Wählt man einen Dienstauftrag als Art aus, erscheinen automatisch noch Eingabefelder, die das Eingeben der GZ und des Dienstauftragtitels ermöglichen.
+Zu den sonstigen Anträgen gehören Anliegen, wie Pflegefreistellungen, Dienstaufträge, Arzttermine und sonstige Freistellungen dieser Arten. Wählt man einen Dienstauftrag als Art aus, erscheinen automatisch noch \textit{Eingabefelder}, die das Eingeben der GZ und des Dienstauftragtitels ermöglichen.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\linewidth]{images/ldehner_implementierung/dienstauftrag}
@@ -571,7 +573,7 @@ Zu den sonstigen Anträgen gehören Anliegen, wie Pflegefreistellungen, Dienstau
 
 \paragraph{Reiseantrag}
 ~\\
-Der Reiseantrag wird automatisch bei den Formularen der Anträge angehängt, bei denen eine Reise nötig ist. Ist keine Reise für einen bestimmten Antrag (zum Beispiel ein Arztbesuch) vorgesehen, dann wird das Formular nicht angehängt und es müssen keine  Daten eingegeben werden. Die Struktur der Elemente ist ident zu denen, die bereits besprochen wurden.
+Der Reiseantrag wird automatisch bei den Formularen der Anträge, bei denen eine Reise nötig ist angehängt. Ist keine Reise für einen bestimmten Antrag (zum Beispiel ein Arztbesuch) vorgesehen, dann wird das Formular nicht angehängt und es müssen keine  Daten eingegeben werden. Die Struktur der Elemente ist ident zu denen, die bereits besprochen wurden.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\linewidth]{images/ldehner_implementierung/zusatz_1}
@@ -581,17 +583,17 @@ Der Reiseantrag wird automatisch bei den Formularen der Anträge angehängt, bei
 
 \subsubsection{Reisekostenabrechnung}
 \label{chapter:implementierung-frontend-komponenten-rechnung}
-Das Formular der Reisekostenabrechnung erfordert von den Lehrern die Eingabe sehr vieler verschiedener Werte. Durch die Unterstützung der Website, ist das Eingeben der Daten wesentlich einfacher, als auf dem Papier, da gewisse Felder, je nach Eingabe des Benutzers, automatisch ausgegraut werden. Wenn zum Beispiel die Tabelle in \autoref{fig:reiserechnungsite} betrachtet wird, kann man nur in jene Felder schreiben, die man mit den Checkboxen angeklickt hat. Außerdem können direkt digital Belege an die Reisekostenabrechnung angehängt werden. Zudem wird automatisch die Zeitspanne des jeweiligen Antrages berechnet und entsprechend viele Zeilen in der Tabelle erzeugt.
+Das Formular der Reisekostenabrechnung erfordert von den Lehrern die Eingabe vieler verschiedener Werte. Durch die Unterstützung der Webseite ist das Eingeben der Daten wesentlich einfacher, als auf dem Papier, da gewisse Felder, je nach Eingabe des Benutzers, automatisch ausgegraut werden. Wenn zum Beispiel die \textit{Tabelle} in \autoref{fig:reiserechnungsite} betrachtet wird, kann man nur in jene Felder schreiben, die man mit den \textit{Checkboxen} angeklickt hat. Außerdem können direkt digital Belege an die Reisekostenabrechnung angehängt werden. Zudem wird automatisch die Zeitspanne des jeweiligen Antrages berechnet und entsprechend viele Zeilen in der \textit{Tabelle} erzeugt.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\linewidth]{images/ldehner_implementierung/reiserechnung_1}
 	\caption[Reisekostenabrechnung]{Ein Bild der Reisekostenabrechnung}
 	\label{fig:reiserechnungsite}
 \end{figure}
-In \autoref{fig:reiserechnungsite} wurden Elemente verwendet, die uns im Gegensatz zu normalen Eingaben nicht bekannt sind, einerseits Tabellen, andererseits die Dateiauswahl.
+In \autoref{fig:reiserechnungsite} wurden Elemente verwendet, die uns im Gegensatz zu normalen Eingaben nicht bekannt sind. Dabei handelt es sich einerseits um \textit{Tabellen} und andererseits um die \textit{Dateiauswahl}.
 \paragraph{Dateiauswahl}
 ~\\
-Wie auch bei den anderen Elementen der Formulare, wie zum Beispiel bei dem \textit{Timepicker}, hat \textit{Bootstrap} ein vorgefertigtes Element für die Dateiauswahl. 
+Wie auch bei den anderen Elementen der Formulare, wie zum Beispiel bei dem \textit{Timepicker}, hat \textit{Bootstrap} ein vorgefertigtes Element für die \textit{Dateiauswahl}. 
 \begin{code}{html}
 	<!-- Belege Input -->
 	<b-form-group
@@ -622,10 +624,10 @@ Wie auch bei den anderen Elementen der Formulare, wie zum Beispiel bei dem \text
 \end{code}
 \captionof{listing}{Datei auswählen Code}
 	\label{list:dateiselect} ~\\
-Wie auch andere Elemente, wird das Element zum Hochladen von Dateien in eine Eingabegruppe, mit Titel und Beschreibung eingesetzt. Nach dem Einsetzen des Elementes, kann sofort per Klick bzw. Drag and Drop eine, oder mehrere Dateien hinzugefügt werden.
+Wie auch andere Elemente, wird das Element zum Hochladen von Dateien in eine \textit{Eingabegruppe}, mit Titel und Beschreibung eingesetzt. Nach dem Einsetzen des Elementes, kann sofort per \textit{Klick bzw. Drag and Drop} eine oder mehrere Dateien hinzugefügt werden.
 \paragraph{Tabelle}
 ~\\
-Um eine Tabelle zu erstellen, kann das Element \enquote{b-table} von \textit{Bootstrap} benutzt werden. In diesem kann man direkt definieren, wie groß die Tabelle sein soll, was auf mobilen Geräten passieren soll, ob die Tabelle gestreift ist, oder nicht und noch weitere Parameter. In diesem Element, wurden die verschiedenen Spalten eingebaut. Dies wurde wie folgt umgesetzt:
+Um eine \textit{Tabelle} zu erstellen, kann das Element \textit{b-table} von \textit{Bootstrap} benutzt werden. In diesem kann man direkt definieren, wie groß die \textit{Tabelle} sein soll, was auf mobilen Geräten passieren soll, ob die \textit{Tabelle} gestreift ist oder nicht und noch weitere Parameter. In diesem Element, wurden die verschiedenen Spalten eingebaut. Dies wurde wie folgt umgesetzt:
 \begin{code}{html}
 	<b-table
           striped
@@ -660,23 +662,24 @@ Die Spalten werden mittels \textit{Templates} erzeugt. Danach können variabel W
 \newpage
 \subsubsection{Ansicht aktive Anträge}
 \label{chapter:implementierung-frontend-komponenten-aktiv}
-Um den Lehrern das Betrachten von aktiven Anträgen einfacher zu machen, wurde eine extra Seite erstellt, die über das Menü auf der Startseite erreichbar ist. Hier werden alle aktiven Anträge (ein Antrag gilt als \enquote{aktiv}, von der Antragsstellung, bis zur Rechnungsphase). Der Benutzer sieht mittels Farben auf den ersten Blick, welchen Status der jeweilige Antrag hat, Rot: Antrag wurde abgelehnt, Gelb: Antrag wird bearbeitet, Grün: Antrag wurde angenommen. Außerdem werden in der Tabelle, der Titel des Antrages, der Leiter, das Einreichdatum und der genaue Status (In Bearbeitung, Rechnungsphase, ...) angezeigt. Falls der Benutzer viele Anträge auf einmal hat, wurde eine Funktion zum Suchen von Anträgen im oberen Teil der Seite eingebaut. Ebenfalls ist es möglich, jede Spalte auf- und absteigend zu sortieren. Falls der \textit{Button} namens \enquote{Antrag betrachten} betätigt wurde, kommt der Nutzer auf die \enquote{Antrags Ansicht}.
+Um den Lehrern das Betrachten von \textit{aktiven Anträgen} einfacher zu machen, wurde eine zusätzliche Seite erstellt, die über das \textit{Menü} auf der \textit{Startseite} erreichbar ist. Hier werden \textit{alle aktiven Anträge} (ein Antrag gilt als \textit{aktiv}, von der Antragsstellung, bis zur Rechnungsphase) verzeichnet. Der Benutzer sieht mittels Farben auf den ersten Blick, welchen Status der jeweilige Antrag hat, Rot: Antrag wurde abgelehnt, Gelb: Antrag wird bearbeitet, Grün: Antrag wurde angenommen. Außerdem werden in der \textit{Tabelle} der Titel des Antrages, der Leiter, das Einreichdatum und der genaue Status (In Bearbeitung, Rechnungsphase, ...) angezeigt. Für den Fall, dass der Benutzer viele Anträge auf einmal hat, wurde eine Funktion zum Suchen von Anträgen im oberen Teil der Seite eingebaut. Ebenfalls ist es möglich, jede Spalte auf- und absteigend zu sortieren. Falls der \textit{Button} namens \textit{Antrag betrachten} betätigt wurde, kommt der Nutzer auf die \textit{Antrags Ansicht}.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\linewidth]{images/ldehner_implementierung/aktiv}
 	\caption[Aktive Anträge Seite]{Ein Bild der aktiven Anträge Seite}
 	\label{fig:antragaktiv}
 \end{figure}
-Um die oben genannten Daten in einer geordneten Liste zu sehen, kann der Lehrer auf \enquote{Schnelle Information} klicken. Dieser Vorgang öffnet folgendes Fenster:
+Um die oben genannten Daten in einer geordneten Liste zu sehen, kann der Lehrer auf \textit{schnelle Information} klicken. Dieser Vorgang öffnet folgendes Fenster:
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.6\linewidth]{images/ldehner_implementierung/aktiv_detail}
 	\caption[Aktive Anträge \textit{Pop-Up Fenster}]{Ein Bild der Detail-Ansicht der aktiven Anträge Seite}
 	\label{fig:antragaktivdetail}
 \end{figure}
-\paragraph{Such-Funktion}
+\newpage
+\paragraph{Suchfunktion}
 ~\\
-Die Erstellung der Suchfunktion wurde wieder essentiell von den \textit{BootstrapVue} Komponenten unterstützt. Es mussten eine Eingabegruppe erstellt werden, die ein Eingabefeld mit dem Typ \textit{\enquote{search}} hat. Um eine Eingabe schneller zu löschen wurde noch ein \textit{Button} hinzugefügt, dieser erscheint, sobald man etwas eintippt. Durch die gute Integration von \textit{Bootstrap} in \textit{VueJS} war die Implementierung der Suchfunktion für die Tabelle reibungslos. Die Vergabe der Funktionalität der Such-Funktion wurde im Backend/Frontend Teil umgesetzt.
+Die Erstellung der \textit{Suchfunktion} wurde wieder essentiell von den \textit{BootstrapVue} Komponenten unterstützt. Es mussten eine \textit{Eingabegruppe} erstellt werden, die ein \textit{Eingabefeld} mit dem Typ \textit{search} hat. Um eine Eingabe schneller zu löschen wurde noch ein \textit{Button} hinzugefügt. Dieser erscheint, sobald man etwas eintippt. Durch die gute Integration von \textit{Bootstrap} in \textit{VueJS} war die Implementierung der \textit{Suchfunktion} für die \textit{Tabelle} reibungslos. Die Vergabe der Funktionalität der \textit{Suchfunktion} wurde im \textit{Backend/Frontend} Teil umgesetzt.
 \begin{code}{html}
 	<!-- Such Element -->
     <b-row align-h="center" style="margin-top: 1rem; margin-bottom: 2rem">
@@ -709,9 +712,10 @@ Die Erstellung der Suchfunktion wurde wieder essentiell von den \textit{Bootstra
 \end{code}
 \captionof{listing}{Anträge Suchfunktion Code}
 	\label{list:antragsearchcode} ~\\
+\newpage
 \paragraph{Filterbare Tabelle}
 ~\\
-Die Aktivierung der filterbaren Tabelle ist mittels \textit{BootstrapVue} möglich. Dazu wurden folgende drei Festlegungen im \textit{\enquote{b-table}} Element hinzugefügt:
+Die Aktivierung der \textit{filterbaren Tabelle} ist mittels \textit{BootstrapVue} möglich. Dazu wurden folgende drei Festlegungen im \textit{b-table} Element hinzugefügt:
 \begin{code}{html}
 	<b-table
 		...
@@ -727,7 +731,7 @@ Die Aktivierung der filterbaren Tabelle ist mittels \textit{BootstrapVue} mögli
 	\label{list:antragfiltercode} ~\\
 \paragraph{Pop-Up Fenster}
 ~\\
-Das \textit{Pop-Up Fenster} wurde mittels einem \enquote{Modal} von \textit{Bootstrap} verwirklicht. Dieses kann über einen zugewiesenen \textit{Button} geöffnet werden und beinhaltet, je nach Antrag, dessen spezifische Daten.
+Das \textit{Pop-Up Fenster} wurde mittels einem \textit{Modal} von \textit{Bootstrap} verwirklicht. Dieses kann über einen zugewiesenen \textit{Button} geöffnet werden und beinhaltet, die spezifischen Daten des jeweiligen Antrags.
 \begin{code}{html}
 	<!-- Info modal -->
     <b-modal
@@ -742,9 +746,9 @@ Das \textit{Pop-Up Fenster} wurde mittels einem \enquote{Modal} von \textit{Boot
 \captionof{listing}{\textit{Pop-Up Fenster} Code}
 	\label{list:codepopup} ~\\
 
-\subsubsection{Ansicht Alle Anträge}
+\subsubsection{Ansicht alle Anträge}
 \label{chapter:implementierung-frontend-komponenten-alle}
-Diese Seite ist sehr ähnlich zu der \enquote{Aktive Anträge} Seite. Der Unterschied ist, dass der Nutzer hier auch bereits abgeschlossene Anträge sieht. Auch hier wurde die \enquote{Suchen} Funktion eingebaut, die hier eine wesentlich wichtigere Rolle spielt, als bei der Seite, der aktiven Anträge. Auch das Filtern der einzelnen Spalten ist wieder möglich.
+Diese Seite ist sehr ähnlich zu der \textit{aktive Anträge} Seite. Der Unterschied ist, dass der Nutzer hier auch bereits abgeschlossene Anträge sieht. Es wurde ebenfalls die \textit{Suchfunktion} eingebaut, die hier eine wesentlich wichtigere Rolle spielt, als bei der Seite der \textit{aktiven Anträge}. Auch das Filtern der einzelnen Spalten ist wieder möglich.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\linewidth]{images/ldehner_implementierung/alle}
@@ -756,7 +760,7 @@ Diese Seite ist sehr ähnlich zu der \enquote{Aktive Anträge} Seite. Der Unters
 \newpage
 \subsubsection{Antragsansicht}
 \label{chapter:implementierung-frontend-komponenten-antragsansicht}
-Die Antragsansicht bietet den Nutzern alle möglichen Informationen zu ihrem Antrag, die sie brauchen. Um den Nutzern einen besseren Überblick darüber zu geben, in welcher Phase sich ihr Antrag befindet, wurde eine Fortschrittsanzeige als erstes Element auf der Seite eingebaut. Desweiteren findet der Benutzer eine aufklappbare Liste auf der Seite, in der je nach Status des Antrages, die Daten angezeigt und/oder editiert werden können (\autoref{fig:antragzu} und \autoref{fig:antragoffen}). Außerdem bietet diese Seite die Funktion, eine generierte PDF-Datei von jedem Antrag, bzw. bei einigen Anträgen auch eine Excel-Datei, zu öffnen. Falls der Nutzer Daten geändert hat, kann er diese Änderung mit einem \textit{Button}, der sich am Schluss der Website befindet speichern. Ebenfalls ist es möglich einen Antrag als abgeschlossen zu markieren, hierbei öffnet sich aber eine Warnmeldung, in der man das Schließen des Antrages nochmal bestätigen muss (\autoref{fig:antragschliessen}). Desweiteren wurde für den Nutzer eine Funktion eingebaut, um einen Antrag zu löschen, wie in \autoref{fig:antragloeschen} dargestellt.
+Die \textit{Antragsansicht} bietet den Nutzern alle möglichen Informationen zu ihrem Antrag, die sie brauchen. Um den Nutzern einen besseren Überblick darüber zu geben, in welcher Phase sich ihr Antrag befindet, wurde eine \textit{Fortschrittsanzeige} als erstes Element auf der Seite eingebaut. Des Weiteren findet der Benutzer eine aufklappbare Liste auf der Seite, in der je, nach Status des Antrages, die Daten angezeigt und/oder editiert werden können (\autoref{fig:antragzu} und \autoref{fig:antragoffen}). Außerdem bietet diese Seite die Funktion, eine generierte \textit{PDF-Datei} von jedem Antrag, bzw. bei einigen Anträgen auch eine \textit{Excel-Datei}, zu öffnen. Falls der Nutzer Daten geändert hat, kann er diese Änderung mit einem \textit{Button}, der sich am Schluss der Webseite befindet speichern. Ebenfalls ist es möglich, einen Antrag als abgeschlossen zu markieren. Hierbei öffnet sich aber eine Warnmeldung, in der man das Schließen des Antrages nochmal bestätigen muss (\autoref{fig:antragschliessen}). Des Weiteren wurde für den Nutzer eine Funktion eingebaut, um einen Antrag zu löschen, wie in \autoref{fig:antragloeschen} dargestellt.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\linewidth]{images/ldehner_implementierung/antrag_zu}
@@ -786,7 +790,7 @@ Die Antragsansicht bietet den Nutzern alle möglichen Informationen zu ihrem Ant
 ~\\
 \paragraph{Fortschrittsanzeige}
 ~\\
-Ein Schritt der Fortschrittsanzeige besteht aus einem \enquote{div}, in dem sich ein \enquote{span} befindet. Das \enquote{div} ist ein \enquote{Strich} und in dem \enquote{span} befindet sich ein Icon, welches den Zustand beschreibt. Je nach Status des Fortschritts wird die Farbe mittels CSS-Klassen geändert.
+Ein Schritt der \textit{Fortschrittsanzeige} besteht aus einem \textit{div}, in dem sich ein \textit{span} befindet. Das \textit{div} ist ein \enquote{Strich} und in dem \textit{span} befindet sich ein Icon, welches den Zustand beschreibt. Je nach Status des Fortschritts wird die Farbe mittels \textit{CSS-Klassen} geändert.
 \begin{code}{html}
 	<div
             :class="{
@@ -836,7 +840,7 @@ Ein Schritt der Fortschrittsanzeige besteht aus einem \enquote{div}, in dem sich
 
 \paragraph{Dokumente anzeigen}
 ~\\
-Die verschiedenen Dokumente, die zu einem gewissen Antrag gehören, werden in einer Tabelle gelistet. Falls der Nutzer auf den \enquote{Bearbeitung öffnen} \textit{Button} drückt, wird der Tabelle eine weitere Reihe hinzugefügt, die alle Informationen zu dem jeweiligen Antrag beinhaltet. Mittels \textit{VueJS} wurden die bestehenden Formulare (hier als Beispiel ein Schulveranstaltungsantrag), in der Tabelle eingebunden und die Eingabefelder über die Datenschnittstelle (\autoref{chapter:implementierung-datenschnittstelle}) mit Daten befüllt.
+Die verschiedenen Dokumente, die zu einem gewissen Antrag gehören, werden in einer \textit{Tabelle} gelistet. Falls der Nutzer auf den \textit{Bearbeitung öffnen - Button} drückt, wird der \textit{Tabelle} eine weitere Reihe hinzugefügt, die alle Informationen zu dem jeweiligen Antrag beinhaltet. Mittels \textit{VueJS} wurden die bestehenden Formulare (hier als Beispiel ein Schulveranstaltungsantrag) in der \textit{Tabelle} eingebunden und die \textit{Eingabefelder} über die Datenschnittstelle (\autoref{chapter:implementierung-datenschnittstelle}) mit Daten befüllt.
 \begin{code}{html}
 	<template #row-details="row">
         <b-card>
@@ -857,7 +861,7 @@ Die verschiedenen Dokumente, die zu einem gewissen Antrag gehören, werden in ei
 
 \paragraph{Funktionen}
 ~\\
-Wird der \enquote{Antrag schließen} \textit{Button} betätigt, erscheint eine Sicherheitsmeldung. Diese wird mit einem \enquote{Modal} erstellt, welches einen Text beinhaltet, der den Nutzer vor den Folgen seiner Tat informiert und zwei weitere \textit{Buttons}: ein grüner \textit{Button}, um den Vorgang abzubrechen und einen roten \textit{Button}, der einen rot blinkenden \enquote{Spinner} beinhaltet.
+Wird der \textit{Antrag schließen - Button} betätigt, erscheint eine Sicherheitsmeldung. Diese wird mit einem \textit{Modal} erstellt, welches einen Text beinhaltet, der den Nutzer vor den Folgen seiner Tat informiert. Hier erscheinen zwei weitere \textit{Buttons}: ein grüner \textit{Button}, um den Vorgang abzubrechen und ein roter \textit{Button}, der einen rot blinkenden \textit{Spinner} beinhaltet.
 \begin{code}{html}
 	<!-- Sicherheitshinweis Antrag schließen -->
     <b-modal ref="close-modal" hide-footer title="Antrag schließen">
@@ -900,14 +904,14 @@ Wird der \enquote{Antrag schließen} \textit{Button} betätigt, erscheint eine S
 \newpage
 \subsubsection{Administrator Ansicht}
 \label{chapter:implementierung-frontend-komponenten-admin}
-Die Administratoransicht ist, wie die \enquote{alle Anträge} oder \enquote{aktive Anträge} Ansicht der Nutzer mit der Struktur einer Tabelle aufgebaut und verfügt über eine Such- als auch Filterfunktion. Eine Zusatzfunktion, damit man direkt in der Übersicht, einen oder mehrere Anträge auswählen kann und diese direkt als PDFs exportieren kann. Außerdem sehen die Administratoren auf den ersten Blick wesentlich mehr Informationen, als normale Nutzer. Es wird der Titel des Antrages angezeigt, die Art, das Enreichdatum, für wann der Antrag ist, den Status (je nach Status sehen gewisse Rollen die Anträge) und den Antragssteller in Kurzschreibweise. Auch hier ist es wieder möglich die Antragsansicht zu öffnen.
+Die \textit{Administratoransicht} ist, wie die \textit{alle Anträge} oder \textit{aktive Anträge} Ansicht der Nutzer mit der Struktur einer \textit{Tabelle} aufgebaut und verfügt sowohl über eine Such- als auch eine \textit{Filterfunktion}. Es gibt aber auch eine Zusatzfunktion, damit man direkt in der Übersicht, einen oder mehrere Anträge auswählen kann und diese direkt als \textit{PDFs} exportieren kann. Außerdem sehen die Administratoren auf den ersten Blick wesentlich mehr Informationen als normale Nutzer. Es wird der Titel des Antrages angezeigt, die Art, das Enreichdatum, für wann der Antrag ist, den Status (je nach Status sehen gewisse Rollen die Anträge) und den Antragssteller in Kurzschreibweise. Auch hier ist es wieder möglich, die \textit{Antragsansicht} zu öffnen.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\linewidth]{images/ldehner_implementierung/admin}
 	\caption[Administrator Ansicht]{Ein Bild der Admin Ansicht}
 	\label{fig:adminview}
 \end{figure}
-Die farbig hinterlegten Elemente heißen \enquote{badges} und können wie folgt erstellt werden:
+Die farbig hinterlegten Elemente heißen \textit{badges} und können wie folgt erstellt werden:
 \begin{code}{html}
 	<b-badge variant="danger">Rote Badge</b-badge>
 	<b-badge variant="success">Grüne Badge</b-badge>
@@ -920,14 +924,14 @@ Die farbig hinterlegten Elemente heißen \enquote{badges} und können wie folgt 
 \newpage
 \paragraph{Administrator Antragsansicht}
 ~\\
-Die Administrator Antragsansicht sieht gleich aus, wie die Ansicht der normalen Benutzer - mit einem Unterschied. Die Administratoren haben nicht die Funktionen \enquote{Speichern} und \enquote{Antrag schließen}, sondern \enquote{Antrag annehmen} und \enquote{Antrag ablehnen}. Falls der Antrag abgelehnt wird, erscheint wieder eine Sicherheitsmeldung. Hier muss der Administrator eine Begründung, für die Ablehnung angeben. 
+Die \textit{Administrator Antragsansicht} sieht gleich aus, wie die Ansicht der normalen Benutzer - mit einem Unterschied. Die Administratoren haben nicht die Funktionen \textit{Speichern} und \textit{Antrag schließen}, sondern \textit{Antrag annehmen} und \textit{Antrag ablehnen}. Falls der Antrag abgelehnt wird, erscheint wieder eine Sicherheitsmeldung. Hier muss der Administrator eine Begründung für die Ablehnung angeben. 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.6\linewidth]{images/ldehner_implementierung/admin_antrag_schiessen}
 	\caption[Antrag ablehnen Warnung]{Ein Bild der Antrag ablehnen Meldung}
 	\label{fig:adminclose}
 \end{figure}
-Im Code wird dieses Eingabefeld im \enquote{Modal} wie folgt erstellt:
+Im Code wird dieses \textit{Eingabefeld} im \textit{Modal} wie folgt erstellt:
 \begin{code}{html}
 	<!-- Antrag Ablehnen Warnhinweis -->
     <b-modal ref="close-modal" hide-footer title="Antrag ablehnen">
@@ -970,10 +974,9 @@ Im Code wird dieses Eingabefeld im \enquote{Modal} wie folgt erstellt:
 \end{code}
 \captionof{listing}{Antrag ablehnen Code}
 	\label{list:badgebsp} ~\\
-\newpage
 \subsubsection{Seite nicht gefunden}
 \label{chapter:implementierung-frontend-komponenten-notfound}
-Falls der momentane Nutzer von \textit{Refundable} eine ungültige URL aufrufen möchte, wird dieser sofort informiert, dass er etwas falsch gemacht hat. Desweiteren wird dem Nutzer direkt eine Lösung vorgeschlagen, wie er dieses Problem beheben kann. Um dem Nutzer zu visualisieren, dass der \enquote{Website} \textit{Button} die richtige Wahl ist, haben wir ihn in Grün hervorgehoben. Außerdem wird dem Aufrufer, der Seite mit schimmernden grauen Boxen, die einen \enquote{Lade-Zustand} visualisieren, gezeigt, dass die Seite nicht richtig lädt.
+Falls der momentane Nutzer von \textit{Refundable} eine ungültige URL aufrufen möchte, wird dieser sofort informiert, dass er etwas falsch gemacht hat. Des Weiteren wird dem Nutzer direkt eine Lösung vorgeschlagen, wie er dieses Problem beheben kann. Um dem Nutzer zu visualisieren, dass der \textit{\enquote{Website-Button}} die richtige Wahl ist, haben wir ihn in Grün hervorgehoben. Außerdem wird dem Aufrufer der Seite mit schimmernden grauen Boxen, die einen \enquote{Lade-Zustand} visualisieren, gezeigt, dass die Seite nicht richtig lädt.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\linewidth]{images/ldehner_implementierung/notfound}
@@ -981,7 +984,7 @@ Falls der momentane Nutzer von \textit{Refundable} eine ungültige URL aufrufen 
 	\label{fig:notfoundsite}
 \end{figure}
 ~\\
-Die Elemente, welche den Lade-Zustand verkörpern sollen, heißen \enquote{b-skeleton-img} und werden wie folgt erstellt:
+Die Elemente, welche den Lade-Zustand verkörpern sollen, heißen \textit{b-skeleton-img} und werden wie folgt erstellt:
 \begin{code}{html}
 	<b-skeleton-img animation="fade"></b-skeleton-img>
 \end{code}
@@ -991,7 +994,7 @@ Die Elemente, welche den Lade-Zustand verkörpern sollen, heißen \enquote{b-ske
 \newpage
 \subsubsection{Antrag suchen}
 \label{chapter:implementierung-frontend-komponenten-suchen}
-Um den Administratoren während ihren Tätigkeiten ein wenig Arbeit abzunehmen, wurde eine Möglichkeit eingebaut, einen Antrag direkt über eine Seite zu suchen. Dazu muss der Administrator die Unterseite \enquote{/viewer} aufrufen und kann, wie man in \autoref{fig:searchsite} sehen kann, die Antrags ID suchen und so direkt zu dem gewünschten Antrag gelangen.
+Um den Administratoren während ihren Tätigkeiten ein wenig Arbeit abzunehmen, wurde eine Möglichkeit eingebaut, einen Antrag direkt über eine Seite zu suchen. Dazu muss der Administrator die Unterseite \enquote{/viewer} aufrufen und kann, wie man in \autoref{fig:searchsite} sehen kann, die Antrags \textit{ID} suchen und so direkt zu dem gewünschten Antrag gelangen.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\linewidth]{images/ldehner_implementierung/search}
@@ -1000,10 +1003,9 @@ Um den Administratoren während ihren Tätigkeiten ein wenig Arbeit abzunehmen, 
 \end{figure}
 ~\\
 
-\newpage 
 \subsubsection{Rechte vergeben}
 \label{chapter:implementierung-frontend-komponenten-rechte}
-Während der Entwicklung ist uns aufgefallen, dass eine Funktion fehlt, einen bestimmten Benutzer mit gewissen Rechten auszustatten. Daher ist es dem \textit{Superuser} möglich über das Admindashboard Rechte zu vergeben. Dazu muss er nur die E-Mail Adresse des in Frage kommenden Nutzers eingeben und mittels \textit{Radio-Buttons} die gewünschten Rechte auswählen. Auch hier wurden wieder die bekannten Elemente der restlichen Website verwendet.
+Während der Entwicklung ist uns aufgefallen, dass eine Funktion fehlt, einen bestimmten Benutzer mit gewissen Rechten auszustatten. Daher ist es dem \textit{Superuser} möglich, über das \textit{Admindashboard} Rechte zu vergeben. Dazu muss er nur die E-Mail Adresse des in Frage kommenden Nutzers eingeben und mittels \textit{Radio-Buttons} die gewünschten Rechte auswählen. Auch hier wurden wieder die bekannten Elemente der restlichen Webseite verwendet.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\linewidth]{images/ldehner_implementierung/rechte}
