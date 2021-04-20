@@ -3,14 +3,14 @@
 \section{Backend und Infrastruktur}
 
 \subsection{Einleitung}
-Wie im Konzept (in \autoref{chapter:conceptbi}) zuvor ausführlich beschrieben, soll eine den Plänen entsprechende automatisch aufbaubare Infrastruktur erstellt und ein dem System angepasstes Backend programmiert werden. Hierfür wurde bereits in der Studie (in \autoref{chapter:golanganalyse}) Golang als zu benutzende Sprache ausgewählt.
+Wie im Konzept (in \autoref{chapter:conceptbi}) zuvor ausführlich beschrieben, soll eine den Plänen entsprechende automatisch aufbaubare Infrastruktur erstellt und ein dem System angepasstes \textit{Backend} programmiert werden. Hierfür wurde bereits in der Studie (in \autoref{chapter:golanganalyse}) \textit{Golang} als zu benutzende Sprache ausgewählt.
 \subsection{Docker}
 
-In den folgenden Kapiteln wird die genaue Umsetzung der einzelnen Docker-Images, jeweils definiert in Dockerfiles, des Docker-Compose Stack und des Aufbaus der Volumen, Umgebungsvariablen und Secrets, beschrieben.
+In den folgenden Kapiteln wird die genaue Umsetzung der einzelnen \textit{Docker}-\textit{Images}, jeweils definiert in \textit{Dockerfiles}, des \textit{Docker-Compose Stack} und des Aufbaus der Volumen, Umgebungsvariablen und \textit{Secrets}, beschrieben.
 
 \subsubsection{MongoDB}
 
-Das Dockerfile in der \autoref{code:dockermongo} beschreibt die Datenbank, eine MongoDB Instanz, die einen eigenen Container erhält. Das aus dem Dockerfile resultierende Image basiert auf der neuesten Version des offiziellen mongo-Images, welches die eigentliche MongoDB-Instanz beinhaltet. Des Weiteren wird das Initskript hinzugefügt, sodass dieses beim Erstellen des Containers immer ausgeführt wird. Zuletzt wird noch der Port 27017, der Standard Port der MongoDB Anwendung, nach außen hin freigegeben.
+Das \textit{Dockerfile} in der \autoref{code:dockermongo} beschreibt die Datenbank, eine \textit{MongoDB} Instanz, die einen eigenen \textit{Container} erhält. Das aus dem \textit{Dockerfile} resultierende \textit{Image} basiert auf der neuesten Version des offiziellen \enquote{\textit{mongo}}-\textit{Images}, welches die eigentliche \textit{MongoDB}-Instanz beinhaltet. Des Weiteren wird das \textit{Initskript} hinzugefügt, sodass dieses beim Erstellen des \textit{Containers} immer ausgeführt wird. Zuletzt wird noch der \textit{Port} 27017, der Standard \textit{Port} der \textit{MongoDB} Anwendung, nach außen hin freigegeben.
 
 \begin{minted}{Dockerfile}
 FROM mongo:latest
@@ -19,10 +19,10 @@ ADD ./init-db.sh /docker-entrypoint-initdb.d/
 
 EXPOSE 27017
 \end{minted}
-\captionof{listing}[MongoDB Dockerfile]{MongoDB Dockerfile}
+\captionof{listing}[\textit{MongoDB Dockerfile}]{\textit{MongoDB Dockerfile}}
 \label{code:dockermongo}
 ~\\
-Das Bashskript in der \autoref{code:mongoskript} sorgt für die Erstellung eines Nutzers als Administrator, einer Datenbank und eines weiteren Benutzers mit einfacher Lese- und Schreibberechtigung. Dieser Vorgang ist nötig, damit die Datenbank direkt verwendbar ist, und nicht erst eine Datenbank von der Seite des Programmes aus erstellt werden muss. Der weitere User stellt ein Best-Practice da, indem man den User, mit welchen man jegliche Daten schreibt, nicht alle Berechtigungen zuschreibt, sondern lediglich jene, die er wirklich braucht. 
+Das \textit{Bashskript} in der \autoref{code:mongoskript} sorgt für die Erstellung eines Nutzers als Administrator, einer Datenbank und eines weiteren Benutzers mit einfacher Lese- und Schreibberechtigung. Dieser Vorgang ist nötig, damit die Datenbank direkt verwendbar ist, und nicht erst eine Datenbank von der Seite des Programmes aus erstellt werden muss. Der weitere User stellt ein \textit{Best-Practice} da, indem man den Nutzer, mit welchen man jegliche Daten schreibt, nicht alle Berechtigungen zuschreibt, sondern lediglich jene, die er wirklich braucht. 
 
 \newpage
 
@@ -40,10 +40,10 @@ mongo -- "$MONGO_DATABASE" << EOF
 	db.createUser({user: user, pwd: passwd, roles: ["readWrite"]});
 EOF
 \end{minted}
-\captionof{listing}[MongoDB Initskript]{MongoDB Initskript}
+\captionof{listing}[\textit{MongoDB Initskript}]{\textit{MongoDB Initskript}}
 \label{code:mongoskript}
 ~\\
-Die \autoref{code:mongocompose} zeigt wie das eigens definierte MongoDB Image weiterverwendet wird, speziell wie die verschiedenen Nutzerinformationen in den Container weitergegeben werden. Dies geschieht über Secrets \cite{secretmongo}. Hierbei handelt es sich um einfache Dateien, welche sicher in den Container eingehängt und dann darin ausgelesen werden können. In diesem Fall werden die Dateien durch den Installationsvorgang des Systems erstellt. 
+Die \autoref{code:mongocompose} zeigt wie das eigens definierte \textit{MongoDB} \textit{Image} weiterverwendet wird, speziell wie die verschiedenen Nutzerinformationen in den \textit{Container} weitergegeben werden. Dies geschieht über \textit{Secrets} \cite{secretmongo}. Hierbei handelt es sich um einfache Dateien, welche sicher in den \textit{Container} eingehängt und dann darin ausgelesen werden können. In diesem Fall werden die Dateien durch den Installationsvorgang des Systems erstellt. 
 
 \begin{minted}{yaml}
 mongo:
@@ -67,14 +67,14 @@ mongo:
 		- mongodb_username
 		- mongodb_password
 \end{minted}
-\captionof{listing}[Docker-Compose File: MongoDB-Container]{Docker-Compose File: MongoDB-Container}
+\captionof{listing}[\textit{Docker-Compose File}: \textit{MongoDB}-\textit{Container}]{\textit{Docker-Compose File}: \textit{MongoDB}-\textit{Container}}
 \label{code:mongocompose}
 
 \newpage
 
 \subsubsection{Backend}
 
-Im Golang-Backend, welches in der \autoref{code:backgodocker} beschrieben wird, läuft nicht nur das Backend selbst, sondern es wird auch kompiliert. Dies bringt den Vorteil mit sich, dass es automatisch für das von Docker bereitgestellte System kompiliert wird und es keine Auslieferung von bereits kompilierten Dateien braucht. Es wird hier ein neues Image gebaut, woraufhin in den Go-Path die Quellcodedateien hineinkopiert werden. Danach werden alle benötigten Dependencies heruntergeladen und das dann vollständige Projekt kompiliert. Nachdem der Port 8080 freigegeben wurde, wird das fertig kompilierte Programm gestartet.
+Im \textit{Golang}-\textit{Backend}, welches in der \autoref{code:backgodocker} beschrieben wird, läuft nicht nur das \textit{Backend} selbst, sondern es wird auch kompiliert. Dies bringt den Vorteil mit sich, dass es automatisch für das von \textit{Docker} bereitgestellte System kompiliert wird und es keine Auslieferung von bereits kompilierten Dateien braucht. Es wird hier ein neues Image gebaut, woraufhin in den \textit{Go}-\textit{Path} die Quellcodedateien hineinkopiert werden. Danach werden alle benötigten Bibliotheken heruntergeladen und das dann vollständige Projekt kompiliert. Nachdem der \textit{Port} 8080 freigegeben wurde, wird das fertig kompilierte Programm gestartet.
 
 \begin{minted}{Dockerfile}
 FROM golang:1.14
@@ -89,10 +89,10 @@ EXPOSE 8080
 	
 CMD ["huginn"]
 \end{minted}
-\captionof{listing}[Backend Dockerfile]{Backend Dockerfile}
+\captionof{listing}[\textit{Backend Dockerfile}]{\textit{Backend Dockerfile}}
 \label{code:backgodocker}
 ~\\
-Dieses Docker-Image ist ein Teil des Docker-Stacks und somit ist es auch in der Docker-Compose Konfiguration vorhanden (\autoref{code:golangbackendcompose}). Hier werden verschiedene Volumen eingehängt um Dateien, wie die generierten Formulare, oder Secrets zum Signieren von Tokens, permanent zu speichern. Außerdem werden wieder Secrets, die bereits im MongoDB Container, die Nutzerinformationen des Datenbanknutzers gespeichert hatten, hinzugefügt \cite{secretmongo}. Dies ist darauf zurückzuführen, dass diese gleich durch das Backend wiederverwendet werden, um sich mit dem Nutzer einloggen zu können.
+Dieses \textit{Docker}-\textit{Image} ist ein Teil des \textit{Docker}-\textit{Stacks} und somit ist es auch in der \textit{Docker-Compose} Konfiguration vorhanden (\autoref{code:golangbackendcompose}). Hier werden verschiedene Volumen eingehängt um Dateien, wie die generierten Formulare, oder \textit{Secrets} zum Signieren von Tokens, permanent zu speichern. Außerdem werden wieder \textit{Secrets}, die bereits im \textit{MongoDB} \textit{Container}, die Nutzerinformationen des Datenbanknutzers gespeichert hatten, hinzugefügt \cite{secretmongo}. Dies ist darauf zurückzuführen, dass diese gleich durch das \textit{Backend} wiederverwendet werden, um sich mit dem Nutzer einloggen zu können.
 
 \begin{minted}{yaml}
 rest:
@@ -111,14 +111,14 @@ rest:
 		- mongodb_username
 		- mongodb_password
 \end{minted}
-\captionof{listing}[Docker-Compose File: Backend-Container]{Docker-Compose File: Backend-Container}
+\captionof{listing}[\textit{Docker-Compose File}: \textit{Backend}-\textit{Container}]{\textit{Docker-Compose File}: \textit{Backend-Container}}
 \label{code:golangbackendcompose}
 
 \newpage
 
 \subsubsection{Frontend}
 
-Zuletzt wird noch das Frontend in \autoref{code:dockerfrontend} definiert. Hierbei wird ein ähnlicher Zugang wie mit dem Backend gewählt, sodass auch das Frontend erst in einem Docker-Container kompiliert wird. Die Herausforderung besteht darin, dass eine eigene Node.js Umgebung hierfür benötigt wird. Aus diesem Grund baut das Image grundsätzlich eine solche Umgebung auf und ladet darin die entsprechend benötigten Abhängigkeiten, wie Bibliotheken und Frameworks, herunter. Die Quelldateien werden anschließend kompiliert. Das fertig kompilierte Frontend wird in einen anderen Docker-Container verschoben, welcher den eigentlichen Webserver umfasst, der das Frontend dann bereit stellt. Der nginx-Webserver wird,nachdem er den Port 80 freigegeben hat, formell gestartet.
+Zuletzt wird noch das \textit{Frontend} in \autoref{code:dockerfrontend} definiert. Hierbei wird ein ähnlicher Zugang wie mit dem \textit{Backend} gewählt, sodass auch das \textit{Frontend} erst in einem \textit{Docker}-\textit{Container} kompiliert wird. Die Herausforderung besteht darin, dass eine eigene \textit{Node.js} Umgebung hierfür benötigt wird. Aus diesem Grund baut das \textit{Image} grundsätzlich eine solche Umgebung auf und ladet darin die entsprechend benötigten Abhängigkeiten, wie Bibliotheken und \textit{Frameworks}, herunter. Die Quelldateien werden anschließend kompiliert. Das fertig kompilierte \textit{Frontend} wird in einen anderen \textit{Docker}-\textit{Container} verschoben, welcher den eigentlichen \textit{Webserver} umfasst, der das Frontend dann bereit stellt. Der \textit{nginx}-\textit{Webserver} wird,nachdem er den \textit{Port} 80 freigegeben hat, formell gestartet.
 
 \begin{minted}{Dockerfile}
 FROM node:lts-alpine AS vue-builder
@@ -134,10 +134,10 @@ COPY history.conf /etc/nginx/conf.d/history.conf
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
 \end{minted}
-\captionof{listing}[Frontend Dockerfile]{Frontend Dockerfile}
+\captionof{listing}[\textit{Frontend} \textit{Dockerfile}]{\textit{Frontend} \textit{Dockerfile}}
 \label{code:dockerfrontend}
 ~\\
-Auch dieses Image muss in der Docker-Konfiguration hinzugefügt werden. Dies wird durch die in \autoref{code:frontendcompose} aufgeführten Konfigurationen erreicht. Hierbei werden lediglich die entsprechenden Ports festgelegt. Weitere Informationen, wie beispielsweise Secrets, werden vom Webserver benötigt.
+Auch dieses \textit{Image} muss in der \textit{Docker}-Konfiguration hinzugefügt werden. Dies wird durch die in \autoref{code:frontendcompose} aufgeführten Konfigurationen erreicht. Hierbei werden lediglich die entsprechenden \textit{Ports} festgelegt. Weitere Informationen, wie beispielsweise \textit{Secrets}, werden vom \textit{Webserver} benötigt.
 
 \begin{minted}{yaml}
 web:
@@ -147,14 +147,14 @@ web:
 		- '80:80'
 		- '443:443'
 \end{minted}
-\captionof{listing}[Docker-Compose File: Web-Container]{Docker-Compose File: Web-Container}
+\captionof{listing}[\textit{Docker-Compose File}: \textit{Web}-\textit{Container}]{\textit{Docker-Compose File}: \textit{Web}-\textit{Container}}
 \label{code:frontendcompose}
 
 \newpage
 
 \subsubsection{Secrets}
 
-Nachdem die verschiedenen Images, aus denen der Docker-Compose Stack bestehen soll, konfiguriert und in die zentrale Docker-Compose Datei hinzugefügt wurden, müssen zuletzt noch die benutzten Secrets registriert werden \cite{secretmongo}. Der Code ist in \autoref{code:dockersecrets} ersichtlich. Der Name des Secrets wird einer Datei zugeordnet. Diese Datei wird, wie bereits erwähnt, in den entsprechenden Containern eingehängt. Hierdurch lassen sich die bei der Installation eingelesenen Daten einfach in die Container weitergeben.
+Nachdem die verschiedenen \textit{Images}, aus denen der \textit{Docker-Compose Stack} bestehen soll, konfiguriert und in die zentrale \textit{Docker-Compose} Datei hinzugefügt wurden, müssen zuletzt noch die benutzten \textit{Secrets} registriert werden \cite{secretmongo}. Der \textit{Code} ist in \autoref{code:dockersecrets} ersichtlich. Der Name des \textit{Secrets} wird einer Datei zugeordnet. Diese Datei wird, wie bereits erwähnt, in den entsprechenden \textit{Containern} eingehängt. Hierdurch lassen sich die bei der Installation eingelesenen Daten einfach in die \textit{Container} weitergeben.
 
 \begin{minted}{yaml}
 secrets:
@@ -167,13 +167,13 @@ secrets:
 	mongodb_password:
 		file: config/mongodb_password
 \end{minted}
-\captionof{listing}[Docker-Compose File: Secrets]{Docker-Compose File: Secrets}
+\captionof{listing}[\textit{Docker-Compose File}: \textit{Secrets}]{\textit{Docker-Compose File}: \textit{Secrets}}
 \label{code:dockersecrets}
 
 \subsection{Steuerungsskript}
 \subsubsection{Docker Installation}
 
-Bei der Docker Installation, welche in \autoref{code:dockerinstall} ersichtlich ist, wird Docker und Docker-Compose während des Installationsvorganges installiert, sofern dies so angegeben ist. Hierfür existiert der Parameter \enquote{\textit{-d}}. Ist dieser vorhanden, so wird das offizielle Docker-Installer Skript heruntergeladen und ausgeführt. Danach wird noch Docker-Compose installiert. Dies geschieht durch das Herunterladen des eigentlichen Programms und der anschließenden Rechtezuteilung zur Ausführung dessen.
+Bei der \textit{Docker} Installation, welche in \autoref{code:dockerinstall} ersichtlich ist, wird \textit{Docker} und \textit{Docker-Compose} während des Installationsvorganges installiert, sofern dies so angegeben ist. Hierfür existiert der Parameter \enquote{\textit{-d}}. Ist dieser vorhanden, so wird das offizielle \textit{Docker-Installer} Skript heruntergeladen und ausgeführt. Danach wird noch \textit{Docker-Compose} installiert. Dies geschieht durch das Herunterladen des eigentlichen Programms und der anschließenden Rechtezuteilung zur Ausführung dessen.
 
 \begin{minted}{bash}
 if [ "$1" = "-d" ]; then
@@ -191,12 +191,12 @@ if [ "$1" = "-d" ]; then
 	printf "\n------\n"
 fi
 \end{minted}
-\captionof{listing}[Docker Installation - Steuerungsskript]{Docker Installation - Steuerungsskript}
+\captionof{listing}[\textit{Docker} Installation - Steuerungsskript]{\textit{Docker} Installation - Steuerungsskript}
 \label{code:dockerinstall}
 
 \subsubsection{Installation}
 
-In der \autoref{code:installer} ist der Installationsvorgang dargestellt. Der Kommentar signalisiert, wo die Docker-Installation eigentlich in der Methode stehen würde. Der Installationsvorgang gliedert sich in zwei Teile. Im ersten werden alle Git-Repositories automatisch geklont. Dadurch wurden nun alle Quellcodedateien, welche nach dem Starten in etwaigen Docker-Containern enden würden, heruntergeladen. Zusätzlich wird der Nutzer nun die Nutzerinformationen des Datenbankadministrators und des Datenbanknutzers abgefragt. Diese Informationen werden in die entsprechenden Dateien gespeichert, sodass sie danach von Docker als Secrets genutzt werden können. Zuletzt wird sowohl im Backend als auch im Frontend die Adresse benötigt unter welcher der Server erreichbar ist. Diese URL wird jeweils in eine dafür vorgesehene Datei im Backend und Frontend gespeichert, sodass diese auslesbar sind.
+In der \autoref{code:installer} ist der Installationsvorgang dargestellt. Der Kommentar signalisiert, wo die \textit{Docker}-Installation eigentlich in der Methode stehen würde. Der Installationsvorgang gliedert sich in zwei Teile. Im ersten werden alle \textit{Git}-\textit{Repositories} automatisch geklont. Dadurch wurden nun alle Quellcodedateien, welche nach dem Starten in etwaigen \textit{Docker}-\textit{Containern} enden würden, heruntergeladen. Zusätzlich wird der Nutzer nun die Nutzerinformationen des Datenbankadministrators und des Datenbanknutzers abgefragt. Diese Informationen werden in die entsprechenden Dateien gespeichert, sodass sie danach von \textit{Docker} als \textit{Secrets} genutzt werden können. Zuletzt wird sowohl im \textit{Backend} als auch im \textit{Frontend} die Adresse benötigt unter welcher der \textit{Server} erreichbar ist. Diese \textit{URL} wird jeweils in eine dafür vorgesehene Datei im \textit{Backend} und \textit{Frontend} gespeichert, sodass diese auslesbar sind.
 
 \begin{minted}{bash}
 sub_install() {
@@ -232,7 +232,7 @@ sub_install() {
 
 \subsubsection{Startvorgang}
 
-Der Startvorgang ist sehr einfach aufgebaut. Er ist in der \autoref{code:start} ersichtlich. Zudem wird hier geprüft, ob das System installiert ist. Ist dies der Fall, so wird die Infrastruktur über den entsprechenden Docker-Compose Befehl hochgefahren. 
+Der Startvorgang ist sehr einfach aufgebaut. Er ist in der \autoref{code:start} ersichtlich. Zudem wird hier geprüft, ob das System installiert ist. Ist dies der Fall, so wird die Infrastruktur über den entsprechenden \textit{Docker-Compose} Befehl hochgefahren. 
 
 \newpage
 
@@ -249,7 +249,7 @@ sub_start() {
 
 \subsubsection{Stoppvorgang}
 
-Der in der \autoref{code:stopp} aufgeführte Stoppvorgang ist, analog zum Startvorgang, einfach aufgebaut. Er führt nach der Überprüfung, ob das System installiert ist, lediglich den Befehl zum Stoppen des Docker-Compose Stacks aus.
+Der in der \autoref{code:stopp} aufgeführte Stoppvorgang ist, analog zum Startvorgang, einfach aufgebaut. Er führt nach der Überprüfung, ob das System installiert ist, lediglich den Befehl zum Stoppen des \textit{Docker-Compose Stacks} aus.
 
 \begin{minted}{bash}
 sub_stop() {
@@ -277,7 +277,7 @@ sub_restart() {
 \label{code:restart}
 
 \subsubsection{Aktualisierung}
-Die in der \autoref{code:update} gezeigte Aktualisierungsfunktion basiert auf dem Prinzip des Git-Repositories. Dadurch, dass während Installation Git-Repositories geklont werden, können diese nun einfach neue Erweiterungen der Software herunterladen. Diese Operation wird in allen drei betroffenen Ordner (Backend, Frontend und Infrastruktur) ausgeführt, um die neuen Änderungen herunterzuladen. Danach wird der Docker-Compose Stack gestoppt und alle veralteten Komponenten werden aus dem System entfernt. Zuletzt werden auf Basis der heruntergeladenen Änderungen alle Komponenten erneut aufgebaut und gestartet.
+Die in der \autoref{code:update} gezeigte Aktualisierungsfunktion basiert auf dem Prinzip des \textit{Git}-\textit{Repositories}. Dadurch, dass während Installation \textit{Git}-\textit{Repositories} geklont werden, können diese nun einfach neue Erweiterungen der Software herunterladen. Diese Operation wird in allen drei betroffenen Ordner (\textit{Backend}, \textit{Frontend} und Infrastruktur) ausgeführt, um die neuen Änderungen herunterzuladen. Danach wird der \textit{Docker-Compose Stack} gestoppt und alle veralteten Komponenten werden aus dem System entfernt. Zuletzt werden auf Basis der heruntergeladenen Änderungen alle Komponenten erneut aufgebaut und gestartet.
 
 \newpage
 
@@ -358,7 +358,7 @@ sub_purge() {
 
 \subsubsection{Subcommands}
 
-Die Subcommands dieses Steuerungsskripts werden namentlich auf die jeweiligen Methoden übertragen \cite{shgist}. Dieser Vorgang ist in der \autoref{code:subcommands} ersichtlich. Durch das Nutzen dieser Methodik können weitere Befehle sehr einfach hinzufügt werden.
+Die \textit{Subcommands} dieses Steuerungsskripts werden namentlich auf die jeweiligen Methoden übertragen \cite{shgist}. Dieser Vorgang ist in der \autoref{code:subcommands} ersichtlich. Durch das Nutzen dieser Methodik können weitere Befehle sehr einfach hinzufügt werden.
 
 \begin{minted}{bash}
 sub=$1
@@ -377,14 +377,14 @@ case $sub in
 		;;
 esac
 \end{minted}
-\captionof{listing}[Subcommand parsing - Steuerungsskript]{Subcommand parsing - Steuerungsskript \cite{shgist}}
+\captionof{listing}[\textit{Subcommand parsing} - Steuerungsskript]{\textit{Subcommand parsing} - Steuerungsskript \cite{shgist}}
 \label{code:subcommands}
 
 \newpage
 
 \subsection{MongoDB}
 
-Die Schnittstelle zwischen der MongoDB Instanz und dem Backend ist wichtig für das System. In dieser Datenbank werden alle Daten gespeichert, die für das System von Relevanz sind. Für diese Datenstrukturen gibt es verschiedene Methoden, um mit den Daten mittels der vier Hauptfunktionen, Erstellen, Lesen, Aktualisieren und Löschen, auf der Datenbank zu interagieren und arbeiten zu können. Die Schnittstelle zwischen Programm und Datenbank wurde hierbei mittels dem offiziellen Golang-MongoDB-Treiber umgesetzt \cite{mongogo}. Auf Basis dessen sind die folgenden Methoden implementiert.
+Die Schnittstelle zwischen der \textit{MongoDB} Instanz und dem \textit{Backend} ist wichtig für das System. In dieser Datenbank werden alle Daten gespeichert, die für das System von Relevanz sind. Für diese Datenstrukturen gibt es verschiedene Methoden, um mit den Daten mittels der vier Hauptfunktionen, Erstellen, Lesen, Aktualisieren und Löschen, auf der Datenbank zu interagieren und arbeiten zu können. Die Schnittstelle zwischen Programm und Datenbank wurde hierbei mittels dem offiziellen \textit{Golang-MongoDB}-Treiber umgesetzt \cite{mongogo}. Auf Basis dessen sind die folgenden Methoden implementiert.
 
 \begin{table}
 	\begin{tabular}{|l|l|l|l|}
@@ -408,7 +408,7 @@ Die Schnittstelle zwischen der MongoDB Instanz und dem Backend ist wichtig für 
 		getInitUserName() & Liest den initialen Usernamen aus & \multicolumn{1}{c|}{---} & username \\ \hline
 	\end{tabular}
 \end{table}
-\captionof{table}[Methoden der MongoDB Schnittstelle]{Methoden der MongoDB Schnittstelle}
+\captionof{table}[Methoden der \textit{MongoDB} Schnittstelle]{Methoden der \textit{MongoDB} Schnittstelle}
 \label{tbl:mongomethods}
 
 \newpage
@@ -425,17 +425,17 @@ func (m MongoDatabaseConnector) GetApplication(uuid string) (application Applica
 	return application
 }
 \end{minted}
-\captionof{listing}[MongoDB Treiber Beispiel]{MongoDB Treiber Beispiel: GetApplication Methode}
+\captionof{listing}[\textit{MongoDB} Treiber Beispiel]{\textit{MongoDB} Treiber Beispiel: \textit{GetApplication} Methode}
 
 ~\\
 
-Die abgebildete Methode sucht nach einem bestimmten Antrag, welcher durch seine UUID identifiziert wird. Hierfür wird das Verzeichnis, die Kollektion, geöffnet, in der alle Anträge gespeichert sind \cite{mongogo}. Danach wird nach einem Antrag gesucht, wobei in diesem das Feld der UUID gleich dem Wert der gesuchten UUID sein muss. Das gefundene Objekt wird in eine Variable gespeichert und zurückgegeben.
+Die abgebildete Methode sucht nach einem bestimmten Antrag, welcher durch seine \textit{UUID} identifiziert wird. Hierfür wird das Verzeichnis, die Kollektion, geöffnet, in der alle Anträge gespeichert sind \cite{mongogo}. Danach wird nach einem Antrag gesucht, wobei in diesem das Feld der \textit{UUID} gleich dem Wert der gesuchten \textit{UUID} sein muss. Das gefundene Objekt wird in eine Variable gespeichert und zurückgegeben.
 
 \newpage
 
 \subsection{LDAP}
 
-Neben der MongoDB muss eine Verbindung zum TGM-eigenen Active Directory über LDAP hergestellt werden. Der Grund dafür  ist, dass das System keine eigenen Accounts mit Passwörtern speichert, sondern jene des TGMs direkt übernehmen soll. Des Weiteren kann über diesen Dienst der komplette Name der Lehrkraft herausgefunden werden. Die Authentifizierung eines Nutzers gestaltet sich wie folgt:
+Neben der \textit{MongoDB} muss eine Verbindung zum \textit{TGM}-eigenen \textit{Active Directory} über \textit{LDAP} hergestellt werden. Der Grund dafür  ist, dass das System keine eigenen Accounts mit Passwörtern speichert, sondern jene des \textit{TGMs} direkt übernehmen soll. Des Weiteren kann über diesen Dienst der komplette Name der Lehrkraft herausgefunden werden. Die Authentifizierung eines Nutzers gestaltet sich wie folgt:
 
 \begin{minted}{go}
 func AuthenticateUserCredentials(username, password string) bool {
@@ -471,10 +471,10 @@ func AuthenticateUserCredentials(username, password string) bool {
 	return true
 }
 \end{minted}
-\captionof{listing}[LDAP-Schnittstelle: Authentifizierungsvorgang]{LDAP-Schnittstelle: Authentifizierungsvorgang \cite{go-ldap}}
+\captionof{listing}[\textit{LDAP}-Schnittstelle: Authentifizierungsvorgang]{\textit{LDAP}-Schnittstelle: Authentifizierungsvorgang \cite{go-ldap}}
 
 ~\\
-Das Backend verbindet sich mit dem TGM-eigene LDAP-Server. Daraufhin werden die Nutzerdaten abgeglichen, um den Nutzer anzumelden. Schlägt diese Aktion fehl, sind die Anmeldedaten falsch. Sind die Informationen richtig wird überprüft ob es der erste Login der Lehrkraft ist. Ist dies der Fall, wird eine neue Lehrkraft in der systemeigenen Datenbank angelegt. Hierfür wird der ganze Name der Lehrkraft benötigt. Dieser wird über folgende Methode ausgelesen:
+Das \textit{Backend} verbindet sich mit dem \textit{TGM}-eigene \textit{LDAP}-\textit{Server}. Daraufhin werden die Nutzerdaten abgeglichen, um den Nutzer anzumelden. Schlägt diese Aktion fehl, sind die Anmeldedaten falsch. Sind die Informationen richtig wird überprüft ob es der erste Login der Lehrkraft ist. Ist dies der Fall, wird eine neue Lehrkraft in der systemeigenen Datenbank angelegt. Hierfür wird der ganze Name der Lehrkraft benötigt. Dieser wird über folgende Methode ausgelesen:
 
 \newpage
 
@@ -512,7 +512,7 @@ func GetLongName(username, password string) (string, error) {
 	return name, nil
 }
 \end{minted}
-\captionof{listing}[LDAP-Schnittstelle: Namensabfrage]{LDAP-Schnittstelle: Namensabfrage \cite{go-ldap}}
+\captionof{listing}[\textit{LDAP}-Schnittstelle: Namensabfrage]{\textit{LDAP}-Schnittstelle: Namensabfrage \cite{go-ldap}}
 ~\\
 Die Abfragemethode ist ähnlich der Authentifizierungsmethode aufgebaut. Beide beginnen mit der Anmeldung beim Dienst, wobei dieser in diesem Fall gelingen muss. Daraufhin wird eine Suche nach dem eigenen Anmeldenamen gestartet, welche einen Pfad zurückliefert \cite{go-ldap}. Dieser Pfad kann zerlegt werden, um auf den eigentlichen Namen zugreifen zu können.
 
@@ -520,7 +520,7 @@ Die Abfragemethode ist ähnlich der Authentifizierungsmethode aufgebaut. Beide b
 
 \subsection{Untis}
 
-Die Untis API wird verwendet, um auf den Stundenplan des TGMs zugreifen zu können \cite{untis}. Um diese effizient zu nutzen, wurde ein Client-Format implementiert. Diese speichert automatisch alle aktiven Sitzungen und ermöglicht ein effektives An- und Abmelden. Als Basis wurde eine Client Datenstruktur erstellt, welche in einer Liste gespeichert wird, wodurch die Clients dem jeweiligen Nutzer zuordenbar sind.
+Die \textit{Untis} \textit{API} wird verwendet, um auf den Stundenplan des \textit{TGMs} zugreifen zu können \cite{untis}. Um diese effizient zu nutzen, wurde ein \textit{Client}-Format implementiert. Diese speichert automatisch alle aktiven Sitzungen und ermöglicht ein effektives An- und Abmelden. Als Basis wurde eine \textit{Client} Datenstruktur erstellt, welche in einer Liste gespeichert wird, wodurch die \textit{Clients} dem jeweiligen Nutzer zuordenbar sind.
 
 \begin{minted}{go}
 const URL = "https://neilo.webuntis.com/WebUntis/jsonrpc.do?school=tgm"
@@ -535,9 +535,9 @@ type Client struct {
 	Authenticated bool
 }
 \end{minted}
-\captionof{listing}[Grundstruktur des Untis Clients]{Grundstruktur des Untis Clients}
+\captionof{listing}[Grundstruktur des \textit{Untis Teil 1} \textit{Clients}]{Grundstruktur des \textit{Untis} \textit{Clients} Teil 1}
 
-~\\ Diese Clients werden zu Beginn der Sitzung erstellt. Sie werden automatisch in die Liste der aktiven Clients eingetragen. Ist eine Abfrage von Untis-Daten nötig, so kann der Client wieder aufgerufen werden, indem der Code ihn über die Liste auswählt. Bei der Abmeldung wird der aktive Client eines Nutzers wieder abgemeldet und aus der Liste ausgetragen. Diese Vorgänge werden durch folgenden Code implementiert: 
+~\\ Diese \textit{Clients} werden zu Beginn der Sitzung erstellt. Sie werden automatisch in die Liste der aktiven \textit{Clients} eingetragen. Ist eine Abfrage von \textit{Untis}-Daten nötig, so kann der \textit{Client} wieder aufgerufen werden, indem der \textit{Code} ihn über die Liste auswählt. Bei der Abmeldung wird der aktive \textit{Client} eines Nutzers wieder abgemeldet und aus der Liste ausgetragen. Diese Vorgänge werden durch folgenden \textit{Code} implementiert: 
 
 \begin{minted}{go}
 func CreateClient(username, password string) *Client {
@@ -561,9 +561,9 @@ func (client Client) DeleteClient() {
 	delete(activeClients, client.Username)
 }
 \end{minted}
-\captionof{listing}[Grundstruktur des Untis Clients]{Grundstruktur des Untis Clients}
+\captionof{listing}[Grundstruktur des \textit{Untis} \textit{Clients} Teil 2]{Grundstruktur des \textit{Untis} \textit{Clients} Teil 2}
 
-Diese Struktur wird genutzt, um Sitzungen bei der Untis API starten zu können. Hierfür werden HTTP POST-Anfragen gesendet \cite{untis}. Diese Anfragen haben jeweils einen Methodennamen und Parameter. Um Anfragen einfach absenden zu können, wurde folgende Funktion implementiert, welche den Methodennamen und die Parameter richtig umwandelt und die Anfrage abschickt. Die Antwort darauf wird dabei automatisch zurückgegeben.
+Diese Struktur wird genutzt, um Sitzungen bei der \textit{Untis} \textit{API} starten zu können. Hierfür werden \textit{HTTP} \textit{POST}-Anfragen gesendet \cite{untis}. Diese Anfragen haben jeweils einen Methodennamen und Parameter. Um Anfragen einfach absenden zu können, wurde folgende Funktion implementiert, welche den Methodennamen und die Parameter richtig umwandelt und die Anfrage abschickt. Die Antwort darauf wird dabei automatisch zurückgegeben.
  
 \begin{minted}{go}
 func (client Client) sendRequest(method string, params map[string]interface{}) (*http.Response, int, error) {
@@ -584,13 +584,13 @@ func (client Client) sendRequest(method string, params map[string]interface{}) (
 	return resp, id, err
 }
 \end{minted}
-\captionof{listing}[Hilffunktion für Anfragen]{Hilffunktion für Anfragen an die Untis Schnittstelle \cite{untis}}
+\captionof{listing}[Hilffunktion für Anfragen]{Hilffunktion für Anfragen an die \textit{Untis} Schnittstelle \cite{untis}}
 
-~\\Die folgenden Methoden werden unterstützt, um einfache Abfragen im beschriebenen Client-Format durchführen zu können:
+~\\Die folgenden Methoden werden unterstützt, um einfache Abfragen im beschriebenen \textit{Client}-Format durchführen zu können:
 
 \newpage
 
-\captionof{table}[Weitere Methoden der Untis API]{Weitere Methoden der Untis API mit den entsprechenden Endpoints und einer Beschreibung \cite{untis}}
+\captionof{table}[Weitere Methoden der \textit{Untis} \textit{API}]{Weitere Methoden der \textit{Untis} \textit{API} mit den entsprechenden Endpoints und einer Beschreibung \cite{untis}}
 \begin{table}
 	\begin{tabular}{|l|l|l|}
 		\hline
@@ -611,7 +611,7 @@ func (client Client) sendRequest(method string, params map[string]interface{}) (
 \subsection{Dateierstellung}
 
 
-Die Dateierstellung funktioniert über die Bibliothek \enquote{\textit{maroto}} für das Erstellen von PDFs und über die Bibliothek \enquote{\textit{excelize}} für das Bearbeiten der Excel-Templates \cite{marotoart} \cite{maroto} \cite{excelize}. Des Weiteren wird auch \enquote{\textit{pdfcpu}} für das Zusammenfügen von PDFs verwendet \cite{pdfcpu}. Das folgende Beispiel zeigt die Erstellung eines einfachen PDFs über \enquote{\textit{maroto}}:
+Die Dateierstellung funktioniert über die Bibliothek \enquote{\textit{maroto}} für das Erstellen von \textit{PDFs} und über die Bibliothek \enquote{\textit{excelize}} für das Bearbeiten der \textit{Excel}-\textit{Templates} \cite{marotoart} \cite{maroto} \cite{excelize}. Des Weiteren wird auch \enquote{\textit{pdfcpu}} für das Zusammenfügen von \textit{PDFs} verwendet \cite{pdfcpu}. Das folgende Beispiel zeigt die Erstellung eines einfachen \textit{PDFs} über \enquote{\textit{maroto}}:
 
 \begin{minted}{go}
 m := pdf.NewMaroto(consts.Portrait, consts.A4)
@@ -636,14 +636,14 @@ m.Row(20, func() {
 })
 m.Line(3.0)
 \end{minted}
-\captionof{listing}[Maroto Beispiel]{Maroto Beispiel zum Erstellen eines PDFs \cite{marotoart}}
+\captionof{listing}[\textit{Maroto} Beispiel]{\textit{Maroto} Beispiel zum Erstellen eines \textit{PDFs} \cite{marotoart}}
 ~\\
-Dieses Code-Beispiel würde ein PDF erstellen, welches einen großen zentrierten QR-Code zeigt und darunter den Text \enquote{YouTube-Video} \cite{maroto}. Diese zwei Elemente werden durch eine horizontale Linie oben und unten begleitet.
+Dieses \textit{Code}-Beispiel würde ein \textit{PDF} erstellen, welches einen großen zentrierten \textit{QR-Code} zeigt und darunter den Text \enquote{\textit{YouTube}-Video} \cite{maroto}. Diese zwei Elemente werden durch eine horizontale Linie oben und unten begleitet.
 
 \newpage
 \subsection{Token Management}
 
-Das Token Management bietet Sicherheit, da es den Zugang zu der REST-Schnittstelle beschränkt \cite{jwt-go} \cite{tokenmanager}. Zugriff auf die meisten Endpunkte ist nur noch durch eine Verifizierung mit einem bei der Anmeldung erhaltenen Token möglich. Die Tokens werden durch Responses an den Client geschickt. Das Token System basiert auf der Bibliothek \enquote{\textit{jwt-go}} und enthält folgende Methoden:
+Das Token Management bietet Sicherheit, da es den Zugang zu der \textit{REST}-Schnittstelle beschränkt \cite{jwt-go} \cite{tokenmanager}. Zugriff auf die meisten Endpunkte ist nur noch durch eine Verifizierung mit einem bei der Anmeldung erhaltenen Token möglich. Die Tokens werden durch \textit{Responses} an den \textit{Client} geschickt. Das Token System basiert auf der Bibliothek \enquote{\textit{jwt-go}} und enthält folgende Methoden:
 
 \captionof{table}[Methoden des Token Management]{Implementierte Methoden im Token Management}
 \label{tbl:token}
@@ -683,12 +683,12 @@ func AuthWall() gin.HandlerFunc {
 \captionof{listing}[Token System Beispiel]{Token System Beispiel \cite{tokenmanager}}
 
 ~\\
-Die \textit{AuthWall} fungiert wie eine Art Mauer zwischen der URL zum Endpoint und dem eigentlichen Endpoint und lässt ausschließlich Anfragen durch, welche ein valides Token besitzen \cite{tokenmanager}. Dadurch werden die Endpoints nicht durch unautorisierte Anfragen angesprochen und somit ist die Ressourcenlast niedriger.
+Die \textit{AuthWall} fungiert wie eine Art Mauer zwischen der \textit{URL} zum \textit{Endpoint} und dem eigentlichen \textit{Endpoint} und lässt ausschließlich Anfragen durch, welche ein valides Token besitzen \cite{tokenmanager}. Dadurch werden die \textit{Endpoints} nicht durch unautorisierte Anfragen angesprochen und somit ist die Ressourcenlast niedriger.
 
 \newpage
 
 \subsection{REST-Schnittstelle}
-Die REST-Schnittstelle basiert auf Endpoints. Diese werden von der Bibliothek \enquote{\textit{gin-gonic}} verwaltet und nach dem Start zur Verfügung gestellt \cite{gingonic}. Um einen Endpoint mit \enquote{\textit{gin-gonic}} hinzuzufügen wird wie folgt vorgegangen:
+Die \textit{REST}-Schnittstelle basiert auf \textit{Endpoints}. Diese werden von der Bibliothek \enquote{\textit{gin-gonic}} verwaltet und nach dem Start zur Verfügung gestellt \cite{gingonic}. Um einen \textit{Endpoint} mit \enquote{\textit{gin-gonic}} hinzuzufügen wird wie folgt vorgegangen:
 
 \begin{minted}{go}
 router := gin.Default()
@@ -703,11 +703,11 @@ api := router.Group("/api")
 }
 log.Fatal(router.Run(":" + strconv.Itoa(Port)))
 \end{minted} 
-\captionof{listing}[REST router]{REST router - Endpoints zu gin-gonic hinzufügen}
+\captionof{listing}[\textit{REST} \textit{router}]{\textit{REST} \textit{router} - \textit{Endpoints} zu \textit{gin-gonic} hinzufügen}
 
 \subsubsection{Endpoints}
 
-Eine Liste aller implementierten Endpoints ist in \autoref{table:endpoints1} und in \autoref{table:endpoints2} ersichtlich. Ein Beispiel für einen implementierten Endpoint sieht wie folgt aus:
+Eine Liste aller implementierten \textit{Endpoints} ist in \autoref{table:endpoints1} und in \autoref{table:endpoints2} ersichtlich. Ein Beispiel für einen implementierten \textit{Endpoint} sieht wie folgt aus:
 
 \begin{minted}{go}
 func Login(con *gin.Context) {
@@ -734,12 +734,12 @@ func Login(con *gin.Context) {
 	con.JSON(http.StatusOK, out)
 }
 \end{minted}
-\captionof{listing}[Implementierung Login-Endpoint]{Implementierung Login-Endpoint}
-Zuerst werden Nutzerinformationen aus der Anfrage extrahiert. Diese Informationen werden über die LDAP-Schnittstelle verifiziert. Sollte dies erfolgreich sein, wird ein Tokenpaar erstellt und zurückgesendet. Bei einem Fehler bei einem vorherigen Schritt wird eine Fehlermeldung gesendet.
+\captionof{listing}[Implementierung Login-\textit{Endpoint}]{Implementierung Login-\textit{Endpoint}}
+Zuerst werden Nutzerinformationen aus der Anfrage extrahiert. Diese Informationen werden über die \textit{LDAP}-Schnittstelle verifiziert. Sollte dies erfolgreich sein, wird ein Tokenpaar erstellt und zurückgesendet. Bei einem Fehler bei einem vorherigen Schritt wird eine Fehlermeldung gesendet.
 
 \subsubsection{Swagger}
 
-\enquote{\textit{Swagger}} ist eine Dokumentationsmöglicht von REST-Schnittstellen \cite{swaggo}. Die einzelnen Endpoints wurden dokumentiert. Auf Basis dessen kann Swagger automatisch eine  komplette API-Dokumentation erstellen. Diese ist als eigener Endpoint der REST-Schnittstelle gestaltet und abrufbar. Damit die automatisch generierten Dateien von der REST-Schnittstelle ausgegeben werden können, müssen sie wie folgt importiert werden:
+\enquote{\textit{Swagger}} ist eine Dokumentationsmöglicht von \textit{REST}-Schnittstellen \cite{swaggo}. Die einzelnen \textit{Endpoints} wurden dokumentiert. Auf Basis dessen kann \textit{Swagger} automatisch eine  komplette \textit{API}-Dokumentation erstellen. Diese ist als eigener \textit{Endpoint} der \textit{REST}-Schnittstelle gestaltet und abrufbar. Damit die automatisch generierten Dateien von der \textit{REST}-Schnittstelle ausgegeben werden können, müssen sie wie folgt importiert werden:
 
 \begin{minted}{go}
 import(
@@ -749,9 +749,9 @@ import(
 	"github.com/swaggo/gin-swagger/swaggerFiles" // swagger files
 )
 \end{minted}
-\captionof{listing}[REST-Schnittstelle: Swagger Imports]{REST-Schnittstelle: Swagger Imports \cite{swagtut}}
+\captionof{listing}[\textit{REST}-Schnittstelle: \textit{Swagger} Imports]{\textit{REST}-Schnittstelle: \textit{Swagger} Imports \cite{swagtut}}
 
-~\\ Um die importierte Dokumentation zu veröffentlichen, wird eine Route zu dem entsprechenden Daten gelegt. Es wurde ebenso eine Weiterleitung vom Wurzelpfad aus eingerichtet, sodass, wenn kein Endpoint aufgerufen wird, man die Dokumentation angezeigt bekommt.
+~\\ Um die importierte Dokumentation zu veröffentlichen, wird eine Route zu dem entsprechenden Daten gelegt. Es wurde ebenso eine Weiterleitung vom Wurzelpfad aus eingerichtet, sodass, wenn kein \textit{Endpoint} aufgerufen wird, man die Dokumentation angezeigt bekommt.
 
 \begin{minted}{go}
 router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
@@ -759,11 +759,11 @@ router.GET("/", func(context *gin.Context) {
 	context.Redirect(http.StatusMovedPermanently, "swagger/index.html")
 })
 \end{minted}
-\captionof{listing}[REST-Schnittstelle: Swagger Routen]{REST-Schnittstelle: Swagger Routen}
+\captionof{listing}[\textit{REST}-Schnittstelle: \textit{Swagger} Routen]{\textit{REST}-Schnittstelle: \textit{Swagger} Routen}
 
 \subsubsection{Hauptmethode}
 
-Der REST-Service wird über die Main-Methode im \enquote{\textit{package main}} gestartet. Diese Methode ist jener Einstiegspunkt, welcher in einer Go Applikation immer gestartet wird. Die Main-Funktion dieses Systems Falle ist in \autoref{code:main} dargestellt.
+Der \textit{REST}-\textit{Service} wird über die \textit{Main}-Methode im \enquote{\textit{package main}} gestartet. Diese Methode ist jener Einstiegspunkt, welcher in einer \textit{Go} Applikation immer gestartet wird. Die \textit{Main}-Funktion dieses Systems Falle ist in \autoref{code:main} dargestellt.
 
 \begin{minted}{go}
 package main
@@ -777,5 +777,5 @@ func main() {
 	rest.StartService()
 }
 \end{minted}
-\captionof{listing}[Hauptmethode des Backends]{Hauptmethode des Backends}
+\captionof{listing}[Hauptmethode des \textit{Backends}]{Hauptmethode des \textit{Backends}}
 \label{code:main}

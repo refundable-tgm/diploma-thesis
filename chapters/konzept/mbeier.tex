@@ -3,26 +3,26 @@
 \section{Backend und Infrastruktur}
 \label{chapter:conceptbi}
 \subsection{Einleitung}
-Der Anspruch an die Infrastruktur und an das Backend besteht darin, die Software als ganzes zu steuern und zu erhalten. Die Infrastruktur muss einfach aufzubauen und zu starten sein. Die folgenden Kapiteln erläutern nach der generellen Analyse von Lösungsmöglichkeiten im \autoref{chap:backendsota} nun einen ausgearbeiteten Plan, wie die später folgende Implementierung aussehen soll. Hierfür werden Graphiken oder Tabelle verwendet. Sie sollen ausreichend Informationen über Abläufe oder verschiedene Funktionalitäten vorgeben, um diese entsprechend daraufhin zu implementieren. Des Weiteren sollen die genormten Diagrammarten dazu dienen das komplexe Backend und die Infrastruktur einfach und übersichtlich darzustellen, um speziell die Schnittstellenherausforderungen verständlich zu machen.
+Der Anspruch an die Infrastruktur und an das \textit{Backend} besteht darin, die Software als ganzes zu steuern und zu erhalten. Die Infrastruktur muss einfach aufzubauen und zu starten sein. Die folgenden Kapiteln erläutern nach der generellen Analyse von Lösungsmöglichkeiten im \autoref{chap:backendsota} nun einen ausgearbeiteten Plan, wie die später folgende Implementierung aussehen soll. Hierfür werden Graphiken oder Tabelle verwendet. Sie sollen ausreichend Informationen über Abläufe oder verschiedene Funktionalitäten vorgeben, um diese entsprechend daraufhin zu implementieren. Des Weiteren sollen die genormten Diagrammarten dazu dienen das komplexe \textit{Backend} und die Infrastruktur einfach und übersichtlich darzustellen, um speziell die Schnittstellenherausforderungen verständlich zu machen.
 \subsection{Infrastruktur}
-Die Infrastruktur enthält jegliche Dienste und Anwendungen, welche von der Software in der Projektumgebung benötigt werden. Um diese Dienste einfach mit aufbauen zu können wird eine Virtualisierung über Container mittels Docker umgesetzt. Diese virtuellen Instanzen, verbunden in einem Docker-Compose Stack, werden über ein eigenes Skript gesteuert.
+Die Infrastruktur enthält jegliche Dienste und Anwendungen, welche von der Software in der Projektumgebung benötigt werden. Um diese Dienste einfach mit aufbauen zu können wird eine Virtualisierung über \textit{Container} mittels \textit{Docker} umgesetzt. Diese virtuellen Instanzen, verbunden in einem \textit{Docker-Compose Stack}, werden über ein eigenes Skript gesteuert.
 \subsubsection{Docker Stack}
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\linewidth]{images/mbeier_konzept/docker-stack}
-	\caption[Docker-Compose Stack]{Übersicht über die Container des Docker-Compose Stack}
+	\caption[\textit{Docker-Compose Stack}]{Übersicht über die \textit{Container} des \textit{Docker-Compose Stack}}
 	\label{fig:docker-stack}
 \end{figure}
 
 \newpage
 
-Diese in Docker Container befindlichen Dienste und Anwendungen werden benötigt um die Software funktionsfähig bereitzustellen. Der automatische Aufbau dieser Container-Infrastruktur geschieht auf Basis einer Docker-Compose Konfiguration automatisch. \\
+Diese in \textit{Docker Container} befindlichen Dienste und Anwendungen werden benötigt um die Software funktionsfähig bereitzustellen. Der automatische Aufbau dieser \textit{Container}-Infrastruktur geschieht auf Basis einer \textit{Docker-Compose} Konfiguration automatisch. \\
 
-Docker Container stellen eigene Umgebungen dar, welche nach dem Stoppen oftmals vollständig zerstört und gelöscht werden. Die Daten, auf die die Software und auch die anderen Anwendungen zugreifen müssen, sind jedoch über die Lebenszeit eines Docker Containers hinaus zu persistieren. Um dies garantieren zu können, werden Volumes in die Container eingehängt, sodass die Daten prinzipiell außerhalb der Container gespeichert werden und nur von außen in die Umgebungen eingehängt werden. Dies ist bei dem MongoDB Container erforderlich um die Daten, welche in der Datenbank gespeichert werden, permanent zu speichern. Ebenso ist es erforderlich die generierten Dateien des Golang-Backends zu persistieren, um auf diese später wieder zugreifen zu können. Auch werden im Backend diverse gleichbleibende Passphrasen, beispielsweise zum Signieren von Tokens, auf die gleiche Art und Weise gespeichert. \\
+\textit{Docker Container} stellen eigene Umgebungen dar, welche nach dem Stoppen oftmals vollständig zerstört und gelöscht werden. Die Daten, auf die die Software und auch die anderen Anwendungen zugreifen müssen, sind jedoch über die Lebenszeit eines \textit{Docker Containers} hinaus zu persistieren. Um dies garantieren zu können, werden \textit{Volumes} in die \textit{Container} eingehängt, sodass die Daten prinzipiell außerhalb der \textit{Container} gespeichert werden und nur von außen in die Umgebungen eingehängt werden. Dies ist bei dem \textit{MongoDB Container} erforderlich um die Daten, welche in der Datenbank gespeichert werden, permanent zu speichern. Ebenso ist es erforderlich die generierten Dateien des \textit{Golang}-\textit{Backends} zu persistieren, um auf diese später wieder zugreifen zu können. Auch werden im \textit{Backend} diverse gleichbleibende Passphrasen, beispielsweise zum Signieren von Tokens, auf die gleiche Art und Weise gespeichert. \\
 
-Die Zugangsdaten für den Nutzeraccount, welche beim Installieren abgefragt werden (siehe \autoref{fig:install}), der Datenbank werden über Dockers Secrets-Management sowohl in den Datenbank-, als auch in den Golang-Container eingehängt, damit sich dieser zur Datenbank verbinden kann. In der Datenbank müssen initial neben den Datenbanknutzern auch die Datenbankinstanz selbst angelegt werden. Dies geschieht über ein eigenes zum Start ausführendes Skript. \\
+Die Zugangsdaten für den Nutzeraccount, welche beim Installieren abgefragt werden (siehe \autoref{fig:install}), der Datenbank werden über \textit{Dockers} \textit{Secrets}-\textit{Management} sowohl in den Datenbank-, als auch in den \textit{Golang}-\textit{Container} eingehängt, damit sich dieser zur Datenbank verbinden kann. In der Datenbank müssen initial neben den Datenbanknutzern auch die Datenbankinstanz selbst angelegt werden. Dies geschieht über ein eigenes zum Start ausführendes Skript. \\
 
-Das Frontend selbst besteht aus zwei Ebenen. Zu Beginn wird das Frontend selbst kompiliert und installiert. Hierfür gibt es einen eigenen Container, der hierfür eine Umgebung bietet. Danach wird der eigentliche Webserver-Container gestartet und die zuvor kompilierten Dateien werden in den neuen Container kopiert. Ebenfalls wird eine angelegte Konfigurationsdatei, die den Webserver Dienst weitergehend konfiguriert, in das entsprechende Verzeichnis hinzugefügt.\\
+Das \textit{Frontend} selbst besteht aus zwei Ebenen. Zu Beginn wird das \textit{Frontend} selbst kompiliert und installiert. Hierfür gibt es einen eigenen \textit{Container}, der hierfür eine Umgebung bietet. Danach wird der eigentliche \textit{Webserver}-\textit{Container} gestartet und die zuvor kompilierten Dateien werden in den neuen \textit{Container} kopiert. Ebenfalls wird eine angelegte Konfigurationsdatei, die den \textit{Webserver} Dienst weitergehend konfiguriert, in das entsprechende Verzeichnis hinzugefügt.\\
 
 \newpage
 
@@ -42,7 +42,7 @@ Hierfür implementiert das Steuerungsskript folgende Submethoden mit entsprechen
 
 \newpage
 
-Die Idee hinter der Etablierung eines Installationsvorganges soll die Einfachheit der Steuerung der Software hervorheben. Das Install-Repository beinhaltet hierbei lediglich eine grundlegende Ordnerstruktur und das Steuerungsskript selbst. Durch den Installationsvorgang werden die restlichen benötigten Daten automatisch heruntergeladen und installiert.
+Die Idee hinter der Etablierung eines Installationsvorganges soll die Einfachheit der Steuerung der Software hervorheben. Das \textit{Install}-\textit{Repository} beinhaltet hierbei lediglich eine grundlegende Ordnerstruktur und das Steuerungsskript selbst. Durch den Installationsvorgang werden die restlichen benötigten Daten automatisch heruntergeladen und installiert.
 
 ~\\~\\~\\
 \textbf{Startvorgang:}
@@ -54,7 +54,7 @@ Die Idee hinter der Etablierung eines Installationsvorganges soll die Einfachhei
 	\label{fig:start}
 \end{figure}
 
-Der Startvorgang baut die Docker-Images, sofern diese noch nicht vorhanden sind, grundlegend auf Basis der installierten Dateien auf und startet daraufhin den gesamten Stack auf einmal. Voraussetzung hierfür ist, dass der Installationsvorgang bereits abgeschlossen ist und die heruntergeladenen Dateien vorhanden sind.
+Der Startvorgang baut die \textit{Docker}-\textit{Images}, sofern diese noch nicht vorhanden sind, grundlegend auf Basis der installierten Dateien auf und startet daraufhin den gesamten Stack auf einmal. Voraussetzung hierfür ist, dass der Installationsvorgang bereits abgeschlossen ist und die heruntergeladenen Dateien vorhanden sind.
 
 \newpage  
 
@@ -68,7 +68,7 @@ Der Startvorgang baut die Docker-Images, sofern diese noch nicht vorhanden sind,
 \end{figure}
 
 ~\\
-Der Stoppvorgang beendet die laufenden Docker-Container und entfernt diese aus der Docker Umgebung. Dies führt dazu, dass garantiert wird, dass die sich wieder neu aufbauende Umgebung tatsächlich neu ist, und nicht nur eine alte Instanz wiederverwendet wird.
+Der Stoppvorgang beendet die laufenden \textit{Docker}-\textit{Container} und entfernt diese aus der \textit{Docker} Umgebung. Dies führt dazu, dass garantiert wird, dass die sich wieder neu aufbauende Umgebung tatsächlich neu ist, und nicht nur eine alte Instanz wiederverwendet wird.
 
 \newpage
 
@@ -94,7 +94,7 @@ Der Neustartvorgang kombiniert den Start- und Stoppvorgang und führt diese beid
 	\label{fig:update}
 \end{figure}
 ~\\
-Der Aktualisierungsvorgang ist dem Installationsvorgang sehr ähnlich. Da es sich bei den installierten Dateien um solche aus Git-Repositories handelt, können diese auch einfach aktualisiert werden. Daraufhin wird nur noch ein Neustart des Systems durchgeführt.
+Der Aktualisierungsvorgang ist dem Installationsvorgang sehr ähnlich. Da es sich bei den installierten Dateien um solche aus \textit{Git}-\textit{Repositories} handelt, können diese auch einfach aktualisiert werden. Daraufhin wird nur noch ein Neustart des Systems durchgeführt.
 
 \newpage
 
@@ -107,7 +107,7 @@ Der Aktualisierungsvorgang ist dem Installationsvorgang sehr ähnlich. Da es sic
 	\label{fig:clean}
 \end{figure}
 ~\\
-Der Bereinigungsvorgang nutzt die Docker Funktionen zum Löschen von nicht mehr benutzten Docker Images (Dangling Images). Nachdem werden die nicht mehr benutzten Ressourcen über die entsprechende Docker-Funktion aus dem System und der Docker Umgebung entfernt.
+Der Bereinigungsvorgang nutzt die \textit{Docker} Funktionen zum Löschen von nicht mehr benutzten \textit{Docker} Images (\textit{Dangling Images}). Nachdem werden die nicht mehr benutzten Ressourcen über die entsprechende \textit{Docker}-Funktion aus dem System und der \textit{Docker} Umgebung entfernt.
 
 \newpage
 
@@ -120,7 +120,7 @@ Der Bereinigungsvorgang nutzt die Docker Funktionen zum Löschen von nicht mehr 
 	\label{fig:purge}
 \end{figure}
 ~\\
-Der Vorgang hinter der Deinstallation löscht jegliche Information der Software aus der Docker Umgebung und auch alle Dateien, welche mit den Diensten assoziiert sind.
+Der Vorgang hinter der Deinstallation löscht jegliche Information der Software aus der \textit{Docker} Umgebung und auch alle Dateien, welche mit den Diensten assoziiert sind.
 
 \newpage
 
@@ -141,14 +141,14 @@ Insgesamt gibt es zehn verschiedene Datenstrukturen, wobei hierbei neun die eige
 
 \subsection{REST-Schnittstelle}
 
- erstellt. Diese sind in sich abgeschlossene Vorgänge, welche sich jeweils immer auf eine Aufgabe beschränken. Im folgenden Kapitel sind alle geplanten Endpoints beschrieben.
+ erstellt. Diese sind in sich abgeschlossene Vorgänge, welche sich jeweils immer auf eine Aufgabe beschränken. Im folgenden Kapitel sind alle geplanten \textit{Endpoints} beschrieben.
 
 \subsubsection{Endpoints}
 \label{chapter:endpoints}
 
-Die folgende Tabelle beschreibt die geplanten Endpoints, wobei  sie jeweils mit der Protokollmethode (GET, POST, PUT oder DELETE), dem Pfad zum Endpoint, einer kurzen Beschreibung, Rückgaben, Eingaben und dem Erfordernis eines Tokens beschrieben werden.
+Die folgende Tabelle beschreibt die geplanten \textit{Endpoints}, wobei  sie jeweils mit der Protokollmethode (\textit{GET}, \textit{POST}, \textit{PUT} oder \textit{DELETE}), dem Pfad zum \textit{Endpoint}, einer kurzen Beschreibung, Rückgaben, Eingaben und dem Erfordernis eines Tokens beschrieben werden.
 
-\captionof{table}[REST-Endpoints 1]{Übersicht REST-Endpoints: Teil 1}
+\captionof{table}[\textit{REST}-\textit{Endpoints} 1]{Übersicht \textit{REST}-\textit{Endpoints}: Teil 1}
 \label{table:endpoints1}
 \begin{table}
 	\centering
@@ -173,7 +173,7 @@ Die folgende Tabelle beschreibt die geplanten Endpoints, wobei  sie jeweils mit 
 
 \newpage
 		
-\captionof{table}[REST-Endpoints 2]{Übersicht REST-Endpoints: Teil 2}	
+\captionof{table}[\textit{REST}-\textit{Endpoints} 2]{Übersicht \textit{REST}-\textit{Endpoints}: Teil 2}	
 \label{table:endpoints2}
 \begin{table}
 	\centering
@@ -200,21 +200,21 @@ Die folgende Tabelle beschreibt die geplanten Endpoints, wobei  sie jeweils mit 
 
 \subsubsection{Token System}
 
-Die Implementierung eines nicht-persistenten Token Systems, um die Kommunikation mit der REST-Schnittstelle weiter zu schützen, ist wenn es sich um sensible Daten handelt, sehr wichtig. Ansonsten könnte einfach jeder die Endpoints der Schnittstelle ansprechen. Durch die Ausgabe von sogenannten \enquote{Access Tokens} und \enquote{Refresh Tokens} werden diese jedoch abgesichert. Diese müssen bei jeder Anfrage nach dem Login mit übergeben werden (im Headerfeld \enquote{Authorization}), wodurch sich der Absender als eingeloggte Lehrkraft verifiziert. Anfragen ohne Tokens werden in Folge automatisch abgewiesen. 
-\\Diese Tokens sind verschlüsselte Zeichenketten, welche nur durch das Backend entschlüsselbar sind, da nur das System selbst den Schlüssel hierfür kennt. Im Token selbst werden Informationen über die Sitzung und den Nutzer gespeichert, sodass er nur durch die Angabe des Tokens verifiziert werden kann.\\
-Das \enquote{Access Token} ist genau 15 Minuten lang gültig und erlaubt solange direkten Zugriff auf die Schnittstelle. Sobald dieses abgelaufen ist, kann mit dem \enquote{Refresh Token}, welches 7 Tage lang gültig ist, ein neues Tokenpaar bei der Schnittstelle generiert werden. Da es sich um zwei komplett neue Tokens handelt, verlängert sich hierbei auch die Gültigkeit des Logins. Sollte keines der beiden Token mehr gültig sein, so muss ein neues Paar durch einen neuen Loginvorgang erstellt werden.
+Die Implementierung eines nicht-persistenten Token Systems, um die Kommunikation mit der \textit{REST}-Schnittstelle weiter zu schützen, ist wenn es sich um sensible Daten handelt, sehr wichtig. Ansonsten könnte einfach jeder die \textit{Endpoints} der Schnittstelle ansprechen. Durch die Ausgabe von sogenannten \enquote{\textit{Access} Tokens} und \enquote{\textit{Refresh} Tokens} werden diese jedoch abgesichert. Diese müssen bei jeder Anfrage nach dem Login mit übergeben werden (im \textit{Headerfeld} \enquote{\textit{Authorization}}), wodurch sich der Absender als eingeloggte Lehrkraft verifiziert. Anfragen ohne Tokens werden in Folge automatisch abgewiesen. 
+\\Diese Tokens sind verschlüsselte Zeichenketten, welche nur durch das \textit{Backend} entschlüsselbar sind, da nur das System selbst den Schlüssel hierfür kennt. Im Token selbst werden Informationen über die Sitzung und den Nutzer gespeichert, sodass er nur durch die Angabe des Tokens verifiziert werden kann.\\
+Das \enquote{\textit{Access} Token} ist genau 15 Minuten lang gültig und erlaubt solange direkten Zugriff auf die Schnittstelle. Sobald dieses abgelaufen ist, kann mit dem \enquote{\textit{Refresh} Token}, welches 7 Tage lang gültig ist, ein neues Tokenpaar bei der Schnittstelle generiert werden. Da es sich um zwei komplett neue Tokens handelt, verlängert sich hierbei auch die Gültigkeit des Logins. Sollte keines der beiden Token mehr gültig sein, so muss ein neues Paar durch einen neuen Loginvorgang erstellt werden.
 
 \subsection{Backend}
-Um jene in  \autoref{chapter:endpoints} beschriebenen Endpoints auch mit Funktionalität ausstatten zu können, müssen entsprechende Methoden im Backend implementiert werden. Hierzu gehören hauptsächlich die Schnittstellen zu folgenden Diensten und die Implementierungen von Hauptfunktionen des Systems. Diese sind in den folgenden Abschnitten beschrieben.
+Um jene in  \autoref{chapter:endpoints} beschriebenen \textit{Endpoints} auch mit Funktionalität ausstatten zu können, müssen entsprechende Methoden im \textit{Backend} implementiert werden. Hierzu gehören hauptsächlich die Schnittstellen zu folgenden Diensten und die Implementierungen von Hauptfunktionen des Systems. Diese sind in den folgenden Abschnitten beschrieben.
 
 \subsubsection{Untis}
 
-Die offizielle Untis-Schnittstelle ermöglicht dem System die Abfrage des aktuellen Stunden- und Supplierplans. Dadurch können diese Informationen auch auf den etwaigen Formularen direkt genutzt werden. Um mit dieser Schnittstelle einfach kommunizieren zu können, ist folgender Aufbau und Implementierung eines REST-Clients im Backend geplant. Mit Hilfe diesen kann das System einfach die Sitzung, welche schon durch die REST-Schnittstelle existiert, weiter nutzen und somit möglichst effizient arbeiten.
+Die offizielle \textit{Untis}-Schnittstelle ermöglicht dem System die Abfrage des aktuellen Stunden- und Supplierplans. Dadurch können diese Informationen auch auf den etwaigen Formularen direkt genutzt werden. Um mit dieser Schnittstelle einfach kommunizieren zu können, ist folgender Aufbau und Implementierung eines \textit{REST}-\textit{Clients} im \textit{Backend} geplant. Mit Hilfe diesen kann das System einfach die Sitzung, welche schon durch die \textit{REST}-Schnittstelle existiert, weiter nutzen und somit möglichst effizient arbeiten.
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\linewidth]{images/mbeier_konzept/Untis}
-	\caption[Untis API-Client UML-Klassendiagramm]{UML-Klassendiagramm des Untis API-Client für das Abfragen von Stundenplaninformationen.}
+	\caption[\textit{Untis} \textit{API}-\textit{Client} \textit{UML}-Klassendiagramm]{\textit{UML}-Klassendiagramm des \textit{Untis} \textit{API}-\textit{Client} für das Abfragen von Stundenplaninformationen.}
 	\label{fig:untis}
 \end{figure}
 
@@ -222,23 +222,23 @@ Die offizielle Untis-Schnittstelle ermöglicht dem System die Abfrage des aktuel
 
 \subsubsection{LDAP}
 
-LDAP ist ein Zugriffsprotokoll um auf ein Active Directory zugreifen zu können. In diesem wird im TGM weitere Informationen zu den Lehrkräften und Schülern gespeichert. Um diese Daten einsehen zu können, muss man sich bei diesem Dienst anmelden, was mit den jeweils eigenen TGM-Account Zugangsdaten möglich ist. Dadurch ist die Anmeldung mit den TGM-Nutzerdaten zu realisieren. Des Weiteren ist die Abfrage weiterer benötigter Daten hierdurch möglich. Der Ablauf einer solchen Interaktion über LDAP wird in folgendem Flussdiagramm veranschaulicht.
+\textit{LDAP} ist ein Zugriffsprotokoll um auf ein \textit{Active Directory} zugreifen zu können. In diesem wird im \textit{TGM} weitere Informationen zu den Lehrkräften und Schülern gespeichert. Um diese Daten einsehen zu können, muss man sich bei diesem Dienst anmelden, was mit den jeweils eigenen \textit{TGM}-\textit{Account} Zugangsdaten möglich ist. Dadurch ist die Anmeldung mit den \textit{TGM}-Nutzerdaten zu realisieren. Des Weiteren ist die Abfrage weiterer benötigter Daten hierdurch möglich. Der Ablauf einer solchen Interaktion über \textit{LDAP} wird in folgendem Flussdiagramm veranschaulicht.
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.5\linewidth]{images/mbeier_konzept/LDAP_Authenticate}
-	\caption[Authentifizierung über LDAP]{Authentifizierung über den tgm-eigenen LDAP Server}
+	\caption[Authentifizierung über \textit{LDAP}]{Authentifizierung über den \textit{TGM}-eigenen \textit{LDAP} \textit{Server}}
 	\label{fig:ldapauthenticate}
 \end{figure}
 
 \newpage
 
-Um jenen in \autoref{fig:ldapauthenticate} abgebildeten Ablauf einfach implementieren zu können, bietet sich folgender Aufbau eines LDAP-Clients an. Dieser kann hierbei die Zugangsdaten durch eine einfache Anmeldung beim Dienst verifizieren und auch die benötigten Daten, wie den kompletten Namen der Lehrkraft, beim Dienst abfragen.
+Um jenen in \autoref{fig:ldapauthenticate} abgebildeten Ablauf einfach implementieren zu können, bietet sich folgender Aufbau eines \textit{LDAP}-\textit{Clients} an. Dieser kann hierbei die Zugangsdaten durch eine einfache Anmeldung beim Dienst verifizieren und auch die benötigten Daten, wie den kompletten Namen der Lehrkraft, beim Dienst abfragen.
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\linewidth]{images/mbeier_konzept/LDAP}
-	\caption[lLDAP UML-Klassendiagramm]{UML-Klassendiagramm des LDAP Packages für die Authentifizierung von Lehrkräften}
+	\caption[\textit{lLDAP} \textit{UML}-Klassendiagramm]{\textit{UML}-Klassendiagramm des \textit{LDAP} \textit{Packages} für die Authentifizierung von Lehrkräften}
 	\label{fig:ldap}
 \end{figure}
 
@@ -246,9 +246,9 @@ Um jenen in \autoref{fig:ldapauthenticate} abgebildeten Ablauf einfach implement
 
 \subsubsection{Dateierstellung}
 
-Die Datei- und Formularerstellung ist die Hauptfunktion der Software. Das Generieren folgender Formulare wird unterstützt. Bei \enquote{Reiserechnung} und \enquote{Dienstreiseantrag} werden auf Grund des festgelegten Designs auch eine Excel Variante angeboten, in der dieses umgesetzt ist. Das Format steht hierbei für Hoch- oder Querformat, wobei Portrait das Hochformat und Landscape das Querformat ist.
+Die Datei- und Formularerstellung ist die Hauptfunktion der Software. Das Generieren folgender Formulare wird unterstützt. Bei \enquote{Reiserechnung} und \enquote{Dienstreiseantrag} werden auf Grund des festgelegten Designs auch eine \textit{Excel} Variante angeboten, in der dieses umgesetzt ist. Das Format steht hierbei für Hoch- oder Querformat, wobei \textit{Portrait} das Hochformat und \textit{Landscape} das Querformat ist.
 
-\captionof{table}[Dateierstellung - Dateien]{Übersicht über die verschiedenen Dateien, die durch das Backend erstellt werden.}	
+\captionof{table}[Dateierstellung - Dateien]{Übersicht über die verschiedenen Dateien, die durch das \textit{Backend} erstellt werden.}	
 \label{tbl:files}
 \begin{table}
 	\centering
@@ -266,12 +266,12 @@ Die Datei- und Formularerstellung ist die Hauptfunktion der Software. Das Generi
 \end{table}
 
 ~\\
-Alle eigens generierten PDFs sind jedenfalls mit einer Kopfzeile ausgestattet. In dieser ist in der linken Ecke das TGM-Logo zu sehen, in der Mitte steht der Name des Formulars (siehe \autoref{tbl:files}) und rechts ein QR-Code, welcher eine URL beinhaltet, die den zugehörigen Antrag direkt im Frontend öffnet.
+Alle eigens generierten \textit{PDFs} sind jedenfalls mit einer Kopfzeile ausgestattet. In dieser ist in der linken Ecke das \textit{TGM}-Logo zu sehen, in der Mitte steht der Name des Formulars (siehe \autoref{tbl:files}) und rechts ein \textit{QR-Code}, welcher eine \textit{URL} beinhaltet, die den zugehörigen Antrag direkt im \textit{Frontend} öffnet.
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\linewidth]{images/mbeier_konzept/Kopfleiste_PDF_border}
-	\caption[Kopfleiste PDF-Datei]{Beispiel einer Kopfleiste in den vom Backend generierten PDF-Dateien}
+	\caption[Kopfleiste \textit{PDF}-Datei]{Beispiel einer Kopfleiste in den vom \textit{Backend} generierten \textit{PDF}-Dateien}
 	\label{fig:kopfleiste-pdf}
 \end{figure}
 
