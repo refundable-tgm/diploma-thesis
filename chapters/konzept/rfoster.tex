@@ -1,6 +1,6 @@
 %!TEX root=../../main.tex
 \section{Datenschnittstelle und Webseitenlogik}
-Die Schnittstelle zwischen Frontend und Backend wird mittels \textit{JavaScript}-Framework umgesetzt. Wie in Kapitel \autoref{sec:rfoster_fazit} beschrieben, wird hierfür \textit{VueJS} verwendet. \textit{VueJS} bietet viele passende Funktionen und Features, um  eine solche Webseite umzusetzen.
+Die Schnittstelle zwischen \textit{Frontend} und \textit{Backend} wird mittels \textit{JavaScript-Framework} umgesetzt. Wie in Kapitel \autoref{sec:rfoster_fazit} beschrieben, wird hierfür \textit{VueJS} verwendet. \textit{VueJS} bietet viele passende Funktionen und Features, um  eine solche Webseite umzusetzen.
 \subsection{Webseitenlogik}
 \label{sec:webseitenlogik}
 Die Webseite wird mittels \textit{Vue}-Komponenten aufgebaut werden. Eine Seite besteht aus einer Hauptkomponente und möglicherweise noch zusätzlichen Nebenkomponenten. Die Struktur der einzelnen Komponenten und Links der Webseite soll wie folgt aussehen:
@@ -22,10 +22,10 @@ Wird ein Link eingegeben, welcher nicht auf die Seite selbst oder eine definiert
 \end{figure}
 
 \subsubsection{Manager}
-Der \textit{Manager} ist der Hauptbestandteil der Webseite. Er beinhaltet alle einzelnen Seiten und zeigt immer die gewünschte Seite an. In dem \textit{Manager} werden auch Cookie-Einstellungen und Rechte gespeichert. Fast alle Komponenten werden dem \textit{Manager} untergeordnet. Der \textit{Manager} ist auch dafür verantwortlich, Daten zwischen Komponenten zu übermitteln.
+Der \textit{Manager} ist der Hauptbestandteil der Webseite. Er beinhaltet alle einzelnen Seiten und zeigt immer die gewünschte Seite an. In dem \textit{Manager} werden auch \textit{Cookie}-Einstellungen und Rechte gespeichert. Fast alle Komponenten werden dem \textit{Manager} untergeordnet. Der \textit{Manager} ist auch dafür verantwortlich, Daten zwischen Komponenten zu übermitteln.
 
 \subsubsection{Komponenten}
-Einzelne Komponenten laden die Daten eigenständig aus dem Backend. Dies ist eine Maßnahme, um den \textit{Manager} nicht mit Funktionen zu überladen und damit nicht bei jedem Aufruf Daten vom \textit{Manager} an die einzelnen Komponenten gesendet werden müssen.\\
+Einzelne Komponenten laden die Daten eigenständig aus dem \textit{Backend}. Dies ist eine Maßnahme, um den \textit{Manager} nicht mit Funktionen zu überladen und damit nicht bei jedem Aufruf Daten vom \textit{Manager} an die einzelnen Komponenten gesendet werden müssen.\\
 Im dem Fall, dass eine Komponente Daten an eine weitere Komponente sendet, wird diese Kommunikation vom \textit{Manager} übernommen.
 
 \subsubsection{Antrag-Viewer}
@@ -34,7 +34,7 @@ Es soll eine weitere Seite vorhanden sein, auf die man durch einen Link gelangen
 Wird in den Parametern des Links bereits spezifiziert, welcher Antrag geöffnet werden soll, wird dem Benutzer nach der Anmeldung dieser Antrag angezeigt. Es können nur jene Anträge angezeigt werden, zu denen der Benutzer die erforderlichen Berechtigungen besitzt. Besitzt der Benutzer nicht die erforderlichen Berechtigungen, wird eine Fehlermeldung ausgegeben.
 
 \subsubsection{Navigation}
-Da fast alle Komponenten dem \textit{Manager} untergeordnet sind, ist es auch die Verantwortung des \textit{Manager}s die Navigation zu steuern. Dazu gibt es eine zentrale Funktion im \textit{Manager}, welche die derzeit geladene Seite verändern kann. Des Weiteren werden die benötigten Informationen geladen bzw. erstellt, welche die Komponenten benötigen.
+Da fast alle Komponenten dem \textit{Manager} untergeordnet sind, ist es auch die Verantwortung des \textit{Managers} die Navigation zu steuern. Dazu gibt es eine zentrale Funktion im \textit{Manager}, welche die derzeit geladene Seite verändern kann. Des Weiteren werden die benötigten Informationen geladen bzw. erstellt, welche die Komponenten benötigen.
 \\\\
 Die Funktion zum Verändern der derzeitigen Anzeige wird von den untergeordneten Komponenten aufgerufen. Hinzu kommt, dass mit dem Aufruf der Funktion auch spezifiziert wird, welche Seite geladen werden soll. Spezielle Seiten, wie z.B: der \textit{Antrag-Viewer}, benötigen zusätzlichen Informationen, welche über diese Funktion mitgegeben werden.
 
@@ -42,16 +42,16 @@ Die Funktion zum Verändern der derzeitigen Anzeige wird von den untergeordneten
 \label{sec:feature}
 Es sollen auch Funktionen implementiert werden, welche das Benützen der Webseite erleichtern.
 \\\\
-Es soll möglich sein, bei erneutem Laden der Webseite auf die zuletzt geöffnete Seite zu gelangen. Beim Beenden des Browsers speichert die Webseite die aktuelle Seite und lädt diese bei erneutem Aufrufen der Webseite automatisch.
+Es soll möglich sein, bei erneutem Laden der Webseite auf die zuletzt geöffnete Seite zu gelangen. Beim Beenden des \textit{Browsers} speichert die Webseite die aktuelle Seite und lädt diese bei erneutem Aufrufen der Webseite automatisch.
 \\\\
-Es ist durch die Browser-Pfeile auch möglich zwischen den Seiten zu navigieren. Dies ist wichtig, da durch versehentliches wechseln der Komponente ein Benutzer möglichst schnell wieder auf die vorherige Seite gelangen soll. Durch die Implementierung der Browser-Pfeile ist es möglich intuitiv auf die vorherige Seite zu wechseln. Andere Funktionen, welche die selbe Funktionalität haben, werden durch diese Implementierung auch unterstützt.
+Es ist durch die \textit{Browser}-Pfeile auch möglich zwischen den Seiten zu navigieren. Dies ist wichtig, da durch versehentliches wechseln der Komponente ein Benutzer möglichst schnell wieder auf die vorherige Seite gelangen soll. Durch die Implementierung der \textit{Browser}-Pfeile ist es möglich intuitiv auf die vorherige Seite zu wechseln. Andere Funktionen, welche die selbe Funktionalität haben, werden durch diese Implementierung auch unterstützt.
 \newpage
 \subsection{Daten laden}
-Auf den Seiten, wo es benötigt wird, werden über Funktionen des Frameworks dynamisch Komponenten erstellt und geladen. Der Prozess Daten aus dem Backend zu laden wird in folgender Grafik beschrieben:
+Auf den Seiten, wo es benötigt wird, werden über Funktionen des \textit{Frameworks} dynamisch Komponenten erstellt und geladen. Der Prozess Daten aus dem \textit{Backend} zu laden wird in folgender Grafik beschrieben:
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.8\linewidth]{images/rfoster_konzept/Prozess_Daten_laden}
-	\caption[Prozess der Daten zur Anzeige]{Übersicht über den Prozess, welcher Daten aus dem Backend lädt}
+	\caption[Prozess der Daten zur Anzeige]{Übersicht über den Prozess, welcher Daten aus dem \textit{Backend} lädt}
 	\label{fig:prozessdatenladen}
 \end{figure}
 
@@ -59,10 +59,10 @@ Auf den Seiten, wo es benötigt wird, werden über Funktionen des Frameworks dyn
 Die Webseite wird aufgerufen und der Benutzer bekommt die Startseite angezeigt.
 
 \subsubsection{Datenabfrage erstellen und Daten erhalten}
-Auf der Startseite der Webseite werden die neuesten Nachrichten angezeigt, welche für den Lehrer relevant sind. Hierfür müssen aus dem Backend Daten geladen werden. Dies erfolgt über eine Abfrage, welche aus dem Frontend gesendet wird, Daten ausliest und diese dann verwendet, um Komponenten zu erstellen.
+Auf der Startseite der Webseite werden die neuesten Nachrichten angezeigt, welche für den Lehrer relevant sind. Hierfür müssen aus dem \textit{Backend} Daten geladen werden. Dies erfolgt über eine Abfrage, welche aus dem \textit{Frontend} gesendet wird, Daten ausliest und diese dann verwendet, um Komponenten zu erstellen.
 
 \subsubsection{Komponenten erstellen}
-Die geladenen Daten aus dem Backend werden mittels Einbindung der Variablen in einzelne Komponenten eingebunden.\\
+Die geladenen Daten aus dem \textit{Backend} werden mittels Einbindung der Variablen in einzelne Komponenten eingebunden.\\
 Seiten, auf denen viele gleiche Komponenten sind, werden mittels Schleifen erstellt. Diese sorgen dafür, dass nicht zu viele Komponenten auf der Seite geladen sind, wenn diese nicht gebraucht werden.
 Ein Beispiel hierfür sind die neuen Nachrichten, welche in folgender Grafik gezeigt werden:
 \begin{figure}[H]
@@ -78,12 +78,12 @@ Durch die Schleife können auch die Komponenten angezeigt werden. Diese ordnet a
 Bei den Nachrichten kann man sich jede Nachricht als eigene Komponente vorstellen, welche jeweils erstellt und danach angezeigt wird.
 %\newpage
 \subsection{Befehle senden}
-Die Webseite besitzt auch einige Aktionen, die von Benutzern ausgeführt werden können. Diese müssen je nach Aktion eine neue Seite aufrufen oder einen Befehl an das Backend senden.
+Die Webseite besitzt auch einige Aktionen, die von Benutzern ausgeführt werden können. Diese müssen je nach Aktion eine neue Seite aufrufen oder einen Befehl an das \textit{Backend} senden.
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.8\linewidth]{images/rfoster_konzept/Prozess_Befehl_senden}
-	\caption[Prozess der Befehlssendung]{Übersicht über den Prozess, welcher Befehle an das Backend sendet}
+	\caption[Prozess der Befehlssendung]{Übersicht über den Prozess, welcher Befehle an das \textit{Backend} sendet}
 	\label{fig:prozessbefehlsenden}
 \end{figure}
 
@@ -91,10 +91,10 @@ Die Webseite besitzt auch einige Aktionen, die von Benutzern ausgeführt werden 
 Eine Aktion wird ausgeführt, wenn z.B. auf eine Komponente gedrückt wird. Dies ruft eine Funktion auf, bei der eine Anfrage erstellt wird.
 
 \subsubsection{Befehl senden}
-Eine Anfrage beinhaltet alle wichtigen Informationen des Befehls für das Backend. Sie wird anschließend an das Backend gesendet, um dort abgearbeitet zu werden.
+Eine Anfrage beinhaltet alle wichtigen Informationen des Befehls für das \textit{Backend}. Sie wird anschließend an das \textit{Backend} gesendet, um dort abgearbeitet zu werden.
 
 \subsubsection{Antwort interpretieren}
-Sobald das Backend den Befehl in der Anfrage ausgeführt hat, wird eine Antwort an das Frontend gesendet und soll dort interpretiert werden. Die Interpretation der Antwort soll durch den Status der Antwort geschehen. Der Status der Antwort ist ein Code, welcher aussagt, ob der Befehl funktioniert hat oder fehlgeschlagen ist. Sollte der Befehl fehlschlagen, so deutet der Code auf den genauen Fehlergrund hin.
+Sobald das \textit{Backend} den Befehl in der Anfrage ausgeführt hat, wird eine Antwort an das \textit{Frontend} gesendet und soll dort interpretiert werden. Die Interpretation der Antwort soll durch den Status der Antwort geschehen. Der Status der Antwort ist ein Code, welcher aussagt, ob der Befehl funktioniert hat oder fehlgeschlagen ist. Sollte der Befehl fehlschlagen, so deutet der Code auf den genauen Fehlergrund hin.
 
 \subsubsection{Information anzeigen}
 Tritt ein Fehler auf, soll dies dem Benutzer offensichtlich mitgeteilt werden. Sollte kein Fehler auftreten, soll das dem Benutzer je nach Befehl auf unterschiedliche Weise mitgeteilt werden.\\
