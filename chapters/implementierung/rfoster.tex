@@ -59,7 +59,7 @@ Die referenzierte \textit{change}-Funktion übernimmt das tatsächliche Ändern 
 \end{code}
 \captionof{listing}[Funktion Managment der \textit{Cookies} und \textit{History}]{Funktion für das Managment der \textit{Cookies} und \textit{History} des Browsers}~\\
 Hier werden nicht nur die angezeigte Seite verändert, sondern auch je nach Parameter die \textit{Cookies} sowie die \textit{History} des Browsers gesetzt.\\
-Die beschriebenen Funktionen müssen von den Komponenten aufgerufen werden können. Deswegen hört der \textit{Manager} auf Signale der Unterseiten, falls diese die Seite geändert werden soll. Dies wird mittels VueJS erledigt, da das Framework hierfür bereits Funktionen implementiert hat:
+Die beschriebenen Funktionen müssen von den Komponenten aufgerufen werden können. Deswegen hört der \textit{Manager} auf Signale der Unterseiten, falls diese die Seite geändert werden soll. Dies wird mittels \textit{VueJS} erledigt, da das Framework hierfür bereits Funktionen implementiert hat:
 \begin{code}{js}
 	v-on:change-component="changeComponent"
 	// Es wird auf das Signal change-component gehört und die Funktion changeComponent aufgerufen
