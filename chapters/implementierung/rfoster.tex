@@ -350,7 +350,7 @@ Im ersten Schritt, werden allgemeine Informationen der Schulveranstaltung eingeg
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\linewidth]{images/rfoster_implementierung/schoolgeneral}
-	\caption[Schulveranstaltung]{Eingabefelder für allgemeine Informationen einer Schulveranstaltung}
+	\caption[Schulveranstaltungsinformationen eingeben]{Eingabefelder für allgemeine Informationen einer Schulveranstaltung}
 	\label{fig:schoolgeneral}
 \end{figure}
 \paragraph{Informationen zu Begleitlehrern}~
@@ -358,9 +358,15 @@ Im ersten Schritt, werden allgemeine Informationen der Schulveranstaltung eingeg
 Nach der Eingabe aller allgemeinen Informationen wird der Benutzer nach dem Drücken des \textit{weiter}-Knopfes auf eine weitere Unterseite weitergeleitet. Auf dieser können Informationen zu den im vorherigen Schritt angegebenen Begleitlehrern angegeben werden.
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.7\linewidth]{images/rfoster_implementierung/escorts}
-	\caption[Schulveranstaltung 2]{Eingabefelder für Informationen von Begleitlehrern}
-	\label{fig:escorts}
+	\includegraphics[width=1\linewidth]{images/rfoster_implementierung/escort1}
+	\caption[Begleitlehrerinformationen eingeben (Teil 1)]{Eingabefelder für Informationen von Begleitlehrern (Teil 1)}
+	\label{fig:escorts1}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\linewidth]{images/rfoster_implementierung/escort2}
+	\caption[Begleitlehrerinformationen eingeben (Teil 2)]{Eingabefelder für Informationen von Begleitlehrern (Teil 2)}
+	\label{fig:escorts2}
 \end{figure}
 \newpage
 Nachdem die Seite bearbeitet worden ist, kann auf den Knopf \textit{Einreichen} gedrückt werden. Sobald der Knopf gedrückt worden ist, wird das \textit{JSON}-Objekt mit allen Informationen, die eingegeben worden sind, erstellt und an das Backend gesendet.
@@ -400,9 +406,15 @@ var data = {		// Das JSON-Objekt mit allen Informationen
 Eine Fortbildung wird auf der Fortbildung-Unterseite erstellt. Diese sieht wie folgt aus und beinhaltet Eingabefelder für alle notwendigen Informationen der Fortbildung.
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.63\linewidth]{images/rfoster_implementierung/workshop}
-	\caption[Fortbildung]{Eingabefelder einer Fortbildung}
-	\label{fig:workshop}
+	\includegraphics[width=1\linewidth]{images/rfoster_implementierung/workshop1}
+	\caption[Fortbildungsinformationen eingeben (Teil 1)]{Eingabefelder einer Fortbildung (Teil 1)}
+	\label{fig:workshop1}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\linewidth]{images/rfoster_implementierung/workshop2}
+	\caption[Fortbildungsinformationen eingeben (Teil 2)]{Eingabefelder einer Fortbildung (Teil 2)}
+	\label{fig:workshop2}
 \end{figure}
 \newpage
 Bei einer Fortbildung kann unterschieden werden, welche Art von Fortbildung erstellt werden soll. Es kann zwischen Seminar, Tagung, Lehrgang und Sonstiges unterschieden werden. Das \textit{JSON}-Objekt wird nach dem Drücken des \textit{Einreichen}-Knopfes erstellt und mit den angegebenen Daten befüllt. Das Objekt wird anschließend an das Backend gesendet.\\
@@ -430,11 +442,17 @@ var data = {		// Das JSON-Objekt mit allen Informationen
 Ein \textit{Sonstiges}-Antrag kann auf der Unterseite \textit{Anderer Grund} erstellt werden. Er sieht wie folgt aus und beinhaltet Eingabefelder für alle notwendigen Informationen für den Antrag.
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.6\linewidth]{images/rfoster_implementierung/othercause}
-	\caption[Sonstiges Antrag]{Eingabefelder für \textit{Sonstiges}-Antrag}
-	\label{fig:othercause}
+	\includegraphics[width=1\linewidth]{images/rfoster_implementierung/othercause1}
+	\caption[Sonstiges-Antrag Informationen eingeben (Teil 1)]{Eingabefelder für \textit{Sonstiges}-Antrag (Teil 1)}
+	\label{fig:othercause1}
 \end{figure}
-\textit{Sonstiges}-Anträge werden unterschieden in Pflegefreistellungen, Dienstaufträge, Arzttermine und Sonstiges. Das \textit{JSON}-Objekt wird nach dem Drücken des \textit{Einreichen}-Knopfes erstellt und mit den angegebenen Daten befüllt. Das Objekt wird anschließend an das Backend gesendet.\\
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\linewidth]{images/rfoster_implementierung/othercause2}
+	\caption[Sonstiges-Antrag Informationen eingeben (Teil 2)]{Eingabefelder für \textit{Sonstiges}-Antrag (Teil 2)}
+	\label{fig:othercause2}
+\end{figure}
+\textit{Sonstiges}-Anträge werden unterschieden in Pflegefreistellungen, Dienstaufträge, Arzttermine und Sonstiges. Das \textit{JSON}-Objekt wird nach dem Drücken des \textit{Einreichen}-Knopfes erstellt und mit den angegebenen Daten befüllt. Das Objekt wird anschließend an das Backend gesendet.\newpage
 
 Das \textit{JSON}-Objekt wird, wie in \autoref{code_submit_data} beschrieben erstellt. Für einen \textit{Sonstiges}-Antrag gibt es nur wenige Änderungen.
 Statt dem \textit{SchoolEventDetails}-Objekt wird ein \textit{OtherReasonDetails}-Objekt in den Antrag hinzugefügt und die Art des Antrags wird auf 6 gesetzt:
