@@ -182,7 +182,7 @@ export default router;
 Wird ein \textit{Link} eingegeben, welcher nicht ''/'' oder ''/viewer'' entspricht, so wird die \textit{PageNotFound}-Komponente geladen und somit dem Benutzer mitteilt, dass der eingegebene \textit{Link} nicht funktioniert.
 \subsubsection{Antrag-Viewer}
 \label{sec:antrag_viewer}
-Der \textit{Antrag-Viewer} wird über den \textit{Link} ''/viewer'' aufgerufen. Dies führt dazu, dass der Benutzer auf eine Seite weitergeleitet wird, auf der er die ID eines Antrags eingeben kann.
+Der \textit{Antrag-Viewer} wird über den \textit{Link} ''/viewer'' aufgerufen. Dies führt dazu, dass der Benutzer auf eine Seite weitergeleitet wird, auf der er die \textit{ID} eines Antrags eingeben kann.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\linewidth]{images/rfoster_implementierung/antrag_viewer}
@@ -190,7 +190,7 @@ Der \textit{Antrag-Viewer} wird über den \textit{Link} ''/viewer'' aufgerufen. 
 	\label{fig:antragviewer}
 \end{figure}
 
-Sollte der Benutzer nicht angemeldet sein, so wird er zuerst auf die \textit{Login}-Seite weitergeleitet, bevor er die ID des Antrags eingeben kann. Sollte der eingegebene \textit{Link} bereits den Parameter \textit{uuid} besitzen, wird der Benutzer auf die Antragsansichtsseite weitergeleitet, sofern dieser angemeldet ist. Ansonsten wird der Benutzer zuerst auf die \textit{Login}-Seite weitergeleitet.
+Sollte der Benutzer nicht angemeldet sein, so wird er zuerst auf die \textit{Login}-Seite weitergeleitet, bevor er die \textit{ID} des Antrags eingeben kann. Sollte der eingegebene \textit{Link} bereits den Parameter \textit{uuid} besitzen, wird der Benutzer auf die Antragsansichtsseite weitergeleitet, sofern dieser angemeldet ist. Ansonsten wird der Benutzer zuerst auf die \textit{Login}-Seite weitergeleitet.
 \begin{code}{js}
 	{
 		// Die Route des Antrag-Viewers
@@ -488,7 +488,7 @@ Sobald der Benutzer auf den \textit{Einreichen}-Knopf drückt, wird das \textit{
 \newpage
 \subsection{Antrag Ansicht}
 \label{sec:antrag_ansicht}
-Wenn die Unterseite, die einen Antrag anzeigen soll, geladen wird, so wird der Unterseite die ID des Antrags mitgegeben. Sobald die Komponente geladen wird, wird mit dieser ID eine Anfrage an das \textit{Backend} gesendet, um den gesamten Antrag zu laden. Die Informationen werden interpretiert und angezeigt.
+Wenn die Unterseite, die einen Antrag anzeigen soll, geladen wird, so wird der Unterseite die \textit{ID} des Antrags mitgegeben. Sobald die Komponente geladen wird, wird mit dieser \textit{ID} eine Anfrage an das \textit{Backend} gesendet, um den gesamten Antrag zu laden. Die Informationen werden interpretiert und angezeigt.
 \subsubsection{Fortschrittsanzeige}
 Jeder Antrag besitzt einen Fortschritt, welcher graphisch durch eine \textit{Progress}-Komponente angezeigt wird. Die Komponente erhält von der \textit{Antrag-Ansicht} den Fortschritt des Antrags und die Art des Antrags als Nummer, um die Informationen für den Benutzer lesbar anzuzeigen.
 \begin{figure}
