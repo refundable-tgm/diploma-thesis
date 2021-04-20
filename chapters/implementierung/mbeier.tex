@@ -649,6 +649,7 @@ Dieses Code-Beispiel würde ein PDF erstellen, welches einen großen zentrierten
 Das Token Management bietet Sicherheit, da es den Zugang zu der REST-Schnittstelle beschränkt. \cite{jwt-go} \cite{tokenmanager} Zugriff ist auf die meisten Endpunkte nur noch durch eine Verifizierung mit einem bei der Anmeldung erhaltenen Token möglich. Die Tokens werden durch Responses an den Client geschickt. Das Token System basiert auf der Bibliothek jwt-go und enthält folgende Methoden:
 
 \captionof{table}[Methoden des Token Management]{Implementierte Methoden im Token Management}
+\label{tbl:token}
 \begin{table}
 	\begin{tabular}{|l|l|l|c|}
 		\hline
@@ -736,7 +737,7 @@ func Login(con *gin.Context) {
 	con.JSON(http.StatusOK, out)
 }
 \end{minted}
-\captionof{listing}[Implementierung Login-Endpoint]{mplementierung Login-Endpoint}
+\captionof{listing}[Implementierung Login-Endpoint]{Implementierung Login-Endpoint}
 Zuerst werden Nutzerinformationen aus der Anfrage extrahiert. Diese Informationen werden über die LDAP-Schnittstelle verifiziert. Sollte dies erfolgreich sein so wird ein Tokenpaar erstellt und zurückgesendet. Bei einem Fehler bei einem vorherigen Schritt wird eine Fehlermeldung gesendet.
 
 \subsubsection{Swagger}
