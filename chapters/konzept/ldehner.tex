@@ -1,16 +1,16 @@
 %!TEX root=../../main.tex
 \section{Frontend}
 \label{chapter:konzept-frontend}
-In diesem Kapitel wird die Erstellung des Konzepts für das Frontend erläutert. Dabei müssen unter anderem Faktoren, wie die Zielgruppe, unsere Lehrerschaft, beachtet werden. Im folgenden Kapitel werden die theoretischen Hintergründe des Konzeptes dargestellt, erörtert. Im Anschluss werden die ersten Entwürfe mittels Mockups erstellt. 
+In diesem Kapitel wird die Erstellung des Konzepts für das Frontend erläutert. Dabei müssen unter anderem Faktoren, wie die Zielgruppe, unsere Lehrerschaft, beachtet werden. Im folgenden Kapitel werden die theoretischen Hintergründe des Konzeptes dargestellt und erörtert. Im Anschluss werden die ersten Entwürfe mittels Mockups erstellt. 
 \subsection{Theoretische Konzeption}
 \label{chapter:konzept-frontend-theorie}
-Da die Zielgruppe \enquote{Lehrer} nicht gleichaltrig ist, sondern die darin enthaltenen Personen ein Alter von 25 bis 65 Jahren haben, gibt es keine Literatur zur \enquote{perfekten Usability für Lehrpersonal}. Demnach richten wir uns nach den Büchern \enquote{Don't Make Me Think: A Common Sense Approche to Web Usability} von Steve Krug und  \enquote{101 UX Principles} von Will Grant. Um eine gute Usability für die Lehrer des TGMs zu gewährleisten, werden wir den Prozess der Entwicklung streng in Kontakt zu Lehrern begleiten und das Produkt auch mit Technik nicht versierten Anwendern testen.  
+Da die Zielgruppe \enquote{Lehrer} nicht gleichaltrig ist, sondern die darin enthaltenen Personen ein Alter von 25 bis 65 Jahren haben, gibt es keine Literatur zur \enquote{perfekten Usability für Lehrpersonal}. Demnach richten wir uns nach den Büchern \enquote{Don't Make Me Think: A Common Sense Approche to Web Usability} von Steve Krug und  \enquote{101 UX Principles} von Will Grant. Um eine gute Usability für die Lehrer des TGMs zu gewährleisten, werden wir den Prozess der Entwicklung in engem Kontakt zu den Lehrern durchführen und das Produkt auch mit Technik nicht versierten Anwendern testen.  
 \newpage
 \subsection{Visuelle Konzeption}
 \label{chapter:konzept-frontend-visuell}
 \paragraph{Login-Seite}
 ~\\
-Wie man auf der \autoref{fig:mockupLogin} erkennen kann, ist die Login-Seite sehr schlicht gehalten. Neben dem Schriftzug \enquote{Refundable} soll das Formular zum Einloggen dargestellt sein. Da die Plattform nur für das Personal des TGMs zugänglich sein soll, wird bei der Eingabe der E-Mail Adresse automatisch eine \enquote{@tgm.ac.at} Endung angefügt. Wird der \enquote{Passwort vergessen?} Link betätigt, soll automatisch auf die Seite des TGMs verwiesen werden, da die Daten, der Lehrer, über LDAP abgerufen werden. Bei der Eingabe von validen Daten und dem Betätigen des \enquote{Anmelden} Buttons wird der Benutzer auf die Startseite weitergeleitet.
+Wie man auf der \autoref{fig:mockupLogin} erkennen kann, ist die Login-Seite sehr schlicht gehalten. Neben dem Schriftzug \enquote{Refundable} soll das Formular zum Einloggen dargestellt sein. Da die Plattform nur für das Personal des TGMs zugänglich sein soll, wird bei der Eingabe der E-Mail Adresse automatisch eine \enquote{@tgm.ac.at} Endung angefügt. Wird der \enquote{Passwort vergessen?} Link betätigt, soll automatisch auf die Seite des TGMs verwiesen werden, da die Daten der Lehrer über LDAP abgerufen werden. Bei der Eingabe von validen Daten und dem Betätigen des \enquote{Anmelden} Buttons wird der Benutzer auf die Startseite weitergeleitet.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\linewidth]{images/ldehner_konzept/Mockup-Startseite}
@@ -66,7 +66,7 @@ Zur Veranschaulichung der oben genannten Prozesse ist in \autoref{fig:ucNew} ein
 \newpage
 \paragraph{Ansicht alle Anträge}
 ~\\
-Auf der \textit{alle Anträge} Seite, sieht man alle Anträge, mit denen man in Verbindung steht. Akzeptierte, abgelehnte Abträge, als auch jene, die noch in Bearbeitung sind, werden hier angezeigt und können über das Menü auf der rechten Seite geöffnet werden (\autoref{fig:mockupAlle}).
+Auf der \textit{alle Anträge} Seite, sieht man alle Anträge, mit denen man in Verbindung steht. Akzeptierte, abgelehnte Anträge und jene, die noch in Bearbeitung sind, werden hier angezeigt und können über das Menü auf der rechten Seite geöffnet werden (\autoref{fig:mockupAlle}).
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\linewidth]{images/ldehner_konzept/Mockup-Alle-Anträge}
@@ -83,7 +83,7 @@ Zur Veranschaulichung der oben genannten Prozesse ist in \autoref{fig:ucAll} ein
 \newpage
 \paragraph{Ansicht aktive Anträge}
 ~\\
-Auf der \textit{aktive Anträge} Seite, sieht man alle Anträge, die aktiv sind (also in Bearbeitung oder vorerst abgelehnt) und mit denen man in Verbindung steht. Diese können über das Menü auf der rechten Seite geöffnet werden (\autoref{fig:mockupAktive}).
+Auf der \textit{aktive Anträge} Seite sieht man alle Anträge, die aktiv sind (also in Bearbeitung oder vorerst abgelehnt) und mit denen man in Verbindung steht. Diese können über das Menü auf der rechten Seite geöffnet werden (\autoref{fig:mockupAktive}).
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\linewidth]{images/ldehner_konzept/Mockup-Aktive-Anträge}
