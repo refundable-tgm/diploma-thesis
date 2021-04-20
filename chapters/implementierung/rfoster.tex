@@ -140,7 +140,7 @@ Diese Attribute können mit folgendem Code aufgefangen und in diesen eingebunden
 In dem Code werden die übergebenen Variablen, welche in der übergeordneten Komponente definiert worden sind, aufgefangen. Diese können als normale Variablen verwendet werden.
 \newpage
 \subsubsection{Seite nicht gefunden}
-Wie in \autoref{sec:not_found} beschrieben wird, wird der Benutzer bei Eingabe eines falschen Links auf eine Seite weitergeleitet. Dazu wird der \textit{Vue-Router} so eingestellt, dass jeder Link, außer dem Hauptlink zur eigentlichen Webseite, auf die beschriebene Seite weitergeleitet wird. Die Routen des Routers sind wie folgt aufgebaut:
+Wie in \autoref{sec:not_found} beschrieben wird, wird der Benutzer bei Eingabe eines falschen \textit{Links} auf eine Seite weitergeleitet. Dazu wird der \textit{Vue-Router} so eingestellt, dass jeder \textit{Link}, außer dem Hauptlink zur eigentlichen Webseite, auf die beschriebene Seite weitergeleitet wird. Die Routen des Routers sind wie folgt aufgebaut:
 \begin{code}{js}
 // Imports für die Komponenten
 import Vue from "vue";
@@ -179,10 +179,10 @@ export default router;
 \end{code}
 \captionof{listing}[Pfadverwaltung]{Router, welcher die Pfade der Software verwaltet}~\\
 
-Wird ein Link eingegeben, welcher nicht ''/'' oder ''/viewer'' entspricht, so wird die \textit{PageNotFound}-Komponente geladen und somit dem Benutzer mitteilt, dass der eingegebene Link nicht funktioniert.
+Wird ein \textit{Link} eingegeben, welcher nicht ''/'' oder ''/viewer'' entspricht, so wird die \textit{PageNotFound}-Komponente geladen und somit dem Benutzer mitteilt, dass der eingegebene \textit{Link} nicht funktioniert.
 \subsubsection{Antrag-Viewer}
 \label{sec:antrag_viewer}
-Der \textit{Antrag-Viewer} wird über den Link ''/viewer'' aufgerufen. Dies führt dazu, dass der Benutzer auf eine Seite weitergeleitet wird, auf der er die ID eines Antrags eingeben kann.
+Der \textit{Antrag-Viewer} wird über den \textit{Link} ''/viewer'' aufgerufen. Dies führt dazu, dass der Benutzer auf eine Seite weitergeleitet wird, auf der er die ID eines Antrags eingeben kann.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\linewidth]{images/rfoster_implementierung/antrag_viewer}
@@ -190,7 +190,7 @@ Der \textit{Antrag-Viewer} wird über den Link ''/viewer'' aufgerufen. Dies füh
 	\label{fig:antragviewer}
 \end{figure}
 
-Sollte der Benutzer nicht angemeldet sein, so wird er zuerst auf die \textit{Login}-Seite weitergeleitet, bevor er die ID des Antrags eingeben kann. Sollte der eingegebene Link bereits den Parameter \textit{uuid} besitzen, wird der Benutzer auf die Antragsansichtsseite weitergeleitet, sofern dieser angemeldet ist. Ansonsten wird der Benutzer zuerst auf die \textit{Login}-Seite weitergeleitet.
+Sollte der Benutzer nicht angemeldet sein, so wird er zuerst auf die \textit{Login}-Seite weitergeleitet, bevor er die ID des Antrags eingeben kann. Sollte der eingegebene \textit{Link} bereits den Parameter \textit{uuid} besitzen, wird der Benutzer auf die Antragsansichtsseite weitergeleitet, sofern dieser angemeldet ist. Ansonsten wird der Benutzer zuerst auf die \textit{Login}-Seite weitergeleitet.
 \begin{code}{js}
 	{
 		// Die Route des Antrag-Viewers

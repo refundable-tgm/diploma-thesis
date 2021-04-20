@@ -3,7 +3,7 @@
 Die Schnittstelle zwischen \textit{Frontend} und \textit{Backend} wird mittels \textit{JavaScript-Framework} umgesetzt. Wie in Kapitel \autoref{sec:rfoster_fazit} beschrieben, wird hierfür \textit{VueJS} verwendet. \textit{VueJS} bietet viele passende Funktionen und Features, um  eine solche Webseite umzusetzen.
 \subsection{Webseitenlogik}
 \label{sec:webseitenlogik}
-Die Webseite wird mittels \textit{Vue}-Komponenten aufgebaut werden. Eine Seite besteht aus einer Hauptkomponente und möglicherweise noch zusätzlichen Nebenkomponenten. Die Struktur der einzelnen Komponenten und Links der Webseite soll wie folgt aussehen:
+Die Webseite wird mittels \textit{Vue}-Komponenten aufgebaut werden. Eine Seite besteht aus einer Hauptkomponente und möglicherweise noch zusätzlichen Nebenkomponenten. Die Struktur der einzelnen Komponenten und \textit{Links} der Webseite soll wie folgt aussehen:
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.8\linewidth]{images/rfoster_konzept/Webseite_hierarchie}
@@ -13,7 +13,7 @@ Die Webseite wird mittels \textit{Vue}-Komponenten aufgebaut werden. Eine Seite 
 
 \subsubsection{Seite nicht gefunden}
 \label{sec:not_found}
-Wird ein Link eingegeben, welcher nicht auf die Seite selbst oder eine definierte Unterseite verweist, wird eine Seite geladen, bei der der Benutzer darauf hingewiesen wird, dass kein korrekten Link eingegeben wurde.
+Wird ein \textit{Link} eingegeben, welcher nicht auf die Seite selbst oder eine definierte Unterseite verweist, wird eine Seite geladen, bei der der Benutzer darauf hingewiesen wird, dass kein korrekten \textit{Link} eingegeben wurde.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.6\linewidth]{images/rfoster_konzept/page_not_found}
@@ -29,9 +29,9 @@ Einzelne Komponenten laden die Daten eigenständig aus dem \textit{Backend}. Die
 Im dem Fall, dass eine Komponente Daten an eine weitere Komponente sendet, wird diese Kommunikation vom \textit{Manager} übernommen.
 
 \subsubsection{Antrag-Viewer}
-Es soll eine weitere Seite vorhanden sein, auf die man durch einen Link gelangen kann. Auf dieser Seite soll es möglich sein, einen Antrag per ID anzeigen zu lassen. Da dieser separate Link technisch auf der selben Ebene wie der \textit{Manager} ist, wird dafür gesorgt, dass dieser Link dem \textit{Manager} nahtlos untergeordnet ist. Der \textit{Antrag-Viewer} ist nur verwendbar, sofern der Benutzer angemeldet ist und auch die Berechtigung hat, diesen Antrag zu betrachten.
+Es soll eine weitere Seite vorhanden sein, auf die man durch einen \textit{Link} gelangen kann. Auf dieser Seite soll es möglich sein, einen Antrag per ID anzeigen zu lassen. Da dieser separate \textit{Link} technisch auf der selben Ebene wie der \textit{Manager} ist, wird dafür gesorgt, dass dieser \textit{Link} dem \textit{Manager} nahtlos untergeordnet ist. Der \textit{Antrag-Viewer} ist nur verwendbar, sofern der Benutzer angemeldet ist und auch die Berechtigung hat, diesen Antrag zu betrachten.
 \\\\
-Wird in den Parametern des Links bereits spezifiziert, welcher Antrag geöffnet werden soll, wird dem Benutzer nach der Anmeldung dieser Antrag angezeigt. Es können nur jene Anträge angezeigt werden, zu denen der Benutzer die erforderlichen Berechtigungen besitzt. Besitzt der Benutzer nicht die erforderlichen Berechtigungen, wird eine Fehlermeldung ausgegeben.
+Wird in den Parametern des \textit{Links} bereits spezifiziert, welcher Antrag geöffnet werden soll, wird dem Benutzer nach der Anmeldung dieser Antrag angezeigt. Es können nur jene Anträge angezeigt werden, zu denen der Benutzer die erforderlichen Berechtigungen besitzt. Besitzt der Benutzer nicht die erforderlichen Berechtigungen, wird eine Fehlermeldung ausgegeben.
 
 \subsubsection{Navigation}
 Da fast alle Komponenten dem \textit{Manager} untergeordnet sind, ist es auch die Verantwortung des \textit{Managers} die Navigation zu steuern. Dazu gibt es eine zentrale Funktion im \textit{Manager}, welche die derzeit geladene Seite verändern kann. Des Weiteren werden die benötigten Informationen geladen bzw. erstellt, welche die Komponenten benötigen.
