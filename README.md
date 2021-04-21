@@ -3,7 +3,7 @@ diploma thesis of this project
 
 
 
-
+the final version can be read [here](main.pdf)
 
 
 
