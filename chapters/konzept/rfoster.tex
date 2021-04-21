@@ -1,6 +1,6 @@
 %!TEX root=../../main.tex
 \section{Datenschnittstelle und Webseitenlogik}
-Die Schnittstelle zwischen \textit{Frontend} und \textit{Backend} wird mittels \textit{JavaScript-Framework} umgesetzt. Wie in Kapitel \autoref{sec:rfoster_fazit} beschrieben, wird hierfür \textit{VueJS} verwendet. \textit{VueJS} bietet viele passende Funktionen und Features, um  eine solche Webseite umzusetzen.
+Die Schnittstelle zwischen \textit{Frontend} und \textit{Backend} wird mittels \textit{JavaScript-Framework} umgesetzt. Wie in \autoref{sec:rfoster_fazit} beschrieben, wird hierfür \textit{VueJS} verwendet. \textit{VueJS} bietet viele passende Funktionen und \textit{Features}, um  eine solche Webseite umzusetzen.
 \subsection{Webseitenlogik}
 \label{sec:webseitenlogik}
 Die Webseite wird mittels \textit{Vue}-Komponenten aufgebaut werden. Eine Seite besteht aus einer Hauptkomponente und möglicherweise noch zusätzlichen Nebenkomponenten. Die Struktur der einzelnen Komponenten und \textit{Links} der Webseite soll wie folgt aussehen:
@@ -94,7 +94,7 @@ Eine Aktion wird ausgeführt, wenn z.B. auf eine Komponente gedrückt wird. Dies
 Eine Anfrage beinhaltet alle wichtigen Informationen des Befehls für das \textit{Backend}. Sie wird anschließend an das \textit{Backend} gesendet, um dort abgearbeitet zu werden.
 
 \subsubsection{Antwort interpretieren}
-Sobald das \textit{Backend} den Befehl in der Anfrage ausgeführt hat, wird eine Antwort an das \textit{Frontend} gesendet und soll dort interpretiert werden. Die Interpretation der Antwort soll durch den Status der Antwort geschehen. Der Status der Antwort ist ein Code, welcher aussagt, ob der Befehl funktioniert hat oder fehlgeschlagen ist. Sollte der Befehl fehlschlagen, so deutet der Code auf den genauen Fehlergrund hin.
+Sobald das \textit{Backend} den Befehl in der Anfrage ausgeführt hat, wird eine Antwort an das \textit{Frontend} gesendet und soll dort interpretiert werden. Die Interpretation der Antwort soll durch den Status der Antwort geschehen. Der Status der Antwort ist ein \textit{Code}, welcher aussagt, ob der Befehl funktioniert hat oder fehlgeschlagen ist. Sollte der Befehl fehlschlagen, so deutet der \textit{Code} auf den genauen Fehlergrund hin.
 
 \subsubsection{Information anzeigen}
 Tritt ein Fehler auf, soll dies dem Benutzer offensichtlich mitgeteilt werden. Sollte kein Fehler auftreten, soll das dem Benutzer je nach Befehl auf unterschiedliche Weise mitgeteilt werden.\\

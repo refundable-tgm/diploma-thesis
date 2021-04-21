@@ -9,7 +9,7 @@ Die Fragestellung der Studie ist erstens, welche Unterschiede es bei der Datenre
 \subsection{Entwurfsmuster}
 Dieser Teil des Projektes wird in Verwendung eines Entwurfsmusters umgesetzt. Zwei \textit{\Gls{mv*}} Entwurfsmuster werden hierbei in Betrachtung gezogen: zum einen \textit{MVVM} und zum anderen \textit{MVC}. Es kommen diese zwei Entwurfsmuster in Frage, da \textit{MVC} ein sehr bekanntes Entwurfsmuster ist und \textit{MVVM} eine neuere und spezifischere Variante von \textit{MVC} ist \cite{mvvm_vue}.
 \subsubsection{MVC}
-\Gls{mvc} ist ein Entwurfsmuster, mit dem eine Software in die drei Teile (\textit{Model}, \textit{View} und \textit{Controller}) geteilt wird \cite{mvc}. Das \textit{Model} beinhaltet alle Daten der Software und auch alle Funktionen, die mit den Daten interagieren oder mit ihnen rechnen. Die \textit{View} ist der Teil der Software, den Benutzer sehen und mit dem sie interagieren. Dieser Teil der Software beinhaltet keine wichtigen Daten oder Funktionen, welche Daten bearbeiten. Die \textit{View} hört nur auf Benutzereingaben und zeigt die bereitgestellten Daten an. Der \textit{Controller} ist der Teil der Software, der \textit{Model} und \textit{View} verbindet. Im \textit{Controller} wird auf die Benutzereingaben reagiert und es werden die gewünschten Funktionen aus dem \textit{Model} aufgerufen.
+\textit{\Gls{mvc}} ist ein Entwurfsmuster, mit dem eine Software in die drei Teile (\textit{Model}, \textit{View} und \textit{Controller}) geteilt wird \cite{mvc}. Das \textit{Model} beinhaltet alle Daten der Software und auch alle Funktionen, die mit den Daten interagieren oder mit ihnen rechnen. Die \textit{View} ist der Teil der Software, den Benutzer sehen und mit dem sie interagieren. Dieser Teil der Software beinhaltet keine wichtigen Daten oder Funktionen, welche Daten bearbeiten. Die \textit{View} hört nur auf Benutzereingaben und zeigt die bereitgestellten Daten an. Der \textit{Controller} ist der Teil der Software, der \textit{Model} und \textit{View} verbindet. Im \textit{Controller} wird auf die Benutzereingaben reagiert und es werden die gewünschten Funktionen aus dem \textit{Model} aufgerufen.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.75\linewidth]{images/rfoster_study/mvc}
@@ -30,16 +30,16 @@ Das \textit{ViewModel} ist ein Bindeglied zwischen \textit{Model} und \textit{Vi
 \end{figure}
 \subsubsection{Vergleich}
 Diese zwei \Gls{designpattern} sind zwar sehr ähnlich, jedoch gibt es wichtige Unterschiede zwischen ihnen.\\\\
-\textit{\Gls{mvc}} ist ein Entwurfsmuster, welches auf einem niedrigen Level überall im Einsatz ist - z.B. bei Tastatureingaben \cite{mvc}. Dieses Entwurfsmuster ist zwar schon lange verfügbar, jedoch kann es bei Webapplikationen zu Problemen führen.\\
-Bei der Entwicklung einer Webapplikation ist es nicht einfach, das \textit{Model} von dem \textit{Controller} zu trennen.\\
+\textit{\Gls{mvc}} ist ein Entwurfsmuster, welches auf einem niedrigen Level überall im Einsatz ist - z.B. bei Tastatureingaben \cite{mvc}. Dieses Entwurfsmuster ist zwar schon lange verfügbar, jedoch kann es bei \textit{Webapplikationen} zu Problemen führen.\\
+Bei der Entwicklung einer \textit{Webapplikation} ist es nicht einfach, das \textit{Model} von dem \textit{Controller} zu trennen.\\
 \textit{\Gls{mvvm}} auf der anderen Seite zielt explizit auf \textit{HTML5} ab \cite{mvvm_vue}. Somit ist es bei webbasierten Applikationen zu bevorzugen.
 \newpage
 \subsection{Umsetzungsmöglichkeiten}
-Dieser Teil des Projekts wird mittels \textit{\Gls{js}} umgesetzt. Hierbei kommen unterschiedliche \textit{\Gls{js}-\Gls{framework}} in Frage. Hier werden die verbreitetsten \textit{JavaScript-Frameworks} vorgestellt und dann verglichen. \textit{\Gls{angular}} wird nicht in Betrachtung gezogen, da dies ein \textit{\Gls{framework}} für professionelle Projekte ist und demnach nicht für vergleichsweise kleine Projekte verwendbar ist, wegen dem Aufwand das \textit{Framework} zu erlernen \cite{angular_ex}.
+Dieser Teil des Projekts wird mittels \textit{\Gls{js}} umgesetzt. Hierbei kommen unterschiedliche \textit{\Gls{js}-\Gls{framework}s} in Frage. Hier werden die verbreitetsten \textit{JavaScript-Frameworks} vorgestellt und dann verglichen. \textit{\Gls{angular}} wird nicht in Betrachtung gezogen, da dies ein \textit{\Gls{framework}} für professionelle Projekte und demnach nicht für vergleichsweise kleine Projekte verwendbar ist, wegen dem Aufwand das \textit{Framework} zu erlernen \cite{angular_ex}.
 \subsubsection{VueJS}
 \textit{\Gls{vue}} ist ein progressives \textit{JavaScript-Framework}. Dies bedeutet, dass \textit{VueJS} in bereits bestehende Webseiten bzw. in webbasierte Software implementiert werden kann.\\
 \textit{VueJS} kann aber auch von Anfang an verwendet werden, wobei man hier mit den Bibliotheken von \textit{VueJS} skalieren kann \cite{vuedoc}. \textit{VueJS} kann Teile einer Webseite in Komponenten aufteilen, um diese mehrmals zu verwenden, falls dies notwendig ist. Jeder dieser Komponenten besitzt seine eigene \textit{\Gls{html}}-, \textit{\Gls{css}}- und \textit{\Gls{js}} Datei, die gebraucht werden, um diese Komponente zu rendern.\\
-Um einzelnen Elementen \textit{VueJS}-Funktionalität zu geben, kann auf diese Elemente folgender Code angewendet werden \cite{vuedoc}:
+Um einzelnen Elementen \textit{VueJS}-Funktionalität zu geben, kann auf diese Elemente folgender \textit{Code} angewendet werden \cite{vuedoc}:
 \begin{code}{html}
 	<!DOCTYPE html>
 	<html lang="de">
@@ -71,7 +71,7 @@ Um einzelnen Elementen \textit{VueJS}-Funktionalität zu geben, kann auf diese E
 \subsubsection{React}
 \textit{\Gls{react}} ist eine \textit{\Gls{js}}-Bibliothek, mit der man Benutzeroberflächen entwickeln kann \cite{reactdoc}. \textit{React} hat, wie \textit{\Gls{vue}}, Komponenten. Dies bedeutet, dass man einzelne Elemente mehrfach verwenden kann, falls man dies benötigt.\\
 \textit{React} wurde von Facebook entwickelt und wurde 2013 als \textit{\Gls{opensource}}-Lösung veröffentlicht.\\
-Folgender Code beschreibt eine Beispiel-\textit{React}-Webseite \cite{reactdoc}:
+Folgender \textit{Code} beschreibt eine Beispiel-\textit{React}-Webseite \cite{reactdoc}:
 \begin{code}{html}
 	<!DOCTYPE html>
 	<html lang="de">
@@ -95,7 +95,7 @@ Folgender Code beschreibt eine Beispiel-\textit{React}-Webseite \cite{reactdoc}:
 \end{code}
 \captionof{listing}[\textit{React}-Webseite Beispiel]{Beispiel für \textit{React} Webseite}~\\
 \newpage
-In der letzten Zeile des body-Tags, wird auf \textit{likebutton.js} referenziert. Dies ist eine Komponente und muss noch erstellt werden \cite{reactdoc}:
+In der letzten Zeile des \textit{body-Tags}, wird auf \textit{likebutton.js} referenziert. Dies ist eine Komponente und muss noch erstellt werden \cite{reactdoc}:
 \begin{code}{js}
 	'use strict';
 	
@@ -126,7 +126,7 @@ In der letzten Zeile des body-Tags, wird auf \textit{likebutton.js} referenziert
 \captionof{listing}[\textit{React}-Komponente Beispiel]{Beispiel für eine \textit{React}-Komponente}
 \newpage
 \subsubsection{Ohne Framework}
-Die Schnittstelle zwischen \textit{\Gls{backend}} und \textit{\Gls{frontend}} kann auch ohne ein \textit{\Gls{framework}} umgesetzt werden. Dies ist bei kleinen und leichten Applikationen von Vorteil, da keine umständlichen \textit{\Gls{js}-\Gls{framework}s} aufgesetzt und richtig implementiert werden müssen. Ohne \textit{Framework} implementiert man eine \textit{\Gls{js}}-Datei in eine Webseite, um die gewünschte Funktionalität einzufügen. Mit folgendem Code kann eine Implementierung einer \textit{JavaScript}-Datei umgesetzt werden:
+Die Schnittstelle zwischen \textit{\Gls{backend}} und \textit{\Gls{frontend}} kann auch ohne ein \textit{\Gls{framework}} umgesetzt werden. Dies ist bei kleinen und leichten Applikationen von Vorteil, da keine umständlichen \textit{\Gls{js}-\Gls{framework}s} aufgesetzt und richtig implementiert werden müssen. Ohne \textit{Framework} implementiert man eine \textit{\Gls{js}}-Datei in eine Webseite, um die gewünschte Funktionalität einzufügen. Mit folgendem \textit{Code} kann eine Implementierung einer \textit{JavaScript}-Datei umgesetzt werden:
 \begin{code}{html}
 	<!DOCTYPE html>
 	<html lang="de">
@@ -149,7 +149,7 @@ Es kann auch direkt in eine \textit{\Gls{html}}-Datei \textit{\Gls{js}} in ein \
 \newpage
 \subsubsection{Vergleich}
 
-Verglichen werden diese unterschiedlichen Umsetzungsmöglichkeiten an Design, Entwicklungszeit, Performanz und \Gls{loc}.\\
+Verglichen werden diese unterschiedlichen Umsetzungsmöglichkeiten an Gestaltung, Entwicklungszeit, Performanz und \Gls{loc}.\\
 Die Webseite, die für den Vergleich umgesetzt werden soll, wird mit den unterschiedlichen Umsetzungsmöglichkeiten umgesetzt.\\
 \begin{figure}[H]
 	\centering
@@ -165,33 +165,33 @@ Folgende Tabelle zeigt die unterschiedlichen Werte bei der Umsetzung der Beispie
 	\label{center}
 	\begin{tabular}{l|c|c|c|c}
 		Kriterium        & Maximale Punkte & \textit{VueJS} & \textit{React} & Ohne \textit{Framework}  \\\hline
-		Design           & -                        &            \checkmark               &             \checkmark              &          \checkmark                           \\
+		Gestaltung           & -                        &            \checkmark               &             \checkmark              &          \checkmark                           \\
 		Entwicklungszeit & 9                         &             8              &               6            &               9                      \\
 		Performanz       & 9                         &             7              &               4            &                 9                    \\
-		\Gls{loc}              & 9                         &             9              &               8            &                   2                  \\
+		\textit{\Gls{loc}}              & 9                         &             9              &               8            &                   2                  \\
 		Gesamtpunkte     & 27                         &              24             &               18            &                20                    
 	\end{tabular}
 \end{table}
 \textbf{Kriterien:}\\\\
-\textbf{Design}\\
-Das Design fällt in die Wertung, da hier angegeben wird, ob die Beispiel-Webseite so umgesetzt werden kann oder ob die Umsetzung in diesem Design nicht möglich ist.\\\\
+\textbf{Gestaltung}\\
+Die Gestaltung fällt in die Wertung, da hier angegeben wird, ob die Beispiel-Webseite so umgesetzt werden kann oder ob die Umsetzung in dieser Gestaltung nicht möglich ist.\\\\
 \newpage
 \textbf{Entwicklungszeit}\\
-\Gls{vue}: 40min\\
-\Gls{react}: 55min\\
-Ohne \Gls{framework}: 20min\\
+\textit{\Gls{vue}}: 40min\\
+\textit{\Gls{react}}: 55min\\
+\textit{Ohne \Gls{framework}}: 20min\\
 Die Entwicklungszeit zwischen den zwei \textit{\Gls{framework}s} ist sehr ähnlich. Jedoch ist zu beachten, dass bei dem \textit{VueJS-Framework} bereits mit Komponenten gearbeitet worden ist und dadurch die Entwicklungszeit höher ist als notwendig. Ohne \textit{Framework} war die Entwicklungszeit am kürzesten, da nichts installiert, importiert oder aufgesetzt werden musste.\\\\
 \textbf{Performanz}\\
-\Gls{vue}: 112ms\\
-\Gls{react}: 175ms\\
-Ohne \Gls{framework}: 21ms\\
-Ohne \textit{Framework} ist die Performanz sehr gut, da im Hintergrund keine \textit{Frameworks} geladen werden müssen. Das \Gls{js} wird direkt ausgeführt. Bei \textit{VueJS} und \textit{React} werden viele Bibliotheken im Hintergrund geladen, wodurch die Performanz sinkt. Obwohl Komponenten bei der Umsetzung mittels \textit{VueJS} verwendet worden sind, ist \textit{VueJS} performanter als \textit{React}.\\\\
-\textbf{Lines of Code}\\
-Die beiden \textit{Frameworks} haben besonders gut abgeschnitten, da für die Umsetzung mit \textit{VueJS} nur wenige Codezeilen geschrieben werden mussten. Durch die Funktionalität von \textit{VueJS} können viele Codezeilen eingespart werden. \textit{React} ist in dem Aspekt für das Projekt geeignet, da auch sehr wenige Codezeilen geschrieben werden mussten. Jedoch musste bei \textit{React} deutlich mehr entwickelt werden, wodurch es nicht die vollen Punkte erreicht.
+\textit{\Gls{vue}:} 112ms\\
+\textit{\Gls{react}}: 175ms\\
+\textit{Ohne \Gls{framework}}: 21ms\\
+\textit{Ohne Framework} ist die Performanz sehr gut, da im Hintergrund keine \textit{Frameworks} geladen werden müssen. Das \Gls{js} wird direkt ausgeführt. Bei \textit{VueJS} und \textit{React} werden viele Bibliotheken im Hintergrund geladen, wodurch die Performanz sinkt. Obwohl Komponenten bei der Umsetzung mittels \textit{VueJS} verwendet worden sind, ist \textit{VueJS} performanter als \textit{React}.\\\\
+\textit{\textbf{Lines of Code}}\\
+Die beiden \textit{Frameworks} haben besonders gut abgeschnitten, da für die Umsetzung mit \textit{VueJS} nur wenige \textit{Codezeilen} geschrieben werden mussten. Durch die Funktionalität von \textit{VueJS} können viele \textit{Codezeilen} eingespart werden. \textit{React} ist in dem Aspekt für das Projekt geeignet, da auch sehr wenige \textit{Codezeilen} geschrieben werden mussten. Jedoch musste bei \textit{React} deutlich mehr entwickelt werden, wodurch es nicht die vollen Punkte erreicht.
 Ohne \textit{\Gls{framework}} konnten weniger Punkte erreicht werden, da die Umsetzung im Vergleich nicht nur unübersichtlicher und komplizierter ist, sondern auch damit zu rechnen ist, dass die Umsetzung bei größeren Beispielen zu großen Problemen führen kann.
 \newpage
 \subsection{Aufbereitung der Daten}
-Die Daten, welche von der \textit{REST}-Schnittstelle gelesen werden, sind im \textit{\Gls{json}}-Format. Dies wird genauer im Kapitel \autoref{sec:json} erklärt. Um die Daten von der \textit{REST}-Schnittstelle zu bekommen, wird \textit{\Gls{axios}} verwendet. Mit dieser Bibliothek kann eine \textit{\Gls{http}}-Anfrage gesendet und damit die Daten von der \textit{REST}-Schnittstelle ausgelesen werden. Im folgenden Code wird eine Beispiel-Anfrage gesendet:
+Die Daten, welche von der \textit{REST}-Schnittstelle gelesen werden, sind im \textit{\Gls{json}}-Format. Dies wird genauer im \autoref{sec:json} erklärt. Um die Daten von der \textit{REST}-Schnittstelle zu bekommen, wird \textit{\Gls{axios}} verwendet. Mit dieser Bibliothek kann eine \textit{\Gls{http}}-Anfrage gesendet und damit die Daten von der \textit{REST}-Schnittstelle ausgelesen werden. Im folgenden \textit{Code} wird eine Beispiel-Anfrage gesendet:
 \begin{code}{html}
 	<html>
 		<head>

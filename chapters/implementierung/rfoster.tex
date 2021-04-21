@@ -64,9 +64,9 @@ Die beschriebenen Funktionen müssen von den Komponenten aufgerufen werden könn
 	v-on:change-component="changeComponent"
 	// Es wird auf das Signal change-component gehört und die Funktion changeComponent aufgerufen
 \end{code}
-\captionof{listing}[\textit{Event Handling}]{Event Handling mittels v-on}~\\
-Die Codezeile wird beim Aufruf der Unterseite im \textit{Manager} hinzugefügt.\\
-Die beschriebenen Signale werden von den Unterseiten mittels folgendem Code bzw. folgender Funktion gesendet:
+\captionof{listing}[\textit{Event Handling}]{\textit{Event Handling} mittels \textit{v-on}}~\\
+Die \textit{Codezeile} wird beim Aufruf der Unterseite im \textit{Manager} hinzugefügt.\\
+Die beschriebenen Signale werden von den Unterseiten mittels folgendem \textit{Code} bzw. folgender Funktion gesendet:
 \begin{code}{js}
 	changeComponent(component, back, application, escortsdata) {
 		this.$emit("change-component", component, back, application, escortsdata);
@@ -77,7 +77,7 @@ Hier wird durch \textit{this.\$emit()} ein Befehl an die übergeordnete Seite ge
 \newpage
 \subsubsection{Komponenten}
 Die Komponenten der Unterseiten werden, wie im vorherigen Kapitel beschrieben, in den \textit{Manager} eingebunden. Dies wird mit dem Importieren, dem Laden und der Implementierung der Komponente umgesetzt.
-Das Importieren erfolgt mit folgendem Code:
+Das Importieren erfolgt mit folgendem \textit{Code}:
 \begin{code}{html}
 	<script>
 	import ApplicationView from "@/components/ApplicationView.vue";
@@ -92,9 +92,9 @@ Das Importieren erfolgt mit folgendem Code:
 </script>
 \end{code}
 \captionof{listing}[Importieren und Laden einer Komponente]{Umsetzung des Importieren und Laden einer Komponente im \textit{Manager}}~\\
-In dem Code werden von \textit{@/components/} die einzelnen Komponenten geladen. Aufgrund der Verwendung von \textit{@} wird das Angeben des vollen Pfades nicht mehr benötigt, da dies auf den relativen Pfad der Softwarestruktur zeigt.
+In dem \textit{Code} werden von ''@/components/'' die einzelnen Komponenten geladen. Aufgrund der Verwendung von '@' wird das Angeben des vollen Pfades nicht mehr benötigt, da dies auf den relativen Pfad der Softwarestruktur zeigt.
 \newpage
-Die Komponente muss noch im \textit{Manager} angezeigt werden. Dies wird im \textit{Template} des \textit{Managers} mit folgendem Code umgesetzt:
+Die Komponente muss noch im \textit{Manager} angezeigt werden. Dies wird im \textit{Template} des \textit{Managers} mit folgendem \textit{Code} umgesetzt:
 \begin{code}{html}
 <template>
 	<div class="home">
@@ -129,15 +129,15 @@ Die Komponente muss noch im \textit{Manager} angezeigt werden. Dies wird im \tex
 </template>
 \end{code}
 \captionof{listing}[Anzeige der Komponenten]{Anzeigen der Komponenten im \textit{Manager}}~\\
-Im Code wird nicht nur die Komponente angezeigt, sondern auch Daten an die Komponenten gebunden.\\
+Im \textit{Code} wird nicht nur die Komponente angezeigt, sondern auch Daten an die Komponenten gebunden.\\
 \textit{v-if}-Attribute sorgen dafür, dass das Rendern nur unter der angegebenen Bedingung erfolgt. Die Komponente wird nur angezeigt, wenn die Variable \textit{currentComponent} den Namen einer Komponente annimmt.\\
 \textit{v-bind}-Attribute binden Daten von der übergeordneten Komponente in die eingebundene Komponente ein. Bei dem Beispiel \textit{v-bind:cookieset=''cookies''} wird an die \textit{Login}-Komponente ein Attribut \textit{cookieset} mit dem Wert von der Variable \textit{cookies} mitgegeben.
-Diese Attribute können mit folgendem Code aufgefangen und in diesen eingebundenen Komponenten verwendet werden:
+Diese Attribute können mit folgendem \textit{Code} aufgefangen und in diesen eingebundenen Komponenten verwendet werden:
 \begin{code}{html}
 		props: ["url", "forward", "cookieset"]
 \end{code}
 \captionof{listing}[Auffangen übergebener Variablen]{Auffangen übergebener Variablen in einer untergeordneten Komponente}~\\
-In dem Code werden die übergebenen Variablen, welche in der übergeordneten Komponente definiert worden sind, aufgefangen. Diese können als normale Variablen verwendet werden.
+In dem \textit{Code} werden die übergebenen Variablen, welche in der übergeordneten Komponente definiert worden sind, aufgefangen. Diese können als normale Variablen verwendet werden.
 \newpage
 \subsubsection{Seite nicht gefunden}
 Wie in \autoref{sec:not_found} beschrieben wird, wird der Benutzer bei Eingabe eines falschen \textit{Links} auf eine Seite weitergeleitet. Dazu wird der \textit{Vue-Router} so eingestellt, dass jeder \textit{Link}, außer dem Hauptlink zur eigentlichen Webseite, auf die beschriebene Seite weitergeleitet wird. Die Routen des Routers sind wie folgt aufgebaut:
@@ -171,7 +171,6 @@ const routes = [
 ];
 const router = new VueRouter({
 	mode: "history",
-	base: process.env.BASE_URL,
 	routes
 });
 
@@ -201,10 +200,10 @@ Sollte der Benutzer nicht angemeldet sein, so wird er zuerst auf die \textit{Log
 	},
 \end{code}
 \captionof{listing}[Route für den \textit{Antrag-Viewer}]{Route für den \textit{Antrag-Viewer} mit Parametern}~\\
-Es wird die \textit{Home}-Komponente (der \textit{Manager}) aufgerufen, da dieser das Verarbeiten der URL und das Weiterleiten auf die \textit{Login}- und \textit{Antragsansicht} übernimmt.
+Es wird die \textit{Home}-Komponente (der \textit{Manager}) aufgerufen, da dieser das Verarbeiten der \textit{URL} und das Weiterleiten auf die \textit{Login}- und \textit{Antragsansicht} übernimmt.
 \newpage
 \subsubsection{Features}
-Die Features in \autoref{sec:feature} wurden folgendermaßen implementiert.
+Die \textit{Features} in \autoref{sec:feature} wurden folgendermaßen implementiert.
 
 \paragraph{Zuletzt besuchte Seite der Webseite}~\\
 Beim Laden der Webseite wird mithilfe von \textit{Cookies} auf die zuletzt besuchte Seite navigiert. Dazu wird bei jeder Navigation, wie in \autoref{sec:navigation} beschrieben, der \textit{Cookie} gesetzt. Dieser wird beim Laden der Webseite ausgelesen und es wird, falls der \textit{Cookie} gesetzt ist, auf die gespeicherte Seite navigiert.
@@ -225,7 +224,7 @@ Beim Laden der Webseite wird mithilfe von \textit{Cookies} auf die zuletzt besuc
 \captionof{listing}[Navigation zuletzt besuchte Seite]{Navigation auf die zuletzt besuchte Seite}~\\
 
 \paragraph{Browser-Pfeile}~\\
-Die \textit{Browser}-Pfeile navigieren durch die \textit{History} des \textit{Browsers}. Da die Webseite ein nur auf einer einzelnen Seite geladen ist, muss das Schreiben in die \textit{History} selbst übernommen werden. Dies wird durch den folgenden Code umgesetzt:
+Die \textit{Browser}-Pfeile navigieren durch die \textit{History} des \textit{Browsers}. Da die Webseite ein nur auf einer einzelnen Seite geladen ist, muss das Schreiben in die \textit{History} selbst übernommen werden. Dies wird durch den folgenden \textit{Code} umgesetzt:
 \begin{code}{js}
 window.addEventListener("popstate", e => {			// Es wird ein Listener auf die Webseite gesetzt
 	if (this.generateState(e.state) === "Escorts") {	// Dies ist eine extra Abfrage, welche verhindert auf die Escorts-Seite zu gelangen.
@@ -239,7 +238,7 @@ window.addEventListener("popstate", e => {			// Es wird ein Listener auf die Web
 Das Hinzufügen der einzelnen \textit{Histories} für die jeweiligen Unterseiten wird in \autoref{sec:navigation} beschrieben.
 \newpage
 \subsection{Daten laden \& Befehle senden}
-Das Laden sowie das senden von Befehle wird mittels \Gls{axios} umgesetzt. Es gibt vier Arten der Anfragen per \Gls{axios}, welche verwendet werden: \textit{Get} (Anfrage von Daten), \textit{put} (Aktualisieren von Daten), \textit{post} (Erstellen von Daten) und \textit{delete} (Löschen von Daten). Mit folgender Struktur können Daten von dem \textit{Backend}, bzw. der REST-Schnittstelle geladen werden:
+Das Laden sowie das senden von Befehle wird mittels \textit{\Gls{axios}} umgesetzt. Es gibt vier Arten der Anfragen per \textit{Axios}, welche verwendet werden: \textit{Get} (Anfrage von Daten), \textit{put} (Aktualisieren von Daten), \textit{post} (Erstellen von Daten) und \textit{delete} (Löschen von Daten). Mit folgender Struktur können Daten von dem \textit{Backend}, bzw. der \textit{REST}-Schnittstelle geladen werden:
 \begin{code}{js}
 	axios.get(this.url + "/getNews", {
 		headers: {
@@ -262,7 +261,7 @@ Das Laden sowie das senden von Befehle wird mittels \Gls{axios} umgesetzt. Es gi
 \end{code}
 \captionof{listing}[Laden von Neuigkeiten]{Laden der Neuigkeiten auf der Startseite}~
 \newpage
-Unter der Bedingung, dass die erste Anfrage den Fehlercode \textit{401} zurückgibt, wird eine Anfrage an das \textit{Backend} gesendet, um die Sitzung des Nutzers zu aktualisieren. Dies wird mit folgendem Code umgesetzt:
+Unter der Bedingung, dass die erste Anfrage den \textit{Fehlercode 401} zurückgibt, wird eine Anfrage an das \textit{Backend} gesendet, um die Sitzung des Nutzers zu aktualisieren. Dies wird mit folgendem \textit{Code} umgesetzt:
 \begin{code}{js}
 	axios.post(this.url + "/login/refresh", {
 		headers: {
@@ -282,7 +281,7 @@ Unter der Bedingung, dass die erste Anfrage den Fehlercode \textit{401} zurückg
 	});
 \end{code}
 \captionof{listing}[Sitzung aktualisieren]{Anfrage um Sitzung des Nutzers zu aktualisieren}~\\
-Bei erfolgreicher Erneuerung der Sitzung, wird die anfangs durchgeführte Anfrage erneut gesendet. Diese reagiert, bis auf die fehlende Behandlung des Fehlercodes \textit{401}, ident wie die originale Anfrage.
+Bei erfolgreicher Erneuerung der Sitzung, wird die anfangs durchgeführte Anfrage erneut gesendet. Diese reagiert, bis auf die fehlende Behandlung des \textit{Fehlercodes} \textit{401}, ident wie die originale Anfrage.
 \newpage
 \subsection{Anmelden}
 Der Benutzer kann sich auf einer Anmeldeseite anmelden, um das System verwenden zu können. Dazu werden die Anmeldedaten des Benutzers an das \textit{Backend} gesendet. Um sich anmelden zu können, müssen die \textit{Cookies} akzeptiert werden. Sollten sie nicht akzeptiert werden, ist es nicht möglich den Dienst zu verwenden.
@@ -321,10 +320,10 @@ switch (this.forward.name) {	// Es wird entschieden, auf welche Unterseite navig
 \end{code}
 \captionof{listing}[Anmelden Weiterleitung]{Weiterleitung nach erfolgreichem Anmelden}~\\
 \subsubsection{Passwort vergessen}
-Da \textit{Refundable} die Anmeldedaten von \textit{LDAP} verwendet, wird der Benutzer auf \href{https://owa.tgm.ac.at}{OWA} weitergeleitet, wenn auf \textit{Passwort vergessen} gedrückt wird.
+Da \textit{Refundable} die Anmeldedaten von \textit{LDAP} verwendet, wird der Benutzer auf \textit{\href{https://owa.tgm.ac.at}{OWA}} weitergeleitet, wenn auf \textit{Passwort vergessen} gedrückt wird.
 \newpage
 \subsection{Abmelden}
-Wird auf den \textit{Abmelden}-Knopf gedrückt, wird ein Anfrage mit dem derzeit aktiven Token an das \textit{Backend} gesendet, um den Authentifizierungstoken zu terminieren. Dies bedeutet, dass der Benutzer keinen validen Token mehr besitzt und auf die \textit{Login}-Seite weitergeleitet wird.
+Wird auf den \textit{Abmelden}-Knopf gedrückt, wird ein Anfrage mit dem derzeit aktiven \textit{Token} an das \textit{Backend} gesendet, um den \textit{Authentifizierungstoken} zu terminieren. Dies bedeutet, dass der Benutzer keinen validen \textit{Token} mehr besitzt und auf die \textit{Login}-Seite weitergeleitet wird.
 \begin{code}{js}
 axios.post(this.url + "/logout", {	// Sendet ein POST-Anfrage an das Backend
 	headers: { Authorization: this.token }	// Der Token des Benutzers
@@ -343,7 +342,7 @@ axios.post(this.url + "/logout", {	// Sendet ein POST-Anfrage an das Backend
 \subsection{Antrag erstellen}
 Ein Antrag kann von jedem Lehrer, der im System angemeldet ist, erstellt werden. Dazu wird auf die \textit{Antrag erstellen}-Unterseite navigiert, bei der der Benutzer aussuchen kann, ob er eine Schulveranstaltung, Fortbildung oder einen anderen Antrag erstellen möchte. Auf diesen Unterseiten werden die notwendigen Informationen vom Benutzer in die Eingabefelder eingegeben. Diese Informationen werden in ein \textit{JSON}-Objekt gegeben und an das \textit{Backend} gesendet.
 \\
-In den folgenden Codebeispielen werden oft die Befehle \textit{returnString}, \textit{returnBoolean} und \textit{returnValue} verwendet. Diese dienen dazu die Datentypen auf die des \textit{Backends} anzupassen. 
+In den folgenden \textit{Codebeispielen} werden oft die Befehle \textit{returnString}, \textit{returnBoolean} und \textit{returnValue} verwendet. Diese dienen dazu die Datentypen auf die des \textit{Backends} anzupassen. 
 \subsubsection{Schulveranstaltung}
 \paragraph{Allgemeine Informationen}~\\
 Im ersten Schritt, werden allgemeine Informationen der Schulveranstaltung eingegeben.
@@ -473,7 +472,7 @@ var data = {		// Das JSON-Objekt mit allen Informationen
 \end{code}
 \captionof{listing}[\textit{JSON} \textit{Sonstiges-Antrag}]{\textit{JSON}-Objekt eines \textit{Sonstiges}-Antrags}~\\
 \subsubsection{Antrag einreichen}
-Sobald der Benutzer auf den \textit{Einreichen}-Knopf drückt, wird das \textit{JSON}-Objekt erstellt und an das \textit{Backend} gesendet. Dies erfolgt mit folgendem Code:
+Sobald der Benutzer auf den \textit{Einreichen}-Knopf drückt, wird das \textit{JSON}-Objekt erstellt und an das \textit{Backend} gesendet. Dies erfolgt mit folgendem \textit{Code}:
 \begin{code}{js}
 	axios.post(this.url + "/createApplication", // Es wird eine createApplication-Anfrage an das Backend gesendet
 	{
@@ -511,7 +510,7 @@ Folgende Dokumente werden je nach Antragsart erstellt:
 Die Schulveranstaltung besitzt zwei Dokumente: zum Einen die allgemeinen Informationen zu der Veranstaltung und zum Anderen die Informationen zu den Begleitpersonen.
 \begin{itemize}
 	\item \textbf{Allgemeine Informationen}\\
-	In diesem Dokument werden generelle Informationen über die Schulveranstaltung gespeichert. Diese können nur von dem Leiter des Antrags eingesehen und bearbeitet werden.
+	In diesem Dokument werden generelle Informationen über die Schulveranstaltung gespeichert. Diese können nur von dem Leiter des Antrags bearbeitet werden.
 	\item \textbf{Informationen zu Begleitlehrern}\\
 	In diesem Dokument sieht jeder Begleitlehrer sein eigenes Formular, welches er je nach Fortschritt des Antrags bearbeiten kann. In diesem Dokument werden Informationen über die An- und Abreise sowie den Aufenthalt des Lehrers gespeichert.
 \end{itemize}
@@ -521,9 +520,9 @@ In einem Fortbildungsformular werden Informationen über die Fortbildung und den
 \paragraph{Sonstiges}~\\
 In einem \textit{Sonstiges}-Antrag werden Informationen über den Grund des Antrags sowie den Zeitraum gespeichert.
 \paragraph{Reiseformular}~\\
-Ein Reiseformular wird bei den meisten Arten von Antrag erstellt. In einem Reiseformular werden Informationen über den Lehrer und über dessen An- und Abreise gespeichert.
+Ein Reiseformular wird bei den meisten Arten von Anträgen erstellt. In einem Reiseformular werden Informationen über den Lehrer und über dessen An- und Abreise gespeichert.
 \paragraph{Reiserechnung}~\\
-Eine Reiserechnung wird bei den meisten Arten von Antrag erstellt. In einer Reiserechnung werden Informationen über die Kosten des Antrags gespeichert und wie diese entstanden sind. Des weiteren können Belege hochgeladen werden, um diese dem Antrag zu hinterlegen. Ein Beleg wird mit folgendem Code hochgeladen:
+Eine Reiserechnung wird bei den meisten Arten von Anträgen erstellt. In einer Reiserechnung werden Informationen über die Kosten des Antrags gespeichert und wie diese entstanden sind. Des Weiteren können Belege hochgeladen werden, um diese dem Antrag zu hinterlegen. Ein Beleg wird mit folgendem \textit{Code} hochgeladen:
 \begin{code}{js}
 	axios.post(this.url + "/saveBillingReceipt",
 	{
@@ -544,7 +543,7 @@ Eine Reiserechnung wird bei den meisten Arten von Antrag erstellt. In einer Reis
 \newpage
 \subsubsection{Aktionen}
 \paragraph{Excel herunterladen}~\\
-Der Benutzer kann Reiseformulare und Reiserechnungen als \textit{Excel}-Datei herunterladen. Diese werden mit folgendem Code erstellt und heruntergeladen \cite{down_excel}:
+Der Benutzer kann Reiseformulare und Reiserechnungen als \textit{Excel}-Datei herunterladen. Diese werden mit folgendem \textit{Code} erstellt und heruntergeladen \cite{down_excel}:
 \begin{code}{js}
 	var anchor_href =
 	"data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64," +
@@ -563,7 +562,7 @@ Der Benutzer kann Reiseformulare und Reiserechnungen als \textit{Excel}-Datei he
 \captionof{listing}[\textit{Excel} hernuterladen]{\textit{Excel} erstellen und herunterladen}~\\
 \paragraph{PDF öffnen}~\\
 Der Benutzer kann die \textit{PDFs} der Dokumente öffnen. Die \textit{PDFs} werden in einem neuen Tab im \textit{Browser} angezeigt.\\
-Mit folgendem Code wird eine \textit{PDF} erstellt und in einem neuen Tab geöffnet \cite{sof_pdf}:
+Mit folgendem \textit{Code} wird eine \textit{PDF} erstellt und in einem neuen Tab geöffnet \cite{sof_pdf}:
 \begin{code}{js}
 	let pdfWindow = window.open("");
 	var fileName = "PDF";
@@ -581,7 +580,7 @@ Mit folgendem Code wird eine \textit{PDF} erstellt und in einem neuen Tab geöff
 \captionof{listing}[\textit{PDF} erstellen und öffnen]{\textit{PDF} erstellen und öffnen im \textit{Browser}}~
 \newpage
 \paragraph{Änderungen speichern}~\\
-Der Benutzer kann die Änderungen eines Antrags speichern. Dies kann in bestimmten Phasen eines Antrags geschehen. Die Änderungen werden an das \textit{Backend} gesendet, sobald auf den \textit{Änderungen Speichern}-Knopf gedrückt wird. Das senden erfolgt mit folgendem Code:
+Der Benutzer kann die Änderungen eines Antrags speichern. Dies kann in bestimmten Phasen eines Antrags geschehen. Die Änderungen werden an das \textit{Backend} gesendet, sobald auf den \textit{Änderungen Speichern}-Knopf gedrückt wird. Das senden erfolgt mit folgendem \textit{Code}:
 \begin{code}{js}
 	if (this.belege.length >= 1) {
 		this.sendReceipts(this.belege); // Falls Belege angegeben worden sind, werden diese hochgeladen
@@ -604,7 +603,7 @@ Der Benutzer kann die Änderungen eines Antrags speichern. Dies kann in bestimmt
 \end{code}
 \captionof{listing}[Antrag speichern]{Beispiel um die Änderungen eines Antrags zu speichern}~\\
 \paragraph{Antrag schließen}~\\
-Der Leiter eines Antrags kann den Antrag schließen. Sobald der Antrag geschlossen ist, wird dieser im \textit{Backend} auf den Fortschritt abgeschlossen gesetzt. Dies wird mit folgendem Code erreicht:
+Der Leiter eines Antrags kann den Antrag schließen. Sobald der Antrag geschlossen ist, wird dieser im \textit{Backend} auf den Fortschritt abgeschlossen gesetzt. Dies wird mit folgendem \textit{Code} erreicht:
 \begin{code}{js}
 	if (this.app.kind === 0) {	// Der Fortschritt wird je nach Antragsart auf Abgeschlossen gesetzt
 		this.app.progress = 7;
@@ -617,7 +616,7 @@ Der Leiter eines Antrags kann den Antrag schließen. Sobald der Antrag geschloss
 \captionof{listing}[Antrag schließen]{Beispiel um einen Antrag zu schließen}~\\
 \newpage
 \paragraph{Antrag löschen}~\\
-Der Leiter eines Antrags kann den Antrag löschen. Sobald auf den Knopf \textit{Antrag löschen} gedrückt wird, wird dieser im \textit{Backend} gelöscht. Der Benutzer wird daraufhin weitergeleitet auf die Startseite. Ein Antrag wird mit folgender Anfrage gelöscht:
+Der Leiter eines Antrags kann den Antrag löschen. Sobald auf den Knopf \textit{Antrag löschen} gedrückt wird, wird dieser im \textit{Backend} gelöscht. Der Benutzer wird daraufhin auf die Startseite weitergeleitet. Ein Antrag wird mit folgender Anfrage gelöscht:
 \begin{code}{js}
 	axios.delete(this.url + "/deleteApplication?uuid=" + this.app.uuid, { // Es wird ein Delete-Request an das Backend gesendet
 		headers: {
@@ -629,7 +628,7 @@ Der Leiter eines Antrags kann den Antrag löschen. Sobald auf den Knopf \textit{
 \newpage
 \subsection{Antrag Übersicht}
 \label{sec:antrag_uebersicht}
-Um einen Überblick über die Anträge zu haben, gibt es zwei Übersichtsseiten, welche die Anträge auflisten. In den Auflistungen sieht man die groben Daten des Antrags und kann diese in der \textit{Antrag-Ansicht} öffnen. Sobald eine Übersichtsseite aufgerufen wird, werden die Anträge abgefragt und in einer Liste angezeigt:
+Um einen Überblick über die Anträge zu erlangen, gibt es zwei Übersichtsseiten, welche die Anträge auflisten. In den Auflistungen werden die groben Daten des Antrags angezeigt und können in der \textit{Antrag-Ansicht} geöffnet werden. Sobald eine Übersichtsseite aufgerufen wird, werden die Anträge abgefragt und in einer Liste angezeigt:
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\linewidth]{images/rfoster_implementierung/liste_antrag}
