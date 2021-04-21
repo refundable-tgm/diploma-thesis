@@ -246,7 +246,7 @@ Die \textit{Startseite} sollte so intuitiv und übersichtlich wie möglich sein.
 Da dieses System auf mobilen Geräten nicht sonderlich übersichtlich ist, wurde diese hierfür etwas abgeändert. Die geänderte \textit{Startseite} ist sehr schlicht gehalten, und macht die Bedienung auf \textit{Smartphones} um einiges einfacher. Die mobile Version der \textit{Startseite} ist in \autoref{fig:dashboardmobile} dargestellt:
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.4\linewidth]{images/ldehner_implementierung/dashboard_mobile}
+	\includegraphics[width=0.3\linewidth]{images/ldehner_implementierung/dashboard_mobile}
 	\caption[Dashboard Mobil Seite]{Ein Bild der endgültigen Startseite (Mobil)}
 	\label{fig:dashboardmobile}
 \end{figure}
@@ -331,7 +331,7 @@ Optisch wurde vor allem die Höhe des umschließenden \textit{Containers} und de
 }
 \end{code}
 \captionof{listing}{Teile des CSS Codes, des Startseitenmenüs}
-	\label{list:cssmenu} ~\\
+	\label{list:cssmenu}
 \paragraph{Menü-Element Mobil}
 ~\\
 Wie bereits erwähnt, ist die \textit{mobile Ansicht} sehr schlicht gehalten, damit sie nicht überladen wirkt und sich vor allem auch jene Lehrer, die sich nicht viel mit Technik beschäftigen, auskennen. Daher wird auf der \textit{mobilen Ansicht} nur das Nötigste angezeigt, siehe \autoref{fig:dashboardmobile}. Alle \textit{Buttons} werden nun vertikal angeordnet und mit einem passenden \textit{Icon} bestückt. Die \textit{Newselemente} unterscheiden sich kaum von denen der Desktop-Version. Die Elemente sind lediglich mit etwas weniger Details bestückt und nicht in einem \textit{scrollbaren Container}, da man auf der mobilen Version sonst doppelt scrollen müsste.
@@ -370,7 +370,8 @@ Wie bereits erwähnt, ist die \textit{mobile Ansicht} sehr schlicht gehalten, da
 		  >	
 \end{code}
 \captionof{listing}{Teile des HTML-Codes der mobilen Startseite}
-	\label{list:startmobile} ~\\
+	\label{list:startmobile}
+	\newpage
 \paragraph{Neuigkeiten-Element}
 ~\\
 Die \textit{Neuigkeiten-Elemente} sind mit einer Illustration bestückt, die den momentanen Status des jeweiligen Antrags beschreiben soll. Außerdem wird ein Titel der Neuigkeit mitgegeben, die zum Beispiel \enquote{Antrag X abgelehnt} heißen könnte. Etwas mehr Details werden in einem Beschreibungsfeld gegeben, das aufgrund der Übersichtlichkeit nur auf Desktopgeräten sichtbar ist.
@@ -429,8 +430,7 @@ Die \textit{Buttons} sind in eigenen \textit{Containern} dargestellt, um sie opt
 	<b-row
 	  class="na-elem-sr"
 	  align-v="center"
-	  v-on:click="school()"
-	>
+	  v-on:click="school()">
 	  <b-col cols="12">
 		<h2 class="na-elem-h">Schulveranstaltung</h2>
 	  </b-col>
@@ -438,7 +438,7 @@ Die \textit{Buttons} sind in eigenen \textit{Containern} dargestellt, um sie opt
   </b-container>	
 \end{code}
 \captionof{listing}{HTML Code, einer Auswahlmöglichkeit}
-	\label{list:htmlselect} ~\\
+	\label{list:htmlselect}
 \paragraph{Schulveranstaltung}
 ~\\
 Der Antrag für eine neue Schulveranstaltung ist der komplexeste Antrag mit den meisten \textit{Eingabefeldern}. Außerdem gehören zu dem Antrag für eine Schulveranstaltung auch die Anträge der Begleitpersonen. Um die Eingabe von Uhrzeiten und Daten einfacher zu gestalten, wurden die Elemente \textit{b-form-datepicker} und \textit{b-form-timepicker} verwendet. Dies sind standardmäßige Elemente, die von \textit{BootstrapVue} vordefiniert sind. Um eine korrekte Eingabe sicherzustellen, wurden alle \textit{Eingabefelder} mit einem Titel und einer Zusatzinformation ausgestattet.
@@ -490,7 +490,7 @@ Das \textit{Timepicker} Element kann ganz einfach, wie im oberen Absatz beschrie
 \end{code}
 \captionof{listing}{\textit{Timepicker}}
 \label{list:timepickerlocale}
-~\\
+\newpage
 \subparagraph{Datepicker}~\\
 Der \textit{Datepicker} ist noch einfacher zu bedienen, als der \textit{Timepicker}. Hier sind nur die üblichen Parameter zu setzen.
 \begin{code}{html}
@@ -571,7 +571,7 @@ Zu den sonstigen Anträgen gehören Anliegen, wie Pflegefreistellungen, Dienstau
 	\caption[Dienstreiseauftrag]{Ein Bild des Dienstauftragsformulars}
 	\label{fig:dienst}
 \end{figure}
-
+\newpage
 \paragraph{Reiseantrag}
 ~\\
 Der Reiseantrag wird automatisch bei den Formularen der Anträge, bei denen eine Reise nötig ist angehängt. Ist keine Reise für einen bestimmten Antrag (zum Beispiel ein Arztbesuch) vorgesehen, dann wird das Formular nicht angehängt und es müssen keine  Daten eingegeben werden. Die Struktur der Elemente ist ident zu denen, die bereits besprochen wurden.
@@ -581,7 +581,7 @@ Der Reiseantrag wird automatisch bei den Formularen der Anträge, bei denen eine
 	\caption[Reiseantrag]{Ein Bild des Reiseantrages}
 	\label{fig:zusatz1}
 \end{figure}
-
+\newpage
 \subsubsection{Reisekostenabrechnung}
 \label{chapter:implementierung-frontend-komponenten-rechnung}
 Das Formular der Reisekostenabrechnung erfordert von den Lehrern die Eingabe vieler verschiedener Werte. Durch die Unterstützung der Webseite ist das Eingeben der Daten wesentlich einfacher, als auf dem Papier, da gewisse Felder, je nach Eingabe des Benutzers, automatisch ausgegraut werden. Wenn zum Beispiel die \textit{Tabelle} in \autoref{fig:reiserechnungsite} betrachtet wird, kann man nur in jene Felder schreiben, die man mit den \textit{Checkboxen} angeklickt hat. Außerdem können direkt digital Belege an die Reisekostenabrechnung angehängt werden. Zudem wird automatisch die Zeitspanne des jeweiligen Antrages berechnet und entsprechend viele Zeilen in der \textit{Tabelle} erzeugt.
@@ -592,6 +592,7 @@ Das Formular der Reisekostenabrechnung erfordert von den Lehrern die Eingabe vie
 	\label{fig:reiserechnungsite}
 \end{figure}
 In \autoref{fig:reiserechnungsite} wurden Elemente verwendet, die uns im Gegensatz zu normalen Eingaben nicht bekannt sind. Dabei handelt es sich einerseits um \textit{Tabellen} und andererseits um die \textit{Dateiauswahl}.
+\newpage
 \paragraph{Dateiauswahl}
 ~\\
 Wie auch bei den anderen Elementen der Formulare, wie zum Beispiel bei dem \textit{Timepicker}, hat \textit{Bootstrap} ein vorgefertigtes Element für die \textit{Dateiauswahl}. 
@@ -626,8 +627,8 @@ Wie auch bei den anderen Elementen der Formulare, wie zum Beispiel bei dem \text
 \captionof{listing}{Datei auswählen Code}
 	\label{list:dateiselect} ~\\
 Wie auch andere Elemente, wird das Element zum Hochladen von Dateien in eine \textit{Eingabegruppe}, mit Titel und Beschreibung eingesetzt. Nach dem Einsetzen des Elementes, kann sofort per \textit{Klick bzw. Drag and Drop} eine oder mehrere Dateien hinzugefügt werden.
-\paragraph{Tabelle}
-~\\
+\newpage
+\paragraph{Tabelle}~\\
 Um eine \textit{Tabelle} zu erstellen, kann das Element \textit{b-table} von \textit{Bootstrap} benutzt werden. In diesem kann man direkt definieren, wie groß die \textit{Tabelle} sein soll, was auf mobilen Geräten passieren soll, ob die \textit{Tabelle} gestreift ist oder nicht und noch weitere Parameter. In diesem Element, wurden die verschiedenen Spalten eingebaut. Dies wurde wie folgt umgesetzt:
 \begin{code}{html}
 	<b-table
@@ -774,19 +775,17 @@ Die \textit{Antragsansicht} bietet den Nutzern alle möglichen Informationen zu 
 \end{figure}
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.6\linewidth]{images/ldehner_implementierung/antrag_schliessen}
+	\includegraphics[width=0.45\linewidth]{images/ldehner_implementierung/antrag_schliessen}
 	\caption[Antrag schließen Warnung]{Ein Bild der Antrag schließen Warnung}
 	\label{fig:antragschliessen}
 \end{figure}
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.6\linewidth]{images/ldehner_implementierung/antrag_löschen}
+	\includegraphics[width=0.45\linewidth]{images/ldehner_implementierung/antrag_löschen}
 	\caption[Antrag löschen Warnung]{Ein Bild der Antrag löschen Warnung}
 	\label{fig:antragloeschen}
 \end{figure}
 
-
-~\\
 \paragraph{Fortschrittsanzeige}
 ~\\
 Ein Schritt der \textit{Fortschrittsanzeige} besteht aus einem \textit{div}, in dem sich ein \textit{span} befindet. Das \textit{div} ist ein \enquote{Strich} und in dem \textit{span} befindet sich ein \textit{Icon}, welches den Zustand beschreibt. Je nach Status des Fortschritts wird die Farbe mittels \textit{CSS-Klassen} geändert.
@@ -857,7 +856,7 @@ Die verschiedenen Dokumente, die zu einem gewissen Antrag gehören, werden in ei
 \end{code}
 \captionof{listing}{Dokumente anzeigen Code}
 	\label{list:docanz} ~\\
-
+\newpage
 \paragraph{Funktionen}
 ~\\
 Wird der \textit{Antrag schließen - Button} betätigt, erscheint eine Sicherheitsmeldung. Diese wird mit einem \textit{Modal} erstellt, welches einen Text beinhaltet, der den Nutzer vor den Folgen seiner Tat informiert. Hier erscheinen zwei weitere \textit{Buttons}: ein grüner \textit{Button}, um den Vorgang abzubrechen und ein roter \textit{Button}, der einen rot blinkenden \textit{Spinner} beinhaltet.
